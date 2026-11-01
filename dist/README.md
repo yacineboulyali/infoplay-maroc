@@ -1,4 +1,31 @@
-# InfoPlay Maroc — guide d'installation et d'utilisation
+# InfoPlay Maroc 🇲🇦
+
+**Plateforme éducative bilingue et interactive pour apprendre l'informatique au collège en jouant.**
+
+[Ouvrir la démonstration](https://yacineboulyali.github.io/infoplay-maroc/) · 4 modules · 30 séances · 120 activités · 600 points · fonctionnement hors ligne
+
+![Accueil d'InfoPlay Maroc](docs/screenshots/01-accueil.png)
+
+## Aperçu
+
+| Tableau de bord | Activité interactive |
+| --- | --- |
+| ![Tableau de bord des quatre modules](docs/screenshots/02-tableau-de-bord.png) | ![Activité bilingue avec cartes illustrées](docs/screenshots/03-activite-interactive.png) |
+
+### Une expérience pensée pour l'élève
+
+- contenu français accompagné d'une traduction arabe discrète ;
+- activités de classement, association, ordre, zones cliquables, simulations et programmation ;
+- images 3D locales, glisser-déposer et alternative complète par clic/clavier ;
+- correction et explications uniquement après **Vérifier** ;
+- sons locaux, bouton muet, volume, contraste renforcé, grand texte et mouvements réduits ;
+- progression conservée dans le navigateur, export JSON et récapitulatif CSV pour l'enseignant.
+
+![Activité de programmation du robot](docs/screenshots/04-robot.png)
+
+---
+
+# Guide d'installation et d'utilisation
 
 Jeux éducatifs d'informatique pour le collège : **4 modules, 30 séances, 120 activités** (4 par séance, notées sur 5, soit 20 points par séance et 600 points au total). Application **100 % locale** : aucun serveur distant, aucun compte, aucune télémétrie, aucune ressource chargée depuis Internet.
 
@@ -22,7 +49,7 @@ Les résultats sont stockés dans le navigateur (Chrome, profil Windows courant)
 
 Plusieurs profils par ordinateur. Un profil = prénom ou pseudo + classe facultative. **Pas de mot de passe et aucune sécurité** : un élève peut modifier les données de son navigateur. Ne saisir ni nom complet, ni CIN, ni adresse, ni téléphone.
 
-La page d’accueil présente d’abord le portfolio éducatif de Yacine Sebouali, puis le bouton « Entrer dans InfoPlay Maroc ». Le nouvel élève ne saisit que son prénom ou son pseudo. Pour intégrer la vraie photo, remplacer `public/images/yacine-portrait-placeholder.svg` par une image locale et mettre à jour son chemin dans `src/app.js`, puis relancer `npm run build`.
+La page d’accueil présente d’abord le portfolio éducatif de Yacine Sebouali et son portrait, puis le bouton « Entrer dans InfoPlay Maroc ». Le nouvel élève ne saisit que son prénom ou son pseudo.
 
 ## Notes et progression
 
@@ -46,7 +73,7 @@ Les clics et les résultats utilisent de courts sons synthétisés localement pa
 npm install            # outils de développement uniquement
 npx playwright install chromium # une seule fois, pour les tests navigateur
 npm run build          # produit dist/ (aucune dépendance à l'exécution)
-npm test               # 257 tests unitaires + intégrité du contenu + moteurs (jsdom)
+npm test               # 258 tests unitaires + intégrité du contenu + moteurs (jsdom)
 npm run test:e2e       # Chromium hors ligne sur dist/index.html (file://)
 npm run test:axe       # audit d'accessibilité automatique (axe-core)
 npm run matrix         # régénère CONTENT_MATRIX.md
