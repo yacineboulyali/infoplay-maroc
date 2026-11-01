@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 720" role="img" aria-labelledby="t d">
+  <title id="t">Emplacement réservé à la photo de Yacine Sebouali</title>
+  <desc id="d">Remplacez ce fichier par la photo fournie par Yacine.</desc>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2b3fc4"/><stop offset="1" stop-color="#6d3aa8"/></linearGradient></defs>
+  <rect width="600" height="720" rx="52" fill="url(#g)"/>
+  <circle cx="300" cy="260" r="122" fill="#fff" opacity=".18"/>
+  <path d="M112 650c24-156 101-234 188-234s164 78 188 234" fill="#fff" opacity=".18"/>
+  <text x="300" y="292" text-anchor="middle" font-family="Arial,sans-serif" font-size="92" font-weight="700" fill="#fff">YS</text>
+  <text x="300" y="674" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#fff">PHOTO À AJOUTER</text>
+</svg>
