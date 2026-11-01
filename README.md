@@ -23,6 +23,20 @@
 
 ![Activité de programmation du robot](docs/screenshots/04-robot.png)
 
+## Démonstrations animées
+
+### Classer par clic ou glisser-déposer
+
+![Démonstration animée d'une activité de classement](docs/gifs/01-classement-glisser-deposer.gif)
+
+### Associer des éléments avec des liens visuels
+
+![Démonstration animée d'une activité d'association](docs/gifs/02-association-avec-liens.gif)
+
+### Programmer le robot pas à pas
+
+![Démonstration animée de la programmation du robot](docs/gifs/03-programmation-robot.gif)
+
 ---
 
 # Guide d'installation et d'utilisation
@@ -77,6 +91,7 @@ npm test               # 258 tests unitaires + intégrité du contenu + moteurs 
 npm run test:e2e       # Chromium hors ligne sur dist/index.html (file://)
 npm run test:axe       # audit d'accessibilité automatique (axe-core)
 npm run matrix         # régénère CONTENT_MATRIX.md
+node scripts/capture-activity-gifs.cjs # recrée les GIF de démonstration
 ```
 Contenu : `src/data/module-N.js` (données, via le mini-langage `src/data/dsl.js`) ; moteurs de jeu : `src/games/` ; stockage : `src/storage/store.js` ; écrans : `src/app.js`.
 
