@@ -4,7 +4,7 @@ import { CATALOG, ACTIVITIES, getActivity, getModule, getSession, isActivityId, 
 import { engineOf } from './games/index.js';
 import { activityScore, band, sessionStats, moduleStats, fmt, MAX } from './scoring/scoring.js';
 import { audio, installInterfaceSounds } from './audio/audio.js';
-import { arModule, arSession, arActivity } from './i18n/ar.js';
+import { arModule, arSession, arActivity, arInstruction } from './i18n/ar.js';
 
 const store = createStore(localAdapter(), isActivityId);
 const app = document.getElementById('app');
@@ -59,8 +59,8 @@ function homeScreen() {
   const entry = h('section', { class: 'welcome-entry', hidden: true, 'aria-label': 'Entrer dans InfoPlay Maroc' }, h('div', { class: 'card' }, h('h2', null, 'Entre ton prénom'), h('p', { class: 'muted' }, 'Un seul champ, aucun mot de passe.'), form), list);
   const enter = h('button', { type: 'button', class: 'btn primary welcome-cta', 'aria-expanded': 'false', onclick: () => { entry.hidden = false; enter.hidden = true; enter.setAttribute('aria-expanded', 'true'); setTimeout(() => name.focus(), 0); } }, 'Entrer dans InfoPlay Maroc →');
   return h('main', { id: 'main', class: 'welcome-page' }, h('section', { class: 'welcome-hero' },
-    h('div', { class: 'welcome-copy' }, h('p', { class: 'eyebrow' }, 'Yacine Sebouali · Portfolio éducatif'), h('h1', { tabindex: '-1' }, 'Bienvenue dans mon univers'), h('p', { class: 'welcome-lead' }, 'Apprends l’informatique en jouant : 30 séances, 120 activités, et une progression qui reste sur cet ordinateur.'), enter),
-    h('figure', { class: 'portrait-frame' }, h('img', { src: 'images/yacine-sebouali-profile.jpg', alt: 'Portrait de Yacine Sebouali, créateur d’InfoPlay Maroc', width: '400', height: '400' }), h('figcaption', null, 'Yacine Sebouali · Créateur d’InfoPlay Maroc'))), entry,
+    h('div', { class: 'welcome-copy' }, h('p', { class: 'eyebrow' }, 'Yacine Boulyali · Portfolio éducatif'), h('h1', { tabindex: '-1' }, 'Bienvenue dans mon univers'), h('p', { class: 'welcome-lead' }, 'Apprends l’informatique en jouant : 30 séances, 120 activités, et une progression qui reste sur cet ordinateur.'), enter),
+    h('figure', { class: 'portrait-frame' }, h('img', { src: 'images/yacine-sebouali-profile.jpg', alt: 'Portrait de Yacine Boulyali', width: '400', height: '400' }), h('figcaption', null, 'Yacine Boulyali'))), entry,
     h('p', { class: 'notice' }, h('b', null, 'À savoir : '), 'ce profil sert seulement à retrouver tes résultats sur cet ordinateur. Il n’y a pas de mot de passe et il n’est pas sécurisé. N’écris ni ton nom complet, ni ton adresse, ni ton numéro de téléphone. Sur un ordinateur partagé, tes résultats restent dans ce navigateur : pense à les sauvegarder dans « Profil et données ».'),
     store.recovered ? h('p', { class: 'notice' }, 'Les données enregistrées étaient illisibles : une copie de secours a été conservée et l’application a repris à zéro.') : null);
 }
@@ -131,7 +131,7 @@ function activityScreen(mi, si, ai) {
   const view = h('main', { id: 'main', class: 'activity-page' }, h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link('#/m/' + mi, 'Module ' + mi), ' › ', link(`#/m/${mi}/s/${si}`, 'Séance ' + si), ' › Activité ', ai),
     h('section', { class: 'activity-progress', 'aria-label': `Progression dans la séance : activité ${ai} sur 4` }, h('div', { class: 'activity-progress-head' }, h('b', null, `Activité ${ai} sur 4`), h('span', { class: 'muted' }, `${progressPct} %`)), bar(progressPct, `Activité ${ai} sur 4`), dots),
     h('h1', { tabindex: '-1' }, act.title, arSub(arActivity(act.id))), h('p', { class: 'muted', style: 'margin:0' }, `${KIND[act.type]} · environ ${act.estimatedMinutes} min · note sur 5`), h('p', { style: 'margin:.4rem 0' }, h('b', null, 'Objectif : '), act.objective),
-    h('div', { class: 'instr activity-brief' }, h('b', null, 'Consigne : '), act.instructions), hintBox, stage, h('div', { class: 'row activity-actions' }, checkBtn, hintBtn), out);
+    h('div', { class: 'instr activity-brief' }, h('b', null, 'Consigne : '), act.instructions, h('p', { class: 'activity-ar-instruction', lang: 'ar', dir: 'rtl' }, arInstruction(act.type))), hintBox, stage, h('div', { class: 'row activity-actions' }, checkBtn, hintBtn), out);
   mount(); return view;
 }
 

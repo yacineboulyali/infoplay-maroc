@@ -23,6 +23,20 @@
 
 ![Activité de programmation du robot](docs/screenshots/04-robot.png)
 
+## Démonstrations animées
+
+### Classer par clic ou glisser-déposer
+
+![Démonstration animée d'une activité de classement](docs/gifs/01-classement-glisser-deposer.gif)
+
+### Associer des éléments avec des liens visuels
+
+![Démonstration animée d'une activité d'association](docs/gifs/02-association-avec-liens.gif)
+
+### Programmer le robot pas à pas
+
+![Démonstration animée de la programmation du robot](docs/gifs/03-programmation-robot.gif)
+
 ---
 
 # Guide d'installation et d'utilisation
@@ -49,7 +63,7 @@ Les résultats sont stockés dans le navigateur (Chrome, profil Windows courant)
 
 Plusieurs profils par ordinateur. Un profil = prénom ou pseudo + classe facultative. **Pas de mot de passe et aucune sécurité** : un élève peut modifier les données de son navigateur. Ne saisir ni nom complet, ni CIN, ni adresse, ni téléphone.
 
-La page d’accueil présente d’abord le portfolio éducatif de Yacine Sebouali et son portrait, puis le bouton « Entrer dans InfoPlay Maroc ». Le nouvel élève ne saisit que son prénom ou son pseudo.
+La page d’accueil présente d’abord le portfolio éducatif de Yacine Boulyali et son portrait, puis le bouton « Entrer dans InfoPlay Maroc ». Le nouvel élève ne saisit que son prénom ou son pseudo.
 
 ## Notes et progression
 
@@ -77,6 +91,7 @@ npm test               # 258 tests unitaires + intégrité du contenu + moteurs 
 npm run test:e2e       # Chromium hors ligne sur dist/index.html (file://)
 npm run test:axe       # audit d'accessibilité automatique (axe-core)
 npm run matrix         # régénère CONTENT_MATRIX.md
+node scripts/capture-activity-gifs.cjs # recrée les GIF de démonstration
 ```
 Contenu : `src/data/module-N.js` (données, via le mini-langage `src/data/dsl.js`) ; moteurs de jeu : `src/games/` ; stockage : `src/storage/store.js` ; écrans : `src/app.js`.
 
