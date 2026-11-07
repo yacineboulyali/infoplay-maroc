@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>InfoPlay Maroc — Immersif 3D</title>
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="immersive.css">
+</head>
+<body class="immersive">
+<a class="skip" href="#panel">Aller au contenu</a>
+<div id="world"></div>
+<header id="hud" class="hud"></header>
+<main id="panel" class="panel" tabindex="-1" hidden></main>
+<div id="holo" class="holo" hidden></div>
+<div id="gate" class="gate" hidden></div>
+<div id="tip" class="tip" role="tooltip" hidden></div>
+<p id="live" class="vh" aria-live="polite"></p>
+<div class="loader" aria-hidden="true"><span>🏝</span>Chargement du monde 3D…</div>
+<noscript><p style="padding:2rem">InfoPlay Maroc a besoin de JavaScript (Google Chrome recommandé).</p></noscript>
+<script src="immersive.js"></script>
+</body>
+</html>

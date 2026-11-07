@@ -9,9 +9,10 @@
     "test:e2e": "node tests/e2e/smoke.cjs",
     "test:axe": "node tests/e2e/axe.cjs",
     "matrix": "node scripts/gen-matrix.mjs",
+    "serve:lan": "node scripts/lan-server.mjs",
     "capture:gifs": "node scripts/capture-activity-gifs.cjs"
   },
-  "author": "",
+  "author": "Yassine Boudjiali",
   "license": "ISC",
   "devDependencies": {
     "@fontsource/nunito": "^5.3.0",
