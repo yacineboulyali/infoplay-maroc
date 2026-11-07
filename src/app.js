@@ -6,6 +6,7 @@ import { activityScore, band, sessionStats, moduleStats, fmt, MAX } from './scor
 import { audio, installInterfaceSounds } from './audio/audio.js';
 import { arModule, arSession, arActivity, arInstruction } from './i18n/ar.js';
 import { lanManager } from './multiplayer/lan.js';
+import { raceScreen, monitorScreen, progressSnapshot, trackRace, avatarFor } from './multiplayer/screens.js';
 
 const store = createStore(localAdapter(), isActivityId);
 const app = document.getElementById('app');
@@ -94,12 +95,16 @@ function header(prof) {
         a('#/dash', 'Tableau de bord', 'dash'),
         a('#/progres', 'Mon progrès', 'progres'),
         a('#/multijoueur', 'Multijoueur LAN', 'multijoueur'),
+        a('#/course', '🏁 Course', 'course'),
+        a('#/suivi', '👀 Suivi', 'suivi'),
         a('#/donnees', 'Profil et données', 'donnees'),
         soundButton(prof),
         h('span', { class: 'who' }, '👤 ' + prof.displayName),
         h('button', { type: 'button', onclick: () => { store.logout(); go('#/profils'); } }, 'Changer')
       ) : h('nav', { class: 'main' },
         a('#/multijoueur', 'Salon Multijoueur', 'multijoueur'),
+        a('#/course', '🏁 Course', 'course'),
+        a('#/suivi', '👀 Suivi enseignant', 'suivi'),
         a('#/donnees', 'Données', 'donnees')
       )
     )
@@ -215,10 +220,23 @@ function homeScreen() {
         h('p', { class: 'welcome-lead', style: 'margin-top:.4rem' },
           'Apprends l’informatique en t’amusant : 30 séances, 120 activités immersives (cliquer-déposer, glisser-déposer, trouver la bonne ou la mauvaise réponse, vrai ou faux) et jeu multijoueur sur le réseau local.'
         ),
-        h('div', { class: 'welcome-cta-group' },
-          enterSoloBtn,
-          enterLanBtn,
-          h('a', { class: 'btn ghost', href: '#/donnees' }, '📊 Données & Enseignant')
+        // Deux fenêtres d'entrée : le projet classique et le monde immersif 3D (progression partagée).
+        h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Choisis ta façon de jouer' },
+          h('section', { class: 'mode-card mode-classic', 'aria-labelledby': 'mode-classic-h' },
+            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '📚'),
+            h('h2', { id: 'mode-classic-h' }, 'InfoPlay Classique'),
+            h('p', null, 'Toutes les activités dans une interface claire et rapide, en solo ou en multijoueur sur le réseau local.'),
+            h('p', { class: 'mode-ar', lang: 'ar', dir: 'rtl' }, 'الواجهة الكلاسيكية: فردي أو جماعي'),
+            h('div', { class: 'welcome-cta-group' }, enterSoloBtn, enterLanBtn, h('a', { class: 'btn ghost', href: '#/donnees' }, '📊 Données & Enseignant'))
+          ),
+          h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
+            h('span', { class: 'mode-badge' }, 'Nouveau · 3D'),
+            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🏝️'),
+            h('h2', { id: 'mode-3d-h' }, 'InfoPlay Immersif 3D'),
+            h('p', null, 'Explore un monde en 3D : quatre îles, un portail pour chaque séance et un robot à programmer en volume. Même progression que le mode classique.'),
+            h('p', { class: 'mode-ar', lang: 'ar', dir: 'rtl' }, 'عالم ثلاثي الأبعاد: جزر وبوابات وروبوت'),
+            h('a', { class: 'btn accent mode-go', href: 'immersive.html' }, '🥽 Entrer dans le monde 3D →')
+          )
         )
       ),
       h('figure', { class: 'portrait-frame' },
@@ -292,7 +310,7 @@ function multiplayerScreen() {
   );
 
   const playersGrid = h('div', { class: 'grid g3' },
-    lanState.players.map((p) => h('div', { class: 'peer-card' + (p.isMe ? ' is-me' : '') },
+    lanState.players.filter((p) => p.role !== 'observer').map((p) => h('div', { class: 'peer-card' + (p.isMe ? ' is-me' : '') },
       h('span', { class: 'peer-avatar', 'aria-hidden': 'true' }, p.avatar || '🎮'),
       h('div', { class: 'peer-info' },
         h('b', null, p.name, p.isMe ? ' (Moi)' : ''),
@@ -527,10 +545,9 @@ function activityScreen(mi, si, ai) {
     eng.reveal && eng.reveal(res);
     stage.inert = true;
 
-    // Mise à jour du score sur le réseau local
-    const all = { sessions: CATALOG.flatMap((m) => m.sessions) };
-    const t = moduleStats(all, recOf(prof.id));
-    lanManager.updateProfile({ score: t.best });
+    // Mise à jour de la progression sur le réseau local (suivi et course)
+    const progress = progressSnapshot(recOf(prof.id));
+    lanManager.updateProfile({ score: progress.points, progress, lastResult: { id: act.id, title: act.title, score, at: Date.now() } });
 
     showResult(score, res, n);
   }
@@ -849,6 +866,7 @@ function errorScreen(e) {
 }
 
 // ---------- ROUTEUR ----------
+let live = null; // page réseau mise à jour en direct (course ou suivi)
 function render() {
   let view;
   try {
@@ -856,12 +874,14 @@ function render() {
     applyPrefs(prof);
     const q = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
 
+    // Présence sur le réseau local : un élève (avec sa progression) ou un simple observateur (ex. l'enseignant).
+    live = null;
+    lanManager.setIdentity(prof ? prof.id : null);
     if (prof) {
-      const all = { sessions: CATALOG.flatMap((m) => m.sessions) };
-      const t = moduleStats(all, recOf(prof.id));
-      lanManager.start({ displayName: prof.displayName, className: prof.className, score: t.best });
+      const progress = progressSnapshot(recOf(prof.id));
+      lanManager.start({ role: 'student', displayName: prof.displayName, className: prof.className, avatar: avatarFor(prof.displayName), score: progress.points, progress });
     } else {
-      lanManager.start({ displayName: 'Invité', score: 0 });
+      lanManager.start({ role: 'observer', displayName: 'Observateur', className: '', score: 0, progress: null, lastResult: null, currentActivityTitle: 'Observe la classe' });
     }
 
     if (!q.length || q[0] === 'profils' || q[0] === 'accueil') {
@@ -869,6 +889,10 @@ function render() {
       view = homeScreen();
     } else if (q[0] === 'multijoueur' || q[0] === 'salon') {
       view = multiplayerScreen();
+    } else if (q[0] === 'course' || q[0] === 'suivi') {
+      if (prof) lanManager.setActivity(q[0], q[0] === 'course' ? 'Regarde la course' : 'Suivi de la classe');
+      live = q[0] === 'course' ? raceScreen() : monitorScreen();
+      view = live.view;
     } else if (q[0] === 'donnees') {
       view = dataScreen();
     } else if (q[0] === 'dash') {
@@ -900,16 +924,21 @@ window.addEventListener('hashchange', render);
 installInterfaceSounds(document);
 window.addEventListener('error', () => toast('Une erreur est survenue. Recharge la page si besoin.'));
 
-// Rafraîchit les compteurs LAN en direct quand les pairs changent
-lanManager.subscribe(() => {
+// Rafraîchit les pages réseau en direct quand les élèves changent.
+// La course et le suivi se mettent à jour sur place (animations conservées) ; le salon n'est
+// redessiné que si son contenu change réellement et jamais pendant la saisie d'un message.
+let salonSig = '';
+lanManager.subscribe((st) => {
+  trackRace(st, (who) => { if (st.race && !st.race.ended) toast(`🏁 ${who} vient de te dépasser ! À toi de jouer.`); });
+  const badge = document.querySelector('.lan-badge span:last-child');
+  if (badge) badge.textContent = `Réseau local (${st.playerCount})`;
   const cur = location.hash.split('/')[1] || '';
+  if (live && (cur === 'course' || cur === 'suivi')) { live.update(st); return; }
   if (cur === 'multijoueur' || cur === 'salon') {
-    render();
-  } else {
-    const badge = document.querySelector('.lan-badge span:last-child');
-    if (badge) {
-      badge.textContent = `Réseau local (${lanManager.getState().playerCount})`;
-    }
+    const sig = JSON.stringify([st.players.map((p) => [p.peerId, p.score, p.activity]), st.messages.length, st.challenges.length]);
+    if (sig === salonSig) return; salonSig = sig;
+    const typing = document.activeElement && document.activeElement.matches('input,textarea,select');
+    if (!typing) { const y = window.scrollY; render(); window.scrollTo(0, y); }
   }
 });
 

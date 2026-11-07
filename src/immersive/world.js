@@ -59,9 +59,9 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
   }
   {
     const mat = new THREE.MeshStandardMaterial({ color: '#3a2457', flatShading: true, roughness: 1 });
-    for (let i = 0; i < 46; i++) {
-      const a = (i / 46) * Math.PI * 2 + Math.random() * 0.1; const r = 150 + Math.random() * 30; const hgt = 18 + Math.random() * 30;
-      const m = new THREE.Mesh(new THREE.ConeGeometry(14 + Math.random() * 10, hgt + 30, 5), mat); m.position.set(Math.cos(a) * r, (hgt + 30) / 2 - 40, Math.sin(a) * r); m.rotation.y = Math.random() * 3; scene.add(m);
+    for (let i = 0; i < 30; i++) {
+      const a = (i / 30) * Math.PI * 2 + Math.random() * 0.12; const r = 200 + Math.random() * 25; const H = 30 + Math.random() * 22;
+      const m = new THREE.Mesh(new THREE.ConeGeometry(26 + Math.random() * 16, H, 6), mat); m.position.set(Math.cos(a) * r, H / 2 - 30, Math.sin(a) * r); m.rotation.y = Math.random() * 3; scene.add(m);
     }
   }
 
@@ -189,7 +189,7 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
   });
 
   // ---------- caméra ----------
-  let inset = 0; let flight = null; let focusMod = null; let interactionLocked = false; let lowPower = false;
+  let inset = 0; let flight = null; let focusMod = null; let focusSi = null; let interactionLocked = false; let lowPower = false;
   function flyTo(pos, target, after) {
     controls.autoRotate = false;
     if (reduced()) { camera.position.copy(pos); controls.target.copy(target); controls.update(); after && after(); return; }
@@ -203,18 +203,18 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
 
   const api = {
     focusHub() {
-      focusMod = null; showPortals(null); interactionLocked = false; lowPower = false;
+      focusMod = null; focusSi = null; showPortals(null); interactionLocked = false; lowPower = false;
       flyTo(new THREE.Vector3(0, 19, 50), new THREE.Vector3(0, 0, 0), () => { controls.autoRotate = !reduced(); controls.autoRotateSpeed = 0.35; });
       controls.minDistance = 14; controls.maxDistance = 75;
     },
     focusModule(mi) {
-      focusMod = mi; showPortals(mi); interactionLocked = false; lowPower = false;
+      focusMod = mi; focusSi = null; showPortals(mi); interactionLocked = false; lowPower = false;
       const c = islandWorld(mi); const d = islands[mi].dir;
       flyTo(c.clone().add(d.clone().multiplyScalar(14)).add(new THREE.Vector3(0, 5, 0)), c.clone().add(new THREE.Vector3(0, 1.6, 0)));
       controls.minDistance = 6; controls.maxDistance = 30;
     },
     focusSession(mi, si) {
-      focusMod = mi; showPortals(mi); interactionLocked = false;
+      focusMod = mi; focusSi = si; showPortals(mi); interactionLocked = false; lowPower = false;
       const pt = portals[mi][si - 1]; if (!pt) return;
       const c = islandWorld(mi); const wp = c.clone().add(pt.p.position);
       flyTo(wp.clone().add(pt.outward.clone().multiplyScalar(4.6)).add(new THREE.Vector3(0, 1.7, 0)), wp.clone().add(new THREE.Vector3(0, 1.05, 0)));
@@ -281,6 +281,7 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
     if (!still) {
       crystal.rotation.y += dt * 0.8; crystal.position.y = 3.4 + Math.sin(t * 1.5) * 0.18; crystalWire.rotation.y -= dt * 0.3; crystalWire.rotation.x += dt * 0.15;
       title.position.y = 7.2 + Math.sin(t) * 0.12;
+      title.material.opacity += ((focusMod ? 0 : 1) - title.material.opacity) * Math.min(1, dt * 6); title.visible = title.material.opacity > 0.02;
       const mp = motes.geometry.attributes.position; for (let i = 0; i < mp.count; i++) { let y = mp.getY(i) + dt * 0.4; if (y > 16) y = -2; mp.setY(i, y); } mp.needsUpdate = true;
       for (const b of bridges) { const { dir, n, yaw } = b.userData; for (let k = 0; k < n; k++) { const tt = (k + 0.5) / n; const r = 8 + tt * (ISLAND_R - 5 - 8); tmp.position.copy(dir).multiplyScalar(r); tmp.position.y = -0.2 + Math.sin(tt * Math.PI) * 0.6 + Math.sin(t * 2 + k * 0.7) * 0.08; tmp.rotation.set(0, yaw, 0); tmp.updateMatrix(); b.setMatrixAt(k, tmp.matrix); } b.instanceMatrix.needsUpdate = true; }
     }
@@ -303,7 +304,8 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
       const isHover = hovered && hovered.type === 'session' && hovered.mi === Number(id) && hovered.si === k + 1;
       pt.hover += ((isHover ? 1 : 0) - pt.hover) * Math.min(1, dt * 8);
       pt.p.scale.setScalar(Math.max(0.001, pt.show * (1 + pt.hover * 0.12)));
-      pt.mat.uniforms.t.value = still ? 0 : t; pt.mat.uniforms.boost.value = pt.hover;
+      const selected = focusSi === k + 1 && focusMod === Number(id);
+      pt.mat.uniforms.t.value = still ? 0 : t; pt.mat.uniforms.boost.value = Math.max(pt.hover, selected ? 0.7 + (still ? 0 : Math.sin(t * 3) * 0.3) : 0);
     });
     for (let i = bursts.length - 1; i >= 0; i--) {
       const b = bursts[i]; b.life += dt; const pa = b.pts.geometry.attributes.position;

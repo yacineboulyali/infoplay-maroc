@@ -257,3 +257,66 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .errbox{border:3px solid var(--ko);background:#fff}
 @media print{header.top,.btn,.crumbs,.noprint{display:none!important}body{background:#fff}.card{box-shadow:none}}
 .slot.base,.slot.filled.base{align-items:flex-end;justify-content:flex-start;text-align:left}
+
+/* Page d'accueil : deux fenêtres (classique / immersif 3D) */
+.mode-choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1.4rem}
+.mode-card{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:.45rem;padding:1.2rem 1.1rem 1.25rem;border-radius:20px;border:2px solid var(--ink);box-shadow:0 6px 0 var(--ink);transition:transform .2s,box-shadow .2s}
+.mode-card:hover,.mode-card:focus-within{transform:translateY(-4px);box-shadow:0 10px 0 var(--ink)}
+.mode-card h2{margin:0;font-size:1.3rem}.mode-card p{margin:0;font-size:.95rem}
+.mode-card .welcome-cta-group{flex-direction:column;align-items:stretch;gap:.5rem;margin-top:auto}
+.mode-card .welcome-cta-group .btn,.mode-card .mode-go{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.mode-card .mode-go{margin-top:auto}
+.mode-ico{font-size:2.2rem;line-height:1}
+.mode-ar{font-family:Cairo,Tahoma,"Segoe UI",system-ui,sans-serif;font-weight:700;text-align:right;font-size:.88rem!important;opacity:.85;margin-bottom:.5rem!important}
+.mode-classic{background:#fff}.mode-classic p{color:var(--muted)}
+.mode-immersive{color:#fff;background:radial-gradient(circle at 80% 10%,rgba(242,180,24,.35),transparent 40%),linear-gradient(160deg,#0b1036 0%,#3b2a78 60%,#c8643a 130%)}
+.mode-immersive::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,#fff 1px,transparent 1.5px);background-size:26px 26px;opacity:.25;pointer-events:none;animation:mode-stars 18s linear infinite}
+.mode-immersive::after{content:"";position:absolute;left:-30%;right:-30%;bottom:-40%;height:70%;background-image:linear-gradient(rgba(125,255,224,.45) 1px,transparent 1px),linear-gradient(90deg,rgba(125,255,224,.45) 1px,transparent 1px);background-size:28px 28px;transform:perspective(260px) rotateX(62deg);transform-origin:top;pointer-events:none;opacity:.5;animation:mode-grid 3s linear infinite}
+.mode-immersive>*{position:relative;z-index:1}
+.mode-immersive h2{color:#ffd86b}
+.mode-immersive .mode-ico{animation:mode-bob 2.6s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}
+.mode-badge{position:absolute!important;top:.8rem;right:.8rem;padding:.15rem .6rem;border-radius:999px;background:#f2b418;color:var(--ink);font-weight:800;font-size:.75rem}
+.mode-immersive .btn.accent{border-color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.45)}
+@keyframes mode-stars{to{background-position:0 -260px}}
+@keyframes mode-grid{to{background-position:0 28px,0 0}}
+@keyframes mode-bob{50%{transform:translateY(-6px) rotate(-4deg)}}
+@media(max-width:620px){.mode-choice{grid-template-columns:1fr}}
+
+/* ---------- Course en direct ---------- */
+.race-banner{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin:1rem 0;padding:.9rem 1.1rem;border-radius:16px;background:#eef0fb;border:2px solid var(--ink)}
+.race-banner.live{background:linear-gradient(90deg,#fff3cf,#ffe0d2);border-color:var(--accent)}
+.race-banner.ended{background:var(--ok-bg);border-color:var(--ok)}
+.race-tag{display:inline-block;padding:.1rem .6rem;border-radius:999px;background:var(--ink);color:#fff;font-weight:800;font-size:.8rem}
+.race-banner.live .race-tag{background:var(--accent);animation:race-blink 1.2s ease-in-out infinite}
+.race-clock{font-size:2rem;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+@keyframes race-blink{50%{opacity:.6}}
+.race-podium{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;align-items:end;max-width:640px;margin:0 auto 1rem}
+.podium-step{display:grid;justify-items:center;gap:.15rem;padding:.8rem .5rem;border:2px solid var(--ink);border-radius:16px 16px 6px 6px;background:#fff;text-align:center;box-shadow:0 4px 0 var(--ink)}
+.podium-step.p1{order:2;padding-top:1.4rem;background:linear-gradient(180deg,#fff3cf,#fff)}.podium-step.p2{order:1}.podium-step.p3{order:3}
+.podium-step .medal{font-size:1.8rem}.podium-step .ava{font-size:2rem}.podium-step.me{outline:3px solid var(--primary);outline-offset:2px}
+.race-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:1rem;align-items:start}
+@media(max-width:900px){.race-layout{grid-template-columns:1fr}}
+.race-track{position:relative;transition:height .4s}
+.lane{position:absolute;left:0;right:0;height:58px;display:grid;grid-template-columns:2.4rem minmax(120px,190px) 1fr;gap:.6rem;align-items:center;transition:top .7s cubic-bezier(.3,.9,.3,1)}
+.lane-rank{font-weight:800;font-size:1.3rem;text-align:center}
+.lane-info{display:grid;min-width:0}.lane-info b,.lane-info small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lane-info small{color:var(--muted);font-size:.78rem}
+.lane-road{position:relative;height:40px;border-radius:999px;background:repeating-linear-gradient(90deg,#ece6d6 0 18px,#f7f2e8 18px 36px);border:2px solid var(--ink);overflow:hidden}
+.lane-road>i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(43,63,196,.15),rgba(43,63,196,.35));transition:width 1s ease}
+.lane.me .lane-road>i{background:linear-gradient(90deg,rgba(242,180,24,.25),rgba(242,180,24,.6))}
+.runner{position:absolute;top:50%;transform:translateY(-50%);font-size:1.6rem;line-height:1;transition:left 1s cubic-bezier(.3,.9,.3,1);filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+.finish{position:absolute;right:.3rem;top:50%;transform:translateY(-50%);opacity:.7}
+.lane.me{background:rgba(242,180,24,.12);border-radius:14px}
+.lane.offline{opacity:.5}
+.race-feed{list-style:none;margin:0;padding:0;display:grid;gap:.45rem;max-height:460px;overflow:auto}
+.race-feed li{display:grid;grid-template-columns:1.6rem 1fr;gap:.1rem .4rem;padding:.45rem .55rem;border-radius:10px;background:#faf7ef;font-size:.92rem}
+.race-feed li small{grid-column:2;color:var(--muted);font-size:.75rem}.race-feed li.mine{background:#fff3cf}
+/* ---------- Suivi des élèves ---------- */
+.monitor-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.8rem;margin:1rem 0}
+.monitor-tiles .tile{display:grid;text-align:center;padding:.8rem}.monitor-tiles .tile b{font-size:1.8rem}
+.monitor-table td{vertical-align:middle}.monitor-table tr.offline{opacity:.55}.monitor-table .bar{height:8px;margin-top:.25rem;min-width:90px}
+.monitor-table .ava{font-size:1.3rem}
+.mini-mods{display:flex;gap:.25rem;align-items:flex-end}
+.mini-mod{position:relative;width:22px;height:34px;border:2px solid var(--ink);border-radius:6px;background:#f2eee4;overflow:hidden;display:grid;place-items:end center}
+.mini-mod i{position:absolute;left:0;right:0;bottom:0;background:var(--primary)}.mini-mod.m2 i{background:var(--m2)}.mini-mod.m3 i{background:var(--m3)}.mini-mod.m4 i{background:var(--m4)}
+.mini-mod small{position:relative;font-weight:800;font-size:.7rem;color:var(--ink);text-shadow:0 0 3px #fff}
+@media (prefers-reduced-motion:reduce){.lane,.runner,.lane-road>i{transition:none}}

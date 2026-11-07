@@ -47,8 +47,9 @@ while ($l.IsListening) {
       if ($body) {
         try {
           $peer = $body | ConvertFrom-Json
-          if ($peer.peerId) {
+          if ($peer.peerId -and ($script:lanPlayers.ContainsKey($peer.peerId) -or $script:lanPlayers.Count -lt 200)) {
             $peer | Add-Member -NotePropertyName lastSeen -NotePropertyValue ([DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -Force
+            $peer | Add-Member -NotePropertyName ip -NotePropertyValue ([string]$c.Request.RemoteEndPoint.Address) -Force
             $script:lanPlayers[$peer.peerId] = $peer
           }
         } catch {}
@@ -56,13 +57,18 @@ while ($l.IsListening) {
       $now = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
       $active = @()
       foreach ($k in @($script:lanPlayers.Keys)) {
-        if ($now - $script:lanPlayers[$k].lastSeen -gt 12000) {
+        $age = $now - $script:lanPlayers[$k].lastSeen
+        # Les eleves silencieux depuis 10 minutes sont retires de la liste de suivi.
+        if ($age -gt 600000) {
           $script:lanPlayers.Remove($k)
         } else {
-          $active += $script:lanPlayers[$k]
+          $copy = $script:lanPlayers[$k].PSObject.Copy()
+          $copy | Add-Member -NotePropertyName ageMs -NotePropertyValue $age -Force
+          $active += $copy
         }
       }
-      $resp = @{ ok = $true; players = $active; challenges = $script:lanChallenges; messages = $script:lanMessages } | ConvertTo-Json -Depth 4
+      # La course chronometree n'est disponible qu'avec le serveur Node (lan-server.mjs).
+      $resp = @{ ok = $true; players = @($active); challenges = $script:lanChallenges; messages = $script:lanMessages; race = $null } | ConvertTo-Json -Depth 8
       $b = [System.Text.Encoding]::UTF8.GetBytes($resp)
       $c.Response.OutputStream.Write($b, 0, $b.Length)
       $c.Response.Close()

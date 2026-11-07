@@ -52,6 +52,14 @@ Copier le dossier **`dist`** sur l'ordinateur (clé USB, réseau de l'école…)
 
 > Limites connues : le lanceur Windows (`.bat` + `serve.ps1`) **n'a pas pu être testé sur Windows** dans l'environnement de développement (tests faits sous Linux/Chromium). Faire un essai sur un poste avant le déploiement en classe.
 
+## Suivi de la classe et course sur le réseau local
+
+Un navigateur ne peut pas scanner le réseau : un **ordinateur hôte** (celui de l'enseignant, avec Node.js) lance `Lancer-InfoPlay.bat` (ou `node lan-server.mjs` dans `dist`). La fenêtre du serveur affiche l'adresse à ouvrir sur les postes élèves, par exemple `http://192.168.1.20:8765/`. Chaque page envoie toutes les 2,5 s un signal au serveur : les élèves connectés apparaissent automatiquement.
+
+- **🏁 Course** (`#/course`) : piste en direct, podium, dépassements et exploits annoncés. Sans course lancée, classement sur les points totaux.
+- **👀 Suivi** (`#/suivi`) : tableau de chaque élève (en ligne/inactif, activité en cours, activités faites, points, progression par module, dernier résultat, poste), export CSV, et bouton **Lancer la course** (5 à 45 min) : seuls les points gagnés pendant la course comptent.
+
+Ce n'est pas du jeu collaboratif : chacun joue seul. Seuls le pseudo, la classe et les totaux circulent, uniquement sur le réseau local ; tout disparaît à l'arrêt du serveur. **Aucune authentification** : n'importe qui sur le réseau peut ouvrir la page de suivi. Si les postes ne se connectent pas, autoriser Node.js dans le pare-feu Windows (réseau privé). Le serveur de secours PowerShell (sans Node) n'écoute généralement que `localhost` et ne propose pas la course chronométrée.
 ## Sauvegarde des résultats (important)
 
 Les résultats sont stockés dans le navigateur (Chrome, profil Windows courant). Ils sont **perdus si l'on vide les données du navigateur** ou si l'on change de profil/ordinateur.

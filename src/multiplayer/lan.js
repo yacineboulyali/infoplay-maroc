@@ -1,24 +1,39 @@
-// Gestionnaire multijoueur sur réseau local (LAN).
-// Fonctionne en double canal :
-// 1) API HTTP (/api/lan/heartbeat) si le serveur local (serve.ps1 / lan-server.mjs) est actif.
-// 2) BroadcastChannel + localStorage pour la synchronisation instantanée entre onglets/fenêtres.
+// Présence et progression des élèves sur le réseau local (LAN).
+// Un navigateur ne peut pas « scanner » le réseau : un ordinateur hôte lance le serveur local
+// (scripts/lan-server.mjs) et chaque élève ouvre son adresse. Chaque page envoie alors un
+// battement de cœur (/api/lan/heartbeat) : le serveur connaît ainsi tous les élèves connectés.
+// Sans serveur, les onglets d'un même ordinateur se voient via BroadcastChannel + localStorage.
 
 const LAN_CHANNEL = 'infoplay_lan_bus';
 const STORAGE_KEY = 'infoplay_lan_peers';
+const DEVICE_KEY = 'infoplay_device_id';
 const HEARTBEAT_INTERVAL = 2500;
-const PEER_TIMEOUT_MS = 12000;
+export const ONLINE_MS = 12000; // au-delà : élève « inactif »
+const ROSTER_MS = 10 * 60 * 1000; // au-delà : élève retiré de la liste de suivi
+
+function deviceId() {
+  try {
+    let id = localStorage.getItem(DEVICE_KEY);
+    if (!id) { id = 'd' + Math.random().toString(36).slice(2, 8); localStorage.setItem(DEVICE_KEY, id); }
+    return id;
+  } catch { return 'd' + Math.random().toString(36).slice(2, 8); }
+}
 
 export class LanManager {
   constructor() {
-    this.peerId = 'peer_' + Math.random().toString(36).slice(2, 9);
-    this.peers = new Map(); // peerId -> peerData
+    this.device = deviceId();
+    this.peerId = this.device + '-obs';
+    this.peers = new Map(); // peerId -> données (lastSeen exprimé avec l'horloge locale)
     this.challenges = [];
     this.messages = [];
+    this.race = null; // { id, label, endsAt, durationMs, baseline, ended }
+    this.serverInfo = null; // { ips: [...], port }
     this.currentUser = null;
     this.timer = null;
     this.listeners = new Set();
     this.serverOnline = false;
     this.bc = null;
+    this.notifyQueued = false;
 
     try {
       if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
@@ -29,58 +44,51 @@ export class LanManager {
 
     if (typeof window !== 'undefined') {
       window.addEventListener('storage', (e) => {
-        if (e.key === STORAGE_KEY && e.newValue) {
-          try {
-            const data = JSON.parse(e.newValue);
-            this.mergePeers(data);
-          } catch {}
-        }
+        if (e.key === STORAGE_KEY && e.newValue) { try { this.mergePeers(JSON.parse(e.newValue)); } catch {} }
       });
-      window.addEventListener('beforeunload', () => {
-        this.broadcast({ type: 'leave', peerId: this.peerId });
-      });
+      window.addEventListener('beforeunload', () => this.broadcast({ type: 'leave', peerId: this.peerId }));
     }
   }
 
-  subscribe(fn) {
-    this.listeners.add(fn);
-    return () => this.listeners.delete(fn);
-  }
+  subscribe(fn) { this.listeners.add(fn); return () => this.listeners.delete(fn); }
 
+  // Regroupe les notifications rapprochées (un seul rafraîchissement par tâche).
   notify() {
-    this.listeners.forEach((fn) => {
-      try { fn(this.getState()); } catch {}
-    });
+    if (this.notifyQueued) return; this.notifyQueued = true;
+    queueMicrotask(() => { this.notifyQueued = false; const st = this.getState(); this.listeners.forEach((fn) => { try { fn(st); } catch (e) { console.error(e); } }); });
   }
 
   getState() {
     this.pruneStale();
-    const all = Array.from(this.peers.values());
-    all.sort((a, b) => (b.score || 0) - (a.score || 0));
+    const now = Date.now();
+    const roster = Array.from(this.peers.values()).map((p) => ({ ...p, online: p.isMe || now - (p.lastSeen || 0) < ONLINE_MS }));
+    roster.sort((a, b) => (b.score || 0) - (a.score || 0));
+    const players = roster.filter((p) => p.online);
     return {
-      serverOnline: this.serverOnline,
-      peerId: this.peerId,
-      playerCount: all.length,
-      players: all,
-      challenges: this.challenges,
-      messages: this.messages,
+      serverOnline: this.serverOnline, serverInfo: this.serverInfo, peerId: this.peerId,
+      playerCount: players.filter((p) => p.role !== 'observer').length, players, roster,
+      challenges: this.challenges, messages: this.messages,
+      race: this.race ? { ...this.race, remainingMs: Math.max(0, this.race.endsAt - now) } : null,
     };
   }
 
+  /** Identité stable : un appareil + un profil = un seul élève (pas de doublon au rechargement). */
+  setIdentity(profileId) {
+    const next = this.device + '-' + (profileId || 'obs');
+    if (next === this.peerId) return;
+    this.broadcast({ type: 'leave', peerId: this.peerId });
+    this.peers.delete(this.peerId);
+    this.peerId = next;
+  }
+
   start(user) {
-    this.currentUser = user || { displayName: 'Joueur ' + this.peerId.slice(-3), score: 0 };
+    this.currentUser = { ...(this.currentUser || {}), ...(user || {}) };
     this.touchSelf();
-    this.sync();
-    if (!this.timer) {
-      this.timer = setInterval(() => this.sync(), HEARTBEAT_INTERVAL);
-    }
+    if (!this.timer) { this.sync(); this.timer = setInterval(() => this.sync(), HEARTBEAT_INTERVAL); }
   }
 
   stop() {
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
+    if (this.timer) { clearInterval(this.timer); this.timer = null; }
     this.broadcast({ type: 'leave', peerId: this.peerId });
   }
 
@@ -92,97 +100,75 @@ export class LanManager {
   }
 
   setActivity(actId, actTitle) {
-    if (!this.currentUser) return;
+    if (!this.currentUser) this.currentUser = {};
+    if (this.currentUser.currentActivityId === actId) return;
     this.currentUser.currentActivityId = actId;
     this.currentUser.currentActivityTitle = actTitle || '';
     this.touchSelf();
-    this.sync();
+  }
+
+  selfPayload() {
+    const u = this.currentUser || {};
+    return {
+      peerId: this.peerId,
+      role: u.role || 'student',
+      name: u.displayName || 'Anonyme',
+      avatar: u.avatar || '🎮',
+      score: u.score || 0,
+      className: u.className || '',
+      activity: u.currentActivityTitle || 'Dans le salon',
+      activityId: u.currentActivityId || null,
+      progress: u.progress || null,
+      lastResult: u.lastResult || null,
+    };
   }
 
   touchSelf() {
-    const me = {
-      peerId: this.peerId,
-      name: this.currentUser?.displayName || 'Anonyme',
-      avatar: this.currentUser?.avatar || '🎮',
-      score: this.currentUser?.score || 0,
-      className: this.currentUser?.className || '',
-      activity: this.currentUser?.currentActivityTitle || 'Dans le salon',
-      activityId: this.currentUser?.currentActivityId || null,
-      lastSeen: Date.now(),
-      isMe: true,
-    };
-    this.peers.set(this.peerId, me);
+    this.peers.set(this.peerId, { ...this.selfPayload(), lastSeen: Date.now(), isMe: true });
     this.notify();
   }
 
   async sync() {
     this.touchSelf();
-    const payload = {
-      peerId: this.peerId,
-      name: this.currentUser?.displayName || 'Anonyme',
-      avatar: this.currentUser?.avatar || '🎮',
-      score: this.currentUser?.score || 0,
-      className: this.currentUser?.className || '',
-      activity: this.currentUser?.currentActivityTitle || 'Dans le salon',
-      activityId: this.currentUser?.currentActivityId || null,
-    };
+    const payload = this.selfPayload();
+    this.broadcast({ type: 'heartbeat', peer: payload });
 
-    // 1. Broadcast vers les autres onglets
-    this.broadcast({ type: 'heartbeat', peer: payload, timestamp: Date.now() });
-
-    // 2. Appel au serveur local (/api/lan/heartbeat)
     try {
       const ctrl = new AbortController();
       const tid = setTimeout(() => ctrl.abort(), 1800);
-      const res = await fetch('/api/lan/heartbeat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        signal: ctrl.signal,
-      });
+      const res = await fetch('/api/lan/heartbeat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal });
       clearTimeout(tid);
       if (res.ok) {
         const data = await res.json();
+        const now = Date.now();
         this.serverOnline = true;
         if (Array.isArray(data.players)) {
-          data.players.forEach((p) => {
-            if (p.peerId !== this.peerId) {
-              this.peers.set(p.peerId, { ...p, isMe: false });
-            }
-          });
+          // L'âge (ageMs) est calculé par le serveur : pas de problème d'horloges différentes entre ordinateurs.
+          data.players.forEach((p) => { if (p && p.peerId && p.peerId !== this.peerId) this.peers.set(p.peerId, { ...p, lastSeen: now - (p.ageMs || 0), isMe: false }); });
         }
         if (Array.isArray(data.challenges)) this.challenges = data.challenges;
         if (Array.isArray(data.messages)) this.messages = data.messages;
+        this.race = data.race ? { ...data.race, endsAt: now + (data.race.remainingMs || 0) } : null;
+        if (!this.serverInfo) this.fetchInfo();
         this.notify();
         return;
       }
-    } catch {
-      this.serverOnline = false;
-    }
-
-    // Si le serveur HTTP ne répond pas, on synchronise via localStorage
+    } catch {}
+    this.serverOnline = false;
     this.syncLocalStorage();
+  }
+
+  async fetchInfo() {
+    try { const r = await fetch('/api/lan/info'); if (r.ok) { this.serverInfo = await r.json(); this.notify(); } } catch {}
   }
 
   syncLocalStorage() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       const data = raw ? JSON.parse(raw) : {};
-      data[this.peerId] = {
-        peerId: this.peerId,
-        name: this.currentUser?.displayName || 'Anonyme',
-        avatar: this.currentUser?.avatar || '🎮',
-        score: this.currentUser?.score || 0,
-        className: this.currentUser?.className || '',
-        activity: this.currentUser?.currentActivityTitle || 'Dans le salon',
-        activityId: this.currentUser?.currentActivityId || null,
-        lastSeen: Date.now(),
-      };
-      // Nettoie les anciens
+      data[this.peerId] = { ...this.selfPayload(), lastSeen: Date.now() };
       const now = Date.now();
-      for (const k in data) {
-        if (now - data[k].lastSeen > PEER_TIMEOUT_MS) delete data[k];
-      }
+      for (const k in data) if (now - (data[k].lastSeen || 0) > ROSTER_MS) delete data[k];
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       this.mergePeers(data);
     } catch {}
@@ -191,98 +177,72 @@ export class LanManager {
   mergePeers(dict) {
     const now = Date.now();
     for (const [id, p] of Object.entries(dict)) {
-      if (id !== this.peerId && now - (p.lastSeen || 0) < PEER_TIMEOUT_MS) {
-        this.peers.set(id, { ...p, isMe: false });
+      if (id !== this.peerId && now - (p.lastSeen || 0) < ROSTER_MS) {
+        const known = this.peers.get(id);
+        if (!known || (known.lastSeen || 0) <= (p.lastSeen || 0)) this.peers.set(id, { ...p, isMe: false });
       }
     }
     this.notify();
   }
 
   handleLocalMessage(msg) {
-    if (!msg || typeof msg !== 'object') return;
-    if (msg.peerId === this.peerId) return;
-
-    if (msg.type === 'heartbeat' && msg.peer) {
-      this.peers.set(msg.peer.peerId, {
-        ...msg.peer,
-        lastSeen: Date.now(),
-        isMe: false,
-      });
+    if (!msg || typeof msg !== 'object' || msg.peerId === this.peerId) return;
+    if (msg.type === 'heartbeat' && msg.peer && msg.peer.peerId !== this.peerId) {
+      this.peers.set(msg.peer.peerId, { ...msg.peer, lastSeen: Date.now(), isMe: false });
       this.notify();
     } else if (msg.type === 'leave') {
-      this.peers.delete(msg.peerId);
-      this.notify();
+      this.peers.delete(msg.peerId); this.notify();
     } else if (msg.type === 'chat' && msg.message) {
-      this.messages.unshift(msg.message);
-      if (this.messages.length > 30) this.messages.pop();
-      this.notify();
+      this.messages.unshift(msg.message); if (this.messages.length > 30) this.messages.pop(); this.notify();
     } else if (msg.type === 'challenge' && msg.challenge) {
-      this.challenges.unshift(msg.challenge);
-      if (this.challenges.length > 10) this.challenges.pop();
-      this.notify();
+      this.challenges.unshift(msg.challenge); if (this.challenges.length > 10) this.challenges.pop(); this.notify();
     }
   }
 
-  broadcast(data) {
-    if (this.bc) {
-      try { this.bc.postMessage(data); } catch {}
-    }
-  }
+  broadcast(data) { if (this.bc) { try { this.bc.postMessage(data); } catch {} } }
 
   pruneStale() {
     const now = Date.now();
-    for (const [id, p] of this.peers.entries()) {
-      if (!p.isMe && now - (p.lastSeen || 0) > PEER_TIMEOUT_MS) {
-        this.peers.delete(id);
-      }
-    }
+    for (const [id, p] of this.peers.entries()) if (!p.isMe && now - (p.lastSeen || 0) > ROSTER_MS) this.peers.delete(id);
+  }
+
+  async post(path, body) {
+    try {
+      const r = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      return r.ok ? await r.json().catch(() => ({ ok: true })) : null;
+    } catch { return null; }
+  }
+
+  /** Course chronométrée (nécessite le serveur local). */
+  async startRace(minutes, label) {
+    const r = await this.post('/api/lan/race', { action: 'start', minutes, label });
+    if (r) await this.sync();
+    return !!r;
+  }
+  async stopRace() {
+    const r = await this.post('/api/lan/race', { action: 'stop' });
+    if (r) await this.sync();
+    return !!r;
   }
 
   async sendChat(text) {
     const msg = {
       id: 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
-      peerId: this.peerId,
-      author: this.currentUser?.displayName || 'Anonyme',
-      avatar: this.currentUser?.avatar || '💬',
-      text: text.trim(),
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      peerId: this.peerId, author: this.currentUser?.displayName || 'Anonyme', avatar: this.currentUser?.avatar || '💬',
+      text: String(text).trim().slice(0, 120), time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
     this.messages.unshift(msg);
     this.broadcast({ type: 'chat', message: msg });
-
-    try {
-      await fetch('/api/lan/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(msg),
-      });
-    } catch {}
-
+    await this.post('/api/lan/chat', msg);
     this.notify();
     return msg;
   }
 
   async createChallenge(activityId, title) {
-    const ch = {
-      id: 'ch_' + Date.now(),
-      creatorId: this.peerId,
-      creatorName: this.currentUser?.displayName || 'Anonyme',
-      activityId,
-      title,
-      timestamp: Date.now(),
-      participants: [this.peerId],
-    };
+    const ch = { id: 'ch_' + Date.now(), creatorId: this.peerId, creatorName: this.currentUser?.displayName || 'Anonyme', activityId, title, timestamp: Date.now(), participants: [this.peerId] };
     this.challenges.unshift(ch);
     this.broadcast({ type: 'challenge', challenge: ch });
-
-    try {
-      await fetch('/api/lan/challenge', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ch),
-      });
-    } catch {}
-
+    await this.post('/api/lan/challenge', ch);
     this.notify();
     return ch;
   }
