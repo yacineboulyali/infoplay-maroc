@@ -112,3 +112,25 @@ body.immersive .modal-bg{z-index:70}
   .robot3d-wrap{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){.loader span{animation:none}}
+
+/* ---------- thème v2 : jeu (niveau, XP, badges) et corrections ---------- */
+.hud .ghud{background:rgba(255,255,255,.08)}
+.hud .ghud-xp{min-width:110px}
+@media (max-width:1500px){.hud .ghud-xp{display:none}}
+.panel-game{margin:.9rem 0;padding:.8rem .9rem;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.pg-head{display:flex;gap:.75rem;align-items:center}
+.pg-head b{color:#fff}.pg-head small{display:block;color:#b8c0e8;font-size:.78rem}
+.pg-lvl{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;font-weight:900;font-size:1.2rem;color:#fff;background:linear-gradient(135deg,#f97316,#f43f5e);box-shadow:0 0 16px rgba(249,115,22,.5)}
+.panel-game .xpbar{width:100%;height:9px;margin:.35rem 0 0}
+.pg-badges{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.7rem}
+.pg-badge{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.06);filter:grayscale(1);opacity:.5;font-size:1.05rem}
+.pg-badge.got{filter:none;opacity:1;background:rgba(242,180,24,.18);box-shadow:inset 0 0 0 1px rgba(242,180,24,.5)}
+.holo-head{align-items:flex-start}
+.holo-side{display:grid;gap:.4rem;justify-items:end}
+.holo-meta{display:flex;gap:.35rem}
+.holo .chrono{background:#eef0ff;color:var(--ink)}.holo .chrono.best{background:#fff4cc}
+.holo .act-hero{display:none}
+.holo-frame{background:rgba(250,249,255,.97)}
+.holo .activity-actions{background:rgba(255,255,255,.92)}
+.rp-bg{z-index:80}
+body.immersive .ach-stack{top:5.2rem}

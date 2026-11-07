@@ -8,6 +8,10 @@ import { audio, installInterfaceSounds } from '../audio/audio.js';
 import { arModule, arSession, arActivity, arInstruction } from '../i18n/ar.js';
 import { createWorld, webglAvailable, MODULE_COLORS } from './world.js';
 import { robot3dGame } from './robot3d.js';
+import { computeGame, bestTime, fmtTime, BADGES } from '../fx/game.js';
+import { gameHud } from '../fx/popup.js';
+import { presentResult, makeChrono } from '../fx/flow.js';
+import { installInteractions } from '../fx/interact.js';
 
 const store = createStore(localAdapter(), isActivityId);
 const KIND = { match: 'Associer', sort: 'Classer', order: 'Ordonner', fill: 'Compléter', quiz: 'Questions', hot: 'Repérer', asm: 'Assembler', net: 'Relier', robot: 'Robot 3D', prog: 'Algorithme', sim: 'Simulation' };
@@ -85,14 +89,15 @@ function renderHud(prof, q) {
   if (q.si) crumbs.push(h('span', { 'aria-hidden': 'true' }, '›'), h('a', { href: `#/m/${q.mi}/s/${q.si}` }, `Séance ${q.si}`));
   if (q.ai) crumbs.push(h('span', { 'aria-hidden': 'true' }, '›'), h('span', { 'aria-current': 'page' }, `Activité ${q.ai}`));
   let pts = null;
-  if (prof) { const t = moduleStats(ALL, recOf(prof.id)); pts = h('span', { class: 'hud-chip', title: 'Points (meilleurs essais)' }, '⭐ ', h('b', null, fmt(t.best)), ` / ${TOTAL_POINTS}`); }
+  let ghud = null;
+  if (prof) { const t = moduleStats(ALL, recOf(prof.id)); pts = h('span', { class: 'hud-chip', title: 'Points (meilleurs essais)' }, '⭐ ', h('b', null, fmt(t.best)), ` / ${TOTAL_POINTS}`); ghud = gameHud(computeGame(recOf(prof.id), prof.id), { compact: true }); }
   const sound = prof ? h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(prof.preferences.soundEnabled), title: prof.preferences.soundEnabled ? 'Couper les sons' : 'Activer les sons', onclick: () => { store.updateProfile(prof.id, { preferences: { soundEnabled: !prof.preferences.soundEnabled } }); applyPrefs(store.active()); render(); } }, prof.preferences.soundEnabled ? '🔊' : '🔇') : null;
   const music = h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(audio.ambientOn), title: audio.ambientOn ? 'Couper l’ambiance sonore' : 'Activer l’ambiance sonore', onclick: () => { const v = !audio.ambientOn; try { localStorage.setItem(AMB_KEY, v ? '1' : '0'); } catch {} audio.ambient(v); render(); } }, audio.ambientOn ? '🎵' : '🎶');
   const motion = prof ? h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(!!prof.preferences.reducedMotion), title: 'Réduire les animations', onclick: () => { store.updateProfile(prof.id, { preferences: { reducedMotion: !prof.preferences.reducedMotion } }); applyPrefs(store.active()); render(); } }, prof.preferences.reducedMotion ? '⏸' : '✨') : null;
   $.hud.replaceChildren(h('div', { class: 'hud-in' },
     h('a', { class: 'hud-brand', href: '#/' }, h('span', { class: 'logo', 'aria-hidden': 'true' }, '🎮'), h('span', null, 'InfoPlay ', h('b', null, 'Immersif'))),
     h('nav', { class: 'hud-crumbs', 'aria-label': 'Fil d’Ariane' }, crumbs),
-    h('div', { class: 'hud-right' }, pts, sound, prof && prof.preferences.soundEnabled ? music : null, motion,
+    h('div', { class: 'hud-right' }, ghud, pts, sound, prof && prof.preferences.soundEnabled ? music : null, motion,
       prof ? h('button', { type: 'button', class: 'hud-chip as-btn', title: 'Changer d’élève', onclick: () => { store.logout(); render(); } }, '👤 ', prof.displayName) : null,
       h('a', { class: 'hud-btn wide', href: 'index.html', title: 'Revenir à la première page' }, '⇦ Accueil'))));
 }
@@ -122,6 +127,9 @@ function hubPanel(prof) {
     h('p', { class: 'muted' }, 'Fais glisser pour tourner autour du monde, fais rouler la molette pour zoomer, clique sur une île pour y voyager.'),
     h('div', { class: 'panel-stats' }, h('div', null, h('b', null, `${t.pct} %`), h('span', null, 'progression')), h('div', null, h('b', null, `${t.done}/${t.n}`), h('span', null, 'activités')), h('div', null, h('b', null, `${t.sessionsDone}/30`), h('span', null, 'séances'))),
     next ? h('a', { class: 'btn primary block', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : ${next.title}`) : h('p', { class: 'pill done' }, '🏆 Tout est terminé !'),
+    (() => { const g = computeGame(rec, prof.id); return h('div', { class: 'panel-game' },
+      h('div', { class: 'pg-head' }, h('span', { class: 'pg-lvl' }, g.level), h('div', null, h('b', null, `Niveau ${g.level} · ${g.rank}`), h('small', null, `${g.into} / ${g.need} XP · 🔥 série ${g.streak} (record ${g.bestStreak})`), h('div', { class: 'xpbar' }, h('i', { style: `width:${g.pct}%` })))),
+      h('div', { class: 'pg-badges', 'aria-label': `Badges : ${g.badges.size} sur ${BADGES.length}` }, BADGES.map((b) => h('span', { class: 'pg-badge' + (g.badges.has(b.id) ? ' got' : ''), title: `${b.title} — ${b.desc}` }, g.badges.has(b.id) ? b.icon : '🔒')))); })(),
     h('h2', null, 'Les 4 îles'),
     h('div', { class: 'island-list' }, CATALOG.map((m) => { const s = moduleStats(m, rec);
       return h('a', { class: 'island-btn', href: `#/m/${m.id}`, style: `--c:${MODULE_COLORS[m.id]}` }, h('span', { class: 'em', 'aria-hidden': 'true' }, m.icon), h('span', null, h('b', null, `Module ${m.id} — ${m.short || m.title}`), arSub(arModule(m.id)), bar(s.pct, `Module ${m.id} : ${s.pct} %`)), h('span', { class: 'pct' }, `${s.pct} %`)); }))];
@@ -167,43 +175,40 @@ function closeHolo() {
 function openActivity(prof, mi, si, ai) {
   const act = getActivity(`m${mi}-s${si}-a${ai}`); if (!act) { go(`#/m/${mi}/s/${si}`); return; }
   closeHolo(); const rec = recOf(prof.id); const s = getSession(mi, si);
-  const stage = h('div', { class: `stage-card activity-${act.id}` }); const out = h('div', { 'aria-live': 'polite' });
+  const stage = h('div', { class: `stage-card activity-${act.id}` }); const out = h('div', { class: 'result-slot' });
   const hintBox = h('div', { class: 'hintbox', hidden: true }, '💡 ' + act.hint);
+  const chrono = makeChrono();
   let submitted = false;
-  const checkBtn = h('button', { type: 'button', class: 'btn primary', onclick: submit }, '✔ Vérifier');
+  const checkBtn = h('button', { type: 'button', class: 'btn primary check-btn', onclick: submit, 'aria-keyshortcuts': 'Control+Enter' }, h('span', null, '✔ Vérifier'), h('kbd', { 'aria-hidden': 'true' }, 'Ctrl+⏎'));
   const hintBtn = h('button', { type: 'button', class: 'btn ghost', 'aria-expanded': 'false', onclick: () => { hintBox.hidden = !hintBox.hidden; if (!hintBox.hidden) audio.play('hint'); hintBtn.setAttribute('aria-expanded', String(!hintBox.hidden)); } }, '💡 Indice');
   const make = act.type === 'robot' ? robot3dGame : engineOf(act.mech);
-  function mount() { if (eng && eng.dispose) eng.dispose(); stage.replaceChildren(); stage.inert = false; out.replaceChildren(); submitted = false; checkBtn.disabled = false; eng = make(stage, act.data); if (window.__ip) window.__ip.eng = eng; }
+  function mount() { if (eng && eng.dispose) eng.dispose(); stage.replaceChildren(); stage.inert = false; out.replaceChildren(); submitted = false; checkBtn.disabled = false; eng = make(stage, act.data); chrono.start(); if (window.__ip) window.__ip.eng = eng; }
   async function submit() {
     if (submitted || !eng) return;
-    const res = eng.check(); if (res.incomplete) { toast(res.incomplete); return; }
+    const res = eng.check(); if (res.incomplete) { toast(res.incomplete); stage.classList.remove('shake'); void stage.offsetWidth; stage.classList.add('shake'); audio.play('wrong'); return; }
     if (res.unanswered > 0 && !(await confirmBox(`Il reste ${res.unanswered} réponse(s) vide(s). Vérifier quand même ?`, 'Vérifier'))) return;
     if (submitted) return; submitted = true; checkBtn.disabled = true;
+    const elapsed = chrono.stop(); const before = computeGame(rec, prof.id);
     const score = activityScore(res.correct, res.total); const n = store.recordAttempt(prof.id, act.id, score, act.version);
-    eng.reveal && eng.reveal(res); stage.inert = true; showResult(score, res, n);
+    eng.reveal && eng.reveal(res); stage.inert = true;
+    const nextHref = ai < 4 ? `#/m/${mi}/s/${si}/a/${ai + 1}` : `#/m/${mi}/s/${si}/bilan`;
+    out.replaceChildren(presentResult({
+      store, prof, act, res, score, n, before, elapsedMs: elapsed, stage, accent: MODULE_COLORS[mi],
+      next: { href: nextHref, label: ai < 4 ? 'Activité suivante →' : 'Voir le bilan →' },
+      onRetry: () => { mount(); body.scrollTo({ top: 0, behavior: 'smooth' }); },
+      onPeak: (ratio) => { if (ratio === 1) celebrate(); if (ratio >= 0.6 && world) world.burst(ratio === 1); },
+    }));
     syncWorld(); renderHud(store.active(), { mi, si, ai });
   }
-  function showResult(score, res, n) {
-    const r = rec(act.id).attempts; const first = r[0].score, best = Math.max(...r.map((x) => x.score)); const ratio = score / MAX;
-    const tm = audio.feedback(res.items, ratio, score); let fbk = 0;
-    setTimeout(() => { if (ratio === 1) celebrate(); if (ratio >= 0.6 && world) world.burst(ratio === 1); }, tm.end * 1000);
-    const msg = ratio === 1 ? 'Parfait ! 🎉' : ratio >= 0.8 ? 'Très bien !' : ratio >= 0.6 ? 'Bien, tu y es presque.' : ratio >= 0.4 ? 'Pas mal, relis les explications.' : 'Courage : lis les explications puis réessaie.';
-    const arMsg = ratio === 1 ? 'ممتاز! إجابة كاملة ومتقنة 🎉' : ratio >= 0.8 ? 'أحسنت جداً! أداء متميز 👍' : ratio >= 0.6 ? 'جيد، اقتربت من الإجابة التامة ✨' : ratio >= 0.4 ? 'لا بأس، راجع الشروحات وأعد المحاولة 🔄' : 'اقرأ الشرح جيداً ثم حاول مجدداً 💪';
-    const stars = Array.from({ length: 5 }, (_, i) => h('span', { class: 'star' + (i < Math.round(score) ? ' filled' : ''), 'aria-hidden': 'true', style: i < Math.round(score) ? `animation-delay:${tm.starAt + i * tm.starStep}s` : null }, '★'));
-    const nextHref = ai < 4 ? `#/m/${mi}/s/${si}/a/${ai + 1}` : `#/m/${mi}/s/${si}/bilan`;
-    out.replaceChildren(h('section', { class: 'result' + (ratio === 1 ? ' perfect' : ''), 'aria-label': 'Résultat' },
-      h('div', { class: 'top' }, h('div', { class: 'score-box' }, h('div', { class: 'score' }, fmt(score), h('small', null, ' / 5')), h('div', { class: 'star-rating', role: 'img', 'aria-label': `${score} étoiles sur 5` }, ...stars)),
-        h('div', null, h('h2', { style: 'margin:0' }, msg), h('p', { class: 'result-ar-msg', lang: 'ar', dir: 'rtl' }, arMsg), h('p', { class: 'muted', style: 'margin:0' }, n === 1 ? 'Premier essai enregistré.' : `Essai n° ${n} · premier essai : ${fmt(first)}/5 · meilleur : ${fmt(best)}/5`))),
-      h('ul', { class: 'fblist' }, res.items.map((it) => h('li', { class: it.info ? 'info' : it.ok ? 'ok' : 'ko', style: `animation-delay:${it.info ? 0 : (fbk++) * tm.step}s` }, h('span', { class: 'ic', 'aria-hidden': 'true' }, it.info ? 'ℹ' : it.ok ? '✔' : '✖'), h('span', null, h('span', { class: 'vh' }, it.info ? 'Information : ' : it.ok ? 'Correct : ' : 'À revoir : '), it.msg)))),
-      h('div', { class: 'row' }, h('button', { type: 'button', class: 'btn', onclick: () => { mount(); body.scrollTo({ top: 0 }); } }, '↻ Réessayer'), h('a', { class: 'btn primary', href: nextHref }, ai < 4 ? 'Activité suivante →' : 'Voir le bilan →'))));
-    out.firstChild.scrollIntoView({ block: 'nearest' });
-  }
   const dots = h('nav', { class: 'dots', 'aria-label': 'Activités de la séance' }, s.acts.map((a) => h('a', { href: `#/m/${mi}/s/${si}/a/${a.index}`, class: (a.index === ai ? 'cur ' : '') + (rec(a.id)?.attempts.length ? 'done' : ''), 'aria-label': `Activité ${a.index} : ${a.title}`, 'aria-current': a.index === ai ? 'step' : null }, a.index)));
+  const bestT = bestTime(prof.id, act.id);
   const body = h('div', { class: 'holo-body' },
-    h('div', { class: 'holo-head' }, h('div', null, h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `${KIND_ICON[act.type]} ${KIND[act.type]} · Module ${mi} · Séance ${si}`), h('h1', { tabindex: '-1', id: 'holo-h' }, act.title, arSub(arActivity(act.id)))), dots),
+    h('div', { class: 'holo-head' }, h('div', null, h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `${KIND_ICON[act.type]} ${KIND[act.type]} · Module ${mi} · Séance ${si}`), h('h1', { tabindex: '-1', id: 'holo-h' }, act.title, arSub(arActivity(act.id)))),
+      h('div', { class: 'holo-side' }, dots, h('div', { class: 'holo-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null))),
     h('p', { class: 'muted', style: 'margin:.2rem 0' }, h('b', null, 'Objectif : '), act.objective, ` · environ ${act.estimatedMinutes} min · note sur 5`),
     h('div', { class: 'instr activity-brief' }, h('b', null, 'Consigne : '), act.instructions, h('p', { class: 'activity-ar-instruction', lang: 'ar', dir: 'rtl' }, arInstruction(act.type))),
     hintBox, stage, h('div', { class: 'row activity-actions' }, checkBtn, hintBtn), out);
+  body.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); submit(); } });
   const frame = h('div', { class: 'holo-frame', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'holo-h', style: `--c:${MODULE_COLORS[mi]}` },
     h('button', { type: 'button', class: 'holo-close', 'aria-label': 'Fermer l’activité et revenir au portail', onclick: () => go(`#/m/${mi}/s/${si}`) }, '✕'), body);
   $.holo.replaceChildren(frame); $.holo.hidden = false; document.body.classList.add('holo-open');
@@ -255,6 +260,7 @@ document.addEventListener('keydown', (e) => {
   if (q.ai || q.bilan) go(`#/m/${q.mi}/s/${q.si}`); else if (q.si) go(`#/m/${q.mi}`); else if (q.mi) go('#/');
 });
 installInterfaceSounds(document);
+installInteractions(document);
 if (/[?&]test=1/.test(location.search)) window.__ip = { store, CATALOG, ACTIVITIES, engineOf, world };
 render();
 requestAnimationFrame(() => { const l = document.querySelector('.loader'); if (l) { l.classList.add('gone'); setTimeout(() => l.remove(), 700); } });
