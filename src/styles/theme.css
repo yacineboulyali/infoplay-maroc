@@ -351,3 +351,18 @@ a.btn{text-decoration:none}
   .activity-brief.open{max-height:40em}
   .activity-brief.open::after{content:"▴ Réduire";background:none;padding-top:.2rem}
 }
+
+/* ---------- Aide arabe à la demande : pastille « ?AR » + mini-bulle ---------- */
+.arh-btn{display:inline-flex;align-items:flex-start;justify-content:center;gap:1px;vertical-align:middle;margin-inline-start:.4rem;min-width:1.7rem;height:1.45rem;padding:0 .3rem;border-radius:999px;background:#eef1ff;border:1.5px solid #8b97e8;color:#2b3fc4;font:800 .78rem/1.35rem Nunito,system-ui,sans-serif;cursor:pointer;user-select:none;-webkit-user-select:none;flex:none;transition:background .15s,transform .15s,box-shadow .15s;position:relative;top:-1px}
+.arh-btn .arh-q{font-size:.85rem}
+.arh-btn .arh-ar{font-size:.5rem;line-height:1;margin-top:.2rem;letter-spacing:.02em;opacity:.85}
+.arh-btn:hover{background:#dfe4ff;transform:scale(1.06)}
+.arh-btn:focus-visible{outline:3px solid #f2b418;outline-offset:2px}
+.arh-btn.is-open{background:#2b3fc4;border-color:#2b3fc4;color:#fff}
+.arh-bubble{position:fixed;z-index:10000;max-width:min(280px,calc(100vw - 16px));padding:.4rem .65rem;border-radius:10px;background:#1e1b4b;color:#fff;font:700 .86rem/1.6 Cairo,Tahoma,"Segoe UI",system-ui,sans-serif;text-align:right;box-shadow:0 8px 24px rgba(15,23,42,.28);pointer-events:auto;animation:arhIn .14s ease-out}
+.arh-bubble::before{content:"";position:absolute;left:var(--arrow-x,50%);top:-5px;width:10px;height:10px;margin-left:-5px;background:inherit;transform:rotate(45deg);border-radius:2px}
+.arh-bubble.is-above::before{top:auto;bottom:-5px}
+@keyframes arhIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+/* Variantes sombres (holo immersif, héros d'activité, pop-up) */
+.panel .arh-btn,.act-hero .arh-btn,.holo .arh-btn,.fs-suggest .arh-btn{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);color:#fff}
+.panel .arh-btn.is-open,.act-hero .arh-btn.is-open{background:#f2b418;border-color:#f2b418;color:#1e1b4b}

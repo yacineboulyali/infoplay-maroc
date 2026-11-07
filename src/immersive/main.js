@@ -6,6 +6,7 @@ import { engineOf } from '../games/index.js';
 import { activityScore, band, sessionStats, moduleStats, fmt, MAX } from '../scoring/scoring.js';
 import { audio, installInterfaceSounds } from '../audio/audio.js';
 import { arModule, arSession, arActivity, arInstruction } from '../i18n/ar.js';
+import { arHint } from '../i18n/arhint.js';
 import { createWorld, webglAvailable, MODULE_COLORS } from './world.js';
 import { robot3dGame } from './robot3d.js';
 import { computeGame, bestTime, fmtTime, BADGES } from '../fx/game.js';
@@ -21,7 +22,7 @@ const STATUS = { todo: 'Pas commencée', doing: 'En cours', done: 'Terminée' };
 const ALL = { sessions: CATALOG.flatMap((m) => m.sessions) };
 const recOf = (pid) => (id) => store.record(pid, id);
 const go = (p) => { location.hash = p; };
-const arSub = (text) => (text ? h('small', { class: 'ar-sub', lang: 'ar', dir: 'rtl' }, text) : null);
+const arSub = (text) => arHint(text);
 
 const $ = {
   world: document.getElementById('world'), hud: document.getElementById('hud'), panel: document.getElementById('panel'),
@@ -118,8 +119,7 @@ function renderGate() {
   const profiles = store.profiles();
   $.gate.replaceChildren(h('div', { class: 'gate-card glass', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'gate-h' },
     h('p', { class: 'eyebrow' }, 'Mode immersif 3D'), h('h1', { id: 'gate-h', tabindex: '-1' }, 'Bienvenue dans le monde InfoPlay'),
-    h('p', { class: 'muted' }, 'Explore les 4 îles de l’informatique, traverse les portails des séances et relève les défis. Ta progression est la même que dans le mode classique.'),
-    h('p', { class: 'ar-lead', lang: 'ar', dir: 'rtl' }, 'استكشف جزر المعلوميات الأربع وادخل بوابات الحصص'),
+    h('p', { class: 'muted' }, 'Explore les 4 îles de l’informatique, traverse les portails des séances et relève les défis. Ta progression est la même que dans le mode classique.', arHint('استكشف جزر المعلوميات الأربع وادخل بوابات الحصص')),
     profiles.length ? h('div', null, h('h2', null, 'Qui joue ?'), h('div', { class: 'gate-profiles' }, profiles.map((p) => { const t = moduleStats(ALL, recOf(p.id));
       return h('button', { type: 'button', class: 'profile-btn', onclick: () => { store.setActive(p.id); audio.play('snap'); render(); } }, h('b', null, p.displayName), h('span', { class: 'pill' }, `${fmt(t.best)} / ${TOTAL_POINTS} pts`)); })), h('p', { class: 'or' }, 'ou crée un nouveau profil')) : null,
     form, h('p', { class: 'notice' }, 'Pas de mot de passe : n’écris ni ton nom complet, ni ton adresse, ni ton téléphone. Les résultats restent dans ce navigateur.')));
@@ -212,7 +212,7 @@ function openActivity(prof, mi, si, ai) {
     h('div', { class: 'holo-head' }, h('div', null, h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `${KIND_ICON[act.type]} ${KIND[act.type]} · Module ${mi} · Séance ${si}`), h('h1', { tabindex: '-1', id: 'holo-h' }, act.title, arSub(arActivity(act.id)))),
       h('div', { class: 'holo-side' }, dots, h('div', { class: 'holo-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null))),
     h('p', { class: 'muted', style: 'margin:.2rem 0' }, h('b', null, 'Objectif : '), act.objective, ` · environ ${act.estimatedMinutes} min · note sur 5`),
-    h('div', { class: 'instr activity-brief' }, h('b', null, 'Consigne : '), act.instructions, h('p', { class: 'activity-ar-instruction', lang: 'ar', dir: 'rtl' }, arInstruction(act.type))),
+    h('div', { class: 'instr activity-brief' }, h('b', null, 'Consigne : '), act.instructions, arHint(arInstruction(act.type))),
     hintBox, stage, h('div', { class: 'row activity-actions' }, checkBtn, hintBtn), out);
   body.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); submit(); } });
   const frame = h('div', { class: 'holo-frame', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'holo-h', style: `--c:${MODULE_COLORS[mi]}` },

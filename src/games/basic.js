@@ -2,6 +2,7 @@
 // ordonner, texte à trous, QCM (trouver la bonne réponse, trouver la réponse fausse, vrai ou faux).
 import { h, shuffle, norm } from '../utils/dom.js';
 import { arText } from '../i18n/ar.js';
+import { arHint } from '../i18n/arhint.js';
 import { audio } from '../audio/audio.js';
 
 const letter = (i) => String.fromCharCode(65 + i);
@@ -86,7 +87,7 @@ export const visualLabel = (label) => {
     artFor(label),
     h('span', { class: 'visual-text' },
       label,
-      ar ? h('small', { class: 'ar-sub', lang: 'ar', dir: 'rtl' }, ar) : null
+      arHint(ar)
     )
   );
 };
@@ -227,8 +228,7 @@ export function matchGame(root, d) {
 
   root.append(
     h('div', { class: 'match-intro-banner' },
-      h('span', { class: 'banner-badge' }, '🔗 Cliquer-déposer ou Glisser-déposer'),
-      h('span', { class: 'banner-ar', lang: 'ar', dir: 'rtl' }, 'انقر أو اسحب من اليسار للربط مع الإجابة المناسبة على اليمين')
+      h('span', { class: 'banner-badge' }, '🔗 Cliquer-déposer ou Glisser-déposer', arHint('انقر أو اسحب من اليسار للربط مع الإجابة المناسبة على اليمين'))
     ),
     matchArea,
     live,
@@ -291,7 +291,7 @@ export function sortGame(root, d) {
       onclick: () => put(ci),
     },
     h('span', { class: 'bucket-title-box' }, h('b', null, c), countBadge),
-    h('small', { class: 'bucket-cta' }, '📥 Déposer ici (ضع هنا)')
+    h('small', { class: 'bucket-cta' }, '📥 Déposer ici', arHint('ضع هنا'))
     );
 
     const box = h('div', {
@@ -387,8 +387,7 @@ export function sortGame(root, d) {
 
   root.append(
     h('div', { class: 'sort-instruction-bar' },
-      h('span', { class: 'banner-badge' }, '🗂️ Classement interactif : Glisse ou clique sur une carte puis sur sa catégorie'),
-      h('span', { class: 'banner-ar', lang: 'ar', dir: 'rtl' }, 'اسحب البطاقات أو انقر عليها ثم اختر التصنيف المناسب لها')
+      h('span', { class: 'banner-badge' }, '🗂️ Classement interactif : Glisse ou clique sur une carte puis sur sa catégorie', arHint('اسحب البطاقات أو انقر عليها ثم اختر التصنيف المناسب لها'))
     ),
     pool,
     h('div', { class: 'buckets', style: '' }, buckets.map((b) => b.box)),
@@ -507,8 +506,7 @@ export function orderGame(root, d) {
 
   root.append(
     h('div', { class: 'sort-instruction-bar' },
-      h('span', { class: 'banner-badge' }, '🔢 Ordonner les étapes : Fais glisser les lignes ou utilise ▲ et ▼'),
-      h('span', { class: 'banner-ar', lang: 'ar', dir: 'rtl' }, 'رتب الخطوات بالسحب أو بالضغط على الأسهم')
+      h('span', { class: 'banner-badge' }, '🔢 Ordonner les étapes : Fais glisser les lignes ou utilise ▲ et ▼', arHint('رتب الخطوات بالسحب أو بالضغط على الأسهم'))
     ),
     ol
   );
@@ -620,11 +618,11 @@ export function quizGame(root, d) {
 
     let modeBanner = null;
     if (isTrueFalse) {
-      modeBanner = h('span', { class: 'q-mode-badge tf' }, '⚖️ VRAI OU FAUX · صحيح أم خطأ');
+      modeBanner = h('span', { class: 'q-mode-badge tf' }, '⚖️ VRAI OU FAUX', arHint('صحيح أم خطأ'));
     } else if (isFindFalse) {
-      modeBanner = h('span', { class: 'q-mode-badge false-mode' }, '🚨 Trouver la réponse fausse / l’intrus · ابحث عن الإجابة الخاطئة');
+      modeBanner = h('span', { class: 'q-mode-badge false-mode' }, '🚨 Trouver la réponse fausse / l’intrus', arHint('ابحث عن الإجابة الخاطئة'));
     } else {
-      modeBanner = h('span', { class: 'q-mode-badge good-mode' }, '🎯 Trouver la bonne réponse · اختر الإجابة الصحيحة');
+      modeBanner = h('span', { class: 'q-mode-badge good-mode' }, '🎯 Trouver la bonne réponse', arHint('اختر الإجابة الصحيحة'));
     }
 
     const inputs = order.map((k) => h('input', {
@@ -658,8 +656,7 @@ export function quizGame(root, d) {
         h('legend', null,
           h('span', { class: 'q-num' }, i + 1),
           modeBanner,
-          h('span', { class: 'q-title-text' }, lines[0]),
-          qar ? h('small', { class: 'ar-sub', lang: 'ar', dir: 'rtl' }, qar) : null
+          h('span', { class: 'q-title-text' }, lines[0], arHint(qar))
         ),
         lines.length > 1 ? h('pre', { class: 'code' }, lines.slice(1).join('\n')) : null,
         h('div', { class: 'quiz-options-grid' + (isTrueFalse ? ' tf-grid' : '') }, labels)

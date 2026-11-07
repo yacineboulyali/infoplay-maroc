@@ -2,6 +2,7 @@
 // iPhone ne permet pas le plein écran d'une page : on propose alors « Sur l'écran d'accueil »
 // (le manifeste ouvre ensuite l'application en plein écran).
 import { h } from '../utils/dom.js';
+import { arHint } from '../i18n/arhint.js';
 
 const doc = typeof document !== 'undefined' ? document : null;
 export const isMobile = () => typeof matchMedia !== 'undefined' && (matchMedia('(pointer: coarse)').matches || matchMedia('(max-width: 820px)').matches);
@@ -52,10 +53,9 @@ export function suggestFullscreen({ delay = 900 } = {}) {
     const box = mobile
       ? h('div', { class: 'fs-suggest mobile', role: 'dialog', 'aria-modal': 'false', 'aria-labelledby': 'fs-h' },
         h('span', { class: 'fs-ic', 'aria-hidden': 'true' }, '📱'),
-        h('b', { id: 'fs-h' }, 'Joue en plein écran'),
+        h('b', { id: 'fs-h' }, 'Joue en plein écran', arHint('العب في وضع ملء الشاشة لتجربة أفضل')),
         h('p', null, ios ? 'Sur iPhone : touche « Partager » puis « Sur l’écran d’accueil ». InfoPlay s’ouvrira ensuite en plein écran, comme une application.' : 'Plus de place pour jouer, sans barre du navigateur. Tu peux revenir à tout moment avec le bouton ⛶.'),
-        h('p', { class: 'fs-ar', lang: 'ar', dir: 'rtl' }, 'العب في وضع ملء الشاشة لتجربة أفضل'),
-        h('div', { class: 'row' }, ios ? null : go, h('button', { type: 'button', class: 'btn ghost', onclick: () => close(false) }, ios ? 'Compris' : 'Plus tard')))
+                h('div', { class: 'row' }, ios ? null : go, h('button', { type: 'button', class: 'btn ghost', onclick: () => close(false) }, ios ? 'Compris' : 'Plus tard')))
       : h('div', { class: 'fs-suggest desktop', role: 'status' },
         h('span', { 'aria-hidden': 'true' }, '⛶'), h('span', null, 'Astuce : joue en plein écran pour une meilleure immersion.'),
         h('button', { type: 'button', class: 'btn small primary', onclick: async () => { await enterFs(); close(false); } }, 'Plein écran'),

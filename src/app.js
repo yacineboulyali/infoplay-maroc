@@ -5,6 +5,7 @@ import { engineOf } from './games/index.js';
 import { activityScore, band, sessionStats, moduleStats, fmt, MAX } from './scoring/scoring.js';
 import { audio, installInterfaceSounds } from './audio/audio.js';
 import { arModule, arSession, arActivity, arInstruction } from './i18n/ar.js';
+import { arHint } from './i18n/arhint.js';
 import { lanManager } from './multiplayer/lan.js';
 import { raceScreen, monitorScreen, progressSnapshot, trackRace, avatarFor } from './multiplayer/screens.js';
 import { computeGame, bestTime, fmtTime, BADGES } from './fx/game.js';
@@ -20,7 +21,7 @@ const recOf = (pid) => (id) => store.record(pid, id);
 const go = (p) => { location.hash = p; };
 const link = (href, ...kids) => h('a', { href }, ...kids);
 const STATUS = { todo: 'Pas commencée', doing: 'En cours', done: 'Terminée' };
-const arSub = (text) => text ? h('small', { class: 'ar-sub', lang: 'ar', dir: 'rtl' }, text) : null;
+const arSub = (text) => arHint(text);
 
 // ---------- Petits composants & utilitaires ----------
 function toast(msg) {
@@ -283,8 +284,8 @@ function homeScreen() {
       h('div', { class: 'mech-card' },
         h('div', { class: 'mech-icon-box' }, '❓'),
         h('h3', null, 'Bonne Réponse, L’Intrus & Vrai/Faux'),
-        h('p', null, 'Trouve la réponse exacte, détecte la fausse réponse (l’intrus) ou relève le défi Vrai ou Faux (صحيح أم خطأ) avec validation sonore instantanée.'),
-        h('div', { class: 'mech-badge' }, 'صحيح أم خطأ')
+        h('p', null, 'Trouve la réponse exacte, détecte la fausse réponse (l’intrus) ou relève le défi Vrai ou Faux avec validation sonore instantanée.'),
+        h('div', { class: 'mech-badge' }, 'Vrai ou Faux', arHint('صحيح أم خطأ'))
       ),
       h('div', { class: 'mech-card' },
         h('div', { class: 'mech-icon-box' }, '🌐'),
@@ -354,11 +355,9 @@ function homeScreen() {
           'InfoPlay ', h('b', { class: 'hero-brand-gold' }, 'Maroc')
         ),
         // Description bilingue
-        h('p', { class: 'welcome-lead-ar', lang: 'ar', dir: 'rtl' },
-          'المنصة التعليمية التفاعلية الأولى بالمغرب لتعلم المعلوميات والبرمجة والشبكات عبر 120 نشاطاً تفاعلياً غامراً، مع إمكانية اللعب الجماعي داخل نفس الشبكة المحلية.'
-        ),
         h('p', { class: 'welcome-lead-fr' },
-          'Apprends l’informatique en t’amusant : 30 séances, 120 activités immersives (cliquer-déposer, glisser-déposer, simulations réelles, trouver la bonne ou la fausse réponse, vrai ou faux) et jeu multijoueur sur réseau local.'
+          'Apprends l’informatique en t’amusant : 30 séances, 120 activités immersives (cliquer-déposer, glisser-déposer, simulations réelles, trouver la bonne ou la fausse réponse, vrai ou faux) et jeu multijoueur sur réseau local.',
+          arHint('المنصة التعليمية التفاعلية الأولى بالمغرب لتعلم المعلوميات والبرمجة والشبكات عبر 120 نشاطاً تفاعلياً غامراً، مع إمكانية اللعب الجماعي داخل نفس الشبكة المحلية.')
         ),
         // Choix de mode de jeu
         h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Choisis ta façon de jouer' },
@@ -366,7 +365,7 @@ function homeScreen() {
             h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '📚'),
             h('h2', { id: 'mode-classic-h' }, 'InfoPlay Classique'),
             h('p', null, 'Toutes les activités dans une interface claire et rapide, en solo ou en multijoueur sur le réseau local de la classe.'),
-            h('p', { class: 'mode-ar', lang: 'ar', dir: 'rtl' }, 'الواجهة الكلاسيكية: تدريب فردي أو تحدي جماعي'),
+            arHint('الواجهة الكلاسيكية: تدريب فردي أو تحدي جماعي'),
             h('div', { class: 'welcome-cta-group' }, enterSoloBtn, enterLanBtn, enterRaceBtn, enterDataBtn)
           ),
           h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
@@ -374,7 +373,7 @@ function homeScreen() {
             h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🏝️'),
             h('h2', { id: 'mode-3d-h' }, 'InfoPlay Immersif 3D'),
             h('p', null, 'Explore un monde en 3D : quatre îles thématiques, un portail pour chaque séance et un robot à programmer en volume.'),
-            h('p', { class: 'mode-ar', lang: 'ar', dir: 'rtl' }, 'عالم ثلاثي الأبعاد: جزر وبوابات وروبوت تفاعلي'),
+            arHint('عالم ثلاثي الأبعاد: جزر وبوابات وروبوت تفاعلي'),
             h('a', { class: 'btn accent mode-go', href: 'immersive.html' }, '🥽 Entrer dans le monde 3D →')
           )
         )
@@ -766,7 +765,7 @@ function activityScreen(mi, si, ai) {
       h('div', { class: 'act-hero-side' }, dots, h('div', { class: 'act-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null, h('span', { class: 'chip-meta' }, `~${act.estimatedMinutes} min · /5`)), hud)),
     h('div', { class: 'instr activity-brief', 'data-reveal': '' },
       h('b', null, 'Consigne : '), act.instructions,
-      h('p', { class: 'activity-ar-instruction', lang: 'ar', dir: 'rtl' }, arInstruction(act.type))
+      arHint(arInstruction(act.type))
     ),
     hintBox,
     stage,

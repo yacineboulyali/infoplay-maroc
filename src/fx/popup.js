@@ -1,5 +1,6 @@
 // Fenêtres surgissantes de correction, partagées par le mode classique et le mode immersif.
 import { h, reduced } from '../utils/dom.js';
+import { arHint } from '../i18n/arhint.js';
 import { audio } from '../audio/audio.js';
 import { fmt } from '../scoring/scoring.js';
 import { fmtTime, RANKS } from './game.js';
@@ -60,7 +61,7 @@ export function resultPopup(opts) {
   }
   const badges = g && g.newBadges.length ? h('div', { class: 'rp-badges' }, h('b', null, 'Nouveau badge !'), g.newBadges.map((b) => h('span', { class: 'rp-badge', title: b.desc }, h('span', { class: 'ico' }, b.icon), b.title))) : null;
   const scoreTab = h('section', { class: 'rp-pane rp-score' },
-    h('div', { class: 'rp-hero' }, ring, h('div', null, h('h2', { id: 'rp-title', tabindex: '-1' }, opts.msg), h('p', { class: 'rp-ar', lang: 'ar', dir: 'rtl' }, opts.arMsg), stars, h('p', { class: 'rp-sub' }, opts.attemptLine))),
+    h('div', { class: 'rp-hero' }, ring, h('div', null, h('h2', { id: 'rp-title', tabindex: '-1' }, opts.msg, arHint(opts.arMsg)), stars, h('p', { class: 'rp-sub' }, opts.attemptLine))),
     h('div', { class: 'rp-tally' }, h('span', { class: 'ok' }, `✔ ${okN} juste${okN > 1 ? 's' : ''}`), h('span', { class: 'ko' }, `✖ ${koN} à revoir`)),
     chips, levelBox, badges);
 

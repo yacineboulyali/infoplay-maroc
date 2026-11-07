@@ -89,7 +89,7 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
   crystal.position.y = 3.4; fountain.add(crystal);
   const crystalWire = new THREE.Mesh(new THREE.IcosahedronGeometry(1.6, 1), new THREE.MeshBasicMaterial({ color: '#ffe9a6', wireframe: true, transparent: true, opacity: 0.35 })); crystalWire.position.y = 3.4; fountain.add(crystalWire);
   const hubLight = new THREE.PointLight('#ffcf6b', 30, 18, 2); hubLight.position.y = 3.4; fountain.add(hubLight);
-  const title = sprite(labelTexture({ title: 'InfoPlay Maroc', sub: 'Choisis une île pour commencer', ar: 'اختر جزيرة لتبدأ', color: '#f2b418' }), 10); title.position.y = 7.2; hub.add(title);
+  const title = sprite(labelTexture({ title: 'InfoPlay Maroc', sub: 'Choisis une île pour commencer', color: '#f2b418' }), 10); title.position.y = 7.2; hub.add(title);
 
   // ---------- îles ----------
   const pickables = []; const islands = {}; const portals = {}; const bridges = [];

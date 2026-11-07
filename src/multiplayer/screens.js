@@ -1,6 +1,7 @@
 // Écrans « Course en direct » et « Suivi des élèves » sur le réseau local.
 // Ce n'est pas du jeu collaboratif : chacun joue seul, la classe voit la progression et le classement.
 import { h, downloadText } from '../utils/dom.js';
+import { arHint } from '../i18n/arhint.js';
 import { CATALOG, ACTIVITIES, TOTAL_POINTS } from '../data/index.js';
 import { moduleStats, fmt } from '../scoring/scoring.js';
 import { lanManager } from './lan.js';
@@ -88,7 +89,7 @@ export function raceScreen() {
   const empty = h('p', { class: 'muted', hidden: true }, 'Aucun élève connecté pour l’instant. Dès qu’un élève ouvre InfoPlay sur le réseau, il apparaît ici.');
   const lanes = new Map(); const LANE = 64;
   const view = h('main', { id: 'main', class: 'race-page' },
-    h('h1', { tabindex: '-1' }, '🏁 Course en direct', h('small', { class: 'ar-sub', lang: 'ar', dir: 'rtl' }, 'سباق مباشر بين التلاميذ')),
+    h('h1', { tabindex: '-1' }, '🏁 Course en direct', arHint('سباق مباشر بين التلاميذ')),
     h('p', { class: 'muted' }, 'Chaque élève joue seul ; ici, tout le monde voit qui avance le plus vite. Les points viennent des activités réussies (meilleur essai).'),
     status, banner, podium,
     h('div', { class: 'race-layout' }, h('section', { class: 'card race-card', 'aria-label': 'Piste' }, track, empty), h('section', { class: 'card race-side' }, h('h2', null, '📣 Fil de la course'), feedBox)));
@@ -156,7 +157,7 @@ export function monitorScreen() {
   sortSel.onchange = () => last && update(last); showOff.onchange = () => last && update(last);
 
   const view = h('main', { id: 'main', class: 'monitor-page' },
-    h('h1', { tabindex: '-1' }, '👀 Suivi des élèves en direct', h('small', { class: 'ar-sub', lang: 'ar', dir: 'rtl' }, 'تتبع تقدم التلاميذ مباشرة')),
+    h('h1', { tabindex: '-1' }, '👀 Suivi des élèves en direct', arHint('تتبع تقدم التلاميذ مباشرة')),
     h('p', { class: 'muted' }, 'Les élèves connectés au même serveur local apparaissent automatiquement, avec leur progression mise à jour toutes les 2 à 3 secondes.'),
     status, tiles, raceCard,
     h('section', { class: 'card', style: 'margin-top:1rem' },
