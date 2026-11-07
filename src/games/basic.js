@@ -173,7 +173,7 @@ export function matchGame(root, d) {
       },
       onclick: () => {
         sel = sel === i ? null : i;
-        if (sel != null) audio.play('hover');
+        if (sel != null) audio.play('select');
         live.textContent = sel == null ? '' : 'Clique maintenant sur la bonne réponse à droite (ou glisse-la).';
         paint();
       },
@@ -359,7 +359,7 @@ export function sortGame(root, d) {
         live.textContent = 'Carte reprise. Tu peux la ranger ailleurs.';
       } else {
         sel = sel === i ? null : i;
-        if (sel != null) audio.play('hover');
+        if (sel != null) audio.play('select');
         live.textContent = sel == null ? '' : 'Choisis la catégorie où ranger cette carte.';
       }
       draw();

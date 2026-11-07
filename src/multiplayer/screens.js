@@ -44,18 +44,18 @@ export function standings(st) {
 // ---------- fil de la course (alimenté à chaque mise à jour, même hors de la page) ----------
 const feed = [];
 let prev = null; let prevRaceId = null;
-export function trackRace(st, onOvertaken) {
+export function trackRace(st, onOvertaken, onEvent) {
   const rows = standings(st); const now = Date.now(); const raceId = st.race?.id || null;
   const cur = new Map(rows.map((r) => [r.p.peerId, { rank: r.rank, at: r.p.lastResult?.at || 0, name: r.p.name, online: r.p.online }]));
   const push = (icon, text, mine = false) => { feed.unshift({ icon, text, t: now, mine }); if (feed.length > 25) feed.pop(); };
   if (raceId !== prevRaceId) {
-    if (raceId) push('🏁', `Départ de la course « ${st.race.label} » !`); else if (prevRaceId) push('🏳️', 'La course est terminée ou a été arrêtée.');
+    if (raceId) { push('🏁', `Départ de la course « ${st.race.label} » !`); if (prevRaceId !== undefined && prev) onEvent && onEvent('race-start'); } else if (prevRaceId) push('🏳️', 'La course est terminée ou a été arrêtée.');
     prevRaceId = raceId; prev = cur; return;
   }
   if (!prev) { prev = cur; return; }
   for (const r of rows) {
     const id = r.p.peerId; const before = prev.get(id);
-    if (!before) { if (r.p.online) push('👋', `${r.p.name} a rejoint la course.`); continue; }
+    if (!before) { if (r.p.online) { push('👋', `${r.p.name} a rejoint la course.`); if (onEvent) onEvent('join'); } continue; }
     const lr = r.p.lastResult;
     if (lr && lr.at && lr.at !== before.at) push(lr.score === 5 ? '⭐' : '✅', `${r.p.name} : ${fmt(lr.score)}/5 à « ${lr.title} »`, r.p.isMe);
     if (r.rank < before.rank) {
@@ -64,6 +64,7 @@ export function trackRace(st, onOvertaken) {
       if (passed) {
         push('🚀', `${r.p.name} dépasse ${passed.p.name} et prend la ${r.rank === 1 ? '1re' : r.rank + 'e'} place !`, r.p.isMe || passed.p.isMe);
         if (passed.p.isMe && onOvertaken) onOvertaken(r.p.name);
+        if (r.p.isMe) onEvent && onEvent('overtake');
       }
     }
   }

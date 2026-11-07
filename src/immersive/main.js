@@ -43,13 +43,19 @@ const bar = (pct, label) => h('div', { class: 'bar', role: 'progressbar', 'aria-
 const announce = (text) => { $.live.textContent = ''; setTimeout(() => { $.live.textContent = text; }, 30); };
 
 // ---------- monde 3D ----------
-let world = null;
+let world = null; let lastHover = '';
+// Ambiance sonore (nappe douce + vent), mémorisée sur ce navigateur ; activée par défaut.
+const AMB_KEY = 'infoplay.ambient';
+const ambientPref = () => { try { return localStorage.getItem(AMB_KEY) !== '0'; } catch { return true; } };
+audio.ambient(ambientPref());
 if (webglAvailable()) {
   try {
     world = createWorld($.world, {
       modules: CATALOG, reduced,
       onPick: (t) => { audio.play('snap'); go(t.type === 'module' ? `#/m/${t.mi}` : `#/m/${t.mi}/s/${t.si}`); },
       onHover: (t, e) => {
+        const hk = t ? [t.type, t.mi, t.si].join('/') : '';
+        if (hk && hk !== lastHover) audio.play(t.type === 'module' ? 'join' : 'portal'); lastHover = hk;
         if (!t) { $.tip.hidden = true; return; }
         if (e && !e.clientX) return;
         const prof = store.active(); const rec = prof ? recOf(prof.id) : () => null;
@@ -81,11 +87,12 @@ function renderHud(prof, q) {
   let pts = null;
   if (prof) { const t = moduleStats(ALL, recOf(prof.id)); pts = h('span', { class: 'hud-chip', title: 'Points (meilleurs essais)' }, '⭐ ', h('b', null, fmt(t.best)), ` / ${TOTAL_POINTS}`); }
   const sound = prof ? h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(prof.preferences.soundEnabled), title: prof.preferences.soundEnabled ? 'Couper les sons' : 'Activer les sons', onclick: () => { store.updateProfile(prof.id, { preferences: { soundEnabled: !prof.preferences.soundEnabled } }); applyPrefs(store.active()); render(); } }, prof.preferences.soundEnabled ? '🔊' : '🔇') : null;
+  const music = h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(audio.ambientOn), title: audio.ambientOn ? 'Couper l’ambiance sonore' : 'Activer l’ambiance sonore', onclick: () => { const v = !audio.ambientOn; try { localStorage.setItem(AMB_KEY, v ? '1' : '0'); } catch {} audio.ambient(v); render(); } }, audio.ambientOn ? '🎵' : '🎶');
   const motion = prof ? h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(!!prof.preferences.reducedMotion), title: 'Réduire les animations', onclick: () => { store.updateProfile(prof.id, { preferences: { reducedMotion: !prof.preferences.reducedMotion } }); applyPrefs(store.active()); render(); } }, prof.preferences.reducedMotion ? '⏸' : '✨') : null;
   $.hud.replaceChildren(h('div', { class: 'hud-in' },
     h('a', { class: 'hud-brand', href: '#/' }, h('span', { class: 'logo', 'aria-hidden': 'true' }, '🎮'), h('span', null, 'InfoPlay ', h('b', null, 'Immersif'))),
     h('nav', { class: 'hud-crumbs', 'aria-label': 'Fil d’Ariane' }, crumbs),
-    h('div', { class: 'hud-right' }, pts, sound, motion,
+    h('div', { class: 'hud-right' }, pts, sound, prof && prof.preferences.soundEnabled ? music : null, motion,
       prof ? h('button', { type: 'button', class: 'hud-chip as-btn', title: 'Changer d’élève', onclick: () => { store.logout(); render(); } }, '👤 ', prof.displayName) : null,
       h('a', { class: 'hud-btn wide', href: 'index.html', title: 'Revenir à la première page' }, '⇦ Accueil'))));
 }
@@ -178,16 +185,16 @@ function openActivity(prof, mi, si, ai) {
   }
   function showResult(score, res, n) {
     const r = rec(act.id).attempts; const first = r[0].score, best = Math.max(...r.map((x) => x.score)); const ratio = score / MAX;
-    audio.play(ratio >= 0.6 ? (ratio === 1 ? 'complete' : 'success') : 'error');
-    if (ratio === 1) celebrate(); if (ratio >= 0.6 && world) world.burst(ratio === 1);
+    const tm = audio.feedback(res.items, ratio, score); let fbk = 0;
+    setTimeout(() => { if (ratio === 1) celebrate(); if (ratio >= 0.6 && world) world.burst(ratio === 1); }, tm.end * 1000);
     const msg = ratio === 1 ? 'Parfait ! 🎉' : ratio >= 0.8 ? 'Très bien !' : ratio >= 0.6 ? 'Bien, tu y es presque.' : ratio >= 0.4 ? 'Pas mal, relis les explications.' : 'Courage : lis les explications puis réessaie.';
     const arMsg = ratio === 1 ? 'ممتاز! إجابة كاملة ومتقنة 🎉' : ratio >= 0.8 ? 'أحسنت جداً! أداء متميز 👍' : ratio >= 0.6 ? 'جيد، اقتربت من الإجابة التامة ✨' : ratio >= 0.4 ? 'لا بأس، راجع الشروحات وأعد المحاولة 🔄' : 'اقرأ الشرح جيداً ثم حاول مجدداً 💪';
-    const stars = Array.from({ length: 5 }, (_, i) => h('span', { class: 'star' + (i < Math.round(score) ? ' filled' : ''), 'aria-hidden': 'true' }, '★'));
+    const stars = Array.from({ length: 5 }, (_, i) => h('span', { class: 'star' + (i < Math.round(score) ? ' filled' : ''), 'aria-hidden': 'true', style: i < Math.round(score) ? `animation-delay:${tm.starAt + i * tm.starStep}s` : null }, '★'));
     const nextHref = ai < 4 ? `#/m/${mi}/s/${si}/a/${ai + 1}` : `#/m/${mi}/s/${si}/bilan`;
     out.replaceChildren(h('section', { class: 'result' + (ratio === 1 ? ' perfect' : ''), 'aria-label': 'Résultat' },
       h('div', { class: 'top' }, h('div', { class: 'score-box' }, h('div', { class: 'score' }, fmt(score), h('small', null, ' / 5')), h('div', { class: 'star-rating', role: 'img', 'aria-label': `${score} étoiles sur 5` }, ...stars)),
         h('div', null, h('h2', { style: 'margin:0' }, msg), h('p', { class: 'result-ar-msg', lang: 'ar', dir: 'rtl' }, arMsg), h('p', { class: 'muted', style: 'margin:0' }, n === 1 ? 'Premier essai enregistré.' : `Essai n° ${n} · premier essai : ${fmt(first)}/5 · meilleur : ${fmt(best)}/5`))),
-      h('ul', { class: 'fblist' }, res.items.map((it) => h('li', { class: it.info ? 'info' : it.ok ? 'ok' : 'ko' }, h('span', { class: 'ic', 'aria-hidden': 'true' }, it.info ? 'ℹ' : it.ok ? '✔' : '✖'), h('span', null, h('span', { class: 'vh' }, it.info ? 'Information : ' : it.ok ? 'Correct : ' : 'À revoir : '), it.msg)))),
+      h('ul', { class: 'fblist' }, res.items.map((it) => h('li', { class: it.info ? 'info' : it.ok ? 'ok' : 'ko', style: `animation-delay:${it.info ? 0 : (fbk++) * tm.step}s` }, h('span', { class: 'ic', 'aria-hidden': 'true' }, it.info ? 'ℹ' : it.ok ? '✔' : '✖'), h('span', null, h('span', { class: 'vh' }, it.info ? 'Information : ' : it.ok ? 'Correct : ' : 'À revoir : '), it.msg)))),
       h('div', { class: 'row' }, h('button', { type: 'button', class: 'btn', onclick: () => { mount(); body.scrollTo({ top: 0 }); } }, '↻ Réessayer'), h('a', { class: 'btn primary', href: nextHref }, ai < 4 ? 'Activité suivante →' : 'Voir le bilan →'))));
     out.firstChild.scrollIntoView({ block: 'nearest' });
   }
@@ -218,6 +225,7 @@ function render() {
   document.body.classList.toggle('gated', !prof);
   const key = [q.mi, q.si, q.ai, q.bilan].join('/');
   if (world && key !== lastKey) {
+    if (lastKey !== '' || location.hash.length > 2) audio.play(q.ai ? 'open' : 'whoosh');
     if (q.ai) world.focusActivity(q.mi, q.si); else if (q.si) world.focusSession(q.mi, q.si); else if (q.mi) world.focusModule(q.mi); else world.focusHub();
   }
   lastKey = key;

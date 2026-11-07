@@ -75,7 +75,7 @@ export function robot3dGame(root, d) {
       k++; if (k >= trace.length) { if (ok) victory(done); else done(); return; }
       const a = trace[k - 1], b = trace[k]; let dy = 0;
       if (b.d !== a.d) dy = ((b.d - a.d + 4) % 4 === 1 ? -1 : 1) * (Math.PI / 2);
-      audio.play('robot');
+      audio.play(b.bump ? 'bump' : 'robot');
       anim = { from: { x: state.x, z: state.z, yaw: state.yaw }, to: { x: b.c, z: b.r, yaw: state.yaw + dy }, bump: !!b.bump, start: performance.now(), dur: 420, then: next };
     };
     next();

@@ -59,9 +59,9 @@ export function robotGame(root, d) {
     drawBoard(res.trace[0]);
     timer = setInterval(() => {
       k++;
-      audio.play('robot');
       const isEnd = k >= res.trace.length - 1;
       const step = res.trace[Math.min(k, res.trace.length - 1)];
+      audio.play(step.bump ? 'bump' : 'robot');
       drawBoard(isEnd && res.ok ? { ...step, victory: true } : step);
       if (isEnd) {
         stop();

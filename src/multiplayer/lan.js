@@ -133,6 +133,8 @@ export class LanManager {
     const payload = this.selfPayload();
     this.broadcast({ type: 'heartbeat', peer: payload });
 
+    // Ouvert directement depuis le fichier (file://) : pas de serveur possible, inutile d'essayer.
+    if (typeof location !== 'undefined' && location.protocol === 'file:') { this.serverOnline = false; this.syncLocalStorage(); return; }
     try {
       const ctrl = new AbortController();
       const tid = setTimeout(() => ctrl.abort(), 1800);

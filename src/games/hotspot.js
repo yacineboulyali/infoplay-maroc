@@ -81,7 +81,7 @@ export function hotspotGame(root, d) {
         type: 'button',
         class: 'prompt-btn',
         'aria-current': i === cur ? 'step' : null,
-        onclick: () => { cur = i; audio.play('hover'); draw(); },
+        onclick: () => { cur = i; audio.play('select'); draw(); },
       }, p[1]),
       h('span', { class: 'ans' }, ans[i] ? zoneName(ans[i]) : '—')
     )));

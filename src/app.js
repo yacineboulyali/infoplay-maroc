@@ -557,12 +557,13 @@ function activityScreen(mi, si, ai) {
     const first = r[0].score, best = Math.max(...r.map((x) => x.score));
     const ratio = score / MAX;
 
-    audio.play(ratio >= 0.6 ? (ratio === 1 ? 'complete' : 'success') : 'error');
-    if (ratio === 1) celebrate();
+    // Son + animation synchronisés : une note par réponse, le jingle, puis une note par étoile.
+    const tm = audio.feedback(res.items, ratio, score); let fbk = 0;
+    if (ratio === 1) setTimeout(celebrate, tm.end * 1000);
 
     const msg = ratio === 1 ? 'Parfait ! 🎉' : ratio >= 0.8 ? 'Très bien !' : ratio >= 0.6 ? 'Bien, tu y es presque.' : ratio >= 0.4 ? 'Pas mal, relis les explications.' : 'Courage : lis les explications puis réessaie.';
     const arMsg = ratio === 1 ? 'ممتاز! إجابة كاملة ومتقنة 🎉' : ratio >= 0.8 ? 'أحسنت جداً! أداء متميز 👍' : ratio >= 0.6 ? 'جيد، اقتربت من الإجابة التامة ✨' : ratio >= 0.4 ? 'لا بأس، راجع الشروحات وأعد المحاولة 🔄' : 'اقرأ الشرح جيداً ثم حاول مجدداً 💪';
-    const stars = Array.from({ length: 5 }, (_, i) => h('span', { class: 'star' + (i < Math.round(score) ? ' filled' : ''), 'aria-hidden': 'true' }, '★'));
+    const stars = Array.from({ length: 5 }, (_, i) => h('span', { class: 'star' + (i < Math.round(score) ? ' filled' : ''), 'aria-hidden': 'true', style: i < Math.round(score) ? `animation-delay:${tm.starAt + i * tm.starStep}s` : null }, '★'));
     const nextHref = ai < 4 ? `#/m/${mi}/s/${si}/a/${ai + 1}` : `#/m/${mi}/s/${si}/bilan`;
 
     out.replaceChildren(h('section', { class: 'result' + (ratio === 1 ? ' perfect' : ''), 'aria-label': 'Résultat' },
@@ -577,7 +578,7 @@ function activityScreen(mi, si, ai) {
           h('p', { class: 'muted', style: 'margin:0' }, n === 1 ? 'Premier essai enregistré.' : `Essai n° ${n} · premier essai : ${fmt(first)}/5 · meilleur : ${fmt(best)}/5`)
         )
       ),
-      h('ul', { class: 'fblist' }, res.items.map((it) => h('li', { class: it.info ? 'info' : it.ok ? 'ok' : 'ko' },
+      h('ul', { class: 'fblist' }, res.items.map((it) => h('li', { class: it.info ? 'info' : it.ok ? 'ok' : 'ko', style: `animation-delay:${it.info ? 0 : (fbk++) * tm.step}s` },
         h('span', { class: 'ic', 'aria-hidden': 'true' }, it.info ? 'ℹ' : it.ok ? '✔' : '✖'),
         h('span', null, h('span', { class: 'vh' }, it.info ? 'Information : ' : it.ok ? 'Correct : ' : 'À revoir : '), it.msg)
       ))),
@@ -929,7 +930,8 @@ window.addEventListener('error', () => toast('Une erreur est survenue. Recharge 
 // redessiné que si son contenu change réellement et jamais pendant la saisie d'un message.
 let salonSig = '';
 lanManager.subscribe((st) => {
-  trackRace(st, (who) => { if (st.race && !st.race.ended) toast(`🏁 ${who} vient de te dépasser ! À toi de jouer.`); });
+  trackRace(st, (who) => { if (st.race && !st.race.ended) { audio.play('overtaken'); toast(`🏁 ${who} vient de te dépasser ! À toi de jouer.`); } },
+    (kind) => { if (kind === 'race-start' || kind === 'overtake' || (kind === 'join' && live)) audio.play(kind); });
   const badge = document.querySelector('.lan-badge span:last-child');
   if (badge) badge.textContent = `Réseau local (${st.playerCount})`;
   const cur = location.hash.split('/')[1] || '';

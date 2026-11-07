@@ -320,3 +320,9 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .mini-mod i{position:absolute;left:0;right:0;bottom:0;background:var(--primary)}.mini-mod.m2 i{background:var(--m2)}.mini-mod.m3 i{background:var(--m3)}.mini-mod.m4 i{background:var(--m4)}
 .mini-mod small{position:relative;font-weight:800;font-size:.7rem;color:var(--ink);text-shadow:0 0 3px #fff}
 @media (prefers-reduced-motion:reduce){.lane,.runner,.lane-road>i{transition:none}}
+
+/* Résultat : apparition des corrections et des étoiles, synchronisée avec les sons */
+.fblist li{animation:fb-in .35s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes fb-in{from{opacity:0;transform:translateX(-14px) scale(.98)}to{opacity:1;transform:none}}
+.star.filled{animation:star-pop .5s cubic-bezier(.2,.9,.3,1.4) both}
+@keyframes star-pop{0%{color:#d6d9e6;transform:scale(.6) rotate(-20deg)}60%{color:#f59e0b;transform:scale(1.45) rotate(8deg)}100%{color:#f59e0b;transform:none}}
