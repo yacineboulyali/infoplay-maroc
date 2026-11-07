@@ -1,4 +1,5 @@
 import { h, reduced } from '../utils/dom.js';
+import { audio } from '../audio/audio.js';
 
 const DR = [[0, 1], [1, 0], [0, -1], [-1, 0]];
 export function parseLevel(rows) {
@@ -39,7 +40,7 @@ export function robotGame(root, d) {
   function drawBoard(pos) {
     const lv = lvs[cur]; board.style.gridTemplateColumns = `repeat(${lv.W}, 1fr)`;
     board.replaceChildren(...lv.g.flatMap((row, i) => row.map((ch, j) => { const here = pos && pos.r === i && pos.c === j;
-      return h('div', { class: 'rcell' + (ch === '#' ? ' wall' : '') + (ch === 'G' ? ' goal' : ''), role: 'img', 'aria-label': ch === '#' ? 'obstacle' : ch === 'G' ? 'objectif' : ch === 'S' ? 'départ' : 'case libre' }, ch === 'G' ? '⚑' : ch === '#' ? '▩' : '', here ? h('span', { class: `bot robot-dir-${pos.d}` + (pos.bump ? ' bump' : ''), 'aria-label': `robot orienté ${ARROW[pos.d]}` }, h('i', null, ARROW[pos.d])) : null); })));
+      return h('div', { class: 'rcell' + (ch === '#' ? ' wall' : '') + (ch === 'G' ? ' goal' : ''), role: 'img', 'aria-label': ch === '#' ? 'obstacle' : ch === 'G' ? 'objectif' : ch === 'S' ? 'départ' : 'case libre' }, ch === 'G' ? '⚑' : ch === '#' ? '▩' : '', here ? h('span', { class: `bot robot-dir-${pos.d}` + (pos.bump ? ' bump' : '') + (pos.victory ? ' victory' : ''), 'aria-label': `robot orienté ${ARROW[pos.d]}` }, h('i', null, ARROW[pos.d])) : null); })));
   }
   function drawTabs() { tabs.replaceChildren(...lvs.map((_, i) => h('button', { type: 'button', role: 'tab', 'aria-selected': String(i === cur), class: 'tab' + (i === cur ? ' on' : '') + (solved[i] ? ' done' : ''), onclick: () => { stop(); cur = i; draw(); } }, `Niveau ${i + 1}` + (solved[i] ? ' ✔' : '')))); }
   function drawSeq() {
@@ -56,7 +57,18 @@ export function robotGame(root, d) {
     const finish = () => { if (res.ok) { solved[cur] = true; } msg.textContent = res.reason; drawTabs(); };
     if (reduced()) { drawBoard(res.trace[res.trace.length - 1]); finish(); return; }
     drawBoard(res.trace[0]);
-    timer = setInterval(() => { k++; drawBoard(res.trace[Math.min(k, res.trace.length - 1)]); if (k >= res.trace.length - 1) { stop(); finish(); } }, 380);
+    timer = setInterval(() => {
+      k++;
+      audio.play('robot');
+      const isEnd = k >= res.trace.length - 1;
+      const step = res.trace[Math.min(k, res.trace.length - 1)];
+      drawBoard(isEnd && res.ok ? { ...step, victory: true } : step);
+      if (isEnd) {
+        stop();
+        if (res.ok) audio.play('success');
+        finish();
+      }
+    }, 380);
   }
   const bar = h('div', { class: 'rbar' }, ['A', 'G', 'D'].map((c) => h('button', { type: 'button', class: 'btn', 'aria-label': NAME[c], onclick: () => add(c) }, ICON[c])),
     h('button', { type: 'button', class: 'btn ghost', onclick: () => { progs[cur].pop(); drawSeq(); } }, '⌫ Retirer la dernière'), h('button', { type: 'button', class: 'btn ghost', onclick: () => { progs[cur] = []; stop(); draw(); } }, 'Tout effacer'),

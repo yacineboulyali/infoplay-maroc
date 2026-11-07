@@ -1,6 +1,7 @@
 // Moteurs : association, tri, ordre, texte à trous, QCM. Chaque moteur retourne {check, reveal, solve}.
 import { h, shuffle, norm } from '../utils/dom.js';
 import { arText } from '../i18n/ar.js';
+import { audio } from '../audio/audio.js';
 
 const letter = (i) => String.fromCharCode(65 + i);
 const mark = (ok) => (ok ? '✔ ' : '✖ ');
@@ -8,22 +9,78 @@ const mark = (ok) => (ok ? '✔ ' : '✖ ');
 // Illustrations locales, utilisables hors ligne. Chaque planche contient 3 x 2 objets.
 // Le texte reste toujours présent : l'image aide à reconnaître l'objet sans donner la réponse.
 const ART = [
-  [/carte mère/i, 'components', 0], [/processeur|cpu/i, 'components', 1], [/mémoire vive|\bram\b/i, 'components', 2],
-  [/disque dur|disque.*ssd|\bssd\b/i, 'components', 3], [/alimentation/i, 'components', 4], [/ventilateur|refroidissement/i, 'components', 5],
-  [/écran(?! tactile)|moniteur/i, 'peripherals', 0], [/clavier/i, 'peripherals', 1], [/souris/i, 'peripherals', 2],
-  [/imprimante(?! multifonction)/i, 'peripherals', 3], [/scanner/i, 'peripherals', 4], [/clé usb/i, 'peripherals', 5],
-  [/haut-parleurs?/i, 'speakers', 0],
-  [/routeur|wi[ -]?fi/i, 'network', 0], [/commutateur|switch/i, 'network', 1], [/modem/i, 'network', 2],
-  [/ordinateur( de bureau)?|unité centrale/i, 'network', 3], [/serveur/i, 'network', 4], [/imprimante multifonction/i, 'network', 5],
-  [/windows|linux|android|macos|ios|système d.exploitation/i, 'software', 0], [/writer|traitement de texte/i, 'software', 1], [/calc|tableur/i, 'software', 2],
-  [/présentation|diapositive/i, 'software', 3], [/navigateur( web)?/i, 'software', 4], [/logiciel de dessin|mise en page/i, 'software', 5],
-  [/mot de passe/i, 'cyber', 0], [/mise à jour/i, 'cyber', 1], [/antivirus|virus/i, 'cyber', 2],
-  [/e-?mail|courriel|message suspect|hameçonnage/i, 'cyber', 3], [/lien inconnu|lien suspect/i, 'cyber', 4], [/données personnelles|information privée/i, 'cyber', 5],
-  [/\bpan\b|bluetooth|quelques mètres/i, 'network-scales', 0], [/\blan\b|réseau local|une salle|un bâtiment/i, 'network-scales', 1], [/collège|bâtiments voisins/i, 'network-scales', 2],
-  [/\bman\b|métropolitain|même ville/i, 'network-scales', 3], [/\bwan\b|réseau étendu|pays|continents|mondial/i, 'network-scales', 4], [/partager.*imprimante|imprimante partagée/i, 'network-scales', 5],
-  [/distributeur/i, 'algorithm-tools', 0], [/calculatrice/i, 'algorithm-tools', 1], [/mémoire.*valeur|valeur.*change/i, 'algorithm-tools', 2], [/organigramme/i, 'algorithm-tools', 3], [/code|programme python|ide/i, 'algorithm-tools', 4], [/console|sortie du programme/i, 'algorithm-tools', 5],
-  [/algorithme/i, 'cs-concepts', 0], [/instruction/i, 'cs-concepts', 1], [/donnée/i, 'cs-concepts', 2], [/variable/i, 'cs-concepts', 3], [/constante/i, 'cs-concepts', 4], [/type de donnée|nombre|texte|booléen/i, 'cs-concepts', 5],
-  [/ne pas répondre|ignorer/i, 'cyber-citizen', 0], [/preuve|capture d.écran/i, 'cyber-citizen', 1], [/bloquer|signaler/i, 'cyber-citizen', 2], [/adulte de confiance|enseignant|parent/i, 'cyber-citizen', 3], [/vérifier les sources/i, 'cyber-citizen', 4], [/respect/i, 'cyber-citizen', 5],
+  // 1) Priorité aux expressions composées spécifiques pour éviter les faux positifs
+  [/preuve|capture d.écran/i, 'cyber-citizen', 1],
+  [/ne pas répondre|ignorer/i, 'cyber-citizen', 0],
+  [/bloquer|signaler/i, 'cyber-citizen', 2],
+  [/adulte de confiance|enseignant|parent/i, 'cyber-citizen', 3],
+  [/vérifier les sources/i, 'cyber-citizen', 4],
+  [/prudence et respect|\brespect\b/i, 'cyber-citizen', 5],
+
+  // 2) Périphériques spécialisés et réseau (avant les génériques)
+  [/imprimante.*(multifonction|réseau|partag)/i, 'network', 5],
+  [/imprimante(?!.*(multifonction|réseau|partag))/i, 'peripherals', 3],
+  [/scanner/i, 'peripherals', 4],
+  [/souris/i, 'peripherals', 2],
+  [/clavier/i, 'peripherals', 1],
+  [/clé usb/i, 'peripherals', 5],
+  [/casque.*micro|microphone|haut-parleurs?|lecteur de musique/i, 'speakers', 0],
+  [/écran tactile|vidéoprojecteur|écran|moniteur/i, 'peripherals', 0],
+
+  // 3) Composants internes
+  [/carte mère/i, 'components', 0],
+  [/processeur|\bcpu\b/i, 'components', 1],
+  [/mémoire vive|\bram\b/i, 'components', 2],
+  [/disque dur externe|disque dur|disque.*ssd|\bssd\b/i, 'components', 3],
+  [/alimentation/i, 'components', 4],
+  [/ventilateur|refroidissement/i, 'components', 5],
+
+  // 4) Équipements réseau
+  [/routeur|wi[ -]?fi|liaison.*(câble|wi)/i, 'network', 0],
+  [/commutateur|\bswitch\b/i, 'network', 1],
+  [/modem/i, 'network', 2],
+  [/ordinateur\s*\(poste\)|\bordinateur( de bureau)?\b|unité centrale/i, 'network', 3],
+  [/serveur/i, 'network', 4],
+
+  // 5) Logiciels (avec délimiteurs de mots stricts pour ne pas matcher "calculer", "idée", etc.)
+  [/windows|linux|android|macos|ios|système d.exploitation/i, 'software', 0],
+  [/writer|\btraitement de texte\b|\bword\b/i, 'software', 1],
+  [/\bcalc\b|\btableur\b|\bexcel\b/i, 'software', 2],
+  [/logiciel de présentation|diaporama|diapositive|\bpowerpoint\b/i, 'software', 3],
+  [/navigateur( web)?/i, 'software', 4],
+  [/logiciel de dessin|mise en page|retouche/i, 'software', 5],
+
+  // 6) Cybersécurité
+  [/mot de passe/i, 'cyber', 0],
+  [/mise à jour/i, 'cyber', 1],
+  [/antivirus|\bvirus\b/i, 'cyber', 2],
+  [/e-?mail.*suspect|hameçonnage|phishing|courriel suspect/i, 'cyber', 3],
+  [/lien inconnu|lien suspect|lien dangereux/i, 'cyber', 4],
+  [/données personnelles|information privée/i, 'cyber', 5],
+
+  // 7) Échelles et types de réseau
+  [/\bpan\b|bluetooth|quelques mètres/i, 'network-scales', 0],
+  [/\blan\b|réseau local|réseau informatique|une salle|un bâtiment/i, 'network-scales', 1],
+  [/collège|bâtiments voisins/i, 'network-scales', 2],
+  [/\bman\b|métropolitain|même ville/i, 'network-scales', 3],
+  [/\bwan\b|réseau étendu|pays et continents|pays.*continents|mondial|\binternet\b/i, 'network-scales', 4],
+  [/partager.*imprimante|imprimante partagée/i, 'network-scales', 5],
+
+  // 8) Outils algorithmiques (bornage strict pour éviter de matcher "rapide", "calculer", etc.)
+  [/distributeur/i, 'algorithm-tools', 0],
+  [/\bcalculatrice\b/i, 'algorithm-tools', 1],
+  [/mémoire.*valeur|valeur.*change/i, 'algorithm-tools', 2],
+  [/organigramme/i, 'algorithm-tools', 3],
+  [/code source|programme python|\bide\b|visual studio code|\bthonny\b|\bidle\b|\bpython\b|\bscratch\b|\bjavascript\b|\bc\b/i, 'algorithm-tools', 4],
+  [/console|sortie du programme/i, 'algorithm-tools', 5],
+
+  // 9) Notions fondamentales (bornage strict par début/fin de chaîne ou terme exact)
+  [/^\s*algorithme\s*$/i, 'cs-concepts', 0],
+  [/^\s*instruction\s*$/i, 'cs-concepts', 1],
+  [/^\s*donnée\s*$|^\s*données\s*$/i, 'cs-concepts', 2],
+  [/^\s*variable\s*$|^\s*variables\s*$/i, 'cs-concepts', 3],
+  [/^\s*constante\s*$|^\s*constantes\s*$/i, 'cs-concepts', 4],
+  [/type de donnée|types de données/i, 'cs-concepts', 5],
 ];
 export function artFor(label) {
   const hit = ART.find(([re]) => re.test(label));
@@ -75,7 +132,7 @@ export function matchGame(root, d) {
   order.forEach((o, k) => rb.push(h('button', { type: 'button', class: 'card pick', onclick: () => {
     if (sel == null) { live.textContent = 'Clique d’abord sur un élément de la colonne de gauche.'; return; }
     const prev = map.indexOf(o); if (prev >= 0) map[prev] = null;
-    justLinked = sel; map[sel] = o; sel = null; live.textContent = 'Association créée. Elle sera corrigée après « Vérifier ».'; paint();
+    justLinked = sel; map[sel] = o; sel = null; live.textContent = 'Association créée. Elle sera corrigée après « Vérifier ».'; audio.play('snap'); paint();
   } }, h('span', { class: 'num', 'aria-hidden': 'true' }, letter(k)), h('span', { class: 'txt' }, visualLabel(d.pairs[o][1])), h('span', { class: 'tag', 'aria-hidden': 'true' }))));
   const matchArea = h('div', { class: 'match-area' }, wires, h('div', { class: 'two-col' }, h('div', { class: 'col' }, lb), h('div', { class: 'col' }, rb)));
   root.append(matchArea, live,
@@ -98,12 +155,12 @@ export function sortGame(root, d) {
   const buckets = d.cats.map((c, ci) => {
     const body = h('div', { class: 'bucket-body' });
     const head = h('button', { type: 'button', class: 'bucket-head', onclick: () => put(ci) }, h('span', null, c), h('small', null, 'Placer ici'));
-    const box = h('div', { class: 'bucket', 'data-cat': ci, ondragenter: (e) => { e.preventDefault(); box.classList.add('drag-over'); }, ondragleave: (e) => { if (!box.contains(e.relatedTarget)) box.classList.remove('drag-over'); }, ondragover: (e) => e.preventDefault(), ondrop: (e) => { e.preventDefault(); box.classList.remove('drag-over'); const i = Number(e.dataTransfer.getData('text/plain')); if (Number.isInteger(i) && items[i]) { place[i] = ci; lastMoved = i; pulseBucket = ci; sel = null; live.textContent = 'Carte déposée. La réponse reste cachée jusqu’à « Vérifier ».'; draw(); } } }, head, body);
+    const box = h('div', { class: 'bucket', 'data-cat': ci, ondragenter: (e) => { e.preventDefault(); box.classList.add('drag-over'); }, ondragleave: (e) => { if (!box.contains(e.relatedTarget)) box.classList.remove('drag-over'); }, ondragover: (e) => e.preventDefault(), ondrop: (e) => { e.preventDefault(); box.classList.remove('drag-over'); const i = Number(e.dataTransfer.getData('text/plain')); if (Number.isInteger(i) && items[i]) { place[i] = ci; lastMoved = i; pulseBucket = ci; sel = null; live.textContent = 'Carte déposée. La réponse reste cachée jusqu’à « Vérifier ».'; audio.play('snap'); draw(); } } }, head, body);
     return { box, body };
   });
   const live = h('p', { class: 'hint-line', 'aria-live': 'polite' });
-  function put(ci) { if (sel == null) { live.textContent = 'Choisis d’abord une carte, puis la catégorie.'; return; } place[sel] = ci; lastMoved = sel; pulseBucket = ci; sel = null; live.textContent = 'Carte placée. La réponse reste cachée jusqu’à « Vérifier ».'; draw(); }
-  const card = (i) => h('button', { type: 'button', class: 'chip' + (artFor(items[i][0]) ? ' has-art' : '') + (sel === i ? ' sel' : '') + (lastMoved === i ? ' just-dropped' : ''), draggable: 'true', 'aria-pressed': String(sel === i),
+  function put(ci) { if (sel == null) { live.textContent = 'Choisis d’abord une carte, puis la catégorie.'; return; } place[sel] = ci; lastMoved = sel; pulseBucket = ci; sel = null; live.textContent = 'Carte placée. La réponse reste cachée jusqu’à « Vérifier ».'; audio.play('snap'); draw(); }
+  const card = (i) => h('button', { type: 'button', 'data-idx': String(i), class: 'chip' + (artFor(items[i][0]) ? ' has-art' : '') + (sel === i ? ' sel' : '') + (lastMoved === i ? ' just-dropped' : ''), draggable: 'true', 'aria-pressed': String(sel === i),
     ondragstart: (e) => { e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(i)); }, ondragend: (e) => { e.currentTarget.classList.remove('dragging'); root.querySelectorAll('.bucket').forEach((b) => b.classList.remove('drag-over')); }, onclick: () => { if (place[i] != null) { place[i] = null; sel = i; } else sel = sel === i ? null : i; live.textContent = ''; draw(); } }, visualLabel(items[i][0]));
   function draw() {
     pool.replaceChildren(...items.map((_, i) => i).filter((i) => place[i] == null).map(card));
@@ -119,7 +176,14 @@ export function sortGame(root, d) {
         return { ok, msg: `${it[0]} → ${d.cats[it[1]]}` + (it[2] ? ' — ' + it[2] : '') + (place[i] == null ? ' (non rangé)' : '') }; });
       return { correct: res.filter((x) => x.ok).length, total: items.length, items: res, unanswered: place.filter((x) => x == null).length };
     },
-    reveal(res) { root.querySelectorAll('.bucket .chip').forEach((c) => { const i = items.findIndex((it, k) => it[0] === c.textContent && place[k] != null); if (i >= 0) c.classList.add(res.items[i].ok ? 'ok' : 'ko'); }); },
+    reveal(res) {
+      root.querySelectorAll('.bucket .chip').forEach((c) => {
+        const idx = c.dataset.idx != null ? Number(c.dataset.idx) : -1;
+        if (idx >= 0 && res.items[idx]) {
+          c.classList.add(res.items[idx].ok ? 'ok' : 'ko');
+        }
+      });
+    },
     solve() { items.forEach((it, i) => { place[i] = it[1]; }); sel = null; draw(); },
   };
 }
@@ -140,7 +204,12 @@ export function orderGame(root, d) {
         h('button', { type: 'button', class: 'icon-btn', 'aria-label': `Descendre l’étape ${pos + 1}`, disabled: pos === n - 1, 'data-f': pos + ':d', onclick: () => mv(pos, 1) }, '▼')))));
     if (focus) { const b = ol.querySelector(`[data-f="${focus}"]`) || ol.querySelector('button:not([disabled])'); b && b.focus(); }
   }
-  function mv(pos, dlt) { const j = pos + dlt; [list[pos], list[j]] = [list[j], list[pos]]; draw(j + ':' + (dlt < 0 ? 'u' : 'd')); }
+  function mv(pos, dlt) {
+    const j = pos + dlt;
+    [list[pos], list[j]] = [list[j], list[pos]];
+    audio.play('move');
+    draw(j + ':' + (dlt < 0 ? 'u' : 'd'));
+  }
   root.append(ol); draw();
   return {
     check() {

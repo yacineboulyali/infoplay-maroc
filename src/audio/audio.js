@@ -32,9 +32,19 @@ export const audio = {
     if (!prefs.soundEnabled) return;
     if (kind === 'click') tone(420, 0.055, { type: 'triangle', gain: 0.06, endFreq: 520 });
     else if (kind === 'hover' && prefs.hoverSound) tone(700, 0.035, { gain: 0.025, endFreq: 760 });
+    else if (kind === 'snap') tone(587, 0.07, { type: 'sine', gain: 0.08, endFreq: 784 });
+    else if (kind === 'move') tone(440, 0.05, { type: 'triangle', gain: 0.05, endFreq: 520 });
+    else if (kind === 'hint') tone(659, 0.08, { type: 'sine', gain: 0.06, endFreq: 880 });
+    else if (kind === 'robot') tone(349, 0.06, { type: 'sine', gain: 0.07, endFreq: 440 });
     else if (kind === 'success') { tone(523, 0.12, { gain: 0.1 }); tone(659, 0.14, { delay: 0.09, gain: 0.1 }); tone(784, 0.18, { delay: 0.18, gain: 0.11 }); }
     else if (kind === 'error') { tone(240, 0.12, { type: 'triangle', gain: 0.08, endFreq: 190 }); tone(180, 0.16, { delay: 0.1, type: 'triangle', gain: 0.07, endFreq: 150 }); }
-    else if (kind === 'complete') { tone(523, 0.12, { gain: 0.09 }); tone(659, 0.14, { delay: 0.08, gain: 0.1 }); tone(784, 0.16, { delay: 0.16, gain: 0.1 }); tone(1046, 0.25, { delay: 0.26, gain: 0.12 }); }
+    else if (kind === 'complete') {
+      tone(523, 0.12, { gain: 0.09 });
+      tone(659, 0.14, { delay: 0.08, gain: 0.1 });
+      tone(784, 0.16, { delay: 0.16, gain: 0.1 });
+      tone(1046, 0.22, { delay: 0.24, gain: 0.12 });
+      tone(1318, 0.32, { delay: 0.34, gain: 0.13, endFreq: 1390 });
+    }
   },
 };
 

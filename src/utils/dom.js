@@ -44,4 +44,69 @@ export function downloadText(name, text, mime = 'application/json') {
   const a = h('a', { href: url, download: name }); document.body.append(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
-export const reduced = () => document.body.classList.contains('reduced-motion') || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+export const reduced = () => typeof document !== 'undefined' && (document.body?.classList?.contains('reduced-motion') || (typeof window !== 'undefined' && window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches));
+
+export function celebrate() {
+  if (typeof window === 'undefined' || typeof document === 'undefined' || reduced()) return;
+  const canvas = document.createElement('canvas');
+  canvas.className = 'confetti-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  Object.assign(canvas.style, {
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    width: '100vw',
+    height: '100vh',
+    pointerEvents: 'none',
+    zIndex: '9999',
+  });
+  document.body.append(canvas);
+  const w = (canvas.width = window.innerWidth || 800);
+  const h = (canvas.height = window.innerHeight || 600);
+  const ctx = canvas.getContext && canvas.getContext('2d');
+  if (!ctx) { canvas.remove(); return; }
+
+  const colors = ['#f2b418', '#2b3fc4', '#c8431a', '#15703f', '#9159cf', '#0a7467'];
+  const particles = Array.from({ length: 60 }, () => ({
+    x: w * (0.2 + Math.random() * 0.6),
+    y: h * 0.35,
+    vx: (Math.random() - 0.5) * 12,
+    vy: (Math.random() - 0.9) * 14,
+    size: Math.random() * 7 + 4,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rot: Math.random() * 360,
+    vrot: (Math.random() - 0.5) * 10,
+    gravity: 0.38,
+    alpha: 1,
+  }));
+
+  let frame = 0;
+  function step() {
+    ctx.clearRect(0, 0, w, h);
+    let alive = false;
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      p.rot += p.vrot;
+      if (frame > 25) p.alpha -= 0.02;
+      if (p.alpha > 0) {
+        alive = true;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rot * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+        ctx.restore();
+      }
+    }
+    frame++;
+    if (alive && frame < 90) {
+      requestAnimationFrame(step);
+    } else {
+      canvas.remove();
+    }
+  }
+  requestAnimationFrame(step);
+}

@@ -1,4 +1,4 @@
-import { h, downloadText, frDate } from './utils/dom.js';
+import { h, downloadText, frDate, celebrate } from './utils/dom.js';
 import { createStore, localAdapter, MAX_IMPORT_BYTES } from './storage/store.js';
 import { CATALOG, ACTIVITIES, getActivity, getModule, getSession, isActivityId, TOTAL_POINTS } from './data/index.js';
 import { engineOf } from './games/index.js';
@@ -106,7 +106,11 @@ function activityScreen(mi, si, ai) {
   const stage = h('div', { class: `stage-card activity-${act.id}`, id: 'stage' }); const out = h('div', { 'aria-live': 'polite' }); const hintBox = h('div', { class: 'hintbox', hidden: true }, '💡 ' + act.hint);
   let eng = null, submitted = false;
   const checkBtn = h('button', { type: 'button', class: 'btn primary', onclick: submit }, '✔ Vérifier');
-  const hintBtn = h('button', { type: 'button', class: 'btn ghost', 'aria-expanded': 'false', onclick: () => { hintBox.hidden = !hintBox.hidden; hintBtn.setAttribute('aria-expanded', String(!hintBox.hidden)); } }, '💡 Indice');
+  const hintBtn = h('button', { type: 'button', class: 'btn ghost', 'aria-expanded': 'false', onclick: () => {
+    hintBox.hidden = !hintBox.hidden;
+    if (!hintBox.hidden) audio.play('hint');
+    hintBtn.setAttribute('aria-expanded', String(!hintBox.hidden));
+  } }, '💡 Indice');
   function mount() { stage.replaceChildren(); stage.inert = false; out.replaceChildren(); submitted = false; checkBtn.disabled = false; eng = engineOf(act.mech)(stage, act.data); if (window.__ip) window.__ip.eng = eng; }
   async function submit() {
     if (submitted || !eng) return;
@@ -119,9 +123,20 @@ function activityScreen(mi, si, ai) {
   function showResult(score, res, n) {
     const r = rec(act.id).attempts; const first = r[0].score, best = Math.max(...r.map((x) => x.score)); const ratio = score / MAX;
     audio.play(ratio >= 0.6 ? (ratio === 1 ? 'complete' : 'success') : 'error');
+    if (ratio === 1) celebrate();
     const msg = ratio === 1 ? 'Parfait ! 🎉' : ratio >= 0.8 ? 'Très bien !' : ratio >= 0.6 ? 'Bien, tu y es presque.' : ratio >= 0.4 ? 'Pas mal, relis les explications.' : 'Courage : lis les explications puis réessaie.';
+    const arMsg = ratio === 1 ? 'ممتاز! إجابة كاملة ومتقنة 🎉' : ratio >= 0.8 ? 'أحسنت جداً! أداء متميز 👍' : ratio >= 0.6 ? 'جيد، اقتربت من الإجابة التامة ✨' : ratio >= 0.4 ? 'لا بأس، راجع الشروحات وأعد المحاولة 🔄' : 'اقرأ الشرح جيداً ثم حاول مجدداً 💪';
+    const stars = Array.from({ length: 5 }, (_, i) => h('span', { class: 'star' + (i < Math.round(score) ? ' filled' : ''), 'aria-hidden': 'true' }, '★'));
     const nextHref = ai < 4 ? `#/m/${mi}/s/${si}/a/${ai + 1}` : `#/m/${mi}/s/${si}/bilan`;
-    out.replaceChildren(h('section', { class: 'result', 'aria-label': 'Résultat' }, h('div', { class: 'top' }, h('div', { class: 'score' }, fmt(score), h('small', null, ' / 5')), h('div', null, h('h2', { style: 'margin:0' }, msg), h('p', { class: 'muted', style: 'margin:0' }, n === 1 ? 'Premier essai enregistré.' : `Essai n° ${n} · premier essai : ${fmt(first)}/5 · meilleur : ${fmt(best)}/5`))),
+    out.replaceChildren(h('section', { class: 'result' + (ratio === 1 ? ' perfect' : ''), 'aria-label': 'Résultat' },
+      h('div', { class: 'top' },
+        h('div', { class: 'score-box' },
+          h('div', { class: 'score' }, fmt(score), h('small', null, ' / 5')),
+          h('div', { class: 'star-rating', role: 'img', 'aria-label': `${score} étoiles sur 5` }, ...stars)),
+        h('div', null,
+          h('h2', { style: 'margin:0' }, msg),
+          h('p', { class: 'result-ar-msg', lang: 'ar', dir: 'rtl' }, arMsg),
+          h('p', { class: 'muted', style: 'margin:0' }, n === 1 ? 'Premier essai enregistré.' : `Essai n° ${n} · premier essai : ${fmt(first)}/5 · meilleur : ${fmt(best)}/5`))),
       h('ul', { class: 'fblist' }, res.items.map((it) => h('li', { class: it.info ? 'info' : it.ok ? 'ok' : 'ko' }, h('span', { class: 'ic', 'aria-hidden': 'true' }, it.info ? 'ℹ' : it.ok ? '✔' : '✖'), h('span', null, h('span', { class: 'vh' }, it.info ? 'Information : ' : it.ok ? 'Correct : ' : 'À revoir : '), it.msg)))),
       h('div', { class: 'row' }, h('button', { type: 'button', class: 'btn', onclick: () => { mount(); stage.scrollIntoView({ block: 'start' }); } }, '↻ Réessayer'), h('a', { class: 'btn primary', href: nextHref, style: 'text-decoration:none;display:inline-flex;align-items:center' }, ai < 4 ? 'Activité suivante →' : 'Voir le bilan de la séance →'))));
     out.firstChild.scrollIntoView({ block: 'nearest' });
