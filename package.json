@@ -12,7 +12,7 @@
     "serve:lan": "node scripts/lan-server.mjs",
     "capture:gifs": "node scripts/capture-activity-gifs.cjs"
   },
-  "author": "Yassine Boudjiali",
+  "author": "Yacine BOULYALI",
   "license": "ISC",
   "devDependencies": {
     "@fontsource/nunito": "^5.3.0",
