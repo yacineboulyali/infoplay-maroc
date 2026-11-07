@@ -16,6 +16,7 @@ copyFileSync(join(root, 'index.html'), join(dist, 'index.html'));
 copyFileSync(join(root, 'immersive.html'), join(dist, 'immersive.html'));
 cpSync(join(root, 'public/fonts'), join(dist, 'fonts'), { recursive: true });
 cpSync(join(root, 'public/images'), join(dist, 'images'), { recursive: true });
+for (const f of ['manifest.webmanifest', 'icon.svg']) copyFileSync(join(root, 'public', f), join(dist, f));
 for (const f of ['README.md', 'LICENSES.md']) { try { copyFileSync(join(root, f), join(dist, f)); } catch {} }
 copyFileSync(join(root, 'scripts/Lancer-InfoPlay.bat'), join(dist, 'Lancer-InfoPlay.bat'));
 copyFileSync(join(root, 'scripts/serve.ps1'), join(dist, 'serve.ps1'));

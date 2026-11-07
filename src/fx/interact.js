@@ -14,6 +14,11 @@ export function installInteractions(root = document) {
     const el = e.target.closest && e.target.closest('[data-tilt]'); if (!el || el.contains(e.relatedTarget)) return;
     el.classList.remove('tilting'); el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg');
   }, { passive: true });
+  // Téléphone : la consigne repliée se déplie au toucher.
+  root.addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('.activity-brief'); if (!b || e.target.closest('a,button')) return;
+    b.classList.toggle('open'); b.setAttribute('aria-expanded', String(b.classList.contains('open')));
+  });
   // Onde au clic sur les boutons.
   root.addEventListener('pointerdown', (e) => {
     const b = e.target.closest && e.target.closest('.btn, .chip, .pick, .rp-tab, .hud-btn'); if (!b || reduced()) return;

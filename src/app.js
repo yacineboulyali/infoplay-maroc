@@ -11,6 +11,7 @@ import { computeGame, bestTime, fmtTime, BADGES } from './fx/game.js';
 import { gameHud } from './fx/popup.js';
 import { presentResult, makeChrono } from './fx/flow.js';
 import { installInteractions, revealIn } from './fx/interact.js';
+import { fsButton, suggestFullscreen, autoHideHeader } from './fx/fullscreen.js';
 
 const store = createStore(localAdapter(), isActivityId);
 const app = document.getElementById('app');
@@ -88,6 +89,11 @@ function header(prof) {
   h('span', null, `Réseau local (${lanState.playerCount})`)
   );
 
+  // Sur téléphone, la navigation se replie derrière un bouton ☰ pour laisser l'écran au jeu.
+  const navToggle = h('button', { type: 'button', class: 'nav-toggle', 'aria-expanded': 'false', 'aria-controls': 'main-nav', 'aria-label': 'Ouvrir le menu', onclick: () => {
+    const open = !document.body.classList.contains('nav-open'); document.body.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', String(open)); navToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu'); navToggle.textContent = open ? '✕' : '☰';
+  } }, '☰');
   return h('header', { class: 'top' },
     h('div', { class: 'in' },
       h('a', { class: 'brand', href: '#/profils' },
@@ -95,7 +101,8 @@ function header(prof) {
         h('span', null, 'InfoPlay ', h('b', null, 'Maroc'))
       ),
       lanPill,
-      prof ? h('nav', { class: 'main', 'aria-label': 'Navigation principale' },
+      h('div', { class: 'top-tools' }, prof ? h('span', { class: 'who-mini', 'aria-hidden': 'true' }, avatarFor(prof.displayName)) : null, fsButton('fs-btn'), navToggle),
+      prof ? h('nav', { class: 'main', id: 'main-nav', 'aria-label': 'Navigation principale' },
         a('#/dash', 'Tableau de bord', 'dash'),
         a('#/progres', 'Mon progrès', 'progres'),
         a('#/multijoueur', 'Multijoueur LAN', 'multijoueur'),
@@ -105,7 +112,7 @@ function header(prof) {
         soundButton(prof),
         h('span', { class: 'who' }, '👤 ' + prof.displayName),
         h('button', { type: 'button', onclick: () => { store.logout(); go('#/profils'); } }, 'Changer')
-      ) : h('nav', { class: 'main' },
+      ) : h('nav', { class: 'main', id: 'main-nav', 'aria-label': 'Navigation principale' },
         a('#/multijoueur', 'Salon Multijoueur', 'multijoueur'),
         a('#/course', '🏁 Course', 'course'),
         a('#/suivi', '👀 Suivi enseignant', 'suivi'),
@@ -684,7 +691,8 @@ function activityScreen(mi, si, ai) {
       if (!hintBox.hidden) audio.play('hint');
       hintBtn.setAttribute('aria-expanded', String(!hintBox.hidden));
     },
-  }, '💡 Indice');
+    'aria-label': 'Indice',
+  }, h('span', { 'aria-hidden': 'true' }, '💡'), h('span', { class: 'lbl' }, ' Indice'));
 
   const challengeBtn = h('button', {
     type: 'button',
@@ -693,7 +701,8 @@ function activityScreen(mi, si, ai) {
       await lanManager.createChallenge(act.id, act.title);
       toast('⚡ Défi réseau lancé ! Les autres élèves sur le réseau ont été notifiés.');
     },
-  }, '⚡ Défier la classe');
+    'aria-label': 'Défier la classe',
+  }, h('span', { 'aria-hidden': 'true' }, '⚡'), h('span', { class: 'lbl' }, ' Défier la classe'));
 
   function mount() {
     stage.replaceChildren();
@@ -1069,6 +1078,9 @@ function render() {
 window.addEventListener('hashchange', render);
 installInterfaceSounds(document);
 installInteractions(document);
+autoHideHeader();
+window.addEventListener('hashchange', () => document.body.classList.remove('nav-open', 'hdr-hidden'));
+suggestFullscreen();
 window.addEventListener('error', () => toast('Une erreur est survenue. Recharge la page si besoin.'));
 
 // Rafraîchit les pages réseau en direct quand les élèves changent.

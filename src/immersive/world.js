@@ -23,7 +23,9 @@ export function webglAvailable() {
  */
 export function createWorld(host, { modules, onPick, onHover, reduced }) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  // Téléphones : résolution et ombres allégées pour rester fluide sans chauffer.
+  const lite = typeof matchMedia !== 'undefined' && matchMedia('(pointer: coarse)').matches;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, lite ? 1.3 : 1.75));
   renderer.setSize(host.clientWidth, host.clientHeight);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
@@ -68,7 +70,7 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
   // ---------- lumières ----------
   scene.add(new THREE.HemisphereLight('#c3ccff', '#c98b5a', 1.0));
   const sun = new THREE.DirectionalLight('#ffe0b5', 2.4); sun.position.set(28, 40, 18); sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -32, right: 32, top: 32, bottom: -32, near: 1, far: 120 }); sun.shadow.bias = -0.0005;
+  sun.shadow.mapSize.set(lite ? 1024 : 2048, lite ? 1024 : 2048); Object.assign(sun.shadow.camera, { left: -32, right: 32, top: 32, bottom: -32, near: 1, far: 120 }); sun.shadow.bias = -0.0005;
   scene.add(sun);
 
   // ---------- place centrale ----------
@@ -178,7 +180,7 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
   const isShown = (o) => { for (let x = o; x; x = x.parent) if (!x.visible) return false; return true; };
   const same = (a, b) => a && b && a.type === b.type && a.mi === b.mi && a.si === b.si;
   renderer.domElement.addEventListener('pointermove', (e) => {
-    if (interactionLocked) return;
+    if (interactionLocked || e.pointerType === 'touch') return; // pas de survol au doigt
     const t = pick(e); if (!same(t, hovered)) { hovered = t; renderer.domElement.style.cursor = t ? 'pointer' : ''; onHover && onHover(t, e); } else if (t) onHover && onHover(t, e);
   });
   renderer.domElement.addEventListener('pointerleave', () => { hovered = null; onHover && onHover(null); });
@@ -189,13 +191,15 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
   });
 
   // ---------- caméra ----------
-  let inset = 0; let flight = null; let focusMod = null; let focusSi = null; let interactionLocked = false; let lowPower = false;
+  let inset = 0; let insetB = 0; let flight = null; let focusMod = null; let focusSi = null; let interactionLocked = false; let lowPower = false;
   function flyTo(pos, target, after) {
     controls.autoRotate = false;
     if (reduced()) { camera.position.copy(pos); controls.target.copy(target); controls.update(); after && after(); return; }
     flight = { p0: camera.position.clone(), t0: controls.target.clone(), p1: pos, t1: target, start: performance.now(), dur: 1500, after };
     controls.enabled = false;
   }
+  // Écran en portrait (téléphone) : on recule la caméra pour garder la scène entière dans le cadre.
+  function fit() { const a = host.clientWidth / Math.max(1, host.clientHeight - insetB * 0.6); return a >= 1.2 ? 1 : Math.min(2.1, 1.2 / a); }
   function islandWorld(mi) { return islands[mi].g.position.clone(); }
   function showPortals(mi) {
     for (const id in portals) portals[id].forEach((x) => { x.wanted = Number(id) === mi; if (x.wanted) x.p.visible = true; });
@@ -204,21 +208,21 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
   const api = {
     focusHub() {
       focusMod = null; focusSi = null; showPortals(null); interactionLocked = false; lowPower = false;
-      flyTo(new THREE.Vector3(0, 19, 50), new THREE.Vector3(0, 0, 0), () => { controls.autoRotate = !reduced(); controls.autoRotateSpeed = 0.35; });
-      controls.minDistance = 14; controls.maxDistance = 75;
+      const k = fit(); flyTo(new THREE.Vector3(0, 19 * k, 50 * k), new THREE.Vector3(0, 0, 0), () => { controls.autoRotate = !reduced(); controls.autoRotateSpeed = 0.35; });
+      controls.minDistance = 14; controls.maxDistance = 75 * fit();
     },
     focusModule(mi) {
       focusMod = mi; focusSi = null; showPortals(mi); interactionLocked = false; lowPower = false;
       const c = islandWorld(mi); const d = islands[mi].dir;
-      flyTo(c.clone().add(d.clone().multiplyScalar(14)).add(new THREE.Vector3(0, 5, 0)), c.clone().add(new THREE.Vector3(0, 1.6, 0)));
-      controls.minDistance = 6; controls.maxDistance = 30;
+      const k = fit(); flyTo(c.clone().add(d.clone().multiplyScalar(14 * k)).add(new THREE.Vector3(0, 5 * k, 0)), c.clone().add(new THREE.Vector3(0, 1.6, 0)));
+      controls.minDistance = 6; controls.maxDistance = 30 * fit();
     },
     focusSession(mi, si) {
       focusMod = mi; focusSi = si; showPortals(mi); interactionLocked = false; lowPower = false;
       const pt = portals[mi][si - 1]; if (!pt) return;
       const c = islandWorld(mi); const wp = c.clone().add(pt.p.position);
-      flyTo(wp.clone().add(pt.outward.clone().multiplyScalar(4.6)).add(new THREE.Vector3(0, 1.7, 0)), wp.clone().add(new THREE.Vector3(0, 1.05, 0)));
-      controls.minDistance = 3; controls.maxDistance = 16;
+      const k = fit(); flyTo(wp.clone().add(pt.outward.clone().multiplyScalar(4.6 * k)).add(new THREE.Vector3(0, 1.7 * k, 0)), wp.clone().add(new THREE.Vector3(0, 1.05, 0)));
+      controls.minDistance = 3; controls.maxDistance = 16 * fit();
     },
     focusActivity(mi, si) {
       api.focusSession(mi, si); interactionLocked = true; lowPower = true;
@@ -239,10 +243,10 @@ export function createWorld(host, { modules, onPick, onHover, reduced }) {
       spawnBurst(at, perfect ? 260 : 120, perfect);
     },
     /** Largeur (px) masquée à droite par le panneau HTML : la scène se recentre sur la zone visible. */
-    setInset(px) { if (px !== inset) { inset = px; api.resize(); } },
+    setInset(px, bottom = 0) { if (px !== inset || bottom !== insetB) { inset = px; insetB = bottom; api.resize(); } },
     resize() {
-      const w = host.clientWidth, hh = host.clientHeight; const full = w + inset; camera.aspect = full / hh;
-      if (inset) camera.setViewOffset(full, hh, inset, 0, w, hh); else camera.clearViewOffset(); camera.updateProjectionMatrix();
+      const w = host.clientWidth, hh = host.clientHeight; const full = w + inset; const fullH = hh + insetB; camera.aspect = full / fullH;
+      if (inset || insetB) camera.setViewOffset(full, fullH, inset, insetB, w, hh); else camera.clearViewOffset(); camera.updateProjectionMatrix();
       renderer.setSize(w, hh); composer.setSize(w, hh); bloom.setSize(w / 2, hh / 2);
     },
     setHighlight(t) { hovered = t; },

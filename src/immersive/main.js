@@ -12,6 +12,7 @@ import { computeGame, bestTime, fmtTime, BADGES } from '../fx/game.js';
 import { gameHud } from '../fx/popup.js';
 import { presentResult, makeChrono } from '../fx/flow.js';
 import { installInteractions } from '../fx/interact.js';
+import { fsButton, suggestFullscreen } from '../fx/fullscreen.js';
 
 const store = createStore(localAdapter(), isActivityId);
 const KIND = { match: 'Associer', sort: 'Classer', order: 'Ordonner', fill: 'Compléter', quiz: 'Questions', hot: 'Repérer', asm: 'Assembler', net: 'Relier', robot: 'Robot 3D', prog: 'Algorithme', sim: 'Simulation' };
@@ -83,6 +84,7 @@ function syncWorld() {
 }
 
 // ---------- HUD ----------
+let hudOpen = false; let sheetOpen = false;
 function renderHud(prof, q) {
   const crumbs = [h('a', { href: '#/' }, '🏝 Place centrale')];
   if (q.mi) crumbs.push(h('span', { 'aria-hidden': 'true' }, '›'), h('a', { href: `#/m/${q.mi}` }, `Module ${q.mi}`));
@@ -94,10 +96,14 @@ function renderHud(prof, q) {
   const sound = prof ? h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(prof.preferences.soundEnabled), title: prof.preferences.soundEnabled ? 'Couper les sons' : 'Activer les sons', onclick: () => { store.updateProfile(prof.id, { preferences: { soundEnabled: !prof.preferences.soundEnabled } }); applyPrefs(store.active()); render(); } }, prof.preferences.soundEnabled ? '🔊' : '🔇') : null;
   const music = h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(audio.ambientOn), title: audio.ambientOn ? 'Couper l’ambiance sonore' : 'Activer l’ambiance sonore', onclick: () => { const v = !audio.ambientOn; try { localStorage.setItem(AMB_KEY, v ? '1' : '0'); } catch {} audio.ambient(v); render(); } }, audio.ambientOn ? '🎵' : '🎶');
   const motion = prof ? h('button', { type: 'button', class: 'hud-btn', 'aria-pressed': String(!!prof.preferences.reducedMotion), title: 'Réduire les animations', onclick: () => { store.updateProfile(prof.id, { preferences: { reducedMotion: !prof.preferences.reducedMotion } }); applyPrefs(store.active()); render(); } }, prof.preferences.reducedMotion ? '⏸' : '✨') : null;
-  $.hud.replaceChildren(h('div', { class: 'hud-in' },
-    h('a', { class: 'hud-brand', href: '#/' }, h('span', { class: 'logo', 'aria-hidden': 'true' }, '🎮'), h('span', null, 'InfoPlay ', h('b', null, 'Immersif'))),
+  // Téléphone : seuls la marque, « retour », le plein écran et ⋯ restent visibles ; le reste se replie.
+  const up = q.ai || q.bilan ? `#/m/${q.mi}/s/${q.si}` : q.si ? `#/m/${q.mi}` : q.mi ? '#/' : null;
+  const more = h('button', { type: 'button', class: 'hud-btn hud-more', 'aria-expanded': String(hudOpen), 'aria-controls': 'hud-right', 'aria-label': hudOpen ? 'Masquer les options' : 'Afficher les options', onclick: () => { hudOpen = !hudOpen; renderHud(store.active(), parse()); } }, hudOpen ? '✕' : '⋯');
+  $.hud.replaceChildren(h('div', { class: 'hud-in' + (hudOpen ? ' open' : '') },
+    h('a', { class: 'hud-brand', href: '#/' }, h('span', { class: 'logo', 'aria-hidden': 'true' }, '🎮'), h('span', { class: 'hud-name' }, 'InfoPlay ', h('b', null, 'Immersif'))),
     h('nav', { class: 'hud-crumbs', 'aria-label': 'Fil d’Ariane' }, crumbs),
-    h('div', { class: 'hud-right' }, ghud, pts, sound, prof && prof.preferences.soundEnabled ? music : null, motion,
+    h('div', { class: 'hud-quick' }, up ? h('a', { class: 'hud-btn hud-up', href: up, 'aria-label': 'Revenir en arrière' }, '‹') : null, fsButton('hud-btn fs-btn'), more),
+    h('div', { class: 'hud-right', id: 'hud-right' }, ghud, pts, sound, prof && prof.preferences.soundEnabled ? music : null, motion,
       prof ? h('button', { type: 'button', class: 'hud-chip as-btn', title: 'Changer d’élève', onclick: () => { store.logout(); render(); } }, '👤 ', prof.displayName) : null,
       h('a', { class: 'hud-btn wide', href: 'index.html', title: 'Revenir à la première page' }, '⇦ Accueil'))));
 }
@@ -180,7 +186,7 @@ function openActivity(prof, mi, si, ai) {
   const chrono = makeChrono();
   let submitted = false;
   const checkBtn = h('button', { type: 'button', class: 'btn primary check-btn', onclick: submit, 'aria-keyshortcuts': 'Control+Enter' }, h('span', null, '✔ Vérifier'), h('kbd', { 'aria-hidden': 'true' }, 'Ctrl+⏎'));
-  const hintBtn = h('button', { type: 'button', class: 'btn ghost', 'aria-expanded': 'false', onclick: () => { hintBox.hidden = !hintBox.hidden; if (!hintBox.hidden) audio.play('hint'); hintBtn.setAttribute('aria-expanded', String(!hintBox.hidden)); } }, '💡 Indice');
+  const hintBtn = h('button', { type: 'button', class: 'btn ghost', 'aria-expanded': 'false', onclick: () => { hintBox.hidden = !hintBox.hidden; if (!hintBox.hidden) audio.play('hint'); hintBtn.setAttribute('aria-expanded', String(!hintBox.hidden)); }, 'aria-label': 'Indice' }, h('span', { 'aria-hidden': 'true' }, '💡'), h('span', { class: 'lbl' }, ' Indice'));
   const make = act.type === 'robot' ? robot3dGame : engineOf(act.mech);
   function mount() { if (eng && eng.dispose) eng.dispose(); stage.replaceChildren(); stage.inert = false; out.replaceChildren(); submitted = false; checkBtn.disabled = false; eng = make(stage, act.data); chrono.start(); if (window.__ip) window.__ip.eng = eng; }
   async function submit() {
@@ -238,7 +244,8 @@ function render() {
   if (!prof) { closeHolo(); $.panel.hidden = true; updateInset(); return; }
   $.panel.hidden = false;
   const content = q.si ? (q.bilan ? summaryPanel(prof, q.mi, q.si) : sessionPanel(prof, q.mi, q.si)) : q.mi ? modulePanel(prof, q.mi) : hubPanel(prof);
-  $.panel.replaceChildren(h('div', { class: 'panel-in glass' }, content));
+  const handle = h('button', { type: 'button', class: 'sheet-handle', 'aria-expanded': String(sheetOpen), 'aria-label': sheetOpen ? 'Réduire le panneau' : 'Agrandir le panneau', onclick: () => { sheetOpen = !sheetOpen; document.body.classList.toggle('sheet-open', sheetOpen); handle.setAttribute('aria-expanded', String(sheetOpen)); handle.setAttribute('aria-label', sheetOpen ? 'Réduire le panneau' : 'Agrandir le panneau'); setTimeout(updateInset, 320); } }, h('span', { 'aria-hidden': 'true' }));
+  $.panel.replaceChildren(h('div', { class: 'panel-in glass' }, handle, content));
   $.panel.scrollTop = 0;
   if (q.ai) { openActivity(prof, q.mi, q.si, q.ai); setTimeout(() => $.holo.querySelector('h1')?.focus({ preventScroll: true }), 50); }
   else { closeHolo(); const t = $.panel.querySelector('h1'); if (t) t.focus({ preventScroll: true }); }
@@ -250,8 +257,10 @@ function render() {
 // Le panneau de droite masque une partie de la scène : on recentre la caméra sur la zone libre.
 function updateInset() {
   if (!world) return;
-  const open = !$.panel.hidden && !document.body.classList.contains('holo-open') && !document.body.classList.contains('gated') && window.innerWidth > 760;
-  world.setInset(open ? Math.round($.panel.getBoundingClientRect().width + 16) : 0);
+  const open = !$.panel.hidden && !document.body.classList.contains('holo-open') && !document.body.classList.contains('gated');
+  // Ordinateur : panneau à droite → décalage horizontal. Téléphone : feuille du bas → décalage vertical.
+  if (window.innerWidth > 760) world.setInset(open ? Math.round($.panel.getBoundingClientRect().width + 16) : 0, 0);
+  else world.setInset(0, open ? Math.round(window.innerHeight - $.panel.getBoundingClientRect().top) : 0);
 }
 window.addEventListener('resize', updateInset);
 window.addEventListener('hashchange', render);
@@ -261,6 +270,9 @@ document.addEventListener('keydown', (e) => {
 });
 installInterfaceSounds(document);
 installInteractions(document);
+window.addEventListener('hashchange', () => { if (hudOpen) { hudOpen = false; } });
+suggestFullscreen({ delay: 1600 });
+document.body.classList.toggle('sheet-open', sheetOpen);
 if (/[?&]test=1/.test(location.search)) window.__ip = { store, CATALOG, ACTIVITIES, engineOf, world };
 render();
 requestAnimationFrame(() => { const l = document.querySelector('.loader'); if (l) { l.classList.add('gone'); setTimeout(() => l.remove(), 700); } });

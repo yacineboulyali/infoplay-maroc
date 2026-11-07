@@ -1,0 +1,16 @@
+{
+  "name": "InfoPlay Maroc",
+  "short_name": "InfoPlay",
+  "description": "Apprendre l'informatique en jouant — collège, hors ligne.",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#1e1b4b",
+  "theme_color": "#1e1b4b",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
