@@ -1,0 +1,204 @@
+[
+  {
+    "file": "qa/batch-164-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s2-a2-q02",
+        "question": "📁 Dossier",
+        "activity": "Associe icônes et rôles"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s2-a2-q03",
+        "question": "📄 Fichier",
+        "activity": "Associe icônes et rôles"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s2-a2-q04",
+        "question": "🔗 Raccourci",
+        "activity": "Associe icônes et rôles"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s2-a2-q05",
+        "question": "⊞ Démarrer",
+        "activity": "Associe icônes et rôles"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s2-a3-q01",
+        "question": "Réduis la fenêtre dans la barre des tâches.",
+        "activity": "Manipule la fenêtre"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s2-a3-q02",
+        "question": "Rouvre la fenêtre depuis la barre des tâches.",
+        "activity": "Manipule la fenêtre"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s2-a3-q03",
+        "question": "Agrandis la fenêtre pour occuper tout l’écran.",
+        "activity": "Manipule la fenêtre"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s2-a3-q04",
+        "question": "Restaure la fenêtre à sa taille précédente.",
+        "activity": "Manipule la fenêtre"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s2-a3-q05",
+        "question": "Ferme la fenêtre.",
+        "activity": "Manipule la fenêtre"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s2-a4-q01",
+        "question": "Tu veux lancer un programme qui n’est pas sur le bureau. Où cliques‑tu ?",
+        "activity": "Mission Bureau"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s2-a4-q02",
+        "question": "Tu as trop de fenêtres ouvertes. Comment passer de l’une à l’autre ?",
+        "activity": "Mission Bureau"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s2-a4-q03",
+        "question": "Tu as supprimé un fichier par erreur (il est dans la corbeille). Que faire ?",
+        "activity": "Mission Bureau"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s2-a4-q04",
+        "question": "Comment connaître l’heure et l’état du réseau ?",
+        "activity": "Mission Bureau"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s2-a4-q05",
+        "question": "Tu veux un accès rapide à un document souvent utilisé. Quelle solution ?",
+        "activity": "Mission Bureau"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s3-a1-q01",
+        "question": "Un fichier est :",
+        "activity": "Fichier, dossier ou raccourci ?"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s3-a1-q02",
+        "question": "Un dossier sert à :",
+        "activity": "Fichier, dossier ou raccourci ?"
+      }
+    ]
+  },
+  {
+    "file": "qa/batch-164-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s3-a1-q03",
+        "question": "Un raccourci est :",
+        "activity": "Fichier, dossier ou raccourci ?"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s3-a1-q04",
+        "question": "Quelle icône représente un dossier ?",
+        "activity": "Fichier, dossier ou raccourci ?"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s3-a1-q05",
+        "question": "Si on supprime un raccourci, que devient le fichier d’origine ?",
+        "activity": "Fichier, dossier ou raccourci ?"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s3-a2-q01",
+        "question": ".docx",
+        "activity": "Extensions et types de fichiers"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s3-a2-q02",
+        "question": ".xlsx",
+        "activity": "Extensions et types de fichiers"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s3-a2-q03",
+        "question": ".jpg",
+        "activity": "Extensions et types de fichiers"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s3-a2-q04",
+        "question": ".mp3",
+        "activity": "Extensions et types de fichiers"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s3-a2-q05",
+        "question": ".mp4",
+        "activity": "Extensions et types de fichiers"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s3-a3-q01",
+        "question": "cours_geometrie.docx",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s3-a3-q02",
+        "question": "fractions.xlsx",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s3-a3-q03",
+        "question": "theoreme_Pythagore.pdf",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s3-a3-q04",
+        "question": "voyage_Marrakech.jpg",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s3-a3-q05",
+        "question": "classe_2AC.png",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s3-a3-q06",
+        "question": "portrait_Atlas.jpg",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s3-a3-q07",
+        "question": "chanson_ecole.mp3",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s3-a3-q08",
+        "question": "concert.mp3",
+        "activity": "Organise tes fichiers"
+      }
+    ]
+  }
+]

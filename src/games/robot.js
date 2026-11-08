@@ -1,5 +1,6 @@
 import { h, reduced } from '../utils/dom.js';
 import { audio } from '../audio/audio.js';
+import { studentIllustration } from '../utils/student-illustrations.js';
 
 const DR = [[0, 1], [1, 0], [0, -1], [-1, 0]];
 export function parseLevel(rows) {
@@ -49,8 +50,9 @@ export function robotGame(root, d) {
     counter.textContent = `${p.length} / ${lvs[cur].max} commandes`;
   }
   const counter = h('span', { class: 'muted' });
+  const illustration = h('div', { class: 'student-level-illustration' });
   function stop() { if (timer) { clearInterval(timer); timer = null; } }
-  function draw() { drawTabs(); drawSeq(); drawBoard({ r: lvs[cur].start[0], c: lvs[cur].start[1], d: 0 }); msg.textContent = ''; }
+  function draw() { illustration.replaceChildren(...[studentIllustration(d, cur)].filter(Boolean)); drawTabs(); drawSeq(); drawBoard({ r: lvs[cur].start[0], c: lvs[cur].start[1], d: 0 }); msg.textContent = ''; }
   function add(c) { if (progs[cur].length >= lvs[cur].max) { msg.textContent = 'Programme complet : retire une commande ou simplifie.'; return; } progs[cur].push(c); drawSeq(); }
   function run() {
     stop(); const lv = lvs[cur]; const res = runProgram(lv, progs[cur]); let k = 0;
@@ -74,6 +76,7 @@ export function robotGame(root, d) {
     h('button', { type: 'button', class: 'btn ghost', onclick: () => { progs[cur].pop(); drawSeq(); } }, '⌫ Retirer la dernière'), h('button', { type: 'button', class: 'btn ghost', onclick: () => { progs[cur] = []; stop(); draw(); } }, 'Tout effacer'),
     h('button', { type: 'button', class: 'btn primary', onclick: run }, '▶ Exécuter'));
   root.append(h('p', { class: 'muted' }, 'Le robot démarre tourné vers la droite (▶). Construis la suite de commandes, exécute-la autant de fois que tu veux, puis clique sur « Vérifier » quand tu as terminé.'), tabs, h('div', { class: 'rwrap' }, board, h('div', null, h('h3', { class: 'small-h' }, 'Programme'), seq, counter)), bar, msg);
+  root.prepend(illustration);
   draw();
   return {
     check() {

@@ -1,0 +1,406 @@
+[
+  {
+    "file": "qa/review-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m1-s1-a2-q07",
+        "question": "Trier des noms par ordre alphabétique",
+        "activity": "Information ou traitement ?"
+      },
+      {
+        "cell": 2,
+        "id": "m1-s2-a1-q06",
+        "question": "Écran",
+        "activity": "Construis le schéma"
+      },
+      {
+        "cell": 3,
+        "id": "m1-s2-a1-q07",
+        "question": "Haut-parleurs",
+        "activity": "Construis le schéma"
+      },
+      {
+        "cell": 4,
+        "id": "m1-s2-a1-q08",
+        "question": "Imprimante",
+        "activity": "Construis le schéma"
+      },
+      {
+        "cell": 5,
+        "id": "m1-s2-a1-q09",
+        "question": "Disque dur / SSD",
+        "activity": "Construis le schéma"
+      },
+      {
+        "cell": 6,
+        "id": "m1-s2-a1-q10",
+        "question": "Clé USB",
+        "activity": "Construis le schéma"
+      },
+      {
+        "cell": 7,
+        "id": "m1-s2-a2-q01",
+        "question": "Clavier",
+        "activity": "Relie les périphériques"
+      },
+      {
+        "cell": 8,
+        "id": "m1-s2-a2-q02",
+        "question": "Souris",
+        "activity": "Relie les périphériques"
+      },
+      {
+        "cell": 9,
+        "id": "m1-s2-a2-q03",
+        "question": "Écran",
+        "activity": "Relie les périphériques"
+      },
+      {
+        "cell": 10,
+        "id": "m1-s2-a2-q04",
+        "question": "Imprimante",
+        "activity": "Relie les périphériques"
+      },
+      {
+        "cell": 11,
+        "id": "m1-s2-a2-q05",
+        "question": "Disque dur",
+        "activity": "Relie les périphériques"
+      },
+      {
+        "cell": 12,
+        "id": "m1-s2-a3-q01",
+        "question": "Tu tapes la touche A sur le clavier.",
+        "activity": "Le parcours de l’information"
+      },
+      {
+        "cell": 13,
+        "id": "m1-s2-a3-q02",
+        "question": "Le clavier envoie le signal à l’unité centrale.",
+        "activity": "Le parcours de l’information"
+      },
+      {
+        "cell": 14,
+        "id": "m1-s2-a3-q03",
+        "question": "Le processeur traite l’information avec la mémoire.",
+        "activity": "Le parcours de l’information"
+      },
+      {
+        "cell": 15,
+        "id": "m1-s2-a3-q04",
+        "question": "Le système prépare l’image de la lettre.",
+        "activity": "Le parcours de l’information"
+      },
+      {
+        "cell": 16,
+        "id": "m1-s2-a3-q05",
+        "question": "La lettre A s’affiche sur l’écran.",
+        "activity": "Le parcours de l’information"
+      }
+    ]
+  },
+  {
+    "file": "qa/review-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m1-s2-a4-q01",
+        "question": "Saisis le nombre 12 dans la première case (entrée).",
+        "activity": "Mission ordinateur"
+      },
+      {
+        "cell": 2,
+        "id": "m1-s2-a4-q02",
+        "question": "Saisis le nombre 30 dans la deuxième case.",
+        "activity": "Mission ordinateur"
+      },
+      {
+        "cell": 3,
+        "id": "m1-s2-a4-q03",
+        "question": "Lance le traitement : clique sur « Additionner ».",
+        "activity": "Mission ordinateur"
+      },
+      {
+        "cell": 4,
+        "id": "m1-s2-a4-q04",
+        "question": "Fais afficher le résultat sur l’écran (sortie).",
+        "activity": "Mission ordinateur"
+      },
+      {
+        "cell": 5,
+        "id": "m1-s2-a4-q05",
+        "question": "Conserve le résultat dans le stockage.",
+        "activity": "Mission ordinateur"
+      },
+      {
+        "cell": 6,
+        "id": "m1-s3-a1-q01",
+        "question": "Clique sur la mémoire vive (RAM).",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 7,
+        "id": "m1-s3-a1-q02",
+        "question": "Clique sur le processeur (CPU).",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 8,
+        "id": "m1-s3-a1-q03",
+        "question": "Clique sur la carte mère.",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 9,
+        "id": "m1-s3-a1-q04",
+        "question": "Clique sur l’unité de stockage SSD.",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 10,
+        "id": "m1-s3-a1-q05",
+        "question": "Clique sur l’alimentation.",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 11,
+        "id": "m1-s3-a2-q01",
+        "question": "Souris",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 12,
+        "id": "m1-s3-a2-q02",
+        "question": "Microphone",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 13,
+        "id": "m1-s3-a2-q03",
+        "question": "Scanner",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 14,
+        "id": "m1-s3-a2-q04",
+        "question": "Vidéoprojecteur",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 15,
+        "id": "m1-s3-a2-q05",
+        "question": "Haut-parleurs",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 16,
+        "id": "m1-s3-a2-q06",
+        "question": "Écran tactile",
+        "activity": "Classe les périphériques"
+      }
+    ]
+  },
+  {
+    "file": "qa/review-003.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m1-s3-a2-q07",
+        "question": "Casque avec micro",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 2,
+        "id": "m1-s3-a2-q08",
+        "question": "Imprimante multifonction",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 3,
+        "id": "m1-s3-a2-q09",
+        "question": "Clé USB",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 4,
+        "id": "m1-s3-a2-q10",
+        "question": "Disque dur externe",
+        "activity": "Classe les périphériques"
+      },
+      {
+        "cell": 5,
+        "id": "m1-s3-a3-q01",
+        "question": "Carte mère",
+        "activity": "Assemble l’ordinateur"
+      },
+      {
+        "cell": 6,
+        "id": "m1-s3-a3-q02",
+        "question": "Processeur (CPU)",
+        "activity": "Assemble l’ordinateur"
+      },
+      {
+        "cell": 7,
+        "id": "m1-s3-a3-q03",
+        "question": "Mémoire vive (RAM)",
+        "activity": "Assemble l’ordinateur"
+      },
+      {
+        "cell": 8,
+        "id": "m1-s3-a3-q04",
+        "question": "Disque SSD",
+        "activity": "Assemble l’ordinateur"
+      },
+      {
+        "cell": 9,
+        "id": "m1-s3-a3-q05",
+        "question": "Ventilateur",
+        "activity": "Assemble l’ordinateur"
+      },
+      {
+        "cell": 10,
+        "id": "m1-s3-a3-q06",
+        "question": "Alimentation",
+        "activity": "Assemble l’ordinateur"
+      },
+      {
+        "cell": 11,
+        "id": "m1-s3-a4-q01",
+        "question": "L’ordinateur est très lent quand on ouvre plusieurs programmes lourds. Quel composant ajouter en priorité ?",
+        "activity": "Mission dépannage"
+      },
+      {
+        "cell": 12,
+        "id": "m1-s3-a4-q02",
+        "question": "Le disque est plein : impossible d’enregistrer de nouveaux fichiers. Que faire ?",
+        "activity": "Mission dépannage"
+      },
+      {
+        "cell": 13,
+        "id": "m1-s3-a4-q03",
+        "question": "Un élève veut écouter une vidéo mais n’entend rien. Quel périphérique manque ?",
+        "activity": "Mission dépannage"
+      },
+      {
+        "cell": 14,
+        "id": "m1-s3-a4-q04",
+        "question": "L’ordinateur chauffe beaucoup et ralentit. Quel élément vérifier ?",
+        "activity": "Mission dépannage"
+      },
+      {
+        "cell": 15,
+        "id": "m1-s3-a4-q05",
+        "question": "Le professeur veut projeter la leçon au tableau. Quel périphérique de sortie choisir ?",
+        "activity": "Mission dépannage"
+      },
+      {
+        "cell": 16,
+        "id": "m1-s4-a1-q01",
+        "question": "Windows",
+        "activity": "Associe les logiciels"
+      }
+    ]
+  },
+  {
+    "file": "qa/review-004.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m1-s4-a1-q02",
+        "question": "Android",
+        "activity": "Associe les logiciels"
+      },
+      {
+        "cell": 2,
+        "id": "m1-s4-a1-q03",
+        "question": "Writer",
+        "activity": "Associe les logiciels"
+      },
+      {
+        "cell": 3,
+        "id": "m1-s4-a1-q04",
+        "question": "Calc",
+        "activity": "Associe les logiciels"
+      },
+      {
+        "cell": 4,
+        "id": "m1-s4-a1-q05",
+        "question": "Navigateur web",
+        "activity": "Associe les logiciels"
+      },
+      {
+        "cell": 5,
+        "id": "m1-s4-a2-q01",
+        "question": "Windows",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 6,
+        "id": "m1-s4-a2-q02",
+        "question": "Linux",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 7,
+        "id": "m1-s4-a2-q03",
+        "question": "Android",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 8,
+        "id": "m1-s4-a2-q04",
+        "question": "macOS",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 9,
+        "id": "m1-s4-a2-q05",
+        "question": "iOS",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 10,
+        "id": "m1-s4-a2-q06",
+        "question": "Writer",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 11,
+        "id": "m1-s4-a2-q07",
+        "question": "Calc",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 12,
+        "id": "m1-s4-a2-q08",
+        "question": "Navigateur web",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 13,
+        "id": "m1-s4-a2-q09",
+        "question": "Lecteur de musique",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 14,
+        "id": "m1-s4-a2-q10",
+        "question": "Logiciel de dessin",
+        "activity": "Classe les logiciels"
+      },
+      {
+        "cell": 15,
+        "id": "m1-s4-a3-q01",
+        "question": "Tu dois écrire une lettre à la directrice. Quel outil choisis‑tu ?",
+        "activity": "Trouve le bon outil"
+      },
+      {
+        "cell": 16,
+        "id": "m1-s4-a3-q02",
+        "question": "Tu veux calculer les moyennes de la classe. Quel outil ?",
+        "activity": "Trouve le bon outil"
+      }
+    ]
+  }
+]

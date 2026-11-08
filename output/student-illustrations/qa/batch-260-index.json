@@ -1,0 +1,204 @@
+[
+  {
+    "file": "qa/batch-260-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s6-a3-q02",
+        "question": "Tout le texte est en gras : on ne distingue plus l’important. Que faire ?",
+        "activity": "Répare le paragraphe"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s6-a3-q03",
+        "question": "Le texte est en jaune clair sur fond blanc, illisible. Que faire ?",
+        "activity": "Répare le paragraphe"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s6-a3-q04",
+        "question": "La date est mal placée. Pour l’aligner à droite, on utilise :",
+        "activity": "Répare le paragraphe"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s6-a3-q05",
+        "question": "Le paragraphe est écrit en taille 4, trop petit. Que faire ?",
+        "activity": "Répare le paragraphe"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s6-a4-q01",
+        "question": "Sélectionne le titre et mets-le en gras.",
+        "activity": "Mission Designer"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s6-a4-q02",
+        "question": "Centre le titre.",
+        "activity": "Mission Designer"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s6-a4-q03",
+        "question": "Mets le titre en taille 24.",
+        "activity": "Mission Designer"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s6-a4-q04",
+        "question": "Mets le titre en rouge.",
+        "activity": "Mission Designer"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s6-a4-q05",
+        "question": "Sélectionne le paragraphe et mets-le en italique.",
+        "activity": "Mission Designer"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s7-a1-q01",
+        "question": "Quel objet permet d’illustrer un texte avec une photo ?",
+        "activity": "Image, tableau ou forme ?"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s7-a1-q02",
+        "question": "Quel objet range des données en lignes et en colonnes ?",
+        "activity": "Image, tableau ou forme ?"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s7-a1-q03",
+        "question": "Un cercle, un rectangle ou une flèche sont des :",
+        "activity": "Image, tableau ou forme ?"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s7-a1-q04",
+        "question": "Quel onglet contient les commandes pour insérer image, tableau et forme ?",
+        "activity": "Image, tableau ou forme ?"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s7-a1-q05",
+        "question": "Pour numéroter les pages, on choisit :",
+        "activity": "Image, tableau ou forme ?"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s7-a2-q01",
+        "question": "Image",
+        "activity": "Objet et utilité"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s7-a2-q02",
+        "question": "Tableau",
+        "activity": "Objet et utilité"
+      }
+    ]
+  },
+  {
+    "file": "qa/batch-260-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s7-a2-q03",
+        "question": "Forme",
+        "activity": "Objet et utilité"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s7-a2-q04",
+        "question": "Zone de texte",
+        "activity": "Objet et utilité"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s7-a2-q05",
+        "question": "Numéro de page",
+        "activity": "Objet et utilité"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s7-a3-q01",
+        "question": "Titre de l’affiche",
+        "activity": "Compose l’affiche"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s7-a3-q02",
+        "question": "Image principale",
+        "activity": "Compose l’affiche"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s7-a3-q03",
+        "question": "Texte de présentation",
+        "activity": "Compose l’affiche"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s7-a3-q04",
+        "question": "Tableau des horaires",
+        "activity": "Compose l’affiche"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s7-a3-q05",
+        "question": "Coordonnées de contact en bas de page",
+        "activity": "Compose l’affiche"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s7-a4-q01",
+        "question": "Insère une image.",
+        "activity": "Mission Affiche"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s7-a4-q02",
+        "question": "Insère un tableau.",
+        "activity": "Mission Affiche"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s7-a4-q03",
+        "question": "Insère une forme.",
+        "activity": "Mission Affiche"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s7-a4-q04",
+        "question": "Centre le titre.",
+        "activity": "Mission Affiche"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s7-a4-q05",
+        "question": "Mets le titre en taille 18 ou plus.",
+        "activity": "Mission Affiche"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s8-a1-q01",
+        "question": "Marges",
+        "activity": "Réglages de page"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s8-a1-q02",
+        "question": "Orientation",
+        "activity": "Réglages de page"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s8-a1-q03",
+        "question": "Format du papier",
+        "activity": "Réglages de page"
+      }
+    ]
+  }
+]

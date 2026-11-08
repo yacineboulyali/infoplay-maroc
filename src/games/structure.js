@@ -1,6 +1,7 @@
 import { h, shuffle } from '../utils/dom.js';
 import { artFor, visualLabel } from './basic.js';
 import { audio } from '../audio/audio.js';
+import { studentIllustration } from '../utils/student-illustrations.js';
 
 // ---- Assemblage 2,5D de l'ordinateur (CSS) ----
 export function asmGame(root, d) {
@@ -18,7 +19,7 @@ export function asmGame(root, d) {
     put[i] = sel; used.add(sel); sel = null; live.textContent = ''; audio.play('snap'); draw();
   }
   function draw() {
-    tray.replaceChildren(...parts.filter((p) => !used.has(p)).map((p) => h('button', { type: 'button', class: 'chip' + (artFor(d.parts[p].name) ? ' has-art' : '') + (sel === p ? ' sel' : ''), 'aria-pressed': String(sel === p), onclick: () => { sel = sel === p ? null : p; if (sel != null) audio.play('select'); draw(); } }, visualLabel(d.parts[p].name))));
+    tray.replaceChildren(...parts.filter((p) => !used.has(p)).map((p) => h('button', { type: 'button', class: 'chip' + (studentIllustration(d, p) || artFor(d.parts[p].name) ? ' has-art' : '') + (sel === p ? ' sel' : ''), 'aria-pressed': String(sel === p), onclick: () => { sel = sel === p ? null : p; if (sel != null) audio.play('select'); draw(); } }, visualLabel(d.parts[p].name, null, studentIllustration(d, p)))));
     if (!tray.children.length) tray.append(h('em', { class: 'muted' }, 'Tous les composants sont posés.'));
     slotEls.forEach((el, i) => { const p = put[i]; el.className = 'slot' + (p != null ? ' filled' : '') + (i === 0 ? ' base' : '');
       el.replaceChildren(p != null ? h('span', { class: 'placed' }, d.parts[p].name) : h('span', { class: 'slot-hint' }, d.slots[i].hint));
@@ -45,7 +46,7 @@ export function netGame(root, d) {
   const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', '0 0 100 100'); svg.setAttribute('preserveAspectRatio', 'none'); svg.setAttribute('class', 'netlines'); svg.setAttribute('aria-hidden', 'true');
   const live = h('p', { class: 'hint-line', 'aria-live': 'polite' });
   const list = h('ul', { class: 'netlist', 'aria-label': 'Câbles branchés' });
-  const btns = d.devices.map((x) => h('button', { type: 'button', class: 'node', style: `left:${x.x}%;top:${x.y}%`, onclick: () => click(x.id) }, h('span', { class: 'ico' }, x.icon), h('span', null, x.label)));
+  const btns = d.devices.map((x, i) => h('button', { type: 'button', class: 'node', style: `left:${x.x}%;top:${x.y}%`, onclick: () => click(x.id) }, studentIllustration(d, i) || h('span', { class: 'ico' }, x.icon), h('span', null, x.label)));
   const board = h('div', { class: 'netboard' }, svg, btns);
   function click(id) {
     if (sel == null) { sel = id; audio.play('select'); live.textContent = `${dev[id].label} sélectionné : choisis l’équipement à relier.`; }

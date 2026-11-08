@@ -1,3 +1,5 @@
+import { officeArt } from './visuals.js';
+import { semanticIcon } from '../utils/semantic-icons.js';
 // Écrans du parcours M205 : tableau de bord carrière, révision espacée et Défi mixte.
 import { h, shuffle, celebrate, reduced } from '../utils/dom.js';
 import { arHint } from '../i18n/arhint.js';
@@ -51,6 +53,7 @@ export function proHub({ prof, rec }) {
     h('div', { class: 'pro-parts' }, PRO_PARTS.map((p) => {
       const ps = moduleStats(p, rec); const cert = ps.n && ps.sessionsDone === p.sessions.length && ps.best / ps.max >= 0.7;
       return h('section', { class: 'card pro-part part-' + p.key },
+        officeArt(p.label, p.key),
         h('header', null, h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, p.icon), h('div', null, h('h3', null, p.label), h('small', { class: 'muted' }, `${ps.done}/${ps.n} activités · ${fmt(ps.best)}/${ps.max} pts`)),
           h('span', { class: 'pill ' + (cert ? 'done' : '') , title: cert ? 'Toutes les séances terminées avec au moins 70 %' : 'Termine toutes les séances avec au moins 70 %' }, cert ? '🎓 ' + p.cert : '🔒 Certificat')),
         h('ol', { class: 'pp-nodes' }, p.sessions.map((s) => { const lv = mastery(s, rec, prof.id); const ss = sessionStats(s, rec);
@@ -101,10 +104,11 @@ function cardView(card, { onAnswer, confidence = true }) {
     if (answered) return; answered = true; const ok = o === card.answer;
     buttons.forEach((b) => { b.disabled = true; if (b.textContent === card.answer) b.classList.add('ok'); else if (b.textContent === o) b.classList.add('ko'); });
     onAnswer(ok, conf, fb);
-  } }, o));
+  } }, semanticIcon(o), h('span', null, o)));
   return h('div', { class: 'flash' },
     h('p', { class: 'flash-meta' }, h('span', { class: 'pill' }, card.kind), ' ', h('small', { class: 'muted' }, `Séance ${card.sessionIndex} · ${card.actTitle}`), card.isNew ? h('span', { class: 'pill new' }, 'Nouvelle') : card.box != null ? h('span', { class: 'pill' }, `Boîte ${card.box}`) : null),
     h('h2', { class: 'flash-q' }, card.q),
+    officeArt(card.q, PRO.sessions[card.sessionIndex - 1].part),
     confidence ? h('div', { class: 'conf', role: 'group', 'aria-label': 'Ta certitude avant de répondre' }, h('span', { class: 'muted' }, 'Avant de répondre, ta certitude :'), ...confBtns) : null,
     h('div', { class: 'card-opts' }, buttons), fb);
 }

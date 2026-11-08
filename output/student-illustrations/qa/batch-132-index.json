@@ -1,0 +1,204 @@
+[
+  {
+    "file": "qa/batch-132-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m1-s4-a4-q05",
+        "question": "Pour créer l’affiche de la fête de l’école, on utilise un [blank].",
+        "activity": "Mission école numérique"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s1-a1-q01",
+        "question": "Gestion des programmes",
+        "activity": "Associe fonctions et définitions"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s1-a1-q02",
+        "question": "Gestion de la mémoire",
+        "activity": "Associe fonctions et définitions"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s1-a1-q03",
+        "question": "Gestion des fichiers",
+        "activity": "Associe fonctions et définitions"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s1-a1-q04",
+        "question": "Gestion des périphériques",
+        "activity": "Associe fonctions et définitions"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s1-a1-q05",
+        "question": "Interface utilisateur",
+        "activity": "Associe fonctions et définitions"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s1-a2-q01",
+        "question": "Lequel de ces logiciels est un système d’exploitation ?",
+        "activity": "Identifie les systèmes d’exploitation"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s1-a2-q02",
+        "question": "Quel système équipe la plupart des smartphones de la classe (hors iPhone) ?",
+        "activity": "Identifie les systèmes d’exploitation"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s1-a2-q03",
+        "question": "Linux est :",
+        "activity": "Identifie les systèmes d’exploitation"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s1-a2-q04",
+        "question": "macOS est le système d’exploitation :",
+        "activity": "Identifie les systèmes d’exploitation"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s1-a2-q05",
+        "question": "Un système d’exploitation s’installe :",
+        "activity": "Identifie les systèmes d’exploitation"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s1-a3-q01",
+        "question": "Gérer la mémoire vive",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s1-a3-q02",
+        "question": "Lancer et arrêter les programmes",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s1-a3-q03",
+        "question": "Gérer les fichiers et dossiers",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s1-a3-q04",
+        "question": "Piloter l’imprimante grâce à son pilote",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s1-a3-q05",
+        "question": "Gérer les comptes des utilisateurs",
+        "activity": "Classe les responsabilités"
+      }
+    ]
+  },
+  {
+    "file": "qa/batch-132-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s1-a3-q06",
+        "question": "Rédiger une lettre",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s1-a3-q07",
+        "question": "Calculer une moyenne",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s1-a3-q08",
+        "question": "Naviguer sur un site web",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s1-a3-q09",
+        "question": "Dessiner un logo",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s1-a3-q10",
+        "question": "Lire une vidéo",
+        "activity": "Classe les responsabilités"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s1-a4-q01",
+        "question": "Pour ouvrir un programme, on double‑clique sur son [blank] ; le système d’exploitation le charge en mémoire.",
+        "activity": "Mission OS"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s1-a4-q02",
+        "question": "Quand on branche une clé USB, le système la reconnaît grâce à un [blank].",
+        "activity": "Mission OS"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s1-a4-q03",
+        "question": "Pour retrouver un document, on passe par le [blank] du système.",
+        "activity": "Mission OS"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s1-a4-q04",
+        "question": "Si deux programmes tournent ensemble, le système leur répartit la [blank].",
+        "activity": "Mission OS"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s1-a4-q05",
+        "question": "Pour éteindre proprement l’ordinateur, on utilise la commande [blank] du menu Démarrer.",
+        "activity": "Mission OS"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s2-a1-q01",
+        "question": "Clique sur le bouton qui ouvre le menu Démarrer.",
+        "activity": "Explore le bureau"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s2-a1-q02",
+        "question": "Clique sur la barre des tâches.",
+        "activity": "Explore le bureau"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s2-a1-q03",
+        "question": "Clique sur la corbeille.",
+        "activity": "Explore le bureau"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s2-a1-q04",
+        "question": "Clique sur une fenêtre.",
+        "activity": "Explore le bureau"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s2-a1-q05",
+        "question": "Clique sur la zone de notification (heure).",
+        "activity": "Explore le bureau"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s2-a2-q01",
+        "question": "🗑️ Corbeille",
+        "activity": "Associe icônes et rôles"
+      }
+    ]
+  }
+]

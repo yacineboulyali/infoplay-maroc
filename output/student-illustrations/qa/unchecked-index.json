@@ -1,0 +1,49 @@
+[
+  {
+    "file": "qa/unchecked-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m1-s4-a4-q02",
+        "question": "Les élèves rédigent leurs comptes rendus avec un [blank].",
+        "activity": "Mission école numérique"
+      },
+      {
+        "cell": 2,
+        "id": "m1-s4-a4-q04",
+        "question": "Pour faire des recherches sur Internet, on installe un [blank].",
+        "activity": "Mission école numérique"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s8-a1-q04",
+        "question": "Nombre de copies",
+        "activity": "Réglages de page"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s8-a1-q05",
+        "question": "Aperçu avant impression",
+        "activity": "Réglages de page"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s8-a2-q01",
+        "question": "Clique sur la zone du nombre de copies.",
+        "activity": "La fenêtre d’impression"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s8-a2-q02",
+        "question": "Clique sur l’aperçu de la page.",
+        "activity": "La fenêtre d’impression"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s8-a2-q03",
+        "question": "Clique sur le bouton qui lance l’impression.",
+        "activity": "La fenêtre d’impression"
+      }
+    ]
+  }
+]

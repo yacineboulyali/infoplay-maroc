@@ -1,0 +1,144 @@
+[
+  {
+    "file": "qa/repairs-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s2-a1-q01",
+        "question": "Clique sur le bouton qui ouvre le menu Démarrer.",
+        "activity": "Explore le bureau"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s2-a2-q05",
+        "question": "⊞ Démarrer",
+        "activity": "Associe icônes et rôles"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s3-a3-q05",
+        "question": "classe_2AC.png",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s4-a1-q02",
+        "question": "Clique sur la zone des onglets.",
+        "activity": "Découvre la fenêtre"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s4-a1-q04",
+        "question": "Clique sur la barre d’état.",
+        "activity": "Découvre la fenêtre"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s4-a1-q05",
+        "question": "Clique sur la barre de titre.",
+        "activity": "Découvre la fenêtre"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s4-a3-q07",
+        "question": "Image",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s4-a3-q08",
+        "question": "Tableau",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s4-a3-q10",
+        "question": "Numéro de page",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s5-a2-q05",
+        "question": "Ce texte contient des [blank] à corriger.",
+        "activity": "Corrige le texte tapé trop vite"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s6-a2-q04",
+        "question": "Clique sur le bouton qui aligne à droite.",
+        "activity": "Repère les outils"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s6-a2-q05",
+        "question": "Clique sur la zone du nom de la police.",
+        "activity": "Repère les outils"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s6-a4-q04",
+        "question": "Mets le titre en rouge.",
+        "activity": "Mission Designer"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s7-a1-q02",
+        "question": "Quel objet range des données en lignes et en colonnes ?",
+        "activity": "Image, tableau ou forme ?"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s7-a2-q01",
+        "question": "Image",
+        "activity": "Objet et utilité"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s7-a2-q02",
+        "question": "Tableau",
+        "activity": "Objet et utilité"
+      }
+    ]
+  },
+  {
+    "file": "qa/repairs-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s7-a2-q03",
+        "question": "Forme",
+        "activity": "Objet et utilité"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s7-a2-q05",
+        "question": "Numéro de page",
+        "activity": "Objet et utilité"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s7-a3-q02",
+        "question": "Image principale",
+        "activity": "Compose l’affiche"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s7-a3-q03",
+        "question": "Texte de présentation",
+        "activity": "Compose l’affiche"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s7-a4-q03",
+        "question": "Insère une forme.",
+        "activity": "Mission Affiche"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s8-a1-q03",
+        "question": "Format du papier",
+        "activity": "Réglages de page"
+      }
+    ]
+  }
+]

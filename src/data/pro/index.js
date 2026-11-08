@@ -13,6 +13,7 @@ const sessions = m.sessions.map((s, si) => {
     const type = a.mech.split(':')[0];
     return {
       ...a, id: `m${m.id}-s${si + 1}-a${ai + 1}`, moduleId: m.id, sessionId: session.id, sessionIndex: si + 1, index: ai + 1, version: 1,
+      data: { ...a.data, visualPart: s.part },
       type, instructions: a.instructions || INSTR_PRO[type], hint: a.hint || HINT_PRO[type],
       estimatedMinutes: a.estimatedMinutes || (type === 'sim' ? 8 : 5),
       accessibilityAlternative: 'Toutes les interactions se font à la souris ou au clavier (Tab, Entrée, Espace) ; les glisser‑déposer ont une alternative par clic.',

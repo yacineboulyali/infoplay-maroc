@@ -2,6 +2,7 @@
 import { h, norm, fmtNum } from '../utils/dom.js';
 import { VIEWS2 } from './sims2.js';
 import { ribbonView } from './ribbon.js';
+import { studentIllustration } from '../utils/student-illustrations.js';
 
 const MODE = /^[~=^]/;
 export function matchVal(exp, act) {
@@ -92,6 +93,8 @@ export function simGame(root, d) {
   const btn = h('button', { type: 'button', class: 'btn primary', onclick: validate }, 'Valider l’étape');
   function drawTask() {
     taskBox.replaceChildren(h('p', { class: 'step-h' }, step < n ? `Étape ${step + 1} sur ${n}` : 'Terminé'), h('p', { class: 'step-t' }, step < n ? d.tasks[step][0] : 'Toutes les étapes sont faites : clique sur « Vérifier ».'), ...(step < n ? [btn] : []));
+    const illustration = step < n ? studentIllustration(d, step, 'student-illustration-task') : null;
+    if (illustration) taskBox.prepend(illustration);
   }
   function validate() {
     if (step >= n) return; const t = d.tasks[step]; const ok = goalOk(t[1], st, api);

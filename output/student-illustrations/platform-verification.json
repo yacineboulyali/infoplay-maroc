@@ -1,0 +1,22 @@
+{
+  "build": "passed",
+  "unitTests": {
+    "passed": 352,
+    "failed": 0
+  },
+  "offlineBrowser": {
+    "loadedImages": 355,
+    "activitiesChecked": 120,
+    "consoleErrors": 0,
+    "externalRequests": 0
+  },
+  "responsive": {
+    "widths": [
+      1280,
+      390
+    ],
+    "screenshots": 12,
+    "horizontalOverflow": false
+  },
+  "generationPaused": true
+}

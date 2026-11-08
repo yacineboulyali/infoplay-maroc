@@ -3,7 +3,10 @@
 import { h, shuffle, norm } from '../utils/dom.js';
 import { arText } from '../i18n/ar.js';
 import { arHint } from '../i18n/arhint.js';
+import { officeArt } from '../pro/visuals.js';
+import { semanticIcon } from '../utils/semantic-icons.js';
 import { audio } from '../audio/audio.js';
+import { studentIllustration } from '../utils/student-illustrations.js';
 
 const letter = (i) => String.fromCharCode(65 + i);
 
@@ -81,10 +84,10 @@ export function artFor(label) {
   return h('span', { class: `item-art sheet-${sheet} cell-${cell}`, role: 'img', 'aria-label': `Illustration : ${label}` });
 }
 
-export const visualLabel = (label) => {
+export const visualLabel = (label, part, illustration = null, textOnly = false) => {
   const ar = arText(label);
   return h('span', { class: 'visual-label' },
-    artFor(label),
+    textOnly ? null : illustration || (part ? officeArt(label, part) : (artFor(label) || semanticIcon(label))),
     h('span', { class: 'visual-text' },
       label,
       arHint(ar)
@@ -97,6 +100,7 @@ export const visualLabel = (label) => {
 // -----------------------------------------------------------------
 export function matchGame(root, d) {
   const n = d.pairs.length;
+  const illustrated = d.pairs.some((_, i) => studentIllustration(d, i));
   const order = shuffle([...Array(n).keys()]);
   const map = Array(n).fill(null);
   let sel = null;
@@ -152,7 +156,7 @@ export function matchGame(root, d) {
     justLinked = leftIdx;
     map[leftIdx] = rightItem;
     sel = null;
-    live.textContent = 'Association réussie ! Tu peux vérifier ton score.';
+    live.textContent = 'Association enregistrée. Clique sur Vérifier pour savoir si elle est correcte.';
     audio.play('snap');
     paint();
   }
@@ -181,7 +185,7 @@ export function matchGame(root, d) {
     },
     h('span', { class: 'grip-icon', 'aria-hidden': 'true' }, '⠿'),
     h('span', { class: 'num', 'aria-hidden': 'true' }, i + 1),
-    h('span', { class: 'txt' }, visualLabel(p[0])),
+    h('span', { class: 'txt' }, visualLabel(p[0], d.visualPart, studentIllustration(d, i))),
     h('span', { class: 'tag', 'aria-hidden': 'true' })
     );
     lb.push(btn);
@@ -212,7 +216,7 @@ export function matchGame(root, d) {
       },
     },
     h('span', { class: 'num', 'aria-hidden': 'true' }, letter(k)),
-    h('span', { class: 'txt' }, visualLabel(d.pairs[o][1])),
+    h('span', { class: 'txt' }, visualLabel(d.pairs[o][1], d.visualPart, null, illustrated)),
     h('span', { class: 'tag', 'aria-hidden': 'true' })
     );
     rb.push(btn);
@@ -290,8 +294,8 @@ export function sortGame(root, d) {
       class: 'bucket-head',
       onclick: () => put(ci),
     },
-    h('span', { class: 'bucket-title-box' }, h('b', null, c), countBadge),
-    h('small', { class: 'bucket-cta' }, '📥 Déposer ici', arHint('ضع هنا'))
+    h('span', { class: 'bucket-title-box' }, semanticIcon(c), h('b', null, c), countBadge),
+    h('small', { class: 'bucket-cta' }, '📥 Déposer ici')
     );
 
     const box = h('div', {
@@ -311,12 +315,12 @@ export function sortGame(root, d) {
           lastMoved = i;
           pulseBucket = ci;
           sel = null;
-          live.textContent = 'Carte classée avec succès dans : ' + c + '.';
+          live.textContent = 'Carte déplacée dans : ' + c + '. Vérifie ensuite ta réponse.';
           audio.play('snap');
           draw();
         }
       },
-    }, head, body);
+    }, head, arHint('ضع هنا'), body);
 
     return { box, body, countBadge };
   });
@@ -338,7 +342,7 @@ export function sortGame(root, d) {
   const card = (i) => h('button', {
     type: 'button',
     'data-idx': String(i),
-    class: 'chip sort-chip' + (artFor(items[i][0]) ? ' has-art' : '') + (sel === i ? ' sel' : '') + (lastMoved === i ? ' just-dropped' : ''),
+    class: 'chip sort-chip' + (d.visualPart || artFor(items[i][0]) ? ' has-art' : '') + (sel === i ? ' sel' : '') + (lastMoved === i ? ' just-dropped' : ''),
     draggable: 'true',
     'aria-pressed': String(sel === i),
     ondragstart: (e) => {
@@ -366,7 +370,7 @@ export function sortGame(root, d) {
     },
   },
   h('span', { class: 'grip-icon', 'aria-hidden': 'true' }, '⠿'),
-  visualLabel(items[i][0])
+  visualLabel(items[i][0], d.visualPart, studentIllustration(d, i))
   );
 
   function draw() {
@@ -469,7 +473,7 @@ export function orderGame(root, d) {
       },
       h('span', { class: 'grip-icon', 'aria-hidden': 'true' }, '⠿'),
       h('span', { class: 'num', 'aria-hidden': 'true' }, pos + 1),
-      h('span', { class: 'txt' }, visualLabel(d.steps[idx])),
+      h('span', { class: 'txt' }, visualLabel(d.steps[idx], d.visualPart, studentIllustration(d, idx))),
       h('span', { class: 'ord-btns' },
         h('button', {
           type: 'button',
@@ -542,8 +546,10 @@ export function fillGame(root, d) {
   const blanks = [];
   const lines = d.lines.map((ln) => (Array.isArray(ln) ? ln : [ln, '']));
 
-  lines.forEach(([text, why]) => {
-    const p = h('p', { class: 'fill-line' });
+  lines.forEach(([text, why], index) => {
+    const p = h('p', { class: 'fill-line' }, semanticIcon(text.replace(/\[\[.+?\]\]/g, '…')));
+    const illustration = studentIllustration(d, index);
+    if (illustration) p.replaceChildren(illustration);
     const re = /\[\[(.+?)\]\]/g;
     let last = 0, m;
     while ((m = re.exec(text))) {
@@ -646,7 +652,7 @@ export function quizGame(root, d) {
       },
       inputs[j],
       h('span', { class: 'opt-letter', 'aria-hidden': 'true' }, isTrueFalse ? (isVrai ? '✔' : '✖') : letter(j)),
-      visualLabel(optText)
+      visualLabel(optText, d.visualPart, null, !!studentIllustration(d, i))
       );
     });
 
@@ -658,6 +664,7 @@ export function quizGame(root, d) {
           modeBanner,
           h('span', { class: 'q-title-text' }, lines[0], arHint(qar))
         ),
+        studentIllustration(d, i, 'student-illustration-question'),
         lines.length > 1 ? h('pre', { class: 'code' }, lines.slice(1).join('\n')) : null,
         h('div', { class: 'quiz-options-grid' + (isTrueFalse ? ' tf-grid' : '') }, labels)
       )

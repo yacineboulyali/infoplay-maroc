@@ -1,0 +1,204 @@
+[
+  {
+    "file": "qa/batch-297-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s8-a2-q04",
+        "question": "Clique sur la zone du choix de l’imprimante.",
+        "activity": "La fenêtre d’impression"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s8-a2-q05",
+        "question": "Clique sur la zone de l’orientation.",
+        "activity": "La fenêtre d’impression"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s8-a3-q01",
+        "question": "Pour imprimer un tableau très large, on choisit l’orientation [blank].",
+        "activity": "Configure selon la situation"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s8-a3-q02",
+        "question": "Pour donner 30 exemplaires à la classe, on règle le nombre de [blank] sur 30.",
+        "activity": "Configure selon la situation"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s8-a3-q03",
+        "question": "Pour économiser l’encre d’un brouillon, on imprime en [blank].",
+        "activity": "Configure selon la situation"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s8-a3-q04",
+        "question": "Pour n’imprimer que la page 2, on choisit l’étendue [blank].",
+        "activity": "Configure selon la situation"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s8-a3-q05",
+        "question": "Avant d’imprimer, on consulte l’[blank] pour vérifier la mise en page.",
+        "activity": "Configure selon la situation"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s8-a4-q02",
+        "question": "Choisis le format de papier A4.",
+        "activity": "Mission Impression"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s8-a4-q03",
+        "question": "Choisis des marges étroites.",
+        "activity": "Mission Impression"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s8-a4-q01",
+        "question": "Choisis l’orientation paysage.",
+        "activity": "Mission Impression"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s8-a4-q04",
+        "question": "Règle le nombre de copies sur 3.",
+        "activity": "Mission Impression"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s8-a4-q05",
+        "question": "Clique sur Imprimer (impression simulée).",
+        "activity": "Mission Impression"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s9-a1-q01",
+        "question": "Clique sur l’en‑tête d’une colonne.",
+        "activity": "Découvre le tableur"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s9-a1-q02",
+        "question": "Clique sur l’en‑tête d’une ligne.",
+        "activity": "Découvre le tableur"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s9-a1-q04",
+        "question": "Clique sur les onglets de feuilles.",
+        "activity": "Découvre le tableur"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s9-a1-q03",
+        "question": "Clique sur la barre de formule.",
+        "activity": "Découvre le tableur"
+      }
+    ]
+  },
+  {
+    "file": "qa/batch-297-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s9-a1-q05",
+        "question": "Clique sur la zone qui donne l’adresse de la cellule.",
+        "activity": "Découvre le tableur"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s9-a2-q01",
+        "question": "Cellule",
+        "activity": "Vocabulaire du tableur"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s9-a2-q02",
+        "question": "Ligne",
+        "activity": "Vocabulaire du tableur"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s9-a2-q03",
+        "question": "Colonne",
+        "activity": "Vocabulaire du tableur"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s9-a2-q04",
+        "question": "Feuille",
+        "activity": "Vocabulaire du tableur"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s9-a2-q05",
+        "question": "Classeur",
+        "activity": "Vocabulaire du tableur"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s9-a3-q01",
+        "question": "Dans la cellule A1, écris le mot Nom.",
+        "activity": "Place les valeurs par adresse"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s9-a3-q02",
+        "question": "Dans la cellule B1, écris le mot Note.",
+        "activity": "Place les valeurs par adresse"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s9-a3-q03",
+        "question": "Dans la cellule A2, écris le prénom Sara.",
+        "activity": "Place les valeurs par adresse"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s9-a3-q04",
+        "question": "Dans la cellule B2, écris le nombre 14.",
+        "activity": "Place les valeurs par adresse"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s9-a3-q05",
+        "question": "Dans la cellule B3, écris le nombre 12.",
+        "activity": "Place les valeurs par adresse"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s9-a4-q01",
+        "question": "Dans un tableau de notes, on écrit les noms des élèves dans une [blank] (par exemple la colonne A).",
+        "activity": "Mission Notes : construire le tableau"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s9-a4-q02",
+        "question": "Chaque élève occupe une [blank] du tableau.",
+        "activity": "Mission Notes : construire le tableau"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s9-a4-q03",
+        "question": "La cellule à l’intersection de la colonne B et de la ligne 4 s’appelle [blank].",
+        "activity": "Mission Notes : construire le tableau"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s9-a4-q04",
+        "question": "La première ligne contient souvent les [blank].",
+        "activity": "Mission Notes : construire le tableau"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s9-a4-q05",
+        "question": "Pour calculer le total des notes, on écrira une [blank] qui commence par le signe =.",
+        "activity": "Mission Notes : construire le tableau"
+      }
+    ]
+  }
+]

@@ -1,0 +1,275 @@
+[
+  {
+    "id": "m2-s2-a1-q01",
+    "reason": "Start button too small in a full monitor view",
+    "direction": "CRITICAL: isolated close-up of ONE operating-system Start button: a rounded blue square containing four white window panes. No complete monitor, desktop, taskbar or play triangle. The button fills most of the frame.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s2-a1-q01-v2.png"
+  },
+  {
+    "id": "m2-s2-a2-q05",
+    "reason": "Start was incorrectly drawn as a video play button",
+    "direction": "CRITICAL: Démarrer here is the Windows START menu button, NOT play/start video. Draw one close-up square blue button with four white window panes. No triangle, video controls or media player.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s2-a2-q05-v2.png"
+  },
+  {
+    "id": "m2-s3-a3-q05",
+    "reason": "Class image file incorrectly drawn as a folder",
+    "direction": "CRITICAL: classe_2AC.png is an IMAGE FILE showing a CLASS GROUP PHOTO. Draw a close-up picture-file card containing a friendly cartoon group of school pupils arranged for a class photo. No folder, directory, printer or monitor.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s3-a3-q05-v2.png"
+  },
+  {
+    "id": "m2-s4-a1-q02",
+    "reason": "Word tabs confused with browser tabs/address bar",
+    "direction": "CRITICAL: close-up ONLY of a word-processor ribbon tab strip, with three tabs labeled exactly Accueil, Insertion, Mise en page. No browser tabs, URL/address bar, monitor or document page.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s4-a1-q02-v2.png"
+  },
+  {
+    "id": "m2-s4-a1-q04",
+    "reason": "Status bar not close enough",
+    "direction": "CRITICAL: isolated enlarged word-processor STATUS BAR, the thin bottom strip, with a tiny page indicator at left and a minus/slider/plus zoom control at right. The strip is centered and fills the width. No entire software window or computer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s4-a1-q04-v2.png"
+  },
+  {
+    "id": "m2-s4-a1-q05",
+    "reason": "Title bar not close enough",
+    "direction": "CRITICAL: isolated enlarged software TITLE BAR, the thin TOP strip, with a small document icon and generic filename Document at left, minimize/maximize/close controls at right. No full window, page or computer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s4-a1-q05-v2.png"
+  },
+  {
+    "id": "m2-s4-a3-q07",
+    "reason": "Image incorrectly drawn as a printer",
+    "direction": "CRITICAL: ONE picture/photo card with a simple mountain-and-sun drawing and white border. Image here is an inserted picture. NO printer, monitor, computer, folder or software window.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s4-a3-q07-v2.png"
+  },
+  {
+    "id": "m2-s4-a3-q08",
+    "reason": "Word table confused with an Excel interface",
+    "direction": "CRITICAL: ONE standalone rectangular data TABLE with three columns and four rows, lightly tinted header cells. No spreadsheet app frame, formula bar, fx, row numbers, column letters, monitor or whiteboard.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s4-a3-q08-v2.png"
+  },
+  {
+    "id": "m2-s4-a3-q10",
+    "reason": "Page number not recognizable",
+    "direction": "CRITICAL: a close-up of the bottom edge of a paper document with the single page number 1 clearly printed at its center, and just two faint text lines above it. No printer, monitor or toolbar. The numeral 1 is permitted as a generic page-number example.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s4-a3-q10-v2.png"
+  },
+  {
+    "id": "m2-s5-a2-q05",
+    "reason": "Generated sentence disclosed the missing word erreurs",
+    "direction": "CRITICAL: close-up of a short paper paragraph shown ONLY as unreadable wavy navy lines, with three red spelling-check squiggles underneath. NO readable words at all, especially never print erreurs or any completion of the blank.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s5-a2-q05-v2.png"
+  },
+  {
+    "id": "m2-s6-a2-q04",
+    "reason": "All alignment controls drawn instead of the requested button",
+    "direction": "CRITICAL: ONE isolated RIGHT-ALIGN TEXT BUTTON. Inside the square button, four horizontal navy lines of alternating lengths share exactly the same RIGHT edge; the LEFT edge is ragged. No other alignment buttons, no full ribbon or computer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s6-a2-q04-v2.png"
+  },
+  {
+    "id": "m2-s6-a2-q05",
+    "reason": "Font-name field not isolated",
+    "direction": "CRITICAL: ONLY an enlarged font-name dropdown field, showing the font name Arial and a downward chevron. No font-size field, formatting buttons, ribbon, document or computer. Arial is permitted to make this field identifiable.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s6-a2-q05-v2.png"
+  },
+  {
+    "id": "m2-s6-a4-q04",
+    "reason": "Required red title not shown in red",
+    "direction": "CRITICAL: close-up of the upper part of a paper document, with one prominent title represented by a thick RED text stroke, and two thinner blue paragraph lines below. The title must visibly be RED, never blue or teal. No readable invented heading.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s6-a4-q04-v2.png"
+  },
+  {
+    "id": "m2-s7-a1-q02",
+    "reason": "Word data table shown as a spreadsheet app",
+    "direction": "CRITICAL: show a standalone paper data table with rows and columns and empty cells. No Excel, fx, formula bar, column letters, row numbers, named application or whiteboard. No category/answer text.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s7-a1-q02-v2.png"
+  },
+  {
+    "id": "m2-s7-a2-q01",
+    "reason": "Image incorrectly shown as a monitor",
+    "direction": "CRITICAL: ONE close-up photo card with a friendly tree-and-hill landscape drawn inside a white photo border. NO monitor, screen, computer, printer or folder. This refers to an image inserted in a document.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s7-a2-q01-v2.png"
+  },
+  {
+    "id": "m2-s7-a2-q02",
+    "reason": "Tableau incorrectly shown as a classroom whiteboard",
+    "direction": "CRITICAL: Tableau here is ONE small DATA TABLE, a flat rectangle of three columns and four rows with a pale teal header row. NO whiteboard, school board, easel, monitor or Excel interface.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s7-a2-q02-v2.png"
+  },
+  {
+    "id": "m2-s7-a2-q03",
+    "reason": "Forme incorrectly shown as a folder",
+    "direction": "CRITICAL: Forme here is a GRAPHICAL SHAPE inserted in Word. Draw ONE clean coral-colored circle with a navy outline, large in the frame. NO folder, file, computer, monitor or physical container.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s7-a2-q03-v2.png"
+  },
+  {
+    "id": "m2-s7-a2-q05",
+    "reason": "Page number incorrectly shown as a printer",
+    "direction": "CRITICAL: close-up of the lower right corner of a paper document, with the numeral 2 as a page number, and a few faint text strokes above. No printer, monitor, computer or software controls. The generic page number 2 is permitted.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s7-a2-q05-v2.png"
+  },
+  {
+    "id": "m2-s7-a3-q02",
+    "reason": "Main poster image incorrectly shown as a monitor",
+    "direction": "CRITICAL: ONE large picture panel from a school-event poster, showing a small friendly illustrated school building with bunting, framed by a white picture border. No screen, monitor, computer or software window.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s7-a3-q02-v2.png"
+  },
+  {
+    "id": "m2-s7-a3-q03",
+    "reason": "Presentation paragraph incorrectly shown as a monitor",
+    "direction": "CRITICAL: close-up of ONE text paragraph on a paper poster, represented by five short navy text strokes grouped in a clear block. No readable words, computer, screen, monitor or software interface.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s7-a3-q03-v2.png"
+  },
+  {
+    "id": "m2-s7-a4-q03",
+    "reason": "Shape insertion shown as a landscape painting application",
+    "direction": "CRITICAL: close-up of a Word-style PAPER page containing ONE selected turquoise circle with small square selection handles. Just a few faint paragraph lines above. No landscape, photo, painting application, drawing toolbox, monitor or computer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s7-a4-q03-v2.png"
+  },
+  {
+    "id": "m2-s8-a1-q03",
+    "reason": "Paper format incorrectly shown as a printer",
+    "direction": "CRITICAL: ONE blank portrait paper sheet with subtle dimension guide lines on its width and height, clearly illustrating paper SIZE. No printer, monitor, computer, software dialog or numerical size claims.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s8-a1-q03-v2.png"
+  },
+  {
+    "id": "m2-s8-a4-q01",
+    "reason": "Portrait paper shown for landscape orientation",
+    "direction": "Show a landscape sheet wider than tall; no scenery photograph.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s8-a4-q04",
+    "reason": "Copy count shows 1 instead of the requested 3",
+    "direction": "Show a close copies selector with exactly 3.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s9-a4-q02",
+    "reason": "Single cell highlighted for a pupil record row",
+    "direction": "Show a neutral student-record table without highlighting an individual cell or completing the missing word.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a1-q03",
+    "reason": "B2 highlighted instead of C5",
+    "direction": "Draw at least five rows and columns A to C; highlight only C5.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a2-q01",
+    "reason": "Equals sign supplies the missing answer",
+    "direction": "Show an empty formula entry field with cursor and fx; no equals sign.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a3-q04",
+    "reason": "Source formula placed in a referenced input cell",
+    "direction": "Show original =B2*C2 in an isolated formula bar or D2, without copied formula or result.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a3-q05",
+    "reason": "Invented zero denominator reveals the answer",
+    "direction": "Show #DIV/0! alone; no zero denominator, invented input numbers or explanation.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a4-q01",
+    "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
+    "direction": "Highlight blank D2 with Sara in A2. Use no invented grades, names or computed results.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a4-q02",
+    "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
+    "direction": "Highlight blank D3 with Omar in A3. Use no invented grades, names or computed results.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a4-q03",
+    "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
+    "direction": "Highlight blank D4 with Lina in A4. Use no invented grades, names or computed results.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a4-q04",
+    "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
+    "direction": "Highlight blank B5 with Maths in B1. Use no invented grades, names or computed results.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s10-a4-q05",
+    "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
+    "direction": "Highlight blank C5 with Physique in C1. Use no invented grades, names or computed results.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s11-a1-q04",
+    "reason": "Whole chart instead of the requested close horizontal axis",
+    "direction": "Show only a close horizontal axis strip and tick marks.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s11-a1-q05",
+    "reason": "Whole chart with an undersized legend",
+    "direction": "Show a close chart legend box with color chips and neutral series strokes.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s11-a4-q02",
+    "reason": "Spreadsheet grid shown instead of a chart title",
+    "direction": "Show an editable chart title field; moyennes is the only allowed literal word.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s11-a4-q04",
+    "reason": "Glossary shown instead of a chart legend",
+    "direction": "Show a chart legend box with color chips and neutral series strokes, never a glossary.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  },
+  {
+    "id": "m2-s11-a4-q05",
+    "reason": "Invented averages imply an unsupported winning subject",
+    "direction": "Show neutral statistics context without numbers, subject rankings or a solution.",
+    "resolved": false,
+    "excludedFromIntegration": true
+  }
+]

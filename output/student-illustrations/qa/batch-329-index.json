@@ -1,0 +1,204 @@
+[
+  {
+    "file": "qa/batch-329-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s10-a1-q01",
+        "question": "A1",
+        "activity": "Adresses et plages"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s10-a1-q02",
+        "question": "B3",
+        "activity": "Adresses et plages"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s10-a1-q03",
+        "question": "C5",
+        "activity": "Adresses et plages"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s10-a1-q04",
+        "question": "D2",
+        "activity": "Adresses et plages"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s10-a1-q05",
+        "question": "A1:A5",
+        "activity": "Adresses et plages"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s10-a2-q01",
+        "question": "Une formule commence toujours par le signe [blank].",
+        "activity": "Complète les formules"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s10-a2-q02",
+        "question": "Pour additionner A1 et B1, on écrit =[blank].",
+        "activity": "Complète les formules"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s10-a2-q03",
+        "question": "Pour additionner les cellules de B2 à B6 : =[blank]",
+        "activity": "Complète les formules"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s10-a2-q04",
+        "question": "Pour la moyenne des cellules C2 à C6 : =[blank]",
+        "activity": "Complète les formules"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s10-a2-q05",
+        "question": "Si B2 contient 10 et C2 contient 4, la formule =B2*C2 affiche [blank].",
+        "activity": "Complète les formules"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s10-a3-q01",
+        "question": "Formule saisie : SOMME(B2:B6)\nQue faut‑il corriger ?",
+        "activity": "Débogue les formules"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s10-a3-q02",
+        "question": "En C1, la formule =A1+B1 avec A1 = 5 et B1 = 7. Quel résultat s’affiche ?",
+        "activity": "Débogue les formules"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s10-a3-q03",
+        "question": "Formule : =MOYENNE(B2:B5\nQue manque‑t‑il ?",
+        "activity": "Débogue les formules"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s10-a3-q04",
+        "question": "La formule =B2*C2 est recopiée une ligne plus bas. Elle devient :",
+        "activity": "Débogue les formules"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s10-a3-q05",
+        "question": "Une cellule affiche #DIV/0! avec =A1/B1. Cause probable :",
+        "activity": "Débogue les formules"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s10-a4-q01",
+        "question": "En D2, calcule la moyenne de Sara avec une formule (=MOYENNE(B2:C2)).",
+        "activity": "Mission Moyennes"
+      }
+    ]
+  },
+  {
+    "file": "qa/batch-329-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s10-a4-q02",
+        "question": "En D3, calcule la moyenne d’Omar avec une formule.",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s10-a4-q03",
+        "question": "En D4, calcule la moyenne de Lina avec une formule.",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s10-a4-q04",
+        "question": "En B5, calcule le total des notes de Maths avec SOMME.",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s10-a4-q05",
+        "question": "En C5, trouve la meilleure note de Physique avec MAX.",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s11-a1-q01",
+        "question": "Clique sur le diagramme en barres.",
+        "activity": "Reconnais les graphiques"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s11-a1-q02",
+        "question": "Clique sur la courbe.",
+        "activity": "Reconnais les graphiques"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s11-a1-q03",
+        "question": "Clique sur le diagramme circulaire.",
+        "activity": "Reconnais les graphiques"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s11-a1-q04",
+        "question": "Clique sur l’axe horizontal du diagramme en barres.",
+        "activity": "Reconnais les graphiques"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s11-a1-q05",
+        "question": "Clique sur la légende.",
+        "activity": "Reconnais les graphiques"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s11-a2-q01",
+        "question": "Comparer les notes de 5 élèves",
+        "activity": "Quel graphique pour quelles données ?"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s11-a2-q02",
+        "question": "Suivre la température heure par heure",
+        "activity": "Quel graphique pour quelles données ?"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s11-a2-q03",
+        "question": "Montrer la part de chaque sport préféré en pourcentage",
+        "activity": "Quel graphique pour quelles données ?"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s11-a2-q04",
+        "question": "Relier la taille et le poids de chaque élève",
+        "activity": "Quel graphique pour quelles données ?"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s11-a2-q05",
+        "question": "Garder une liste de noms et de numéros",
+        "activity": "Quel graphique pour quelles données ?"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s11-a3-q01",
+        "question": "Un graphique doit avoir un [blank] qui dit ce qu’il montre.",
+        "activity": "Complète les éléments du graphique"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s11-a3-q02",
+        "question": "L’axe horizontal affiche souvent les [blank].",
+        "activity": "Complète les éléments du graphique"
+      }
+    ]
+  }
+]

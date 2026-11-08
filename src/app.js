@@ -1,3 +1,6 @@
+import { activityVisual, visualPractice } from './pro/practice.js';
+import { officeArt } from './pro/visuals.js';
+import { mechanicIcon } from './utils/semantic-icons.js';
 import { h, downloadText, frDate, celebrate } from './utils/dom.js';
 import { createStore, localAdapter, MAX_IMPORT_BYTES } from './storage/store.js';
 import { CATALOG, ACTIVITIES, getActivity, getModule, getSession, isActivityId, TOTAL_POINTS } from './data/index.js';
@@ -670,6 +673,7 @@ function sessionScreen(mi, si) {
       const r = rec(a.id);
       const best = r?.attempts.length ? Math.max(...r.attempts.map((x) => x.score)) : null;
       return h('a', { class: 'card act-tile', href: `#/m/${mi}/s/${si}/a/${a.index}`, style: 'text-decoration:none;color:inherit', 'data-tilt': '', 'data-reveal': '' },
+        mi === 205 ? officeArt(a.title, s.part) : mechanicIcon(a.type),
         h('div', { class: 'row', style: 'justify-content:space-between' },
           h('span', { class: 'pill' }, `${a.index}. ${KIND[a.type]}`),
           best != null ? h('span', { class: 'pill done' }, `${fmt(best)}/5 ★`) : h('span', { class: 'pill' }, `~${a.estimatedMinutes} min`)
@@ -734,7 +738,7 @@ function activityScreen(mi, si, ai) {
     submitted = false;
     checkBtn.disabled = false;
     view.classList.remove('graded');
-    eng = engineOf(act.mech)(stage, act.data);
+    eng = engineOf(act.mech)(stage, { ...act.data, illustrationActivityId: act.id });
     chrono.start();
     if (window.__ip) window.__ip.eng = eng;
   }
@@ -791,10 +795,12 @@ function activityScreen(mi, si, ai) {
       h('b', null, 'Consigne : '), act.instructions,
       arHint(arInstruction(act.type))
     ),
+    mi === 205 ? activityVisual(act, s) : null,
     hintBox,
     stage,
     h('div', { class: 'row activity-actions' }, checkBtn, hintBtn, challengeBtn),
-    out
+    out,
+    mi === 205 ? visualPractice(act, s) : null
   );
   view.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); submit(); } });
 

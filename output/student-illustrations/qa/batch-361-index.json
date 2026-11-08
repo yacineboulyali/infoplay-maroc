@@ -1,0 +1,204 @@
+[
+  {
+    "file": "qa/batch-361-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s11-a3-q03",
+        "question": "L’axe vertical affiche l’[blank].",
+        "activity": "Complète les éléments du graphique"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s11-a3-q04",
+        "question": "La [blank] explique la signification des couleurs ou des séries.",
+        "activity": "Complète les éléments du graphique"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s11-a3-q05",
+        "question": "Un diagramme circulaire convient pour montrer des [blank].",
+        "activity": "Complète les éléments du graphique"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s11-a4-q01",
+        "question": "Choisis le type de graphique le plus adapté pour comparer les matières.",
+        "activity": "Mission Statistiques"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s11-a4-q02",
+        "question": "Donne un titre qui contient le mot « moyennes ».",
+        "activity": "Mission Statistiques"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s11-a4-q03",
+        "question": "Affiche les titres des axes.",
+        "activity": "Mission Statistiques"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s11-a4-q04",
+        "question": "Affiche la légende.",
+        "activity": "Mission Statistiques"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s11-a4-q05",
+        "question": "Interprète : quelle matière a la meilleure moyenne ?",
+        "activity": "Mission Statistiques"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s1-a1-q01",
+        "question": "Algorithme",
+        "activity": "Associe les notions"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s1-a1-q02",
+        "question": "Instruction",
+        "activity": "Associe les notions"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s1-a1-q03",
+        "question": "Donnée",
+        "activity": "Associe les notions"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s1-a1-q04",
+        "question": "Variable",
+        "activity": "Associe les notions"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s1-a1-q05",
+        "question": "Constante",
+        "activity": "Associe les notions"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s1-a2-q01",
+        "question": "π (3,14)",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s1-a2-q02",
+        "question": "Le nombre de jours d’une semaine (7)",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s1-a2-q03",
+        "question": "La TVA fixée à 20 % dans le programme",
+        "activity": "Constante ou variable ?"
+      }
+    ]
+  },
+  {
+    "file": "qa/batch-361-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s1-a2-q04",
+        "question": "Le nombre d’heures dans un jour (24)",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s1-a2-q05",
+        "question": "Le nombre de lettres de l’alphabet latin (26)",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s1-a2-q06",
+        "question": "La note saisie par l’élève",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s1-a2-q07",
+        "question": "Le total qui augmente à chaque achat",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s1-a2-q08",
+        "question": "L’âge de l’utilisateur",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s1-a2-q09",
+        "question": "Le résultat d’une addition",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s1-a2-q10",
+        "question": "Le score d’un jeu",
+        "activity": "Constante ou variable ?"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s1-a3-q01",
+        "question": "Quel est le type de la valeur 14 ?",
+        "activity": "Quel type de donnée ?"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s1-a3-q02",
+        "question": "Quel est le type de la valeur 3,75 ?",
+        "activity": "Quel type de donnée ?"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s1-a3-q03",
+        "question": "Quel est le type de la valeur « Rabat » ?",
+        "activity": "Quel type de donnée ?"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s1-a3-q04",
+        "question": "Quel est le type de la valeur Vrai ?",
+        "activity": "Quel type de donnée ?"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s1-a3-q05",
+        "question": "Quel est le type de la valeur « 2026 » écrite entre guillemets ?",
+        "activity": "Quel type de donnée ?"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s1-a4-q01",
+        "question": "Robot level 1",
+        "activity": "Mission robot"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s1-a4-q02",
+        "question": "Robot level 2",
+        "activity": "Mission robot"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s1-a4-q03",
+        "question": "Robot level 3",
+        "activity": "Mission robot"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s1-a4-q04",
+        "question": "Robot level 4",
+        "activity": "Mission robot"
+      }
+    ]
+  }
+]

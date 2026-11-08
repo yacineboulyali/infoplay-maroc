@@ -1,0 +1,103 @@
+[
+  {
+    "file": "qa/review-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m1-s3-a1-q01",
+        "question": "Clique sur la mémoire vive (RAM).",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 2,
+        "id": "m1-s3-a1-q02",
+        "question": "Clique sur le processeur (CPU).",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 3,
+        "id": "m1-s3-a1-q03",
+        "question": "Clique sur la carte mère.",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 4,
+        "id": "m1-s3-a1-q04",
+        "question": "Clique sur l’unité de stockage SSD.",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 5,
+        "id": "m1-s3-a1-q05",
+        "question": "Clique sur l’alimentation.",
+        "activity": "Reconnais les composants"
+      },
+      {
+        "cell": 6,
+        "id": "m1-s4-a3-q02",
+        "question": "Tu veux calculer les moyennes de la classe. Quel outil ?",
+        "activity": "Trouve le bon outil"
+      },
+      {
+        "cell": 7,
+        "id": "m1-s4-a3-q03",
+        "question": "Tu veux chercher des informations sur Internet. Quel outil ?",
+        "activity": "Trouve le bon outil"
+      },
+      {
+        "cell": 8,
+        "id": "m1-s4-a3-q04",
+        "question": "Tu veux créer une affiche illustrée. Quel outil ?",
+        "activity": "Trouve le bon outil"
+      },
+      {
+        "cell": 9,
+        "id": "m1-s4-a3-q05",
+        "question": "Tu dois présenter un exposé avec des diapositives. Quel outil ?",
+        "activity": "Trouve le bon outil"
+      },
+      {
+        "cell": 10,
+        "id": "m1-s4-a4-q01",
+        "question": "Pour que les ordinateurs fonctionnent, chaque poste doit d’abord avoir un [blank].",
+        "activity": "Mission école numérique"
+      },
+      {
+        "cell": 11,
+        "id": "m1-s4-a4-q02",
+        "question": "Les élèves rédigent leurs comptes rendus avec un [blank].",
+        "activity": "Mission école numérique"
+      },
+      {
+        "cell": 12,
+        "id": "m1-s4-a4-q03",
+        "question": "Le professeur de mathématiques calcule les moyennes avec un [blank].",
+        "activity": "Mission école numérique"
+      },
+      {
+        "cell": 13,
+        "id": "m1-s4-a4-q04",
+        "question": "Pour faire des recherches sur Internet, on installe un [blank].",
+        "activity": "Mission école numérique"
+      },
+      {
+        "cell": 14,
+        "id": "m1-s4-a4-q05",
+        "question": "Pour créer l’affiche de la fête de l’école, on utilise un [blank].",
+        "activity": "Mission école numérique"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s1-a1-q01",
+        "question": "Gestion des programmes",
+        "activity": "Associe fonctions et définitions"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s1-a1-q02",
+        "question": "Gestion de la mémoire",
+        "activity": "Associe fonctions et définitions"
+      }
+    ]
+  }
+]

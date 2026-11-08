@@ -1,0 +1,73 @@
+[
+  {
+    "file": "qa/paused-tail-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s1-a4-q05",
+        "question": "Robot level 5",
+        "activity": "Mission robot"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s2-a1-q01",
+        "question": "Lire(a)",
+        "activity": "Lire, écrire, affecter"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s2-a1-q02",
+        "question": "Écrire(a)",
+        "activity": "Lire, écrire, affecter"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s2-a1-q03",
+        "question": "a ← 5",
+        "activity": "Lire, écrire, affecter"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s2-a1-q04",
+        "question": "a ← a + 1",
+        "activity": "Lire, écrire, affecter"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s2-a1-q05",
+        "question": "Écrire(\"Bonjour\")",
+        "activity": "Lire, écrire, affecter"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s2-a2-q01",
+        "question": "Pour demander l’âge à l’utilisateur on écrit : [blank](age)",
+        "activity": "Complète les instructions"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s2-a2-q02",
+        "question": "Pour afficher le résultat on écrit : [blank](resultat)",
+        "activity": "Complète les instructions"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s2-a2-q03",
+        "question": "Pour mettre 10 dans n on écrit : n [blank] 10",
+        "activity": "Complète les instructions"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s2-a2-q04",
+        "question": "Pour doubler n on écrit : n ← [blank]",
+        "activity": "Complète les instructions"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s2-a2-q05",
+        "question": "Dans Écrire(\"Total\"), le mot Total est [blank].",
+        "activity": "Complète les instructions"
+      }
+    ]
+  }
+]

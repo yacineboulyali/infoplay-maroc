@@ -1,0 +1,1283 @@
+{
+  "errors": [],
+  "brokenImages": [],
+  "routes": [
+    {
+      "route": "#/dash",
+      "title": "Bonjour Inspection 👋",
+      "signs": 0
+    },
+    {
+      "route": "#/pro",
+      "title": "💼 Bureautique avancée?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/progres",
+      "title": "Mon progrès",
+      "signs": 0
+    },
+    {
+      "route": "#/donnees",
+      "title": "Profil et données",
+      "signs": 0
+    },
+    {
+      "route": "#/pro/defi",
+      "title": "⚡ Défi mixte?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/1/s/1",
+      "title": "Séance 1 — Définitions et vocabulaire de base?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/1/s/2",
+      "title": "Séance 2 — Schéma fonctionnel d’un ordinateur?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/1/s/3",
+      "title": "Séance 3 — Périphériques et unité centrale?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/1/s/4",
+      "title": "Séance 4 — Types de logiciels et domaines d’application?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/1",
+      "title": "Séance 1 — Fonctionnalités de base d’un système d’exploitation?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/2",
+      "title": "Séance 2 — Environnement d’un système d’exploitation?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/3",
+      "title": "Séance 3 — Gestion des fichiers et dossiers?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/4",
+      "title": "Séance 4 — Traitement de texte : fonctionnalités et environnement?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/5",
+      "title": "Séance 5 — Saisie et édition?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/6",
+      "title": "Séance 6 — Mise en forme?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/7",
+      "title": "Séance 7 — Insertion d’objets?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/8",
+      "title": "Séance 8 — Mise en page et impression?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/9",
+      "title": "Séance 9 — Tableur : fonctionnalités et environnement?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/10",
+      "title": "Séance 10 — Formules, adressage et fonctions?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/2/s/11",
+      "title": "Séance 11 — Graphiques?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/3/s/1",
+      "title": "Séance 1 — Notion d’algorithme, constantes, variables et types?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/3/s/2",
+      "title": "Séance 2 — Instructions de base : lire, écrire, affecter?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/3/s/3",
+      "title": "Séance 3 — Structure séquentielle?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/3/s/4",
+      "title": "Séance 4 — Structure sélective simple?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/3/s/5",
+      "title": "Séance 5 — Structure sélective complète?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/3/s/6",
+      "title": "Séance 6 — Notion de programme?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/3/s/7",
+      "title": "Séance 7 — Langages de programmation?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/3/s/8",
+      "title": "Séance 8 — Transcription d’algorithme?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/4/s/1",
+      "title": "Séance 1 — Notion de réseau informatique?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/4/s/2",
+      "title": "Séance 2 — Typologie et avantages des réseaux?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/4/s/3",
+      "title": "Séance 3 — Définition d’Internet?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/4/s/4",
+      "title": "Séance 4 — Connexion à Internet?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/4/s/5",
+      "title": "Séance 5 — Service Web?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/4/s/6",
+      "title": "Séance 6 — E‑mail et chat pédagogique?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/4/s/7",
+      "title": "Séance 7 — Avantages et inconvénients d’Internet?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/1",
+      "title": "Séance 1 — Personnalisation de Word et environnement de travail?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/2",
+      "title": "Séance 2 — Mise en page avancée : colonnes, sauts et orientation?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/3",
+      "title": "Séance 3 — Styles, thèmes et modèles?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/4",
+      "title": "Séance 4 — Documents longs : mode Plan et navigation?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/5",
+      "title": "Séance 5 — Table des matières, index et illustrations?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/6",
+      "title": "Séance 6 — Publipostage : préparation, fusion et production?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/7",
+      "title": "Séance 7 — Sections, en-têtes/pieds de page et formulaires?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/8",
+      "title": "Séance 8 — Macros, protection et activité d’intégration Word?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/9",
+      "title": "Séance 9 — Excel : séries, listes et mise en forme conditionnelle?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/10",
+      "title": "Séance 10 — Excel : liens, images, objets et macros?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/11",
+      "title": "Séance 11 — Excel : graphiques?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/12",
+      "title": "Séance 12 — Excel : tri, filtres et transposition?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/13",
+      "title": "Séance 13 — Excel : sous-totaux, groupements et consolidation?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/14",
+      "title": "Séance 14 — Excel : tableaux croisés dynamiques?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/15",
+      "title": "Séance 15 — Excel : validation, protection et collaboration?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/16",
+      "title": "Séance 16 — Excel : macros et activité d’intégration?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/17",
+      "title": "Séance 17 — PowerPoint : thèmes, arrière-plans et masques?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/18",
+      "title": "Séance 18 — PowerPoint : objets, interactivité, animations et exportation?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/19",
+      "title": "Séance 19 — Outlook : messagerie, recherche, suivi et règles?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/205/s/20",
+      "title": "Séance 20 — Outlook : contacts, modèles, tâches et intégration finale?AR",
+      "signs": 4
+    },
+    {
+      "route": "#/m/1/s/1/a/1",
+      "title": "Associe les définitions?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/1/s/1/a/2",
+      "title": "Information ou traitement ??AR",
+      "signs": 12
+    },
+    {
+      "route": "#/m/1/s/1/a/3",
+      "title": "Compléter le schéma Entrée → Traitement → Sortie?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/1/s/1/a/4",
+      "title": "Mission : le bulletin scolaire?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/1/s/2/a/1",
+      "title": "Construis le schéma?AR",
+      "signs": 14
+    },
+    {
+      "route": "#/m/1/s/2/a/2",
+      "title": "Relie les périphériques?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/1/s/2/a/3",
+      "title": "Le parcours de l’information?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/1/s/2/a/4",
+      "title": "Mission ordinateur?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/1/s/3/a/1",
+      "title": "Reconnais les composants?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/1/s/3/a/2",
+      "title": "Classe les périphériques?AR",
+      "signs": 14
+    },
+    {
+      "route": "#/m/1/s/3/a/3",
+      "title": "Assemble l’ordinateur?AR",
+      "signs": 6
+    },
+    {
+      "route": "#/m/1/s/3/a/4",
+      "title": "Mission dépannage?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/1/s/4/a/1",
+      "title": "Associe les logiciels?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/1/s/4/a/2",
+      "title": "Classe les logiciels?AR",
+      "signs": 12
+    },
+    {
+      "route": "#/m/1/s/4/a/3",
+      "title": "Trouve le bon outil?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/1/s/4/a/4",
+      "title": "Mission école numérique?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/1/a/1",
+      "title": "Associe fonctions et définitions?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/1/a/2",
+      "title": "Identifie les systèmes d’exploitation?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/2/s/1/a/3",
+      "title": "Classe les responsabilités?AR",
+      "signs": 12
+    },
+    {
+      "route": "#/m/2/s/1/a/4",
+      "title": "Mission OS?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/2/a/1",
+      "title": "Explore le bureau?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/2/s/2/a/2",
+      "title": "Associe icônes et rôles?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/2/a/3",
+      "title": "Manipule la fenêtre?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/2/a/4",
+      "title": "Mission Bureau?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/2/s/3/a/1",
+      "title": "Fichier, dossier ou raccourci ??AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/2/s/3/a/2",
+      "title": "Extensions et types de fichiers?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/3/a/3",
+      "title": "Organise tes fichiers?AR",
+      "signs": 13
+    },
+    {
+      "route": "#/m/2/s/3/a/4",
+      "title": "Mission Explorateur?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/4/a/1",
+      "title": "Découvre la fenêtre?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/2/s/4/a/2",
+      "title": "Commandes et icônes?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/4/a/3",
+      "title": "Édition, mise en forme ou insertion ??AR",
+      "signs": 13
+    },
+    {
+      "route": "#/m/2/s/4/a/4",
+      "title": "Mission Word?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/5/a/1",
+      "title": "Le clavier en situation?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/2/s/5/a/2",
+      "title": "Corrige le texte tapé trop vite?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/5/a/3",
+      "title": "Copier‑coller un mot?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/5/a/4",
+      "title": "Mission Secrétaire?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/6/a/1",
+      "title": "Effets et boutons?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/6/a/2",
+      "title": "Repère les outils?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/2/s/6/a/3",
+      "title": "Répare le paragraphe?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/2/s/6/a/4",
+      "title": "Mission Designer?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/7/a/1",
+      "title": "Image, tableau ou forme ??AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/2/s/7/a/2",
+      "title": "Objet et utilité?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/7/a/3",
+      "title": "Compose l’affiche?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/7/a/4",
+      "title": "Mission Affiche?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/8/a/1",
+      "title": "Réglages de page?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/8/a/2",
+      "title": "La fenêtre d’impression?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/2/s/8/a/3",
+      "title": "Configure selon la situation?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/8/a/4",
+      "title": "Mission Impression?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/9/a/1",
+      "title": "Découvre le tableur?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/2/s/9/a/2",
+      "title": "Vocabulaire du tableur?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/9/a/3",
+      "title": "Place les valeurs par adresse?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/9/a/4",
+      "title": "Mission Notes : construire le tableau?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/10/a/1",
+      "title": "Adresses et plages?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/10/a/2",
+      "title": "Complète les formules?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/10/a/3",
+      "title": "Débogue les formules?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/2/s/10/a/4",
+      "title": "Mission Moyennes?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/2/s/11/a/1",
+      "title": "Reconnais les graphiques?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/2/s/11/a/2",
+      "title": "Quel graphique pour quelles données ??AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/2/s/11/a/3",
+      "title": "Complète les éléments du graphique?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/2/s/11/a/4",
+      "title": "Mission Statistiques?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/3/s/1/a/1",
+      "title": "Associe les notions?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/3/s/1/a/2",
+      "title": "Constante ou variable ??AR",
+      "signs": 12
+    },
+    {
+      "route": "#/m/3/s/1/a/3",
+      "title": "Quel type de donnée ??AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/3/s/1/a/4",
+      "title": "Mission robot?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/3/s/2/a/1",
+      "title": "Lire, écrire, affecter?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/3/s/2/a/2",
+      "title": "Complète les instructions?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/2/a/3",
+      "title": "Simule les variables?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/3/s/2/a/4",
+      "title": "Mission calculatrice?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/3/a/1",
+      "title": "Ordonne l’algorithme?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/3/a/2",
+      "title": "Prédis le résultat?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/3/s/3/a/3",
+      "title": "Complète et débogue?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/3/a/4",
+      "title": "Mission distributeur?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/3/s/4/a/1",
+      "title": "Vrai ou faux ??AR",
+      "signs": 12
+    },
+    {
+      "route": "#/m/3/s/4/a/2",
+      "title": "Condition et action?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/3/s/4/a/3",
+      "title": "Si … Alors … FinSi?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/4/a/4",
+      "title": "Mission accès?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/3/s/5/a/1",
+      "title": "Quelle branche est exécutée ??AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/3/s/5/a/2",
+      "title": "Si … Sinon … FinSi?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/5/a/3",
+      "title": "Corrige les erreurs de logique?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/3/s/5/a/4",
+      "title": "Mission bulletin?AR",
+      "signs": 12
+    },
+    {
+      "route": "#/m/3/s/6/a/1",
+      "title": "Le vocabulaire du programme?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/3/s/6/a/2",
+      "title": "Du problème au programme?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/6/a/3",
+      "title": "Lignes et instructions?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/3/s/6/a/4",
+      "title": "Mission exécution?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/3/s/7/a/1",
+      "title": "Reconnais les langages?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/3/s/7/a/2",
+      "title": "Langage, IDE ou application ??AR",
+      "signs": 13
+    },
+    {
+      "route": "#/m/3/s/7/a/3",
+      "title": "Complète le code Python?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/7/a/4",
+      "title": "Mission débogage?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/3/s/8/a/1",
+      "title": "Pseudo‑code ↔ Python?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/3/s/8/a/2",
+      "title": "Complète le programme?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/3/s/8/a/3",
+      "title": "Compare avec le résultat attendu?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/3/s/8/a/4",
+      "title": "Mission finale : la moyenne?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/4/s/1/a/1",
+      "title": "Associe les éléments du réseau?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/4/s/1/a/2",
+      "title": "Identifie les équipements?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/4/s/1/a/3",
+      "title": "Construis le réseau de la salle?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/4/s/1/a/4",
+      "title": "Mission : le réseau de la classe?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/4/s/2/a/1",
+      "title": "LAN, MAN ou WAN ??AR",
+      "signs": 13
+    },
+    {
+      "route": "#/m/4/s/2/a/2",
+      "title": "Type de réseau et étendue?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/4/s/2/a/3",
+      "title": "Les avantages du réseau?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/4/s/2/a/4",
+      "title": "Mission : choisis la solution?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/4/s/3/a/1",
+      "title": "Internet, Web, navigateur, site?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/4/s/3/a/2",
+      "title": "Service ou infrastructure ??AR",
+      "signs": 12
+    },
+    {
+      "route": "#/m/4/s/3/a/3",
+      "title": "Client, réseau, serveur?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/4/s/3/a/4",
+      "title": "Mission : requête et réponse?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/4/s/4/a/1",
+      "title": "Le routeur vu de l’arrière?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/4/s/4/a/2",
+      "title": "Matériel de connexion?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/4/s/4/a/3",
+      "title": "Les étapes de la connexion?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/4/s/4/a/4",
+      "title": "Mission diagnostic?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/4/s/5/a/1",
+      "title": "Le navigateur?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/4/s/5/a/2",
+      "title": "Vocabulaire du Web?AR",
+      "signs": 11
+    },
+    {
+      "route": "#/m/4/s/5/a/3",
+      "title": "Décode une adresse?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/4/s/5/a/4",
+      "title": "Mission recherche?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/4/s/6/a/1",
+      "title": "Les parties d’un e‑mail?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/4/s/6/a/2",
+      "title": "E‑mail ou chat ??AR",
+      "signs": 12
+    },
+    {
+      "route": "#/m/4/s/6/a/3",
+      "title": "Envoyer un e‑mail?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/4/s/6/a/4",
+      "title": "Mission : écrire et envoyer (simulation)?AR",
+      "signs": 0
+    },
+    {
+      "route": "#/m/4/s/7/a/1",
+      "title": "Avantage, risque ou protection ??AR",
+      "signs": 13
+    },
+    {
+      "route": "#/m/4/s/7/a/2",
+      "title": "Détecte le message suspect?AR",
+      "signs": 1
+    },
+    {
+      "route": "#/m/4/s/7/a/3",
+      "title": "Choisis la bonne réaction?AR",
+      "signs": 20
+    },
+    {
+      "route": "#/m/4/s/7/a/4",
+      "title": "Mission cybercitoyen?AR",
+      "signs": 5
+    },
+    {
+      "route": "#/m/205/s/1/a/1",
+      "title": "Le vocabulaire de l’interface",
+      "signs": 18
+    },
+    {
+      "route": "#/m/205/s/1/a/2",
+      "title": "Crée l’onglet « Utiles »",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/1/a/3",
+      "title": "Simulator : personnalise Word",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/1/a/4",
+      "title": "Mission Nadia",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/2/a/1",
+      "title": "Quel saut choisir ?",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/2/a/2",
+      "title": "Colonnes et sections",
+      "signs": 10
+    },
+    {
+      "route": "#/m/205/s/2/a/3",
+      "title": "Simulator : la mini-brochure",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/2/a/4",
+      "title": "Mission brochure",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/3/a/1",
+      "title": "Style, thème ou modèle ?",
+      "signs": 18
+    },
+    {
+      "route": "#/m/205/s/3/a/2",
+      "title": "Range les besoins",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/3/a/3",
+      "title": "Simulator : uniformise le rapport",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/3/a/4",
+      "title": "Mission présentation uniforme",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/4/a/1",
+      "title": "Les outils du document long",
+      "signs": 18
+    },
+    {
+      "route": "#/m/205/s/4/a/2",
+      "title": "Déplace un chapitre complet",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/4/a/3",
+      "title": "Simulator : réorganise le rapport",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/4/a/4",
+      "title": "Mission mémoire",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/5/a/1",
+      "title": "À quelle table appartient-il ?",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/5/a/2",
+      "title": "Produis les références du rapport",
+      "signs": 12
+    },
+    {
+      "route": "#/m/205/s/5/a/3",
+      "title": "Simulator : finalise le rapport",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/5/a/4",
+      "title": "Mission rapport final",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/6/a/1",
+      "title": "Fixe ou variable ?",
+      "signs": 14
+    },
+    {
+      "route": "#/m/205/s/6/a/2",
+      "title": "Les étapes du publipostage",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/6/a/3",
+      "title": "Simulator : les convocations",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/6/a/4",
+      "title": "Mission 150 convocations",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/7/a/1",
+      "title": "Sections et formulaires",
+      "signs": 20
+    },
+    {
+      "route": "#/m/205/s/7/a/2",
+      "title": "Le dossier administratif",
+      "signs": 10
+    },
+    {
+      "route": "#/m/205/s/7/a/3",
+      "title": "Simulator : le dossier et son formulaire",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/7/a/4",
+      "title": "Mission fiche d’inscription",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/8/a/1",
+      "title": "Automatiser, réviser ou protéger ?",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/8/a/2",
+      "title": "Enregistre une macro de titre",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/8/a/3",
+      "title": "Simulator : réviser et protéger",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/8/a/4",
+      "title": "Mission intégration Word",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/9/a/1",
+      "title": "Les outils de saisie et de mise en évidence",
+      "signs": 18
+    },
+    {
+      "route": "#/m/205/s/9/a/2",
+      "title": "Saisie rapide et règles",
+      "signs": 10
+    },
+    {
+      "route": "#/m/205/s/9/a/3",
+      "title": "Simulator : le tableau des ventes",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/9/a/4",
+      "title": "Mission 500 lignes",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/10/a/1",
+      "title": "Lien, objet ou macro ?",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/10/a/2",
+      "title": "Crée la page d’accueil du classeur",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/10/a/3",
+      "title": "Simulator : le menu de navigation",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/10/a/4",
+      "title": "Mission classeur de suivi",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/11/a/1",
+      "title": "Quel graphique pour quelle question ?",
+      "signs": 14
+    },
+    {
+      "route": "#/m/205/s/11/a/2",
+      "title": "Les éléments du graphique",
+      "signs": 18
+    },
+    {
+      "route": "#/m/205/s/11/a/3",
+      "title": "Simulator : le graphique des ventes",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/11/a/4",
+      "title": "Mission présentation à la direction",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/12/a/1",
+      "title": "Trier, filtrer ou transposer ?",
+      "signs": 14
+    },
+    {
+      "route": "#/m/205/s/12/a/2",
+      "title": "Tri à deux niveaux",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/12/a/3",
+      "title": "Simulator : la base clients",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/12/a/4",
+      "title": "Mission extraction",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/13/a/1",
+      "title": "Sous-totaux par client",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/13/a/2",
+      "title": "Synthèse et plan",
+      "signs": 18
+    },
+    {
+      "route": "#/m/205/s/13/a/3",
+      "title": "Simulator : la synthèse des agences",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/13/a/4",
+      "title": "Mission synthèse annuelle",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/14/a/1",
+      "title": "Place les champs du TCD",
+      "signs": 15
+    },
+    {
+      "route": "#/m/205/s/14/a/2",
+      "title": "Crée le TCD des ventes",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/14/a/3",
+      "title": "Simulator : l’analyse des ventes",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/14/a/4",
+      "title": "Mission 5 000 lignes",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/15/a/1",
+      "title": "Contrôler et protéger",
+      "signs": 20
+    },
+    {
+      "route": "#/m/205/s/15/a/2",
+      "title": "Sécurise le formulaire de saisie",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/15/a/3",
+      "title": "Simulator : le formulaire commercial",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/15/a/4",
+      "title": "Mission saisie fiable",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/16/a/1",
+      "title": "Quel outil pour quel besoin ?",
+      "signs": 16
+    },
+    {
+      "route": "#/m/205/s/16/a/2",
+      "title": "Le mini-projet Excel",
+      "signs": 12
+    },
+    {
+      "route": "#/m/205/s/16/a/3",
+      "title": "Simulator : le rapport mensuel",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/16/a/4",
+      "title": "Mission intégration Excel",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/17/a/1",
+      "title": "Identité visuelle d’une présentation",
+      "signs": 18
+    },
+    {
+      "route": "#/m/205/s/17/a/2",
+      "title": "Dans le masque ou sur une diapositive ?",
+      "signs": 13
+    },
+    {
+      "route": "#/m/205/s/17/a/3",
+      "title": "Simulator : le modèle institutionnel",
+      "signs": 8
+    },
+    {
+      "route": "#/m/205/s/17/a/4",
+      "title": "Mission identité visuelle",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/18/a/1",
+      "title": "Transition, animation ou interactivité ?",
+      "signs": 14
+    },
+    {
+      "route": "#/m/205/s/18/a/2",
+      "title": "Animer avec méthode",
+      "signs": 10
+    },
+    {
+      "route": "#/m/205/s/18/a/3",
+      "title": "Simulator : le parcours interactif",
+      "signs": 8
+    },
+    {
+      "route": "#/m/205/s/18/a/4",
+      "title": "Mission présentation interactive",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/19/a/1",
+      "title": "Les outils de la messagerie",
+      "signs": 20
+    },
+    {
+      "route": "#/m/205/s/19/a/2",
+      "title": "Crée la règle « Factures »",
+      "signs": 11
+    },
+    {
+      "route": "#/m/205/s/19/a/3",
+      "title": "Simulator : la boîte de réception",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/19/a/4",
+      "title": "Mission boîte organisée",
+      "signs": 25
+    },
+    {
+      "route": "#/m/205/s/20/a/1",
+      "title": "La chaîne d’intégration",
+      "signs": 10
+    },
+    {
+      "route": "#/m/205/s/20/a/2",
+      "title": "Contacts, modèles et tâches",
+      "signs": 18
+    },
+    {
+      "route": "#/m/205/s/20/a/3",
+      "title": "Simulator : le service partenariats",
+      "signs": 19
+    },
+    {
+      "route": "#/m/205/s/20/a/4",
+      "title": "Mission finale : intégration",
+      "signs": 25
+    }
+  ],
+  "overflow": [],
+  "accessibility": []
+}

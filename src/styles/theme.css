@@ -355,7 +355,7 @@ a.btn{text-decoration:none}
 /* ---------- Aide arabe à la demande : pastille « ?AR » + mini-bulle ---------- */
 .arh-btn{display:inline-flex;align-items:flex-start;justify-content:center;gap:1px;vertical-align:middle;margin-inline-start:.4rem;min-width:1.7rem;height:1.45rem;padding:0 .3rem;border-radius:999px;background:#eef1ff;border:1.5px solid #8b97e8;color:#2b3fc4;font:800 .78rem/1.35rem Nunito,system-ui,sans-serif;cursor:pointer;user-select:none;-webkit-user-select:none;flex:none;transition:background .15s,transform .15s,box-shadow .15s;position:relative;top:-1px}
 .arh-btn .arh-q{font-size:.85rem}
-.arh-btn .arh-ar{font-size:.5rem;line-height:1;margin-top:.2rem;letter-spacing:.02em;opacity:.85}
+.arh-btn .arh-ar{font-size:.6rem;line-height:1;margin-top:.2rem;letter-spacing:.02em;opacity:1}
 .arh-btn:hover{background:#dfe4ff;transform:scale(1.06)}
 .arh-btn:focus-visible{outline:3px solid #f2b418;outline-offset:2px}
 .arh-btn.is-open{background:#2b3fc4;border-color:#2b3fc4;color:#fff}

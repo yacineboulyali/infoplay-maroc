@@ -1,6 +1,7 @@
 import { h, svgFrom } from '../utils/dom.js';
 import { SCENES, regionIds } from './scenes.js';
 import { audio } from '../audio/audio.js';
+import { studentIllustration } from '../utils/student-illustrations.js';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 function shapeMarkup(s) {
@@ -82,7 +83,7 @@ export function hotspotGame(root, d) {
         class: 'prompt-btn',
         'aria-current': i === cur ? 'step' : null,
         onclick: () => { cur = i; audio.play('select'); draw(); },
-      }, p[1]),
+      }, studentIllustration(d, i), p[1]),
       h('span', { class: 'ans' }, ans[i] ? zoneName(ans[i]) : '—')
     )));
     root.querySelectorAll('[data-r]').forEach((g) => {

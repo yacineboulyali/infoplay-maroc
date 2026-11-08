@@ -1,0 +1,204 @@
+[
+  {
+    "file": "qa/batch-196-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s3-a3-q09",
+        "question": "rythme.wav",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s3-a3-q10",
+        "question": "hymne.mp3",
+        "activity": "Organise tes fichiers"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s3-a4-q01",
+        "question": "Crée un nouveau dossier nommé Sciences dans Mes documents (sélectionne le dossier racine, écris le nom, clique sur « Nouveau dossier »).",
+        "activity": "Mission Explorateur"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s3-a4-q02",
+        "question": "Renomme le fichier notes.txt en notes_2AC.txt.",
+        "activity": "Mission Explorateur"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s3-a4-q03",
+        "question": "Copie plage.jpg dans le dossier Sciences : l’original doit rester dans Photos.",
+        "activity": "Mission Explorateur"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s3-a4-q04",
+        "question": "Déplace maths.docx du dossier Cours vers Sciences (couper puis coller).",
+        "activity": "Mission Explorateur"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s3-a4-q05",
+        "question": "Supprime brouillon.txt : il doit se retrouver dans la corbeille.",
+        "activity": "Mission Explorateur"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s3-a4-q06",
+        "question": "Restaure brouillon.txt depuis la corbeille.",
+        "activity": "Mission Explorateur"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s4-a1-q01",
+        "question": "Clique sur le ruban qui regroupe les outils.",
+        "activity": "Découvre la fenêtre"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s4-a1-q02",
+        "question": "Clique sur la zone des onglets.",
+        "activity": "Découvre la fenêtre"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s4-a1-q03",
+        "question": "Clique sur la feuille où l’on tape le texte.",
+        "activity": "Découvre la fenêtre"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s4-a1-q04",
+        "question": "Clique sur la barre d’état.",
+        "activity": "Découvre la fenêtre"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s4-a1-q05",
+        "question": "Clique sur la barre de titre.",
+        "activity": "Découvre la fenêtre"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s4-a2-q01",
+        "question": "💾",
+        "activity": "Commandes et icônes"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s4-a2-q02",
+        "question": "↩",
+        "activity": "Commandes et icônes"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s4-a2-q03",
+        "question": "🖨",
+        "activity": "Commandes et icônes"
+      }
+    ]
+  },
+  {
+    "file": "qa/batch-196-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s4-a2-q04",
+        "question": "📂",
+        "activity": "Commandes et icônes"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s4-a2-q05",
+        "question": "🔍",
+        "activity": "Commandes et icônes"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s4-a3-q01",
+        "question": "Copier",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s4-a3-q02",
+        "question": "Couper",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s4-a3-q03",
+        "question": "Coller",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s4-a3-q04",
+        "question": "Gras",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s4-a3-q05",
+        "question": "Centrer",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s4-a3-q06",
+        "question": "Souligné",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s4-a3-q07",
+        "question": "Image",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s4-a3-q08",
+        "question": "Tableau",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s4-a3-q09",
+        "question": "Forme",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s4-a3-q10",
+        "question": "Numéro de page",
+        "activity": "Édition, mise en forme ou insertion ?"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s4-a4-q01",
+        "question": "Clique dans la page et tape le mot « Bonjour ».",
+        "activity": "Mission Word"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s4-a4-q02",
+        "question": "Écris le nom « exposeMaroc » dans la case du nom de fichier.",
+        "activity": "Mission Word"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s4-a4-q03",
+        "question": "Choisis le dossier « Mes documents ».",
+        "activity": "Mission Word"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s4-a4-q04",
+        "question": "Clique sur Enregistrer.",
+        "activity": "Mission Word"
+      }
+    ]
+  }
+]

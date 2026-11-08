@@ -2,6 +2,7 @@
 // L'élève retrouve le bon chemin Onglet › Commande › Option pour réaliser chaque tâche.
 // Chemin d'une commande : "Onglet>Commande" ou "Onglet>Commande>Option" (séparateur « > », jamais dans un nom).
 import { h } from '../utils/dom.js';
+import { semanticIcon } from '../utils/semantic-icons.js';
 
 // Définition compacte : onglet → [ "Groupe: Cmd | Cmd(opt; opt) | …", … ]
 const DEF = {
@@ -151,10 +152,10 @@ export function ribbonView(host, st, ctx) {
         e.stopPropagation();
         if (!c.opts.length) { act(`${tab}>${c.name}`); return; }
         const was = openMenu && openMenu.__owner === b; closeMenu(); if (was) return;
-        const menu = h('div', { class: 'rb-menu', role: 'menu', 'aria-label': c.name }, c.opts.map((o) => h('button', { type: 'button', role: 'menuitem', class: 'rb-opt', onclick: (ev) => { ev.stopPropagation(); act(`${tab}>${c.name}>${o}`); } }, o)));
+        const menu = h('div', { class: 'rb-menu', role: 'menu', 'aria-label': c.name }, c.opts.map((o) => h('button', { type: 'button', role: 'menuitem', class: 'rb-opt', onclick: (ev) => { ev.stopPropagation(); act(`${tab}>${c.name}>${o}`); } }, semanticIcon(o), o)));
         menu.__owner = b; b.setAttribute('aria-expanded', 'true'); b.after(menu); openMenu = menu; menu.querySelector('button')?.focus();
         menu.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { closeMenu(); b.setAttribute('aria-expanded', 'false'); b.focus(); } });
-      } }, c.name, c.opts.length ? h('span', { class: 'rb-caret', 'aria-hidden': 'true' }, '▾') : null);
+      } }, semanticIcon(c.name), c.name, c.opts.length ? h('span', { class: 'rb-caret', 'aria-hidden': 'true' }, '▾') : null);
     return h('span', { class: 'rb-cmd-wrap' }, b);
   }
   function paintCanvas() {

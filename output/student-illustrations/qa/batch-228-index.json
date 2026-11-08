@@ -1,0 +1,204 @@
+[
+  {
+    "file": "qa/batch-228-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s4-a4-q05",
+        "question": "Ajoute le mot « Maroc » dans le texte, puis enregistre de nouveau.",
+        "activity": "Mission Word"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s5-a1-q01",
+        "question": "Quelle touche efface le caractère à gauche du curseur ?",
+        "activity": "Le clavier en situation"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s5-a1-q02",
+        "question": "Quelle touche donne une lettre majuscule quand on la maintient avec une lettre ?",
+        "activity": "Le clavier en situation"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s5-a1-q03",
+        "question": "Pour passer à la ligne et créer un nouveau paragraphe, on appuie sur :",
+        "activity": "Le clavier en situation"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s5-a1-q04",
+        "question": "Quelle touche efface le caractère à droite du curseur ?",
+        "activity": "Le clavier en situation"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s5-a1-q05",
+        "question": "Pour séparer deux mots, on utilise :",
+        "activity": "Le clavier en situation"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s5-a2-q01",
+        "question": "Le professeur [blank] la leçon aux élèves.",
+        "activity": "Corrige le texte tapé trop vite"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s5-a2-q02",
+        "question": "Les élèves [blank] dans la salle informatique.",
+        "activity": "Corrige le texte tapé trop vite"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s5-a2-q03",
+        "question": "Nous [blank] un ordinateur pour écrire.",
+        "activity": "Corrige le texte tapé trop vite"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s5-a2-q04",
+        "question": "Il faut [blank] le document avant de fermer.",
+        "activity": "Corrige le texte tapé trop vite"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s5-a2-q05",
+        "question": "Ce texte contient des [blank] à corriger.",
+        "activity": "Corrige le texte tapé trop vite"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s5-a3-q01",
+        "question": "Sélectionner le mot à copier.",
+        "activity": "Copier‑coller un mot"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s5-a3-q02",
+        "question": "Cliquer sur Copier (Ctrl + C).",
+        "activity": "Copier‑coller un mot"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s5-a3-q03",
+        "question": "Placer le curseur à l’endroit voulu.",
+        "activity": "Copier‑coller un mot"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s5-a3-q04",
+        "question": "Cliquer sur Coller (Ctrl + V).",
+        "activity": "Copier‑coller un mot"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s5-a3-q05",
+        "question": "Vérifier que le mot apparaît à la nouvelle place.",
+        "activity": "Copier‑coller un mot"
+      }
+    ]
+  },
+  {
+    "file": "qa/batch-228-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s5-a4-q01",
+        "question": "Écris le titre « AVIS » en majuscules.",
+        "activity": "Mission Secrétaire"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s5-a4-q02",
+        "question": "Passe à la ligne (touche Entrée) et écris : Réunion des parents le lundi",
+        "activity": "Mission Secrétaire"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s5-a4-q03",
+        "question": "Ajoute à la suite : « à 17 h ».",
+        "activity": "Mission Secrétaire"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s5-a4-q04",
+        "question": "Corrige : remplace « lundi » par « mardi ».",
+        "activity": "Mission Secrétaire"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s5-a4-q05",
+        "question": "Termine par une signature sur une nouvelle ligne : La direction",
+        "activity": "Mission Secrétaire"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s6-a1-q01",
+        "question": "Gras (G)",
+        "activity": "Effets et boutons"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s6-a1-q02",
+        "question": "Italique (I)",
+        "activity": "Effets et boutons"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s6-a1-q03",
+        "question": "Souligné (S)",
+        "activity": "Effets et boutons"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s6-a1-q04",
+        "question": "Centrer",
+        "activity": "Effets et boutons"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s6-a1-q05",
+        "question": "Couleur de police",
+        "activity": "Effets et boutons"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s6-a2-q01",
+        "question": "Clique sur la zone de la taille de police.",
+        "activity": "Repère les outils"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s6-a2-q02",
+        "question": "Clique sur le bouton de la couleur du texte.",
+        "activity": "Repère les outils"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s6-a2-q03",
+        "question": "Clique sur le bouton qui centre le texte.",
+        "activity": "Repère les outils"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s6-a2-q04",
+        "question": "Clique sur le bouton qui aligne à droite.",
+        "activity": "Repère les outils"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s6-a2-q05",
+        "question": "Clique sur la zone du nom de la police.",
+        "activity": "Repère les outils"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s6-a3-q01",
+        "question": "Le titre est petit et collé à gauche. Pour le rendre bien visible, que faire ?",
+        "activity": "Répare le paragraphe"
+      }
+    ]
+  }
+]
