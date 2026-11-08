@@ -20,7 +20,7 @@ export function presentResult(o) {
   const ratio = o.score / MAX;
   const prevBest = bestTime(o.prof.id, o.act.id);
   const record = saveTime(o.prof.id, o.act.id, o.elapsedMs, o.score);
-  const after = computeGame(rec, o.prof.id); const d = diffGame(o.before, after);
+  const after = computeGame(rec, o.prof.id, o.scope); const d = diffGame(o.before, after, o.scope?.badges);
   const attempts = rec(o.act.id).attempts; const first = attempts[0].score; const best = Math.max(...attempts.map((x) => x.score));
   const attemptLine = o.n === 1 ? 'Premier essai enregistré.' : `Essai n° ${o.n} · premier essai : ${fmt(first)}/5 · meilleur : ${fmt(best)}/5`;
 

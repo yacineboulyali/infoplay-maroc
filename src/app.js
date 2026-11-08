@@ -13,6 +13,10 @@ import { gameHud } from './fx/popup.js';
 import { presentResult, makeChrono } from './fx/flow.js';
 import { installInteractions, revealIn } from './fx/interact.js';
 import { fsButton, suggestFullscreen, autoHideHeader } from './fx/fullscreen.js';
+import { PRO, PRO_ACTIVITIES } from './data/index.js';
+import { PRO_POINTS } from './data/pro/index.js';
+import { proHub, reviewScreen, defiScreen } from './pro/screens.js';
+import { proScope } from './pro/engine.js';
 
 const store = createStore(localAdapter(), isActivityId);
 const app = document.getElementById('app');
@@ -22,6 +26,12 @@ const go = (p) => { location.hash = p; };
 const link = (href, ...kids) => h('a', { href }, ...kids);
 const STATUS = { todo: 'Pas commencée', doing: 'En cours', done: 'Terminée' };
 const arSub = (text) => arHint(text);
+// Parcours M205 : libellés et périmètre de jeu propres (le Tronc Commun garde les siens).
+const isPro = (mi) => Number(mi) === PRO.id;
+const modLabel = (mi) => (isPro(mi) ? 'M205' : 'Module ' + mi);
+const modHref = (mi) => (isPro(mi) ? '#/pro' : '#/m/' + mi);
+const scopeOf = (mi, pid) => (isPro(mi) ? proScope(pid, recOf(pid)) : undefined);
+const arSess = (s) => s.ar || arSession(s.id);
 
 // ---------- Petits composants & utilitaires ----------
 function toast(msg) {
@@ -106,6 +116,7 @@ function header(prof) {
       prof ? h('nav', { class: 'main', id: 'main-nav', 'aria-label': 'Navigation principale' },
         a('#/dash', 'Tableau de bord', 'dash'),
         a('#/progres', 'Mon progrès', 'progres'),
+        a('#/pro', '💼 M205 OFPPT', 'pro'),
         a('#/multijoueur', 'Multijoueur LAN', 'multijoueur'),
         a('#/course', '🏁 Course', 'course'),
         a('#/suivi', '👀 Suivi', 'suivi'),
@@ -368,6 +379,14 @@ function homeScreen() {
             arHint('الواجهة الكلاسيكية: تدريب فردي أو تحدي جماعي'),
             h('div', { class: 'welcome-cta-group' }, enterSoloBtn, enterLanBtn, enterRaceBtn, enterDataBtn)
           ),
+          h('section', { class: 'mode-card mode-pro', 'aria-labelledby': 'mode-pro-h' },
+            h('span', { class: 'mode-badge' }, 'Nouveau · OFPPT'),
+            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '💼'),
+            h('h2', { id: 'mode-pro-h' }, 'M205 · Bureautique avancée'),
+            h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint et Outlook avancés, Simulator type MOS, révision espacée, défi mixte et quêtes du jour.'),
+            arHint('المكتبيات المتقدمة للتكوين المهني: 20 حصة و80 نشاطاً تفاعلياً'),
+            h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => { if (store.active()) go('#/pro'); else { const el = document.getElementById('entry-zone'); if (el) { el.scrollIntoView({ block: 'start', behavior: 'smooth' }); setTimeout(() => name.focus({ preventScroll: true }), 250); } } } }, '💼 Ouvrir le parcours M205 →')
+          ),
           h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
             h('span', { class: 'mode-badge' }, 'Nouveau · 3D'),
             h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🏝️'),
@@ -562,6 +581,7 @@ function dashScreen() {
         h('span', { class: 'cta-play', 'aria-hidden': 'true' }, '▶'),
         h('span', null, h('small', null, `Module ${next.moduleId} · Séance ${next.sessionIndex} · Activité ${next.index}`), h('b', null, `Continuer : ${next.title}`)))
         : h('span', { class: 'pill done' }, '🏆 Tout est fait !'),
+      h('a', { class: 'btn accent', href: '#/pro' }, '💼 M205 Bureautique avancée'),
       h('a', { class: 'btn ghost', href: '#/course' }, '🏁 Course de la classe'),
       h('a', { class: 'btn ghost', href: '#/multijoueur' }, '🌐 Joueurs du réseau')),
     h('h2', { class: 'section-h', 'data-reveal': '' }, 'Les 4 modules'),
@@ -639,8 +659,11 @@ function sessionScreen(mi, si) {
   lanManager.setActivity(`m${mi}-s${si}`, `Séance ${si} : ${s.title}`);
 
   return h('main', { id: 'main' },
-    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link('#/m/' + mi, 'Module ' + mi), ' › Séance ', si),
-    h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`, arSub(arSession(s.id))),
+    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link(modHref(mi), modLabel(mi)), ' › Séance ', si),
+    h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`, arSub(arSess(s))),
+    s.situation ? h('section', { class: 'mission-brief', 'data-reveal': '' },
+      h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, s.situation.ico),
+      h('div', null, h('p', { class: 'eyebrow' }, 'Mission · situation professionnelle'), h('b', null, s.situation.who), h('p', null, s.situation.text))) : null,
     h('p', null, h('b', null, 'Notions : '), s.topics.join(', '), '.'),
     h('p', { class: 'muted' }, `4 activités interactives · environ ${s.acts.reduce((a, b) => a + b.estimatedMinutes, 0)} minutes · /20 points`),
     h('div', { class: 'grid g2' }, s.acts.map((a) => {
@@ -658,7 +681,8 @@ function sessionScreen(mi, si) {
     h('div', { class: 'row', style: 'margin-top:1.2rem' },
       h('a', { class: 'btn primary', href: `#/m/${mi}/s/${si}/a/${next.index}` }, st.done ? '▶ Continuer la séance' : '▶ Commencer la séance'),
       st.done ? h('a', { class: 'btn', href: `#/m/${mi}/s/${si}/bilan` }, 'Voir le bilan') : null
-    )
+    ),
+    s.retenir && st.status === 'done' ? h('div', { class: 'card retenir' }, h('h2', null, '📌 À retenir'), h('p', null, s.retenir)) : null
   );
 }
 
@@ -725,7 +749,7 @@ function activityScreen(mi, si, ai) {
     checkBtn.disabled = true;
     const elapsed = chrono.stop();
 
-    const before = computeGame(rec, prof.id);
+    const before = computeGame(rec, prof.id, scopeOf(mi, prof.id));
     const score = activityScore(res.correct, res.total);
     const n = store.recordAttempt(prof.id, act.id, score, act.version);
     eng.reveal && eng.reveal(res);
@@ -738,12 +762,12 @@ function activityScreen(mi, si, ai) {
 
     const nextHref = ai < 4 ? `#/m/${mi}/s/${si}/a/${ai + 1}` : `#/m/${mi}/s/${si}/bilan`;
     out.replaceChildren(presentResult({
-      store, prof, act, res, score, n, before, elapsedMs: elapsed, stage,
+      scope: scopeOf(mi, prof.id), store, prof, act, res, score, n, before, elapsedMs: elapsed, stage,
       next: { href: nextHref, label: ai < 4 ? 'Activité suivante →' : 'Bilan de la séance →' },
       onRetry: () => { mount(); stage.scrollIntoView({ block: 'start', behavior: 'smooth' }); },
       onPeak: (ratio) => { if (ratio === 1) celebrate(); },
     }));
-    hud.replaceWith(hud = gameHud(computeGame(rec, prof.id), { compact: true }));
+    hud.replaceWith(hud = gameHud(computeGame(rec, prof.id, scopeOf(mi, prof.id)), { compact: true }));
   }
 
   const dots = h('nav', { class: 'dots', 'aria-label': 'Activités de la séance' }, s.acts.map((a) => h('a', {
@@ -753,13 +777,13 @@ function activityScreen(mi, si, ai) {
     'aria-current': a.index === ai ? 'step' : null,
   }, a.index)));
 
-  let hud = gameHud(computeGame(rec, prof.id), { compact: true });
+  let hud = gameHud(computeGame(rec, prof.id, scopeOf(mi, prof.id)), { compact: true });
   const bestT = bestTime(prof.id, act.id);
   const view = h('main', { id: 'main', class: `activity-page ${m.color}` },
-    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link('#/m/' + mi, 'Module ' + mi), ' › ', link(`#/m/${mi}/s/${si}`, 'Séance ' + si), ' › Activité ', ai),
+    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link(modHref(mi), modLabel(mi)), ' › ', link(`#/m/${mi}/s/${si}`, 'Séance ' + si), ' › Activité ', ai),
     h('header', { class: 'act-hero', 'data-reveal': '' },
       h('div', { class: 'act-hero-main' },
-        h('span', { class: 'act-kind' }, `${m.icon} ${KIND[act.type]} · Module ${mi} · Séance ${si}`),
+        h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulator' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
         h('h1', { tabindex: '-1' }, act.title, arSub(arActivity(act.id))),
         h('p', { class: 'act-obj' }, h('b', null, 'Objectif : '), act.objective)),
       h('div', { class: 'act-hero-side' }, dots, h('div', { class: 'act-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null, h('span', { class: 'chip-meta' }, `~${act.estimatedMinutes} min · /5`)), hud)),
@@ -795,7 +819,7 @@ function summaryScreen(mi, si) {
   const nextS = getSession(mi, si + 1);
 
   return h('main', { id: 'main' },
-    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link('#/m/' + mi, 'Module ' + mi), ' › Bilan de la séance ', si),
+    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link(modHref(mi), modLabel(mi)), ' › Bilan de la séance ', si),
     h('h1', { tabindex: '-1' }, `Bilan — Séance ${si} : ${s.title}`),
     h('p', { class: 'muted' }, `Élève : ${p.displayName}${p.className ? ' · ' + p.className : ''} · ${frDate(new Date().toISOString())}`),
     h('div', { class: 'card row', style: 'justify-content:space-around' },
@@ -839,7 +863,7 @@ function progressScreen() {
   return h('main', { id: 'main' },
     h('h1', { tabindex: '-1' }, 'Mon progrès'),
     h('p', { class: 'muted' }, 'Les points d’une séance sont sur 20 : « Premier » = premiers essais, « Meilleur » = meilleurs essais.'),
-    CATALOG.map((m) => {
+    [...CATALOG, PRO].map((m) => {
       const ms = moduleStats(m, rec);
       return h('section', { class: 'card', style: 'margin-bottom:1rem;overflow:auto' },
         h('h2', null, `${m.icon} Module ${m.id} — ${m.title}`),
@@ -957,7 +981,7 @@ function dataScreen() {
       )
     ) : h('p', null, 'Aucun profil sur cet ordinateur.'),
     h('div', { class: 'row', style: 'margin-top:.6rem' },
-      h('button', { type: 'button', class: 'btn small', onclick: () => downloadText('infoplay-resultats.csv', store.csv(ACTIVITIES), 'text/csv') }, '⬇ Exporter les résultats (CSV)'),
+      h('button', { type: 'button', class: 'btn small', onclick: () => downloadText('infoplay-resultats.csv', store.csv([...ACTIVITIES, ...PRO_ACTIVITIES]), 'text/csv') }, '⬇ Exporter les résultats (CSV)'),
       h('button', { type: 'button', class: 'btn small', onclick: () => exp(null, 'infoplay-classe.json') }, '⬇ Exporter tous les profils (JSON)')
     )
   );
@@ -1025,7 +1049,7 @@ function render() {
   try {
     const prof = store.active();
     applyPrefs(prof);
-    const q = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
+    const q = location.hash.replace(/^#\/?/, '').replace(/\?.*$/, '').split('/').filter(Boolean);
 
     // Présence sur le réseau local : un élève (avec sa progression) ou un simple observateur (ex. l'enseignant).
     live = null;
@@ -1052,7 +1076,13 @@ function render() {
       view = prof ? dashScreen() : homeScreen();
     } else if (q[0] === 'progres') {
       view = prof ? progressScreen() : homeScreen();
-    } else if (q[0] === 'm' && /^[1-4]$/.test(q[1] || '')) {
+    } else if (q[0] === 'pro') {
+      const ctx = prof ? { prof, rec: recOf(prof.id) } : null;
+      if (prof) lanManager.setActivity('pro', 'M205 Bureautique avancée');
+      view = !prof ? homeScreen() : q[1] === 'revision' ? reviewScreen(ctx) : q[1] === 'defi' ? defiScreen(ctx) : proHub(ctx);
+    } else if (q[0] === 'm' && isPro(q[1]) && !q[2]) {
+      view = prof ? proHub({ prof, rec: recOf(prof.id) }) : homeScreen();
+    } else if (q[0] === 'm' && (/^[1-4]$/.test(q[1] || '') || isPro(q[1]))) {
       if (!prof) view = homeScreen();
       else if (!q[2]) view = moduleScreen(+q[1]);
       else if (q[2] === 's' && /^\d+$/.test(q[3] || '')) {

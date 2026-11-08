@@ -6,6 +6,21 @@
 
 ![Accueil d'InfoPlay Maroc](docs/screenshots/01-accueil.png)
 
+## Nouveau : parcours OFPPT M205 — Bureautique avancée 💼
+
+Second parcours, indépendant du Tronc Commun (il ne change ni ses 120 activités ni ses 600 points) : **20 séances × 2 h, 80 activités, 400 points**, tirées du cours « M205 Cours complets 20 séances 40 h » (formateur : Yacine Boulyali).
+
+- **Word avancé (S1–S8)**, **Excel avancé (S9–S16)**, **PowerPoint avancé (S17–S18)**, **Outlook et intégration (S19–S20)**.
+- Chaque séance commence par une **mission professionnelle** (Atlas Services) et propose 4 mécaniques différentes : associer, classer, ordonner ou compléter, un **Simulator de ruban Office** (même réflexe qu'à l'examen MOS : Onglet › Commande › Option, avec les tâches SEANCE / PROJET / T du document) et une mission-quiz. La séance terminée affiche sa trace écrite « À retenir ».
+- Mécaniques ajoutées, fondées sur la recherche en sciences de l'apprentissage :
+  - **révision espacée** en boîtes de Leitner (1, 3, 7, 16, 35 jours) à partir de cartes générées depuis les activités ;
+  - **indice de certitude** avant de répondre, avec un retour sur l'hypercorrection et la calibration ;
+  - **Défi mixte entrelacé** (3 vies, combo ×4) ;
+  - **quêtes du jour** et série de jours ;
+  - **carte des compétences** par niveaux de maîtrise ;
+  - **rangs de carrière**, badges et certificats par partie.
+- Accès : bouton « M205 · Bureautique avancée » sur l'accueil, lien **💼 M205 OFPPT** dans le menu (`#/pro`). La progression est enregistrée dans le même profil et exportée dans le CSV enseignant.
+
 ## Aperçu
 
 | Tableau de bord | Activité interactive |

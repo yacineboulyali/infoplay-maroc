@@ -1,7 +1,7 @@
 // Stockage local versionné. Aucune donnée ne quitte l'ordinateur.
 export const SCHEMA = 1;
 export const KEY = 'infoplay.v1';
-const ACT_RE = /^m[1-4]-s\d{1,2}-a[1-4]$/;
+const ACT_RE = /^m([1-4]|205)-s\d{1,2}-a[1-4]$/; // Tronc Commun (m1–m4) et parcours OFPPT M205
 const ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
 export const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
 const uid = () => (globalThis.crypto && crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10));

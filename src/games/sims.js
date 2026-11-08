@@ -1,6 +1,7 @@
 // Moteur de simulation guidée : une vue interactive + des étapes validées une à une.
 import { h, norm, fmtNum } from '../utils/dom.js';
 import { VIEWS2 } from './sims2.js';
+import { ribbonView } from './ribbon.js';
 
 const MODE = /^[~=^]/;
 export function matchVal(exp, act) {
@@ -80,6 +81,7 @@ const VIEWS = {
     return { refresh() { to.value = st.to; sub.value = st.subject; body.value = st.body; paint(); } };
   },
   ...VIEWS2,
+  ribbon: ribbonView,
 };
 
 export function simGame(root, d) {
@@ -89,7 +91,7 @@ export function simGame(root, d) {
   const taskBox = h('div', { class: 'taskbox', 'aria-live': 'polite' }); const log = h('ul', { class: 'steplog' });
   const btn = h('button', { type: 'button', class: 'btn primary', onclick: validate }, 'Valider l’étape');
   function drawTask() {
-    taskBox.replaceChildren(h('p', { class: 'step-h' }, step < n ? `Étape ${step + 1} sur ${n}` : 'Terminé'), h('p', { class: 'step-t' }, step < n ? d.tasks[step][0] : 'Toutes les étapes sont faites : clique sur « Vérifier ».'), step < n ? btn : null);
+    taskBox.replaceChildren(h('p', { class: 'step-h' }, step < n ? `Étape ${step + 1} sur ${n}` : 'Terminé'), h('p', { class: 'step-t' }, step < n ? d.tasks[step][0] : 'Toutes les étapes sont faites : clique sur « Vérifier ».'), ...(step < n ? [btn] : []));
   }
   function validate() {
     if (step >= n) return; const t = d.tasks[step]; const ok = goalOk(t[1], st, api);
