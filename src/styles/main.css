@@ -419,6 +419,7 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .student-level-illustration .student-illustration{width:112px;height:112px;margin:0 0 .75rem}
 .node .student-illustration{width:48px;height:48px;margin:auto}
 .node:hover{transform:translate(-50%,calc(-50% - 2px))}
+@media(max-width:620px){.activity-m1-s3-a3 .case3d{aspect-ratio:2/3}.activity-m1-s3-a3 .slot{font-size:.68rem}}
 @media(max-width:620px){.card .student-illustration{width:88px;height:88px}.ord-row .student-illustration{width:68px;height:68px}.chip .student-illustration{width:112px;height:112px}.student-illustration-question{width:132px;height:132px}.taskbox>.student-illustration{width:88px;height:88px}.fill-line>.student-illustration{width:80px;height:80px}}
 
 
@@ -462,3 +463,12 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .egtsi-visual-terms{display:grid;flex:1 1 280px;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:.75rem;margin:0}
 .egtsi-visual-terms dt{font-weight:800}.egtsi-visual-terms dd{margin:0}
 .egtsi-lesson h4{margin-top:1.3rem}.egtsi-name-field{display:grid;gap:.35rem;max-width:38rem;margin-block:.8rem}
+.egtsi-concept-visual{display:inline-grid;flex:0 0 auto;place-items:center;width:3.25rem;height:3.25rem;border:1px solid currentColor;border-radius:.75rem;background:var(--surface,#f2f7fc);color:var(--ink,#153b65)}
+.egtsi-concept-visual svg{width:2.25rem;height:2.25rem;margin:0}
+.egtsi-visual-terms .egtsi-picture,.egtsi-facts .egtsi-picture{width:min(100%,105px);margin:0 0 .5rem}
+.egtsi-visual-terms .egtsi-concept-visual,.egtsi-facts .egtsi-concept-visual{margin-bottom:.45rem}
+.egtsi-activity-link>.egtsi-concept-visual,.egtsi-activity-link>.egtsi-picture{margin:0 .65rem 0 0;width:2.65rem;height:2.65rem}
+.egtsi-activity-visual{display:flex;align-items:center;gap:.75rem;margin:1rem 0;font-weight:800}
+.egtsi-practice .egtsi-activity-visual .egtsi-picture{width:3.25rem}
+.egtsi-practice .stage-card .egtsi-concept-visual{width:2.65rem;height:2.65rem}
+.egtsi-practice .stage-card .egtsi-concept-visual svg{width:1.8rem;height:1.8rem}

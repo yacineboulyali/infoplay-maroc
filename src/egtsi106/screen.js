@@ -7,6 +7,9 @@ import { partOneSessions } from '../data/egtsi106/part-one.js';
 
 import { lessonPlans, organizeLessons } from '../data/egtsi106/lesson-plans.js';
 
+import { conceptVisual } from './visuals.js';
+import { STUDENT_ILLUSTRATIONS } from '../data/student-illustrations.js';
+
 const courses = [
   organizeLessons(topics, activities, lessonPlans[0]),
   ...partOneSessions.map((session, i) => organizeLessons(session.topics, session.activities, lessonPlans[i + 1])),
@@ -25,6 +28,8 @@ function picture(source, label = '', className = '') {
   }
   return h('img', { class: 'egtsi-picture ' + className, src: source, alt: label, loading: 'lazy', decoding: 'async', draggable: 'false' });
 }
+
+const visual = (label, source, context) => conceptVisual(label, picture, source, context);
 
 function heading(title, eyebrow, text) {
   return h('section', { class: 'egtsi-hero' },
@@ -101,11 +106,11 @@ function lessonBlocks(course, session) {
       h('figure', { class: 'egtsi-lesson-visual' },
         picture(lesson.image),
         h('dl', { class: 'egtsi-visual-terms' }, lesson.terms.map(([term, clue]) =>
-          h('div', null, h('dt', null, term), h('dd', null, clue))))),
+          h('div', null, visual(term), h('dt', null, term), h('dd', null, clue))))),
       h('details', { open: true },
         h('summary', null, 'Explications du cours'),
         h('dl', { class: 'egtsi-facts' }, lesson.entries.map(([term, text, source]) =>
-          h('div', null, picture(source), h('dt', null, term), h('dd', null, text)))),
+          h('div', null, visual(term, source, lesson.title), h('dt', null, term), h('dd', null, text)))),
         !session && index === 3 ? h('div', { class: 'egtsi-ports' }, ports.map(([name], i) =>
           h('figure', null, picture(portPictures[i]), h('figcaption', null, name)))) : null),
       h('h4', null, 'Activités de la leçon'),
@@ -113,14 +118,15 @@ function lessonBlocks(course, session) {
         const activity = course.activities[i];
         return h('li', null, h('a', { href: href(i, session), class: 'card egtsi-activity-link' },
           h('span', { class: 'egtsi-number' }, order + 1),
+          visual(activity.title, null, lesson.title),
           h('span', null, h('strong', null, activity.title), h('span', { class: 'muted' }, activity.objective))));
       })) )));
 }
 
-function typeName(root, { terms }) {
+function typeName(root, { terms, itemPicture }) {
   const fields = terms.map(([, clue], i) => {
     const input = h('input', { type: 'text', autocomplete: 'off', spellcheck: 'false' });
-    root.append(h('label', { class: 'egtsi-name-field' }, h('span', null, (i + 1) + '. ' + clue), input));
+    root.append(h('label', { class: 'egtsi-name-field' }, itemPicture(i), h('span', null, (i + 1) + '. ' + clue), input));
     return input;
   });
   const key = (value) => norm(value).replace(/\s*([+.]|’|')\s*/g, '$1');
@@ -139,7 +145,8 @@ function typeName(root, { terms }) {
 function practice(index, session, course) {
   const available = course.activities;
   const lessonNumber = course.lessons.findIndex((lesson) => lesson.indices.includes(index));
-  const sequence = course.lessons[lessonNumber].indices;
+  const lesson = course.lessons[lessonNumber];
+  const sequence = lesson.indices;
   const activity = available[index];
   const position = sequence.indexOf(index);
   const next = sequence[position + 1];
@@ -156,11 +163,23 @@ function practice(index, session, course) {
     stage.inert = false;
     check.disabled = false;
     feedback.replaceChildren();
-    engine = (activity.mech === 'type-name' ? typeName : engineOf(activity.mech))(stage, activity.id ? { ...activity.data, illustrationActivityId: activity.id } : {
-      ...activity.data,
+    const data = activity.data;
+    const items = data.pairs || data.items || data.steps || data.qs || data.lines || data.prompts || data.terms || [];
+    const label = (item) => Array.isArray(item) ? item[0] : item;
+    engine = (activity.mech === 'type-name' ? typeName : engineOf(activity.mech))(stage, {
+      ...data,
       textOnly: true,
-      itemPicture: (i) => picture(activity.pictures?.[i], '', 'student-illustration'),
-      answerPicture: (i) => picture(activity.answers?.[i], '', 'student-illustration'),
+      illustrationActivityId: activity.id,
+      itemPicture: (i) => {
+        const item = items[i];
+        if (item == null) return null;
+        const original = activity.id && STUDENT_ILLUSTRATIONS[activity.id + '-q' + String(i + 1).padStart(2, '0')];
+        const text = activity.mech === 'type-name' || activity.mech === 'hot' ? item[1] : label(item);
+        const safeText = String(text).replace(/\[\[.+?\]\]/g, '…');
+        return visual(safeText, activity.pictures?.[i] || original, lesson.title);
+      },
+      answerPicture: (i) => data.pairs && visual(data.pairs[i][1], activity.answers?.[i], lesson.title),
+      optionPicture: (i, k) => visual(data.qs[i][1][k], null, lesson.title),
     });
   }
 
@@ -191,6 +210,8 @@ function practice(index, session, course) {
     heading(activity.title, 'Séance 0' + (session?.id || '1') + ' · Leçon ' + (lessonNumber + 1) + ' · Activité ' + (position + 1) + ' / ' + sequence.length, activity.instructions || activity.objective),
     h('nav', { class: 'dots', 'aria-label': 'Activités de la séance' }, sequence.map((i, order) =>
       h('a', { href: href(i, session), class: i === index ? 'cur' : '', 'aria-current': i === index ? 'step' : null, 'aria-label': available[i].title }, order + 1))),
+    h('div', { class: 'egtsi-activity-visual' },
+      visual(lesson.title, lesson.image), h('span', null, lesson.title)),
     stage,
     h('div', { class: 'row activity-actions' }, check, retry),
     feedback);

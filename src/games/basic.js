@@ -652,7 +652,7 @@ export function quizGame(root, d) {
       },
       inputs[j],
       h('span', { class: 'opt-letter', 'aria-hidden': 'true' }, isTrueFalse ? (isVrai ? '✔' : '✖') : letter(j)),
-      visualLabel(optText, d.visualPart, null, d.textOnly || !!studentIllustration(d, i))
+      visualLabel(optText, d.visualPart, d.optionPicture?.(i, k), d.textOnly || !!studentIllustration(d, i))
       );
     });
 
