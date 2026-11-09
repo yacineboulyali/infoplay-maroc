@@ -393,9 +393,9 @@ function homeScreen() {
             h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => { if (store.active()) go('#/pro'); else { const el = document.getElementById('entry-zone'); if (el) { el.scrollIntoView({ block: 'start', behavior: 'smooth' }); setTimeout(() => name.focus({ preventScroll: true }), 250); } } } }, '💼 Ouvrir le parcours M205 →')
           ),
           h('section', { class: 'mode-card mode-pro', 'aria-labelledby': 'mode-egtsi-h' },
-            h('span', { class: 'mode-badge' }, 'OFPPT · Séance 01'),
+            h('span', { class: 'mode-badge' }, 'OFPPT · Partie 1'),
             h('h2', { id: 'mode-egtsi-h' }, 'EGTSI106 · Culture et techniques du numérique'),
-            h('p', null, 'Fondamentaux du digital et architecture d’un ordinateur. Cours, exercices interactifs et TP guidé.'),
+            h('p', null, 'Trois séances sur les fondamentaux du digital, les appareils et réseaux, puis Windows, les fichiers et le stockage.'),
             h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir la séance →')
           ),
           h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
