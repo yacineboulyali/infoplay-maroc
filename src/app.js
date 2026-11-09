@@ -1,3 +1,4 @@
+import { egtsiScreen } from './egtsi106/screen.js';
 import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
 import { mechanicIcon } from './utils/semantic-icons.js';
@@ -120,6 +121,7 @@ function header(prof) {
         a('#/dash', 'Tableau de bord', 'dash'),
         a('#/progres', 'Mon progrès', 'progres'),
         a('#/pro', '💼 M205 OFPPT', 'pro'),
+        a('#/egtsi106', 'EGTSI106', 'egtsi106'),
         a('#/multijoueur', 'Multijoueur LAN', 'multijoueur'),
         a('#/course', '🏁 Course', 'course'),
         a('#/suivi', '👀 Suivi', 'suivi'),
@@ -389,6 +391,12 @@ function homeScreen() {
             h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint et Outlook avancés, Simulator type MOS, révision espacée, défi mixte et quêtes du jour.'),
             arHint('المكتبيات المتقدمة للتكوين المهني: 20 حصة و80 نشاطاً تفاعلياً'),
             h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => { if (store.active()) go('#/pro'); else { const el = document.getElementById('entry-zone'); if (el) { el.scrollIntoView({ block: 'start', behavior: 'smooth' }); setTimeout(() => name.focus({ preventScroll: true }), 250); } } } }, '💼 Ouvrir le parcours M205 →')
+          ),
+          h('section', { class: 'mode-card mode-pro', 'aria-labelledby': 'mode-egtsi-h' },
+            h('span', { class: 'mode-badge' }, 'OFPPT · Séance 01'),
+            h('h2', { id: 'mode-egtsi-h' }, 'EGTSI106 · Culture et techniques du numérique'),
+            h('p', null, 'Fondamentaux du digital et architecture d’un ordinateur. Cours, exercices interactifs et TP guidé.'),
+            h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir la séance →')
           ),
           h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
             h('span', { class: 'mode-badge' }, 'Nouveau · 3D'),
@@ -1082,6 +1090,8 @@ function render() {
       view = prof ? dashScreen() : homeScreen();
     } else if (q[0] === 'progres') {
       view = prof ? progressScreen() : homeScreen();
+    } else if (q[0] === 'egtsi106') {
+      view = egtsiScreen(q);
     } else if (q[0] === 'pro') {
       const ctx = prof ? { prof, rec: recOf(prof.id) } : null;
       if (prof) lanManager.setActivity('pro', 'M205 Bureautique avancée');

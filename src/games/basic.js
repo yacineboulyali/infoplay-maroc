@@ -87,7 +87,7 @@ export function artFor(label) {
 export const visualLabel = (label, part, illustration = null, textOnly = false) => {
   const ar = arText(label);
   return h('span', { class: 'visual-label' },
-    textOnly ? null : illustration || (part ? officeArt(label, part) : (artFor(label) || semanticIcon(label))),
+    illustration || (textOnly ? null : part ? officeArt(label, part) : (artFor(label) || semanticIcon(label))),
     h('span', { class: 'visual-text' },
       label,
       arHint(ar)
@@ -185,7 +185,7 @@ export function matchGame(root, d) {
     },
     h('span', { class: 'grip-icon', 'aria-hidden': 'true' }, '⠿'),
     h('span', { class: 'num', 'aria-hidden': 'true' }, i + 1),
-    h('span', { class: 'txt' }, visualLabel(p[0], d.visualPart, studentIllustration(d, i))),
+    h('span', { class: 'txt' }, visualLabel(p[0], d.visualPart, studentIllustration(d, i), d.textOnly)),
     h('span', { class: 'tag', 'aria-hidden': 'true' })
     );
     lb.push(btn);
@@ -216,7 +216,7 @@ export function matchGame(root, d) {
       },
     },
     h('span', { class: 'num', 'aria-hidden': 'true' }, letter(k)),
-    h('span', { class: 'txt' }, visualLabel(d.pairs[o][1], d.visualPart, null, illustrated)),
+    h('span', { class: 'txt' }, visualLabel(d.pairs[o][1], d.visualPart, d.answerPicture?.(o), illustrated || d.textOnly)),
     h('span', { class: 'tag', 'aria-hidden': 'true' })
     );
     rb.push(btn);
@@ -370,7 +370,7 @@ export function sortGame(root, d) {
     },
   },
   h('span', { class: 'grip-icon', 'aria-hidden': 'true' }, '⠿'),
-  visualLabel(items[i][0], d.visualPart, studentIllustration(d, i))
+  visualLabel(items[i][0], d.visualPart, studentIllustration(d, i), d.textOnly)
   );
 
   function draw() {
@@ -473,7 +473,7 @@ export function orderGame(root, d) {
       },
       h('span', { class: 'grip-icon', 'aria-hidden': 'true' }, '⠿'),
       h('span', { class: 'num', 'aria-hidden': 'true' }, pos + 1),
-      h('span', { class: 'txt' }, visualLabel(d.steps[idx], d.visualPart, studentIllustration(d, idx))),
+      h('span', { class: 'txt' }, visualLabel(d.steps[idx], d.visualPart, studentIllustration(d, idx), d.textOnly)),
       h('span', { class: 'ord-btns' },
         h('button', {
           type: 'button',
@@ -652,7 +652,7 @@ export function quizGame(root, d) {
       },
       inputs[j],
       h('span', { class: 'opt-letter', 'aria-hidden': 'true' }, isTrueFalse ? (isVrai ? '✔' : '✖') : letter(j)),
-      visualLabel(optText, d.visualPart, null, !!studentIllustration(d, i))
+      visualLabel(optText, d.visualPart, null, d.textOnly || !!studentIllustration(d, i))
       );
     });
 
