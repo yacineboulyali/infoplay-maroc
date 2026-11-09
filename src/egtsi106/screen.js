@@ -1,9 +1,16 @@
-import { h } from '../utils/dom.js';
+import { h, norm } from '../utils/dom.js';
 import { arHint } from '../i18n/arhint.js';
 import { engineOf } from '../games/index.js';
-import { activities, activitySequence, title, topics, ports, portPictures } from '../data/egtsi106/lesson.js';
+import { activities, title, topics, ports, portPictures } from '../data/egtsi106/lesson.js';
 
 import { partOneSessions } from '../data/egtsi106/part-one.js';
+
+import { lessonPlans, organizeLessons } from '../data/egtsi106/lesson-plans.js';
+
+const courses = [
+  organizeLessons(topics, activities, lessonPlans[0]),
+  ...partOneSessions.map((session, i) => organizeLessons(session.topics, session.activities, lessonPlans[i + 1])),
+];
 
 const base = '#/egtsi106';
 const sessionHref = (session) => session ? base + '/seance/' + session.id : base;
@@ -37,22 +44,9 @@ function lesson() {
       h('p', { class: 'eyebrow' }, 'Situation professionnelle'),
       h('h2', null, 'Préparer un poste pour le service administratif'),
       h('p', null, 'Dans une PME, tu dois préparer un poste de travail et expliquer à l’équipe comment le matériel, les logiciels et les périphériques fonctionnent ensemble.'),
-      h('div', { class: 'row' }, button(href(activitySequence[0]), 'Commencer la mise en pratique →', true),
+      h('div', { class: 'row' }, button(href(courses[0].sequence[0]), 'Commencer la mise en pratique →', true),
         h('button', { type: 'button', class: 'btn', onclick: () => { const course = document.getElementById('egtsi-cours'); course.focus(); course.scrollIntoView(); } }, 'Consulter le cours'))),
-    h('section', { class: 'egtsi-section', 'aria-labelledby': 'egtsi-cours' },
-      h('h2', { id: 'egtsi-cours', tabindex: '-1' }, 'Cours complet'),
-      topics.map(([name, entries], index) => h('details', { class: 'card egtsi-topic', open: index === 0 },
-        h('summary', null, h('span', { class: 'egtsi-number' }, index + 1), name),
-        h('dl', { class: 'egtsi-facts' }, entries.map(([term, text, source]) => h('div', null,
-          picture(source), h('dt', null, term), h('dd', null, text)))),
-        index === 3 ? h('div', { class: 'egtsi-ports' }, ports.map(([name], i) =>
-          h('figure', null, picture(portPictures[i]), h('figcaption', null, name)))) : null))),
-    h('section', { class: 'egtsi-section', 'aria-labelledby': 'egtsi-exercices' },
-      h('h2', { id: 'egtsi-exercices' }, 'Exercices et applications'),
-      h('ol', { class: 'egtsi-activities' }, activitySequence.map((i, position) =>
-        h('li', null, h('a', { href: href(i), class: 'card egtsi-activity-link' },
-          h('span', { class: 'egtsi-number' }, position + 1),
-          h('span', null, h('strong', null, activities[i].title), h('span', { class: 'muted' }, activities[i].objective))))))),
+    lessonBlocks(courses[0]),
     h('section', { class: 'card egtsi-section' },
       h('p', { class: 'eyebrow' }, 'TP guidé · 15 min · en binôme'),
       h('h2', null, 'Inventorier un poste de travail'),
@@ -89,27 +83,68 @@ function additionalLesson(session) {
     h('p', { class: 'crumbs' }, button(base, '← EGTSI106')),
     heading(session.title, 'OFPPT · EGTSI106 · Partie 1 · Séance 0' + session.id, session.mission),
     partOneNav(session),
-    h('section', { class: 'egtsi-section' },
-      h('h2', null, 'Cours complet'),
-      session.topics.map(([name, entries], index) => h('details', { class: 'card egtsi-topic', open: index === 0 },
-        h('summary', null, h('span', { class: 'egtsi-number' }, index + 1), name),
-        h('dl', { class: 'egtsi-facts' }, entries.map(([term, text]) =>
-          h('div', null, h('dt', null, term), h('dd', null, text))))))),
-    h('section', { class: 'egtsi-section' },
-      h('h2', null, 'Exercices et applications'),
-      h('ol', { class: 'egtsi-activities' }, session.activities.map((activity, index) =>
-        h('li', null, h('a', { href: href(index, session), class: 'card egtsi-activity-link' },
-          h('span', { class: 'egtsi-number' }, index + 1),
-          h('span', null, h('strong', null, activity.title), h('span', { class: 'muted' }, activity.objective))))))),
+    lessonBlocks(courses[Number(session.id) - 1], session),
     following ? button(sessionHref(following), 'Séance suivante →', true) : null);
 }
 
-function practice(index, session) {
-  const available = session?.activities || activities;
-  const sequence = session ? available.map((_, i) => i) : activitySequence;
+function lessonBlocks(course, session) {
+  const requested = Number(new URLSearchParams(globalThis.location?.hash.split('?')[1]).get('lecon'));
+  if (requested > 0 && requested <= course.lessons.length) requestAnimationFrame(() => {
+    const target = document.getElementById('egtsi-lecon-' + requested);
+    target?.focus();
+    target?.scrollIntoView();
+  });
+  return h('section', { class: 'egtsi-section', 'aria-labelledby': 'egtsi-cours' },
+    h('h2', { id: 'egtsi-cours', tabindex: '-1' }, 'Leçons et activités'),
+    course.lessons.map((lesson, index) => h('article', { class: 'card egtsi-section egtsi-lesson' },
+      h('h3', { id: 'egtsi-lecon-' + (index + 1), tabindex: '-1' }, h('span', { class: 'egtsi-number', 'aria-label': 'Leçon ' + (index + 1) }, index + 1), lesson.title),
+      h('figure', { class: 'egtsi-lesson-visual' },
+        picture(lesson.image),
+        h('dl', { class: 'egtsi-visual-terms' }, lesson.terms.map(([term, clue]) =>
+          h('div', null, h('dt', null, term), h('dd', null, clue))))),
+      h('details', { open: true },
+        h('summary', null, 'Explications du cours'),
+        h('dl', { class: 'egtsi-facts' }, lesson.entries.map(([term, text, source]) =>
+          h('div', null, picture(source), h('dt', null, term), h('dd', null, text)))),
+        !session && index === 3 ? h('div', { class: 'egtsi-ports' }, ports.map(([name], i) =>
+          h('figure', null, picture(portPictures[i]), h('figcaption', null, name)))) : null),
+      h('h4', null, 'Activités de la leçon'),
+      h('ol', { class: 'egtsi-activities' }, lesson.indices.map((i, order) => {
+        const activity = course.activities[i];
+        return h('li', null, h('a', { href: href(i, session), class: 'card egtsi-activity-link' },
+          h('span', { class: 'egtsi-number' }, order + 1),
+          h('span', null, h('strong', null, activity.title), h('span', { class: 'muted' }, activity.objective))));
+      })) )));
+}
+
+function typeName(root, { terms }) {
+  const fields = terms.map(([, clue], i) => {
+    const input = h('input', { type: 'text', autocomplete: 'off', spellcheck: 'false' });
+    root.append(h('label', { class: 'egtsi-name-field' }, h('span', null, (i + 1) + '. ' + clue), input));
+    return input;
+  });
+  const key = (value) => norm(value).replace(/\s*([+.]|’|')\s*/g, '$1');
+  return {
+    check() {
+      const items = terms.map(([name, clue], i) => ({
+        ok: key(fields[i].value) === key(name),
+        msg: clue + ' → ' + name,
+      }));
+      return { items, correct: items.filter((item) => item.ok).length,
+        total: items.length, unanswered: fields.filter((input) => !input.value.trim()).length };
+    },
+  };
+}
+
+function practice(index, session, course) {
+  const available = course.activities;
+  const lessonNumber = course.lessons.findIndex((lesson) => lesson.indices.includes(index));
+  const sequence = course.lessons[lessonNumber].indices;
   const activity = available[index];
   const position = sequence.indexOf(index);
   const next = sequence[position + 1];
+  const followingLesson = lessonNumber + 1 < course.lessons.length;
+  const courseUrl = sessionHref(session);
   const stage = h('div', { class: 'stage-card' });
   const feedback = h('div', { class: 'egtsi-feedback', 'aria-live': 'polite' });
   const check = h('button', { class: 'btn primary', type: 'button', onclick: verify }, 'Vérifier');
@@ -121,7 +156,7 @@ function practice(index, session) {
     stage.inert = false;
     check.disabled = false;
     feedback.replaceChildren();
-    engine = engineOf(activity.mech)(stage, activity.id ? { ...activity.data, illustrationActivityId: activity.id } : {
+    engine = (activity.mech === 'type-name' ? typeName : engineOf(activity.mech))(stage, activity.id ? { ...activity.data, illustrationActivityId: activity.id } : {
       ...activity.data,
       textOnly: true,
       itemPicture: (i) => picture(activity.pictures?.[i], '', 'student-illustration'),
@@ -146,14 +181,14 @@ function practice(index, session) {
     feedback.replaceChildren(score,
       h('details', null, h('summary', null, 'Voir le corrigé expliqué'),
         h('ol', null, result.items.map((item) => h('li', null, (item.ok ? '✓ ' : 'À revoir · ') + item.msg)))),
-      button(next == null ? sessionHref(session) : href(next, session),
-        next == null ? 'Revenir au cours →' : 'Activité suivante →', true));
+      button(next != null ? href(next, session) : followingLesson ? courseUrl + '?lecon=' + (lessonNumber + 2) : courseUrl,
+        next != null ? 'Activité suivante →' : followingLesson ? 'Leçon suivante →' : 'Revenir au cours →', true));
     score.focus();
   }
 
   const view = h('main', { id: 'main', class: 'egtsi-page egtsi-practice' },
-    h('p', { class: 'crumbs' }, button(sessionHref(session), '← Cours et activités')),
-    heading(activity.title, 'Séance 0' + (session?.id || '1') + ' · Activité ' + (position + 1) + ' / ' + available.length, activity.instructions || activity.objective),
+    h('p', { class: 'crumbs' }, button(courseUrl + '?lecon=' + (lessonNumber + 1), '← Retour à la leçon')),
+    heading(activity.title, 'Séance 0' + (session?.id || '1') + ' · Leçon ' + (lessonNumber + 1) + ' · Activité ' + (position + 1) + ' / ' + sequence.length, activity.instructions || activity.objective),
     h('nav', { class: 'dots', 'aria-label': 'Activités de la séance' }, sequence.map((i, order) =>
       h('a', { href: href(i, session), class: i === index ? 'cur' : '', 'aria-current': i === index ? 'step' : null, 'aria-label': available[i].title }, order + 1))),
     stage,
@@ -168,10 +203,11 @@ export function egtsiScreen(route) {
   const session = route[1] === 'seance' ? partOneSessions.find((entry) => entry.id === route[2]) : null;
   if (route[1] === 'seance' && !session) return null;
   if (session && route.length === 3) return additionalLesson(session);
+  const course = courses[session ? Number(session.id) - 1 : 0];
   const offset = session ? 3 : 1;
   const number = route[offset + 1];
   const index = Number(number) - 1;
   if (route.length === offset + 2 && route[offset] === 'activite' && /^[1-9]\d*$/.test(number)
-    && (session?.activities || activities)[index]) return practice(index, session);
+    && course.activities[index]) return practice(index, session, course);
   return null;
 }

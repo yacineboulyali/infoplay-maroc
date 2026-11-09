@@ -457,3 +457,8 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .egtsi-picture.sprite-plug-hdmi{--asset-ratio:382/358;background-image:url('images/egtsi106/connectors.png');background-size:519.11% 221.51%;background-position:25.11% 96.55%}
 .egtsi-picture.sprite-plug-rj45{--asset-ratio:370/370;background-image:url('images/egtsi106/connectors.png');background-size:535.95% 214.32%;background-position:78.12% 98.11%}
 .egtsi-picture.sprite-plug-jack{--asset-ratio:342/371;background-image:url('images/egtsi106/connectors.png');background-size:579.82% 213.75%;background-position:99.94% 99.29%}
+.egtsi-lesson-visual{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin:1rem 0;padding:1rem;border:1px solid currentColor;border-radius:12px}
+.egtsi-lesson-visual .egtsi-picture{margin:0;max-width:110px}
+.egtsi-visual-terms{display:grid;flex:1 1 280px;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:.75rem;margin:0}
+.egtsi-visual-terms dt{font-weight:800}.egtsi-visual-terms dd{margin:0}
+.egtsi-lesson h4{margin-top:1.3rem}.egtsi-name-field{display:grid;gap:.35rem;max-width:38rem;margin-block:.8rem}
