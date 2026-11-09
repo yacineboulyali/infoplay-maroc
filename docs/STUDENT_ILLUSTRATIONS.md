@@ -1,25 +1,26 @@
 # صور أنشطة التلاميذ
 
-أوقف توليد الصور بناءً على طلب المستخدم. حُفظت 372 صورة مستقلة، ودُمجت 355 صورة مراجعة في المنصة. أُجّلت 17 صورة تحتاج تصحيحًا، وتبقى 306 عناصر دون صور مولدة. يشمل الربط الوحدات الأربع فقط؛ الصور المتاحة حاليًا تخص الوحدات 1 و2 وبداية الوحدة 3، ولا توجد صور مولدة للوحدة 4 بعد.
+دُمجت 678 صورة مستقلة مراجعة في 120 نشاطًا من الوحدات الأربع. لكل سؤال أو عنصر تفاعلي صورته ومعرّفه ومساره المحدد في خريطة الدمج.
 
-الصورة مرتبطة بمعرّف السؤال الأصلي مثل `m1-s1-a1-q01`، وتبقى معه عند خلط البطاقات أو نقلها. تظهر صور المطابقة بجانب المفهوم فقط، وصور الاختيار خارج أزرار الإجابة. تعرض المحاكاة والروبوت صورة المهمة أو المستوى الحالي. تبقى المشاهد القابلة للنقر ومناطقها والشيفرة وشبكات اللعب وآليات التصحيح الأصلية فعالة.
+ترتبط الصورة بمعرّف السؤال الأصلي مثل `m1-s1-a1-q01` أثناء خلط البطاقات أو نقلها. تظهر صور المطابقة بجانب المفهوم، وصور الاختيار فوق الإجابات. تعرض المحاكاة والروبوت صورة المهمة أو المستوى الحالي. تعمل مناطق النقر وشبكات اللعب مع الصور المدمجة.
 
-ملفات العرض محلية بصيغة WebP بدقة 512×512، وتعمل دون الإنترنت. النسخ الأصلية وأوصاف التوليد وسجل المراجعة محفوظة في `output/student-illustrations/`، بما فيها النسخ المستبعدة؛ لا تُنسخ هذه النسخ إلى المنصة.
+ملفات العرض محلية بصيغة WebP بدقة 512×512، وحجمها الإجمالي نحو 11.1 ميغابايت. النسخ الأصلية وأوصاف التوليد وسجل المراجعة محفوظة في `output/student-illustrations/`. تحدد حقول `asset` و`integratedAsset` النسخة المعتمدة لكل معرّف.
 
-- `src/data/student-illustrations.js`: ربط معرّفات الأسئلة بالصور المعتمدة.
-- `src/utils/student-illustrations.js`: إنشاء عنصر الصورة من معرّف النشاط وترتيب العنصر الأصلي.
-- `public/images/student-illustrations/`: صور العرض المعتمدة فقط.
-- `output/student-illustrations/integration-report.json`: الصور المدمجة ومساراتها وأحجامها.
-- `output/student-illustrations/question-map.csv`: خريطة كل الأسئلة، مع مسار الصورة الأصلية ومسارها داخل المنصة.
-- `output/student-illustrations/review-findings.json`: ملاحظات الصور المؤجلة.
+- `src/data/student-illustrations.js` يربط معرّفات الأسئلة بالصور المعتمدة.
+- `src/utils/student-illustrations.js` ينشئ عنصر الصورة من معرّف النشاط وترتيب العنصر الأصلي.
+- `public/images/student-illustrations/` يحتوي صور العرض المعتمدة.
+- `output/student-illustrations/integration-report.json` يسجل الصور المدمجة ومساراتها وأحجامها.
+- `output/student-illustrations/question-map.csv` يربط كل سؤال بموضعه في البيانات وصورته الأصلية وصورته داخل المنصة.
+- `output/student-illustrations/review-findings.json` يوثق الملاحظات التي عولجت أثناء المراجعة.
 
-لا يستدعي البناء أي توليد صور. عند استكمال التوليد لاحقًا، تُراجع الصور أولًا، ثم تُحدَّث الملفات بالأوامر التالية:
+لتحديث الحزمة وبناء المنصة بعد اعتماد صور جديدة، تُستخدم الأوامر التالية.
 
 ```powershell
 node output/student-illustrations/prepare-manifest.mjs
 node scripts/sync-student-illustrations.mjs
 node output/student-illustrations/prepare-manifest.mjs
+node output/student-illustrations/verify-manifest.mjs --complete
 npm run build
 ```
 
-التوليد السابق استعمل أداة `image_gen` المدمجة؛ أوصافه الفعلية في `output/student-illustrations/generated-prompts.jsonl`.
+استُعملت أداة `image_gen` المدمجة. أوصاف التوليد الفعلية محفوظة في `output/student-illustrations/generated-prompts.jsonl`.

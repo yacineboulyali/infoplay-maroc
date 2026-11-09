@@ -1,0 +1,22 @@
+[
+  {
+    "id": "m3-s3-a3-q03",
+    "reason": "An extra Écrire moyenne line supplies the missing function name and other input lines were invented.",
+    "direction": "CRITICAL: ONE isolated code-editor row with an EMPTY function-name slot followed by the literal (moyenne). No other code rows. Do NOT print Écrire, Ecrire, Lire, print or any function name anywhere. No computed result."
+  },
+  {
+    "id": "m3-s4-a3-q01",
+    "reason": "The illustration prints Si, which is the missing word.",
+    "direction": "CRITICAL: one close-up blank code worksheet with an empty keyword slot and neutral short strokes. Absolutely NO readable programming keywords, letters, code examples or captions. Do NOT print Si, Alors, FinSi, Sinon or their English equivalents anywhere. The activity title is context and must never be used to supply a missing answer."
+  },
+  {
+    "id": "m3-s4-a3-q02",
+    "reason": "The illustration prints Alors, which is the missing word.",
+    "direction": "CRITICAL: one close-up blank code worksheet with an empty keyword slot and neutral short strokes. Absolutely NO readable programming keywords, letters, code examples or captions. Do NOT print Si, Alors, FinSi, Sinon or their English equivalents anywhere. The activity title is context and must never be used to supply a missing answer."
+  },
+  {
+    "id": "m3-s4-a3-q03",
+    "reason": "The illustration prints FinSi, which is the missing word.",
+    "direction": "CRITICAL: one close-up blank code worksheet with an empty keyword slot and neutral short strokes. Absolutely NO readable programming keywords, letters, code examples or captions. Do NOT print Si, Alors, FinSi, Sinon or their English equivalents anywhere. The activity title is context and must never be used to supply a missing answer."
+  }
+]

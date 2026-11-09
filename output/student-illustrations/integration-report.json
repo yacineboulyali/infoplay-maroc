@@ -1,9 +1,10 @@
 {
-  "generationPaused": true,
-  "generated": 372,
-  "integrated": 355,
-  "excluded": 17,
-  "totalBytes": 6052180,
+  "generationPaused": false,
+  "generationPhase": "complete",
+  "generated": 678,
+  "integrated": 678,
+  "excluded": 0,
+  "totalBytes": 11117060,
   "entries": [
     {
       "id": "m1-s1-a1-q01",
@@ -2182,6 +2183,14 @@
       "bytes": 13888
     },
     {
+      "id": "m2-s8-a4-q01",
+      "activityId": "m2-s8-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m2-s8-a4-q01-v2.png",
+      "src": "images/student-illustrations/m2-s8-a4-q01-cf28b814a1.webp",
+      "bytes": 7288
+    },
+    {
       "id": "m2-s8-a4-q02",
       "activityId": "m2-s8-a4",
       "dataPath": "data.tasks[1]",
@@ -2196,6 +2205,14 @@
       "sourceAsset": "assets/m2-s8-a4-q03.png",
       "src": "images/student-illustrations/m2-s8-a4-q03-110ab1ef3f.webp",
       "bytes": 18994
+    },
+    {
+      "id": "m2-s8-a4-q04",
+      "activityId": "m2-s8-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m2-s8-a4-q04-v2.png",
+      "src": "images/student-illustrations/m2-s8-a4-q04-b44de10eab.webp",
+      "bytes": 10688
     },
     {
       "id": "m2-s8-a4-q05",
@@ -2334,6 +2351,14 @@
       "bytes": 15332
     },
     {
+      "id": "m2-s9-a4-q02",
+      "activityId": "m2-s9-a4",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m2-s9-a4-q02-v2.png",
+      "src": "images/student-illustrations/m2-s9-a4-q02-502561ea93.webp",
+      "bytes": 9764
+    },
+    {
       "id": "m2-s9-a4-q03",
       "activityId": "m2-s9-a4",
       "dataPath": "data.lines[2]",
@@ -2374,6 +2399,14 @@
       "bytes": 10886
     },
     {
+      "id": "m2-s10-a1-q03",
+      "activityId": "m2-s10-a1",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m2-s10-a1-q03-v2.png",
+      "src": "images/student-illustrations/m2-s10-a1-q03-70ce55a3c4.webp",
+      "bytes": 11014
+    },
+    {
       "id": "m2-s10-a1-q04",
       "activityId": "m2-s10-a1",
       "dataPath": "data.pairs[3]",
@@ -2388,6 +2421,14 @@
       "sourceAsset": "assets/m2-s10-a1-q05.png",
       "src": "images/student-illustrations/m2-s10-a1-q05-b7bfcd9414.webp",
       "bytes": 11576
+    },
+    {
+      "id": "m2-s10-a2-q01",
+      "activityId": "m2-s10-a2",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m2-s10-a2-q01-v2.png",
+      "src": "images/student-illustrations/m2-s10-a2-q01-975a850415.webp",
+      "bytes": 4894
     },
     {
       "id": "m2-s10-a2-q02",
@@ -2446,6 +2487,62 @@
       "bytes": 9946
     },
     {
+      "id": "m2-s10-a3-q04",
+      "activityId": "m2-s10-a3",
+      "dataPath": "data.qs[3]",
+      "sourceAsset": "assets/m2-s10-a3-q04-v2.png",
+      "src": "images/student-illustrations/m2-s10-a3-q04-b288aac850.webp",
+      "bytes": 14806
+    },
+    {
+      "id": "m2-s10-a3-q05",
+      "activityId": "m2-s10-a3",
+      "dataPath": "data.qs[4]",
+      "sourceAsset": "assets/m2-s10-a3-q05-v2.png",
+      "src": "images/student-illustrations/m2-s10-a3-q05-4020e4d4df.webp",
+      "bytes": 15754
+    },
+    {
+      "id": "m2-s10-a4-q01",
+      "activityId": "m2-s10-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m2-s10-a4-q01-v2.png",
+      "src": "images/student-illustrations/m2-s10-a4-q01-4046c316e7.webp",
+      "bytes": 10710
+    },
+    {
+      "id": "m2-s10-a4-q02",
+      "activityId": "m2-s10-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m2-s10-a4-q02-v2.png",
+      "src": "images/student-illustrations/m2-s10-a4-q02-a5f5bd0add.webp",
+      "bytes": 12666
+    },
+    {
+      "id": "m2-s10-a4-q03",
+      "activityId": "m2-s10-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m2-s10-a4-q03-v2.png",
+      "src": "images/student-illustrations/m2-s10-a4-q03-82a0c0420f.webp",
+      "bytes": 12592
+    },
+    {
+      "id": "m2-s10-a4-q04",
+      "activityId": "m2-s10-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m2-s10-a4-q04-v2.png",
+      "src": "images/student-illustrations/m2-s10-a4-q04-7e2431be39.webp",
+      "bytes": 10618
+    },
+    {
+      "id": "m2-s10-a4-q05",
+      "activityId": "m2-s10-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m2-s10-a4-q05-v2.png",
+      "src": "images/student-illustrations/m2-s10-a4-q05-26cf81cb6f.webp",
+      "bytes": 12380
+    },
+    {
       "id": "m2-s11-a1-q01",
       "activityId": "m2-s11-a1",
       "dataPath": "data.prompts[0]",
@@ -2468,6 +2565,22 @@
       "sourceAsset": "assets/m2-s11-a1-q03.png",
       "src": "images/student-illustrations/m2-s11-a1-q03-e78a64aa63.webp",
       "bytes": 13076
+    },
+    {
+      "id": "m2-s11-a1-q04",
+      "activityId": "m2-s11-a1",
+      "dataPath": "data.prompts[3]",
+      "sourceAsset": "assets/m2-s11-a1-q04-v2.png",
+      "src": "images/student-illustrations/m2-s11-a1-q04-143d139d89.webp",
+      "bytes": 2440
+    },
+    {
+      "id": "m2-s11-a1-q05",
+      "activityId": "m2-s11-a1",
+      "dataPath": "data.prompts[4]",
+      "sourceAsset": "assets/m2-s11-a1-q05-v2.png",
+      "src": "images/student-illustrations/m2-s11-a1-q05-1d7d0ce77c.webp",
+      "bytes": 5582
     },
     {
       "id": "m2-s11-a2-q01",
@@ -2558,12 +2671,36 @@
       "bytes": 21940
     },
     {
+      "id": "m2-s11-a4-q02",
+      "activityId": "m2-s11-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m2-s11-a4-q02-v2.png",
+      "src": "images/student-illustrations/m2-s11-a4-q02-8db97a3f3a.webp",
+      "bytes": 13976
+    },
+    {
       "id": "m2-s11-a4-q03",
       "activityId": "m2-s11-a4",
       "dataPath": "data.tasks[2]",
       "sourceAsset": "assets/m2-s11-a4-q03.png",
       "src": "images/student-illustrations/m2-s11-a4-q03-32c7d41229.webp",
       "bytes": 9446
+    },
+    {
+      "id": "m2-s11-a4-q04",
+      "activityId": "m2-s11-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m2-s11-a4-q04-v2.png",
+      "src": "images/student-illustrations/m2-s11-a4-q04-bd1547f623.webp",
+      "bytes": 9262
+    },
+    {
+      "id": "m2-s11-a4-q05",
+      "activityId": "m2-s11-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m2-s11-a4-q05-v3.png",
+      "src": "images/student-illustrations/m2-s11-a4-q05-948ce14f38.webp",
+      "bytes": 21536
     },
     {
       "id": "m3-s1-a1-q01",
@@ -2844,6 +2981,2454 @@
       "sourceAsset": "assets/m3-s2-a2-q05.png",
       "src": "images/student-illustrations/m3-s2-a2-q05-b012dd38b5.webp",
       "bytes": 10222
+    },
+    {
+      "id": "m3-s2-a3-q01",
+      "activityId": "m3-s2-a3",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m3-s2-a3-q01.png",
+      "src": "images/student-illustrations/m3-s2-a3-q01-b725a32e61.webp",
+      "bytes": 15128
+    },
+    {
+      "id": "m3-s2-a3-q02",
+      "activityId": "m3-s2-a3",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m3-s2-a3-q02.png",
+      "src": "images/student-illustrations/m3-s2-a3-q02-17f758e885.webp",
+      "bytes": 14064
+    },
+    {
+      "id": "m3-s2-a3-q03",
+      "activityId": "m3-s2-a3",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m3-s2-a3-q03.png",
+      "src": "images/student-illustrations/m3-s2-a3-q03-71829dc888.webp",
+      "bytes": 13106
+    },
+    {
+      "id": "m3-s2-a3-q04",
+      "activityId": "m3-s2-a3",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m3-s2-a3-q04.png",
+      "src": "images/student-illustrations/m3-s2-a3-q04-d085c152c4.webp",
+      "bytes": 13772
+    },
+    {
+      "id": "m3-s2-a3-q05",
+      "activityId": "m3-s2-a3",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m3-s2-a3-q05.png",
+      "src": "images/student-illustrations/m3-s2-a3-q05-1ae0164a88.webp",
+      "bytes": 14950
+    },
+    {
+      "id": "m3-s2-a4-q01",
+      "activityId": "m3-s2-a4",
+      "dataPath": "data.steps[0]",
+      "sourceAsset": "assets/m3-s2-a4-q01.png",
+      "src": "images/student-illustrations/m3-s2-a4-q01-143883226f.webp",
+      "bytes": 25422
+    },
+    {
+      "id": "m3-s2-a4-q02",
+      "activityId": "m3-s2-a4",
+      "dataPath": "data.steps[1]",
+      "sourceAsset": "assets/m3-s2-a4-q02.png",
+      "src": "images/student-illustrations/m3-s2-a4-q02-e634d432ce.webp",
+      "bytes": 10260
+    },
+    {
+      "id": "m3-s2-a4-q03",
+      "activityId": "m3-s2-a4",
+      "dataPath": "data.steps[2]",
+      "sourceAsset": "assets/m3-s2-a4-q03.png",
+      "src": "images/student-illustrations/m3-s2-a4-q03-7b191d2755.webp",
+      "bytes": 11268
+    },
+    {
+      "id": "m3-s2-a4-q04",
+      "activityId": "m3-s2-a4",
+      "dataPath": "data.steps[3]",
+      "sourceAsset": "assets/m3-s2-a4-q04.png",
+      "src": "images/student-illustrations/m3-s2-a4-q04-b9529db5ee.webp",
+      "bytes": 10404
+    },
+    {
+      "id": "m3-s2-a4-q05",
+      "activityId": "m3-s2-a4",
+      "dataPath": "data.steps[4]",
+      "sourceAsset": "assets/m3-s2-a4-q05.png",
+      "src": "images/student-illustrations/m3-s2-a4-q05-9b21b3a914.webp",
+      "bytes": 9884
+    },
+    {
+      "id": "m3-s3-a1-q01",
+      "activityId": "m3-s3-a1",
+      "dataPath": "data.steps[0]",
+      "sourceAsset": "assets/m3-s3-a1-q01.png",
+      "src": "images/student-illustrations/m3-s3-a1-q01-052b03707d.webp",
+      "bytes": 9490
+    },
+    {
+      "id": "m3-s3-a1-q02",
+      "activityId": "m3-s3-a1",
+      "dataPath": "data.steps[1]",
+      "sourceAsset": "assets/m3-s3-a1-q02.png",
+      "src": "images/student-illustrations/m3-s3-a1-q02-38f119fdc1.webp",
+      "bytes": 11362
+    },
+    {
+      "id": "m3-s3-a1-q03",
+      "activityId": "m3-s3-a1",
+      "dataPath": "data.steps[2]",
+      "sourceAsset": "assets/m3-s3-a1-q03.png",
+      "src": "images/student-illustrations/m3-s3-a1-q03-d19f4afc7b.webp",
+      "bytes": 8628
+    },
+    {
+      "id": "m3-s3-a1-q04",
+      "activityId": "m3-s3-a1",
+      "dataPath": "data.steps[3]",
+      "sourceAsset": "assets/m3-s3-a1-q04.png",
+      "src": "images/student-illustrations/m3-s3-a1-q04-7c8102a621.webp",
+      "bytes": 11302
+    },
+    {
+      "id": "m3-s3-a1-q05",
+      "activityId": "m3-s3-a1",
+      "dataPath": "data.steps[4]",
+      "sourceAsset": "assets/m3-s3-a1-q05.png",
+      "src": "images/student-illustrations/m3-s3-a1-q05-b20eeb3cb8.webp",
+      "bytes": 9682
+    },
+    {
+      "id": "m3-s3-a2-q01",
+      "activityId": "m3-s3-a2",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m3-s3-a2-q01.png",
+      "src": "images/student-illustrations/m3-s3-a2-q01-83b5cede6c.webp",
+      "bytes": 15754
+    },
+    {
+      "id": "m3-s3-a2-q02",
+      "activityId": "m3-s3-a2",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m3-s3-a2-q02.png",
+      "src": "images/student-illustrations/m3-s3-a2-q02-aa4a0f576d.webp",
+      "bytes": 15200
+    },
+    {
+      "id": "m3-s3-a2-q03",
+      "activityId": "m3-s3-a2",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m3-s3-a2-q03.png",
+      "src": "images/student-illustrations/m3-s3-a2-q03-66443c8b69.webp",
+      "bytes": 16772
+    },
+    {
+      "id": "m3-s3-a2-q04",
+      "activityId": "m3-s3-a2",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m3-s3-a2-q04.png",
+      "src": "images/student-illustrations/m3-s3-a2-q04-fac100c650.webp",
+      "bytes": 17878
+    },
+    {
+      "id": "m3-s3-a2-q05",
+      "activityId": "m3-s3-a2",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m3-s3-a2-q05.png",
+      "src": "images/student-illustrations/m3-s3-a2-q05-f4bfc200a6.webp",
+      "bytes": 17282
+    },
+    {
+      "id": "m3-s3-a3-q01",
+      "activityId": "m3-s3-a3",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m3-s3-a3-q01.png",
+      "src": "images/student-illustrations/m3-s3-a3-q01-5f669cb59d.webp",
+      "bytes": 7736
+    },
+    {
+      "id": "m3-s3-a3-q02",
+      "activityId": "m3-s3-a3",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m3-s3-a3-q02.png",
+      "src": "images/student-illustrations/m3-s3-a3-q02-df418e1a1f.webp",
+      "bytes": 15666
+    },
+    {
+      "id": "m3-s3-a3-q03",
+      "activityId": "m3-s3-a3",
+      "dataPath": "data.lines[2]",
+      "sourceAsset": "assets/m3-s3-a3-q03-v2.png",
+      "src": "images/student-illustrations/m3-s3-a3-q03-db8126f2c1.webp",
+      "bytes": 6450
+    },
+    {
+      "id": "m3-s3-a3-q04",
+      "activityId": "m3-s3-a3",
+      "dataPath": "data.lines[3]",
+      "sourceAsset": "assets/m3-s3-a3-q04.png",
+      "src": "images/student-illustrations/m3-s3-a3-q04-0456e4fa11.webp",
+      "bytes": 12532
+    },
+    {
+      "id": "m3-s3-a3-q05",
+      "activityId": "m3-s3-a3",
+      "dataPath": "data.lines[4]",
+      "sourceAsset": "assets/m3-s3-a3-q05.png",
+      "src": "images/student-illustrations/m3-s3-a3-q05-df06bfd48e.webp",
+      "bytes": 17824
+    },
+    {
+      "id": "m3-s3-a4-q01",
+      "activityId": "m3-s3-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m3-s3-a4-q01.png",
+      "src": "images/student-illustrations/m3-s3-a4-q01-0a8c148870.webp",
+      "bytes": 19322
+    },
+    {
+      "id": "m3-s3-a4-q02",
+      "activityId": "m3-s3-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m3-s3-a4-q02-v2.png",
+      "src": "images/student-illustrations/m3-s3-a4-q02-2a7bcefc8e.webp",
+      "bytes": 22054
+    },
+    {
+      "id": "m3-s3-a4-q03",
+      "activityId": "m3-s3-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m3-s3-a4-q03.png",
+      "src": "images/student-illustrations/m3-s3-a4-q03-56a584c70b.webp",
+      "bytes": 19326
+    },
+    {
+      "id": "m3-s3-a4-q04",
+      "activityId": "m3-s3-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m3-s3-a4-q04-v2.png",
+      "src": "images/student-illustrations/m3-s3-a4-q04-bc0b66171e.webp",
+      "bytes": 29416
+    },
+    {
+      "id": "m3-s3-a4-q05",
+      "activityId": "m3-s3-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m3-s3-a4-q05.png",
+      "src": "images/student-illustrations/m3-s3-a4-q05-6366431768.webp",
+      "bytes": 19948
+    },
+    {
+      "id": "m3-s4-a1-q01",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[0]",
+      "sourceAsset": "assets/m3-s4-a1-q01.png",
+      "src": "images/student-illustrations/m3-s4-a1-q01-d937f1ec70.webp",
+      "bytes": 8534
+    },
+    {
+      "id": "m3-s4-a1-q02",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[1]",
+      "sourceAsset": "assets/m3-s4-a1-q02.png",
+      "src": "images/student-illustrations/m3-s4-a1-q02-9654601d21.webp",
+      "bytes": 8310
+    },
+    {
+      "id": "m3-s4-a1-q03",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[2]",
+      "sourceAsset": "assets/m3-s4-a1-q03.png",
+      "src": "images/student-illustrations/m3-s4-a1-q03-911a09601a.webp",
+      "bytes": 9184
+    },
+    {
+      "id": "m3-s4-a1-q04",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[3]",
+      "sourceAsset": "assets/m3-s4-a1-q04.png",
+      "src": "images/student-illustrations/m3-s4-a1-q04-a0cb0ef312.webp",
+      "bytes": 9218
+    },
+    {
+      "id": "m3-s4-a1-q05",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[4]",
+      "sourceAsset": "assets/m3-s4-a1-q05.png",
+      "src": "images/student-illustrations/m3-s4-a1-q05-3c490fb1fd.webp",
+      "bytes": 9312
+    },
+    {
+      "id": "m3-s4-a1-q06",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[5]",
+      "sourceAsset": "assets/m3-s4-a1-q06.png",
+      "src": "images/student-illustrations/m3-s4-a1-q06-5a590c5173.webp",
+      "bytes": 10098
+    },
+    {
+      "id": "m3-s4-a1-q07",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[6]",
+      "sourceAsset": "assets/m3-s4-a1-q07.png",
+      "src": "images/student-illustrations/m3-s4-a1-q07-1bf8b42a39.webp",
+      "bytes": 8236
+    },
+    {
+      "id": "m3-s4-a1-q08",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[7]",
+      "sourceAsset": "assets/m3-s4-a1-q08.png",
+      "src": "images/student-illustrations/m3-s4-a1-q08-97949b13a5.webp",
+      "bytes": 8898
+    },
+    {
+      "id": "m3-s4-a1-q09",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[8]",
+      "sourceAsset": "assets/m3-s4-a1-q09.png",
+      "src": "images/student-illustrations/m3-s4-a1-q09-8d8998fae8.webp",
+      "bytes": 11014
+    },
+    {
+      "id": "m3-s4-a1-q10",
+      "activityId": "m3-s4-a1",
+      "dataPath": "data.items[9]",
+      "sourceAsset": "assets/m3-s4-a1-q10.png",
+      "src": "images/student-illustrations/m3-s4-a1-q10-0631ba33ca.webp",
+      "bytes": 9028
+    },
+    {
+      "id": "m3-s4-a2-q01",
+      "activityId": "m3-s4-a2",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m3-s4-a2-q01.png",
+      "src": "images/student-illustrations/m3-s4-a2-q01-deedcaebe1.webp",
+      "bytes": 16658
+    },
+    {
+      "id": "m3-s4-a2-q02",
+      "activityId": "m3-s4-a2",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m3-s4-a2-q02.png",
+      "src": "images/student-illustrations/m3-s4-a2-q02-b68111d69e.webp",
+      "bytes": 16122
+    },
+    {
+      "id": "m3-s4-a2-q03",
+      "activityId": "m3-s4-a2",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m3-s4-a2-q03.png",
+      "src": "images/student-illustrations/m3-s4-a2-q03-e79a9ed3c0.webp",
+      "bytes": 11162
+    },
+    {
+      "id": "m3-s4-a2-q04",
+      "activityId": "m3-s4-a2",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m3-s4-a2-q04.png",
+      "src": "images/student-illustrations/m3-s4-a2-q04-ff4d8ee78a.webp",
+      "bytes": 14636
+    },
+    {
+      "id": "m3-s4-a2-q05",
+      "activityId": "m3-s4-a2",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m3-s4-a2-q05.png",
+      "src": "images/student-illustrations/m3-s4-a2-q05-9fbd13b02b.webp",
+      "bytes": 16842
+    },
+    {
+      "id": "m3-s4-a3-q01",
+      "activityId": "m3-s4-a3",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m3-s4-a3-q01-v2.png",
+      "src": "images/student-illustrations/m3-s4-a3-q01-0915dadfdb.webp",
+      "bytes": 8970
+    },
+    {
+      "id": "m3-s4-a3-q02",
+      "activityId": "m3-s4-a3",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m3-s4-a3-q02-v2.png",
+      "src": "images/student-illustrations/m3-s4-a3-q02-9beb931a3a.webp",
+      "bytes": 10778
+    },
+    {
+      "id": "m3-s4-a3-q03",
+      "activityId": "m3-s4-a3",
+      "dataPath": "data.lines[2]",
+      "sourceAsset": "assets/m3-s4-a3-q03-v2.png",
+      "src": "images/student-illustrations/m3-s4-a3-q03-82b53814b0.webp",
+      "bytes": 8450
+    },
+    {
+      "id": "m3-s4-a3-q04",
+      "activityId": "m3-s4-a3",
+      "dataPath": "data.lines[3]",
+      "sourceAsset": "assets/m3-s4-a3-q04.png",
+      "src": "images/student-illustrations/m3-s4-a3-q04-efe348806a.webp",
+      "bytes": 13952
+    },
+    {
+      "id": "m3-s4-a3-q05",
+      "activityId": "m3-s4-a3",
+      "dataPath": "data.lines[4]",
+      "sourceAsset": "assets/m3-s4-a3-q05.png",
+      "src": "images/student-illustrations/m3-s4-a3-q05-123e9ca817.webp",
+      "bytes": 17326
+    },
+    {
+      "id": "m3-s4-a4-q01",
+      "activityId": "m3-s4-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m3-s4-a4-q01.png",
+      "src": "images/student-illustrations/m3-s4-a4-q01-0bc040458e.webp",
+      "bytes": 18144
+    },
+    {
+      "id": "m3-s4-a4-q02",
+      "activityId": "m3-s4-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m3-s4-a4-q02.png",
+      "src": "images/student-illustrations/m3-s4-a4-q02-93d972b361.webp",
+      "bytes": 19772
+    },
+    {
+      "id": "m3-s4-a4-q03",
+      "activityId": "m3-s4-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m3-s4-a4-q03.png",
+      "src": "images/student-illustrations/m3-s4-a4-q03-64c6abae9a.webp",
+      "bytes": 20104
+    },
+    {
+      "id": "m3-s4-a4-q04",
+      "activityId": "m3-s4-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m3-s4-a4-q04.png",
+      "src": "images/student-illustrations/m3-s4-a4-q04-273818c5c1.webp",
+      "bytes": 17570
+    },
+    {
+      "id": "m3-s4-a4-q05",
+      "activityId": "m3-s4-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m3-s4-a4-q05.png",
+      "src": "images/student-illustrations/m3-s4-a4-q05-eabb101929.webp",
+      "bytes": 18828
+    },
+    {
+      "id": "m3-s5-a1-q01",
+      "activityId": "m3-s5-a1",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m3-s5-a1-q01.png",
+      "src": "images/student-illustrations/m3-s5-a1-q01-77aa8f50d7.webp",
+      "bytes": 21572
+    },
+    {
+      "id": "m3-s5-a1-q02",
+      "activityId": "m3-s5-a1",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m3-s5-a1-q02.png",
+      "src": "images/student-illustrations/m3-s5-a1-q02-987c305ce6.webp",
+      "bytes": 23030
+    },
+    {
+      "id": "m3-s5-a1-q03",
+      "activityId": "m3-s5-a1",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m3-s5-a1-q03.png",
+      "src": "images/student-illustrations/m3-s5-a1-q03-d8045c5fe1.webp",
+      "bytes": 21970
+    },
+    {
+      "id": "m3-s5-a1-q04",
+      "activityId": "m3-s5-a1",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m3-s5-a1-q04.png",
+      "src": "images/student-illustrations/m3-s5-a1-q04-007a7a7477.webp",
+      "bytes": 17758
+    },
+    {
+      "id": "m3-s5-a1-q05",
+      "activityId": "m3-s5-a1",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m3-s5-a1-q05.png",
+      "src": "images/student-illustrations/m3-s5-a1-q05-7af215a5cb.webp",
+      "bytes": 20936
+    },
+    {
+      "id": "m3-s5-a2-q01",
+      "activityId": "m3-s5-a2",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m3-s5-a2-q01.png",
+      "src": "images/student-illustrations/m3-s5-a2-q01-5d02f9d9e5.webp",
+      "bytes": 15382
+    },
+    {
+      "id": "m3-s5-a2-q02",
+      "activityId": "m3-s5-a2",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m3-s5-a2-q02-v2.png",
+      "src": "images/student-illustrations/m3-s5-a2-q02-440e61058c.webp",
+      "bytes": 10196
+    },
+    {
+      "id": "m3-s5-a2-q03",
+      "activityId": "m3-s5-a2",
+      "dataPath": "data.lines[2]",
+      "sourceAsset": "assets/m3-s5-a2-q03.png",
+      "src": "images/student-illustrations/m3-s5-a2-q03-ed1462151b.webp",
+      "bytes": 14516
+    },
+    {
+      "id": "m3-s5-a2-q04",
+      "activityId": "m3-s5-a2",
+      "dataPath": "data.lines[3]",
+      "sourceAsset": "assets/m3-s5-a2-q04.png",
+      "src": "images/student-illustrations/m3-s5-a2-q04-b1e353c670.webp",
+      "bytes": 6052
+    },
+    {
+      "id": "m3-s5-a2-q05",
+      "activityId": "m3-s5-a2",
+      "dataPath": "data.lines[4]",
+      "sourceAsset": "assets/m3-s5-a2-q05.png",
+      "src": "images/student-illustrations/m3-s5-a2-q05-f68f09de57.webp",
+      "bytes": 13954
+    },
+    {
+      "id": "m3-s5-a3-q01",
+      "activityId": "m3-s5-a3",
+      "dataPath": "data.qs[0]",
+      "sourceAsset": "assets/m3-s5-a3-q01.png",
+      "src": "images/student-illustrations/m3-s5-a3-q01-ac550688b0.webp",
+      "bytes": 22480
+    },
+    {
+      "id": "m3-s5-a3-q02",
+      "activityId": "m3-s5-a3",
+      "dataPath": "data.qs[1]",
+      "sourceAsset": "assets/m3-s5-a3-q02.png",
+      "src": "images/student-illustrations/m3-s5-a3-q02-b952543914.webp",
+      "bytes": 16928
+    },
+    {
+      "id": "m3-s5-a3-q03",
+      "activityId": "m3-s5-a3",
+      "dataPath": "data.qs[2]",
+      "sourceAsset": "assets/m3-s5-a3-q03.png",
+      "src": "images/student-illustrations/m3-s5-a3-q03-018927bcc8.webp",
+      "bytes": 19038
+    },
+    {
+      "id": "m3-s5-a3-q04",
+      "activityId": "m3-s5-a3",
+      "dataPath": "data.qs[3]",
+      "sourceAsset": "assets/m3-s5-a3-q04.png",
+      "src": "images/student-illustrations/m3-s5-a3-q04-b82ac87b57.webp",
+      "bytes": 17864
+    },
+    {
+      "id": "m3-s5-a3-q05",
+      "activityId": "m3-s5-a3",
+      "dataPath": "data.qs[4]",
+      "sourceAsset": "assets/m3-s5-a3-q05.png",
+      "src": "images/student-illustrations/m3-s5-a3-q05-e72cdadcc4.webp",
+      "bytes": 21372
+    },
+    {
+      "id": "m3-s5-a4-q01",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[0]",
+      "sourceAsset": "assets/m3-s5-a4-q01.png",
+      "src": "images/student-illustrations/m3-s5-a4-q01-dbaf859875.webp",
+      "bytes": 17380
+    },
+    {
+      "id": "m3-s5-a4-q02",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[1]",
+      "sourceAsset": "assets/m3-s5-a4-q02.png",
+      "src": "images/student-illustrations/m3-s5-a4-q02-5974c3d8a0.webp",
+      "bytes": 17874
+    },
+    {
+      "id": "m3-s5-a4-q03",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[2]",
+      "sourceAsset": "assets/m3-s5-a4-q03.png",
+      "src": "images/student-illustrations/m3-s5-a4-q03-0a88850aaf.webp",
+      "bytes": 18814
+    },
+    {
+      "id": "m3-s5-a4-q04",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[3]",
+      "sourceAsset": "assets/m3-s5-a4-q04.png",
+      "src": "images/student-illustrations/m3-s5-a4-q04-605008e4a2.webp",
+      "bytes": 12286
+    },
+    {
+      "id": "m3-s5-a4-q05",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[4]",
+      "sourceAsset": "assets/m3-s5-a4-q05.png",
+      "src": "images/student-illustrations/m3-s5-a4-q05-7c550607a1.webp",
+      "bytes": 11346
+    },
+    {
+      "id": "m3-s5-a4-q06",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[5]",
+      "sourceAsset": "assets/m3-s5-a4-q06.png",
+      "src": "images/student-illustrations/m3-s5-a4-q06-00a4535c17.webp",
+      "bytes": 14674
+    },
+    {
+      "id": "m3-s5-a4-q07",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[6]",
+      "sourceAsset": "assets/m3-s5-a4-q07.png",
+      "src": "images/student-illustrations/m3-s5-a4-q07-73a76df831.webp",
+      "bytes": 14252
+    },
+    {
+      "id": "m3-s5-a4-q08",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[7]",
+      "sourceAsset": "assets/m3-s5-a4-q08.png",
+      "src": "images/student-illustrations/m3-s5-a4-q08-680584d363.webp",
+      "bytes": 23414
+    },
+    {
+      "id": "m3-s5-a4-q09",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[8]",
+      "sourceAsset": "assets/m3-s5-a4-q09.png",
+      "src": "images/student-illustrations/m3-s5-a4-q09-5d049f3265.webp",
+      "bytes": 23146
+    },
+    {
+      "id": "m3-s5-a4-q10",
+      "activityId": "m3-s5-a4",
+      "dataPath": "data.items[9]",
+      "sourceAsset": "assets/m3-s5-a4-q10.png",
+      "src": "images/student-illustrations/m3-s5-a4-q10-5602b02abc.webp",
+      "bytes": 16468
+    },
+    {
+      "id": "m3-s6-a1-q01",
+      "activityId": "m3-s6-a1",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m3-s6-a1-q01.png",
+      "src": "images/student-illustrations/m3-s6-a1-q01-04112bffed.webp",
+      "bytes": 8844
+    },
+    {
+      "id": "m3-s6-a1-q02",
+      "activityId": "m3-s6-a1",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m3-s6-a1-q02.png",
+      "src": "images/student-illustrations/m3-s6-a1-q02-687dbc7905.webp",
+      "bytes": 8388
+    },
+    {
+      "id": "m3-s6-a1-q03",
+      "activityId": "m3-s6-a1",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m3-s6-a1-q03.png",
+      "src": "images/student-illustrations/m3-s6-a1-q03-842579036b.webp",
+      "bytes": 13290
+    },
+    {
+      "id": "m3-s6-a1-q04",
+      "activityId": "m3-s6-a1",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m3-s6-a1-q04.png",
+      "src": "images/student-illustrations/m3-s6-a1-q04-d738a142f8.webp",
+      "bytes": 9506
+    },
+    {
+      "id": "m3-s6-a1-q05",
+      "activityId": "m3-s6-a1",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m3-s6-a1-q05.png",
+      "src": "images/student-illustrations/m3-s6-a1-q05-b39e141961.webp",
+      "bytes": 14094
+    },
+    {
+      "id": "m3-s6-a2-q01",
+      "activityId": "m3-s6-a2",
+      "dataPath": "data.steps[0]",
+      "sourceAsset": "assets/m3-s6-a2-q01.png",
+      "src": "images/student-illustrations/m3-s6-a2-q01-0ee5d36157.webp",
+      "bytes": 13622
+    },
+    {
+      "id": "m3-s6-a2-q02",
+      "activityId": "m3-s6-a2",
+      "dataPath": "data.steps[1]",
+      "sourceAsset": "assets/m3-s6-a2-q02.png",
+      "src": "images/student-illustrations/m3-s6-a2-q02-9e52ead1ac.webp",
+      "bytes": 18900
+    },
+    {
+      "id": "m3-s6-a2-q03",
+      "activityId": "m3-s6-a2",
+      "dataPath": "data.steps[2]",
+      "sourceAsset": "assets/m3-s6-a2-q03.png",
+      "src": "images/student-illustrations/m3-s6-a2-q03-051e2b8500.webp",
+      "bytes": 12832
+    },
+    {
+      "id": "m3-s6-a2-q04",
+      "activityId": "m3-s6-a2",
+      "dataPath": "data.steps[3]",
+      "sourceAsset": "assets/m3-s6-a2-q04.png",
+      "src": "images/student-illustrations/m3-s6-a2-q04-30610aa472.webp",
+      "bytes": 8316
+    },
+    {
+      "id": "m3-s6-a2-q05",
+      "activityId": "m3-s6-a2",
+      "dataPath": "data.steps[4]",
+      "sourceAsset": "assets/m3-s6-a2-q05.png",
+      "src": "images/student-illustrations/m3-s6-a2-q05-eec613d0eb.webp",
+      "bytes": 17868
+    },
+    {
+      "id": "m3-s6-a3-q01",
+      "activityId": "m3-s6-a3",
+      "dataPath": "data.prompts[0]",
+      "sourceAsset": "assets/m3-s6-a3-q01-v2.png",
+      "src": "images/student-illustrations/m3-s6-a3-q01-fee3904605.webp",
+      "bytes": 8982
+    },
+    {
+      "id": "m3-s6-a3-q02",
+      "activityId": "m3-s6-a3",
+      "dataPath": "data.prompts[1]",
+      "sourceAsset": "assets/m3-s6-a3-q02-v2.png",
+      "src": "images/student-illustrations/m3-s6-a3-q02-ba13b883ac.webp",
+      "bytes": 8474
+    },
+    {
+      "id": "m3-s6-a3-q03",
+      "activityId": "m3-s6-a3",
+      "dataPath": "data.prompts[2]",
+      "sourceAsset": "assets/m3-s6-a3-q03-v2.png",
+      "src": "images/student-illustrations/m3-s6-a3-q03-48383accd7.webp",
+      "bytes": 8480
+    },
+    {
+      "id": "m3-s6-a3-q04",
+      "activityId": "m3-s6-a3",
+      "dataPath": "data.prompts[3]",
+      "sourceAsset": "assets/m3-s6-a3-q04-v2.png",
+      "src": "images/student-illustrations/m3-s6-a3-q04-441b1df1b2.webp",
+      "bytes": 9830
+    },
+    {
+      "id": "m3-s6-a3-q05",
+      "activityId": "m3-s6-a3",
+      "dataPath": "data.prompts[4]",
+      "sourceAsset": "assets/m3-s6-a3-q05-v2.png",
+      "src": "images/student-illustrations/m3-s6-a3-q05-5e55fd6daf.webp",
+      "bytes": 10750
+    },
+    {
+      "id": "m3-s6-a4-q01",
+      "activityId": "m3-s6-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m3-s6-a4-q01.png",
+      "src": "images/student-illustrations/m3-s6-a4-q01-6774f3ee8b.webp",
+      "bytes": 15430
+    },
+    {
+      "id": "m3-s6-a4-q02",
+      "activityId": "m3-s6-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m3-s6-a4-q02.png",
+      "src": "images/student-illustrations/m3-s6-a4-q02-e72cb87220.webp",
+      "bytes": 14820
+    },
+    {
+      "id": "m3-s6-a4-q03",
+      "activityId": "m3-s6-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m3-s6-a4-q03.png",
+      "src": "images/student-illustrations/m3-s6-a4-q03-2fadbb0daa.webp",
+      "bytes": 15284
+    },
+    {
+      "id": "m3-s6-a4-q04",
+      "activityId": "m3-s6-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m3-s6-a4-q04.png",
+      "src": "images/student-illustrations/m3-s6-a4-q04-9406a8a912.webp",
+      "bytes": 12428
+    },
+    {
+      "id": "m3-s6-a4-q05",
+      "activityId": "m3-s6-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m3-s6-a4-q05.png",
+      "src": "images/student-illustrations/m3-s6-a4-q05-a43f60bb5b.webp",
+      "bytes": 13690
+    },
+    {
+      "id": "m3-s7-a1-q01",
+      "activityId": "m3-s7-a1",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m3-s7-a1-q01.png",
+      "src": "images/student-illustrations/m3-s7-a1-q01-55375257de.webp",
+      "bytes": 14218
+    },
+    {
+      "id": "m3-s7-a1-q02",
+      "activityId": "m3-s7-a1",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m3-s7-a1-q02.png",
+      "src": "images/student-illustrations/m3-s7-a1-q02-6800aee13c.webp",
+      "bytes": 34210
+    },
+    {
+      "id": "m3-s7-a1-q03",
+      "activityId": "m3-s7-a1",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m3-s7-a1-q03.png",
+      "src": "images/student-illustrations/m3-s7-a1-q03-5864863ab5.webp",
+      "bytes": 9822
+    },
+    {
+      "id": "m3-s7-a1-q04",
+      "activityId": "m3-s7-a1",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m3-s7-a1-q04.png",
+      "src": "images/student-illustrations/m3-s7-a1-q04-44ed64de0c.webp",
+      "bytes": 13550
+    },
+    {
+      "id": "m3-s7-a1-q05",
+      "activityId": "m3-s7-a1",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m3-s7-a1-q05.png",
+      "src": "images/student-illustrations/m3-s7-a1-q05-1b8087b9bc.webp",
+      "bytes": 16448
+    },
+    {
+      "id": "m3-s7-a2-q01",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[0]",
+      "sourceAsset": "assets/m3-s7-a2-q01.png",
+      "src": "images/student-illustrations/m3-s7-a2-q01-94e50d929f.webp",
+      "bytes": 13958
+    },
+    {
+      "id": "m3-s7-a2-q02",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[1]",
+      "sourceAsset": "assets/m3-s7-a2-q02.png",
+      "src": "images/student-illustrations/m3-s7-a2-q02-cba78834fa.webp",
+      "bytes": 15778
+    },
+    {
+      "id": "m3-s7-a2-q03",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[2]",
+      "sourceAsset": "assets/m3-s7-a2-q03-v2.png",
+      "src": "images/student-illustrations/m3-s7-a2-q03-325deb311d.webp",
+      "bytes": 15840
+    },
+    {
+      "id": "m3-s7-a2-q04",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[3]",
+      "sourceAsset": "assets/m3-s7-a2-q04.png",
+      "src": "images/student-illustrations/m3-s7-a2-q04-fc2cb62bd0.webp",
+      "bytes": 10674
+    },
+    {
+      "id": "m3-s7-a2-q05",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[4]",
+      "sourceAsset": "assets/m3-s7-a2-q05.png",
+      "src": "images/student-illustrations/m3-s7-a2-q05-138464fdc2.webp",
+      "bytes": 18590
+    },
+    {
+      "id": "m3-s7-a2-q06",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[5]",
+      "sourceAsset": "assets/m3-s7-a2-q06.png",
+      "src": "images/student-illustrations/m3-s7-a2-q06-4087433aa8.webp",
+      "bytes": 11946
+    },
+    {
+      "id": "m3-s7-a2-q07",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[6]",
+      "sourceAsset": "assets/m3-s7-a2-q07.png",
+      "src": "images/student-illustrations/m3-s7-a2-q07-836af5ce20.webp",
+      "bytes": 12490
+    },
+    {
+      "id": "m3-s7-a2-q08",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[7]",
+      "sourceAsset": "assets/m3-s7-a2-q08.png",
+      "src": "images/student-illustrations/m3-s7-a2-q08-b0032eeb11.webp",
+      "bytes": 13002
+    },
+    {
+      "id": "m3-s7-a2-q09",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[8]",
+      "sourceAsset": "assets/m3-s7-a2-q09.png",
+      "src": "images/student-illustrations/m3-s7-a2-q09-b0cbec791e.webp",
+      "bytes": 18756
+    },
+    {
+      "id": "m3-s7-a2-q10",
+      "activityId": "m3-s7-a2",
+      "dataPath": "data.items[9]",
+      "sourceAsset": "assets/m3-s7-a2-q10.png",
+      "src": "images/student-illustrations/m3-s7-a2-q10-0a1bfe6615.webp",
+      "bytes": 31872
+    },
+    {
+      "id": "m3-s7-a3-q01",
+      "activityId": "m3-s7-a3",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m3-s7-a3-q01.png",
+      "src": "images/student-illustrations/m3-s7-a3-q01-2d6b647459.webp",
+      "bytes": 9748
+    },
+    {
+      "id": "m3-s7-a3-q02",
+      "activityId": "m3-s7-a3",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m3-s7-a3-q02.png",
+      "src": "images/student-illustrations/m3-s7-a3-q02-fdad26f2af.webp",
+      "bytes": 9688
+    },
+    {
+      "id": "m3-s7-a3-q03",
+      "activityId": "m3-s7-a3",
+      "dataPath": "data.lines[2]",
+      "sourceAsset": "assets/m3-s7-a3-q03.png",
+      "src": "images/student-illustrations/m3-s7-a3-q03-c7cf942075.webp",
+      "bytes": 12414
+    },
+    {
+      "id": "m3-s7-a3-q04",
+      "activityId": "m3-s7-a3",
+      "dataPath": "data.lines[3]",
+      "sourceAsset": "assets/m3-s7-a3-q04.png",
+      "src": "images/student-illustrations/m3-s7-a3-q04-182ac9414e.webp",
+      "bytes": 10332
+    },
+    {
+      "id": "m3-s7-a3-q05",
+      "activityId": "m3-s7-a3",
+      "dataPath": "data.lines[4]",
+      "sourceAsset": "assets/m3-s7-a3-q05.png",
+      "src": "images/student-illustrations/m3-s7-a3-q05-0b947b61d9.webp",
+      "bytes": 11820
+    },
+    {
+      "id": "m3-s7-a4-q01",
+      "activityId": "m3-s7-a4",
+      "dataPath": "data.qs[0]",
+      "sourceAsset": "assets/m3-s7-a4-q01.png",
+      "src": "images/student-illustrations/m3-s7-a4-q01-69285e79d4.webp",
+      "bytes": 10934
+    },
+    {
+      "id": "m3-s7-a4-q02",
+      "activityId": "m3-s7-a4",
+      "dataPath": "data.qs[1]",
+      "sourceAsset": "assets/m3-s7-a4-q02.png",
+      "src": "images/student-illustrations/m3-s7-a4-q02-7bd043125f.webp",
+      "bytes": 9658
+    },
+    {
+      "id": "m3-s7-a4-q03",
+      "activityId": "m3-s7-a4",
+      "dataPath": "data.qs[2]",
+      "sourceAsset": "assets/m3-s7-a4-q03.png",
+      "src": "images/student-illustrations/m3-s7-a4-q03-e0bd228ae6.webp",
+      "bytes": 9252
+    },
+    {
+      "id": "m3-s7-a4-q04",
+      "activityId": "m3-s7-a4",
+      "dataPath": "data.qs[3]",
+      "sourceAsset": "assets/m3-s7-a4-q04.png",
+      "src": "images/student-illustrations/m3-s7-a4-q04-f071bce5a8.webp",
+      "bytes": 8412
+    },
+    {
+      "id": "m3-s7-a4-q05",
+      "activityId": "m3-s7-a4",
+      "dataPath": "data.qs[4]",
+      "sourceAsset": "assets/m3-s7-a4-q05.png",
+      "src": "images/student-illustrations/m3-s7-a4-q05-a2b19f7fd2.webp",
+      "bytes": 11574
+    },
+    {
+      "id": "m3-s8-a1-q01",
+      "activityId": "m3-s8-a1",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m3-s8-a1-q01.png",
+      "src": "images/student-illustrations/m3-s8-a1-q01-34bc2360c6.webp",
+      "bytes": 10546
+    },
+    {
+      "id": "m3-s8-a1-q02",
+      "activityId": "m3-s8-a1",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m3-s8-a1-q02.png",
+      "src": "images/student-illustrations/m3-s8-a1-q02-e4e0c656d8.webp",
+      "bytes": 7154
+    },
+    {
+      "id": "m3-s8-a1-q03",
+      "activityId": "m3-s8-a1",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m3-s8-a1-q03.png",
+      "src": "images/student-illustrations/m3-s8-a1-q03-5c10110ad8.webp",
+      "bytes": 10764
+    },
+    {
+      "id": "m3-s8-a1-q04",
+      "activityId": "m3-s8-a1",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m3-s8-a1-q04.png",
+      "src": "images/student-illustrations/m3-s8-a1-q04-e1898bf475.webp",
+      "bytes": 12210
+    },
+    {
+      "id": "m3-s8-a1-q05",
+      "activityId": "m3-s8-a1",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m3-s8-a1-q05.png",
+      "src": "images/student-illustrations/m3-s8-a1-q05-e996fb0a58.webp",
+      "bytes": 15376
+    },
+    {
+      "id": "m3-s8-a2-q01",
+      "activityId": "m3-s8-a2",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m3-s8-a2-q01.png",
+      "src": "images/student-illustrations/m3-s8-a2-q01-cd80043d1e.webp",
+      "bytes": 8456
+    },
+    {
+      "id": "m3-s8-a2-q02",
+      "activityId": "m3-s8-a2",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m3-s8-a2-q02.png",
+      "src": "images/student-illustrations/m3-s8-a2-q02-17a62b09b0.webp",
+      "bytes": 6340
+    },
+    {
+      "id": "m3-s8-a2-q03",
+      "activityId": "m3-s8-a2",
+      "dataPath": "data.lines[2]",
+      "sourceAsset": "assets/m3-s8-a2-q03.png",
+      "src": "images/student-illustrations/m3-s8-a2-q03-b411013331.webp",
+      "bytes": 5488
+    },
+    {
+      "id": "m3-s8-a2-q04",
+      "activityId": "m3-s8-a2",
+      "dataPath": "data.lines[3]",
+      "sourceAsset": "assets/m3-s8-a2-q04.png",
+      "src": "images/student-illustrations/m3-s8-a2-q04-35771beb8e.webp",
+      "bytes": 10554
+    },
+    {
+      "id": "m3-s8-a2-q05",
+      "activityId": "m3-s8-a2",
+      "dataPath": "data.lines[4]",
+      "sourceAsset": "assets/m3-s8-a2-q05-v2.png",
+      "src": "images/student-illustrations/m3-s8-a2-q05-1b96af8999.webp",
+      "bytes": 7754
+    },
+    {
+      "id": "m3-s8-a3-q01",
+      "activityId": "m3-s8-a3",
+      "dataPath": "data.qs[0]",
+      "sourceAsset": "assets/m3-s8-a3-q01.png",
+      "src": "images/student-illustrations/m3-s8-a3-q01-8c47a10d72.webp",
+      "bytes": 11256
+    },
+    {
+      "id": "m3-s8-a3-q02",
+      "activityId": "m3-s8-a3",
+      "dataPath": "data.qs[1]",
+      "sourceAsset": "assets/m3-s8-a3-q02.png",
+      "src": "images/student-illustrations/m3-s8-a3-q02-b8773b1ee9.webp",
+      "bytes": 9700
+    },
+    {
+      "id": "m3-s8-a3-q03",
+      "activityId": "m3-s8-a3",
+      "dataPath": "data.qs[2]",
+      "sourceAsset": "assets/m3-s8-a3-q03.png",
+      "src": "images/student-illustrations/m3-s8-a3-q03-6094859681.webp",
+      "bytes": 11092
+    },
+    {
+      "id": "m3-s8-a3-q04",
+      "activityId": "m3-s8-a3",
+      "dataPath": "data.qs[3]",
+      "sourceAsset": "assets/m3-s8-a3-q04.png",
+      "src": "images/student-illustrations/m3-s8-a3-q04-78c77796c3.webp",
+      "bytes": 10206
+    },
+    {
+      "id": "m3-s8-a3-q05",
+      "activityId": "m3-s8-a3",
+      "dataPath": "data.qs[4]",
+      "sourceAsset": "assets/m3-s8-a3-q05.png",
+      "src": "images/student-illustrations/m3-s8-a3-q05-d094079bcd.webp",
+      "bytes": 9186
+    },
+    {
+      "id": "m3-s8-a4-q01",
+      "activityId": "m3-s8-a4",
+      "dataPath": "data.steps[0]",
+      "sourceAsset": "assets/m3-s8-a4-q01-v2.png",
+      "src": "images/student-illustrations/m3-s8-a4-q01-86bcc13d58.webp",
+      "bytes": 10086
+    },
+    {
+      "id": "m3-s8-a4-q02",
+      "activityId": "m3-s8-a4",
+      "dataPath": "data.steps[1]",
+      "sourceAsset": "assets/m3-s8-a4-q02.png",
+      "src": "images/student-illustrations/m3-s8-a4-q02-2aa830572e.webp",
+      "bytes": 10438
+    },
+    {
+      "id": "m3-s8-a4-q03",
+      "activityId": "m3-s8-a4",
+      "dataPath": "data.steps[2]",
+      "sourceAsset": "assets/m3-s8-a4-q03.png",
+      "src": "images/student-illustrations/m3-s8-a4-q03-d07cf42236.webp",
+      "bytes": 11504
+    },
+    {
+      "id": "m3-s8-a4-q04",
+      "activityId": "m3-s8-a4",
+      "dataPath": "data.steps[3]",
+      "sourceAsset": "assets/m3-s8-a4-q04-v2.png",
+      "src": "images/student-illustrations/m3-s8-a4-q04-7b53c51b15.webp",
+      "bytes": 8366
+    },
+    {
+      "id": "m3-s8-a4-q05",
+      "activityId": "m3-s8-a4",
+      "dataPath": "data.steps[4]",
+      "sourceAsset": "assets/m3-s8-a4-q05.png",
+      "src": "images/student-illustrations/m3-s8-a4-q05-7c49c26e0a.webp",
+      "bytes": 11434
+    },
+    {
+      "id": "m4-s1-a1-q01",
+      "activityId": "m4-s1-a1",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m4-s1-a1-q01.png",
+      "src": "images/student-illustrations/m4-s1-a1-q01-d5694ded17.webp",
+      "bytes": 18640
+    },
+    {
+      "id": "m4-s1-a1-q02",
+      "activityId": "m4-s1-a1",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m4-s1-a1-q02.png",
+      "src": "images/student-illustrations/m4-s1-a1-q02-9a5a9f4e0d.webp",
+      "bytes": 9424
+    },
+    {
+      "id": "m4-s1-a1-q03",
+      "activityId": "m4-s1-a1",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m4-s1-a1-q03.png",
+      "src": "images/student-illustrations/m4-s1-a1-q03-753d0344ef.webp",
+      "bytes": 10742
+    },
+    {
+      "id": "m4-s1-a1-q04",
+      "activityId": "m4-s1-a1",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m4-s1-a1-q04.png",
+      "src": "images/student-illustrations/m4-s1-a1-q04-2e9bdeac28.webp",
+      "bytes": 19734
+    },
+    {
+      "id": "m4-s1-a1-q05",
+      "activityId": "m4-s1-a1",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m4-s1-a1-q05.png",
+      "src": "images/student-illustrations/m4-s1-a1-q05-b80e9e36f0.webp",
+      "bytes": 18106
+    },
+    {
+      "id": "m4-s1-a2-q01",
+      "activityId": "m4-s1-a2",
+      "dataPath": "data.prompts[0]",
+      "sourceAsset": "assets/m4-s1-a2-q01.png",
+      "src": "images/student-illustrations/m4-s1-a2-q01-4011d8ad10.webp",
+      "bytes": 9460
+    },
+    {
+      "id": "m4-s1-a2-q02",
+      "activityId": "m4-s1-a2",
+      "dataPath": "data.prompts[1]",
+      "sourceAsset": "assets/m4-s1-a2-q02.png",
+      "src": "images/student-illustrations/m4-s1-a2-q02-a289e3867f.webp",
+      "bytes": 14890
+    },
+    {
+      "id": "m4-s1-a2-q03",
+      "activityId": "m4-s1-a2",
+      "dataPath": "data.prompts[2]",
+      "sourceAsset": "assets/m4-s1-a2-q03.png",
+      "src": "images/student-illustrations/m4-s1-a2-q03-e342bbf73b.webp",
+      "bytes": 17712
+    },
+    {
+      "id": "m4-s1-a2-q04",
+      "activityId": "m4-s1-a2",
+      "dataPath": "data.prompts[3]",
+      "sourceAsset": "assets/m4-s1-a2-q04.png",
+      "src": "images/student-illustrations/m4-s1-a2-q04-2b3f08de7b.webp",
+      "bytes": 12368
+    },
+    {
+      "id": "m4-s1-a2-q05",
+      "activityId": "m4-s1-a2",
+      "dataPath": "data.prompts[4]",
+      "sourceAsset": "assets/m4-s1-a2-q05.png",
+      "src": "images/student-illustrations/m4-s1-a2-q05-464574e096.webp",
+      "bytes": 20824
+    },
+    {
+      "id": "m4-s1-a3-q01",
+      "activityId": "m4-s1-a3",
+      "dataPath": "data.devices[0]",
+      "sourceAsset": "assets/m4-s1-a3-q01.png",
+      "src": "images/student-illustrations/m4-s1-a3-q01-75aaaa1978.webp",
+      "bytes": 10714
+    },
+    {
+      "id": "m4-s1-a3-q02",
+      "activityId": "m4-s1-a3",
+      "dataPath": "data.devices[1]",
+      "sourceAsset": "assets/m4-s1-a3-q02.png",
+      "src": "images/student-illustrations/m4-s1-a3-q02-9a43c7329c.webp",
+      "bytes": 11990
+    },
+    {
+      "id": "m4-s1-a3-q03",
+      "activityId": "m4-s1-a3",
+      "dataPath": "data.devices[2]",
+      "sourceAsset": "assets/m4-s1-a3-q03.png",
+      "src": "images/student-illustrations/m4-s1-a3-q03-cd0dc6023a.webp",
+      "bytes": 11386
+    },
+    {
+      "id": "m4-s1-a3-q04",
+      "activityId": "m4-s1-a3",
+      "dataPath": "data.devices[3]",
+      "sourceAsset": "assets/m4-s1-a3-q04.png",
+      "src": "images/student-illustrations/m4-s1-a3-q04-13aa7b0ccc.webp",
+      "bytes": 10858
+    },
+    {
+      "id": "m4-s1-a3-q05",
+      "activityId": "m4-s1-a3",
+      "dataPath": "data.devices[4]",
+      "sourceAsset": "assets/m4-s1-a3-q05.png",
+      "src": "images/student-illustrations/m4-s1-a3-q05-7cffb78f21.webp",
+      "bytes": 9456
+    },
+    {
+      "id": "m4-s1-a3-q06",
+      "activityId": "m4-s1-a3",
+      "dataPath": "data.devices[5]",
+      "sourceAsset": "assets/m4-s1-a3-q06.png",
+      "src": "images/student-illustrations/m4-s1-a3-q06-0bb9740241.webp",
+      "bytes": 11798
+    },
+    {
+      "id": "m4-s1-a4-q01",
+      "activityId": "m4-s1-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m4-s1-a4-q01.png",
+      "src": "images/student-illustrations/m4-s1-a4-q01-e6d7468732.webp",
+      "bytes": 10100
+    },
+    {
+      "id": "m4-s1-a4-q02",
+      "activityId": "m4-s1-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m4-s1-a4-q02.png",
+      "src": "images/student-illustrations/m4-s1-a4-q02-a5883ec04a.webp",
+      "bytes": 25014
+    },
+    {
+      "id": "m4-s1-a4-q03",
+      "activityId": "m4-s1-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m4-s1-a4-q03.png",
+      "src": "images/student-illustrations/m4-s1-a4-q03-25b83c0870.webp",
+      "bytes": 16832
+    },
+    {
+      "id": "m4-s1-a4-q04",
+      "activityId": "m4-s1-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m4-s1-a4-q04.png",
+      "src": "images/student-illustrations/m4-s1-a4-q04-8d9c45a4cc.webp",
+      "bytes": 11912
+    },
+    {
+      "id": "m4-s1-a4-q05",
+      "activityId": "m4-s1-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m4-s1-a4-q05.png",
+      "src": "images/student-illustrations/m4-s1-a4-q05-b897ac0982.webp",
+      "bytes": 12890
+    },
+    {
+      "id": "m4-s2-a1-q01",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[0]",
+      "sourceAsset": "assets/m4-s2-a1-q01.png",
+      "src": "images/student-illustrations/m4-s2-a1-q01-47c9bb3931.webp",
+      "bytes": 29584
+    },
+    {
+      "id": "m4-s2-a1-q02",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[1]",
+      "sourceAsset": "assets/m4-s2-a1-q02.png",
+      "src": "images/student-illustrations/m4-s2-a1-q02-9fe0c7d26b.webp",
+      "bytes": 19842
+    },
+    {
+      "id": "m4-s2-a1-q03",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[2]",
+      "sourceAsset": "assets/m4-s2-a1-q03.png",
+      "src": "images/student-illustrations/m4-s2-a1-q03-24eb921c09.webp",
+      "bytes": 21418
+    },
+    {
+      "id": "m4-s2-a1-q04",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[3]",
+      "sourceAsset": "assets/m4-s2-a1-q04.png",
+      "src": "images/student-illustrations/m4-s2-a1-q04-a5691c1d45.webp",
+      "bytes": 30196
+    },
+    {
+      "id": "m4-s2-a1-q05",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[4]",
+      "sourceAsset": "assets/m4-s2-a1-q05.png",
+      "src": "images/student-illustrations/m4-s2-a1-q05-17d914cd11.webp",
+      "bytes": 41676
+    },
+    {
+      "id": "m4-s2-a1-q06",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[5]",
+      "sourceAsset": "assets/m4-s2-a1-q06.png",
+      "src": "images/student-illustrations/m4-s2-a1-q06-0bf1b235c8.webp",
+      "bytes": 28300
+    },
+    {
+      "id": "m4-s2-a1-q07",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[6]",
+      "sourceAsset": "assets/m4-s2-a1-q07.png",
+      "src": "images/student-illustrations/m4-s2-a1-q07-d227cb6b33.webp",
+      "bytes": 33988
+    },
+    {
+      "id": "m4-s2-a1-q08",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[7]",
+      "sourceAsset": "assets/m4-s2-a1-q08.png",
+      "src": "images/student-illustrations/m4-s2-a1-q08-eaaa82ae2d.webp",
+      "bytes": 37586
+    },
+    {
+      "id": "m4-s2-a1-q09",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[8]",
+      "sourceAsset": "assets/m4-s2-a1-q09.png",
+      "src": "images/student-illustrations/m4-s2-a1-q09-b499f8ee7d.webp",
+      "bytes": 30976
+    },
+    {
+      "id": "m4-s2-a1-q10",
+      "activityId": "m4-s2-a1",
+      "dataPath": "data.items[9]",
+      "sourceAsset": "assets/m4-s2-a1-q10.png",
+      "src": "images/student-illustrations/m4-s2-a1-q10-0229c18062.webp",
+      "bytes": 42670
+    },
+    {
+      "id": "m4-s2-a2-q01",
+      "activityId": "m4-s2-a2",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m4-s2-a2-q01.png",
+      "src": "images/student-illustrations/m4-s2-a2-q01-17eae0beab.webp",
+      "bytes": 18756
+    },
+    {
+      "id": "m4-s2-a2-q02",
+      "activityId": "m4-s2-a2",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m4-s2-a2-q02.png",
+      "src": "images/student-illustrations/m4-s2-a2-q02-09f45feb16.webp",
+      "bytes": 27780
+    },
+    {
+      "id": "m4-s2-a2-q03",
+      "activityId": "m4-s2-a2",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m4-s2-a2-q03.png",
+      "src": "images/student-illustrations/m4-s2-a2-q03-453148c8f6.webp",
+      "bytes": 33412
+    },
+    {
+      "id": "m4-s2-a2-q04",
+      "activityId": "m4-s2-a2",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m4-s2-a2-q04.png",
+      "src": "images/student-illustrations/m4-s2-a2-q04-721991bc58.webp",
+      "bytes": 29592
+    },
+    {
+      "id": "m4-s2-a2-q05",
+      "activityId": "m4-s2-a2",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m4-s2-a2-q05.png",
+      "src": "images/student-illustrations/m4-s2-a2-q05-be181d2e26.webp",
+      "bytes": 29544
+    },
+    {
+      "id": "m4-s2-a3-q01",
+      "activityId": "m4-s2-a3",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m4-s2-a3-q01.png",
+      "src": "images/student-illustrations/m4-s2-a3-q01-daa95d9cd2.webp",
+      "bytes": 15632
+    },
+    {
+      "id": "m4-s2-a3-q02",
+      "activityId": "m4-s2-a3",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m4-s2-a3-q02-v2.png",
+      "src": "images/student-illustrations/m4-s2-a3-q02-e50f6573af.webp",
+      "bytes": 16164
+    },
+    {
+      "id": "m4-s2-a3-q03",
+      "activityId": "m4-s2-a3",
+      "dataPath": "data.lines[2]",
+      "sourceAsset": "assets/m4-s2-a3-q03.png",
+      "src": "images/student-illustrations/m4-s2-a3-q03-81e3fc9953.webp",
+      "bytes": 18900
+    },
+    {
+      "id": "m4-s2-a3-q04",
+      "activityId": "m4-s2-a3",
+      "dataPath": "data.lines[3]",
+      "sourceAsset": "assets/m4-s2-a3-q04.png",
+      "src": "images/student-illustrations/m4-s2-a3-q04-eee49be9c5.webp",
+      "bytes": 21412
+    },
+    {
+      "id": "m4-s2-a3-q05",
+      "activityId": "m4-s2-a3",
+      "dataPath": "data.lines[4]",
+      "sourceAsset": "assets/m4-s2-a3-q05.png",
+      "src": "images/student-illustrations/m4-s2-a3-q05-648bfedef9.webp",
+      "bytes": 17166
+    },
+    {
+      "id": "m4-s2-a4-q01",
+      "activityId": "m4-s2-a4",
+      "dataPath": "data.qs[0]",
+      "sourceAsset": "assets/m4-s2-a4-q01.png",
+      "src": "images/student-illustrations/m4-s2-a4-q01-6c9c65d768.webp",
+      "bytes": 34658
+    },
+    {
+      "id": "m4-s2-a4-q02",
+      "activityId": "m4-s2-a4",
+      "dataPath": "data.qs[1]",
+      "sourceAsset": "assets/m4-s2-a4-q02.png",
+      "src": "images/student-illustrations/m4-s2-a4-q02-6707ddcb54.webp",
+      "bytes": 25822
+    },
+    {
+      "id": "m4-s2-a4-q03",
+      "activityId": "m4-s2-a4",
+      "dataPath": "data.qs[2]",
+      "sourceAsset": "assets/m4-s2-a4-q03.png",
+      "src": "images/student-illustrations/m4-s2-a4-q03-4e392f9c29.webp",
+      "bytes": 29924
+    },
+    {
+      "id": "m4-s2-a4-q04",
+      "activityId": "m4-s2-a4",
+      "dataPath": "data.qs[3]",
+      "sourceAsset": "assets/m4-s2-a4-q04.png",
+      "src": "images/student-illustrations/m4-s2-a4-q04-b3e7461882.webp",
+      "bytes": 26194
+    },
+    {
+      "id": "m4-s2-a4-q05",
+      "activityId": "m4-s2-a4",
+      "dataPath": "data.qs[4]",
+      "sourceAsset": "assets/m4-s2-a4-q05.png",
+      "src": "images/student-illustrations/m4-s2-a4-q05-e8717c7a84.webp",
+      "bytes": 23716
+    },
+    {
+      "id": "m4-s3-a1-q01",
+      "activityId": "m4-s3-a1",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m4-s3-a1-q01.png",
+      "src": "images/student-illustrations/m4-s3-a1-q01-5145670be9.webp",
+      "bytes": 28960
+    },
+    {
+      "id": "m4-s3-a1-q02",
+      "activityId": "m4-s3-a1",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m4-s3-a1-q02.png",
+      "src": "images/student-illustrations/m4-s3-a1-q02-1ef93fa093.webp",
+      "bytes": 17614
+    },
+    {
+      "id": "m4-s3-a1-q03",
+      "activityId": "m4-s3-a1",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m4-s3-a1-q03.png",
+      "src": "images/student-illustrations/m4-s3-a1-q03-a66ddfe882.webp",
+      "bytes": 15764
+    },
+    {
+      "id": "m4-s3-a1-q04",
+      "activityId": "m4-s3-a1",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m4-s3-a1-q04.png",
+      "src": "images/student-illustrations/m4-s3-a1-q04-9d2ba0796b.webp",
+      "bytes": 16138
+    },
+    {
+      "id": "m4-s3-a1-q05",
+      "activityId": "m4-s3-a1",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m4-s3-a1-q05.png",
+      "src": "images/student-illustrations/m4-s3-a1-q05-0ac4e8347d.webp",
+      "bytes": 14716
+    },
+    {
+      "id": "m4-s3-a2-q01",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[0]",
+      "sourceAsset": "assets/m4-s3-a2-q01.png",
+      "src": "images/student-illustrations/m4-s3-a2-q01-8a3a904760.webp",
+      "bytes": 15852
+    },
+    {
+      "id": "m4-s3-a2-q02",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[1]",
+      "sourceAsset": "assets/m4-s3-a2-q02.png",
+      "src": "images/student-illustrations/m4-s3-a2-q02-43186f0607.webp",
+      "bytes": 16920
+    },
+    {
+      "id": "m4-s3-a2-q03",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[2]",
+      "sourceAsset": "assets/m4-s3-a2-q03.png",
+      "src": "images/student-illustrations/m4-s3-a2-q03-ae1a30cc6b.webp",
+      "bytes": 27902
+    },
+    {
+      "id": "m4-s3-a2-q04",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[3]",
+      "sourceAsset": "assets/m4-s3-a2-q04.png",
+      "src": "images/student-illustrations/m4-s3-a2-q04-c0f6fa496b.webp",
+      "bytes": 9706
+    },
+    {
+      "id": "m4-s3-a2-q05",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[4]",
+      "sourceAsset": "assets/m4-s3-a2-q05.png",
+      "src": "images/student-illustrations/m4-s3-a2-q05-49a39d4f1e.webp",
+      "bytes": 16846
+    },
+    {
+      "id": "m4-s3-a2-q06",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[5]",
+      "sourceAsset": "assets/m4-s3-a2-q06.png",
+      "src": "images/student-illustrations/m4-s3-a2-q06-ef3e18f630.webp",
+      "bytes": 17120
+    },
+    {
+      "id": "m4-s3-a2-q07",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[6]",
+      "sourceAsset": "assets/m4-s3-a2-q07.png",
+      "src": "images/student-illustrations/m4-s3-a2-q07-57458c9c9b.webp",
+      "bytes": 12974
+    },
+    {
+      "id": "m4-s3-a2-q08",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[7]",
+      "sourceAsset": "assets/m4-s3-a2-q08.png",
+      "src": "images/student-illustrations/m4-s3-a2-q08-1b600b867f.webp",
+      "bytes": 19208
+    },
+    {
+      "id": "m4-s3-a2-q09",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[8]",
+      "sourceAsset": "assets/m4-s3-a2-q09.png",
+      "src": "images/student-illustrations/m4-s3-a2-q09-8b20bf840b.webp",
+      "bytes": 24426
+    },
+    {
+      "id": "m4-s3-a2-q10",
+      "activityId": "m4-s3-a2",
+      "dataPath": "data.items[9]",
+      "sourceAsset": "assets/m4-s3-a2-q10.png",
+      "src": "images/student-illustrations/m4-s3-a2-q10-cdf591ce83.webp",
+      "bytes": 12718
+    },
+    {
+      "id": "m4-s3-a3-q01",
+      "activityId": "m4-s3-a3",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m4-s3-a3-q01.png",
+      "src": "images/student-illustrations/m4-s3-a3-q01-9be29bed12.webp",
+      "bytes": 14602
+    },
+    {
+      "id": "m4-s3-a3-q02",
+      "activityId": "m4-s3-a3",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m4-s3-a3-q02.png",
+      "src": "images/student-illustrations/m4-s3-a3-q02-632fb58f48.webp",
+      "bytes": 12360
+    },
+    {
+      "id": "m4-s3-a3-q03",
+      "activityId": "m4-s3-a3",
+      "dataPath": "data.lines[2]",
+      "sourceAsset": "assets/m4-s3-a3-q03-v2.png",
+      "src": "images/student-illustrations/m4-s3-a3-q03-faf6d7f88c.webp",
+      "bytes": 15818
+    },
+    {
+      "id": "m4-s3-a3-q04",
+      "activityId": "m4-s3-a3",
+      "dataPath": "data.lines[3]",
+      "sourceAsset": "assets/m4-s3-a3-q04.png",
+      "src": "images/student-illustrations/m4-s3-a3-q04-50f35ea3b0.webp",
+      "bytes": 13928
+    },
+    {
+      "id": "m4-s3-a3-q05",
+      "activityId": "m4-s3-a3",
+      "dataPath": "data.lines[4]",
+      "sourceAsset": "assets/m4-s3-a3-q05.png",
+      "src": "images/student-illustrations/m4-s3-a3-q05-0e125096d6.webp",
+      "bytes": 15638
+    },
+    {
+      "id": "m4-s3-a4-q01",
+      "activityId": "m4-s3-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m4-s3-a4-q01.png",
+      "src": "images/student-illustrations/m4-s3-a4-q01-9813b9007f.webp",
+      "bytes": 6966
+    },
+    {
+      "id": "m4-s3-a4-q02",
+      "activityId": "m4-s3-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m4-s3-a4-q02-v2.png",
+      "src": "images/student-illustrations/m4-s3-a4-q02-312a74bf0d.webp",
+      "bytes": 11390
+    },
+    {
+      "id": "m4-s3-a4-q03",
+      "activityId": "m4-s3-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m4-s3-a4-q03-v2.png",
+      "src": "images/student-illustrations/m4-s3-a4-q03-018bd4ee27.webp",
+      "bytes": 10664
+    },
+    {
+      "id": "m4-s3-a4-q04",
+      "activityId": "m4-s3-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m4-s3-a4-q04.png",
+      "src": "images/student-illustrations/m4-s3-a4-q04-330b75fb18.webp",
+      "bytes": 11928
+    },
+    {
+      "id": "m4-s3-a4-q05",
+      "activityId": "m4-s3-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m4-s3-a4-q05.png",
+      "src": "images/student-illustrations/m4-s3-a4-q05-20e7ab1d8c.webp",
+      "bytes": 10172
+    },
+    {
+      "id": "m4-s4-a1-q01",
+      "activityId": "m4-s4-a1",
+      "dataPath": "data.prompts[0]",
+      "sourceAsset": "assets/m4-s4-a1-q01.png",
+      "src": "images/student-illustrations/m4-s4-a1-q01-3298751553.webp",
+      "bytes": 15146
+    },
+    {
+      "id": "m4-s4-a1-q02",
+      "activityId": "m4-s4-a1",
+      "dataPath": "data.prompts[1]",
+      "sourceAsset": "assets/m4-s4-a1-q02.png",
+      "src": "images/student-illustrations/m4-s4-a1-q02-516bd00b09.webp",
+      "bytes": 15756
+    },
+    {
+      "id": "m4-s4-a1-q03",
+      "activityId": "m4-s4-a1",
+      "dataPath": "data.prompts[2]",
+      "sourceAsset": "assets/m4-s4-a1-q03.png",
+      "src": "images/student-illustrations/m4-s4-a1-q03-d8649126f4.webp",
+      "bytes": 14678
+    },
+    {
+      "id": "m4-s4-a1-q04",
+      "activityId": "m4-s4-a1",
+      "dataPath": "data.prompts[3]",
+      "sourceAsset": "assets/m4-s4-a1-q04.png",
+      "src": "images/student-illustrations/m4-s4-a1-q04-33684b9344.webp",
+      "bytes": 12798
+    },
+    {
+      "id": "m4-s4-a1-q05",
+      "activityId": "m4-s4-a1",
+      "dataPath": "data.prompts[4]",
+      "sourceAsset": "assets/m4-s4-a1-q05.png",
+      "src": "images/student-illustrations/m4-s4-a1-q05-74b4a72a6a.webp",
+      "bytes": 13592
+    },
+    {
+      "id": "m4-s4-a2-q01",
+      "activityId": "m4-s4-a2",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m4-s4-a2-q01.png",
+      "src": "images/student-illustrations/m4-s4-a2-q01-bef339089e.webp",
+      "bytes": 10518
+    },
+    {
+      "id": "m4-s4-a2-q02",
+      "activityId": "m4-s4-a2",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m4-s4-a2-q02.png",
+      "src": "images/student-illustrations/m4-s4-a2-q02-e00667392b.webp",
+      "bytes": 12558
+    },
+    {
+      "id": "m4-s4-a2-q03",
+      "activityId": "m4-s4-a2",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m4-s4-a2-q03.png",
+      "src": "images/student-illustrations/m4-s4-a2-q03-d0498b75c8.webp",
+      "bytes": 17820
+    },
+    {
+      "id": "m4-s4-a2-q04",
+      "activityId": "m4-s4-a2",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m4-s4-a2-q04.png",
+      "src": "images/student-illustrations/m4-s4-a2-q04-9d3fc35471.webp",
+      "bytes": 28596
+    },
+    {
+      "id": "m4-s4-a2-q05",
+      "activityId": "m4-s4-a2",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m4-s4-a2-q05.png",
+      "src": "images/student-illustrations/m4-s4-a2-q05-bf19ce3401.webp",
+      "bytes": 26326
+    },
+    {
+      "id": "m4-s4-a3-q01",
+      "activityId": "m4-s4-a3",
+      "dataPath": "data.steps[0]",
+      "sourceAsset": "assets/m4-s4-a3-q01.png",
+      "src": "images/student-illustrations/m4-s4-a3-q01-f793431ae6.webp",
+      "bytes": 18382
+    },
+    {
+      "id": "m4-s4-a3-q02",
+      "activityId": "m4-s4-a3",
+      "dataPath": "data.steps[1]",
+      "sourceAsset": "assets/m4-s4-a3-q02.png",
+      "src": "images/student-illustrations/m4-s4-a3-q02-c3dfbf04f2.webp",
+      "bytes": 17220
+    },
+    {
+      "id": "m4-s4-a3-q03",
+      "activityId": "m4-s4-a3",
+      "dataPath": "data.steps[2]",
+      "sourceAsset": "assets/m4-s4-a3-q03.png",
+      "src": "images/student-illustrations/m4-s4-a3-q03-2e023149fe.webp",
+      "bytes": 11030
+    },
+    {
+      "id": "m4-s4-a3-q04",
+      "activityId": "m4-s4-a3",
+      "dataPath": "data.steps[3]",
+      "sourceAsset": "assets/m4-s4-a3-q04.png",
+      "src": "images/student-illustrations/m4-s4-a3-q04-c9fbd6c035.webp",
+      "bytes": 17420
+    },
+    {
+      "id": "m4-s4-a3-q05",
+      "activityId": "m4-s4-a3",
+      "dataPath": "data.steps[4]",
+      "sourceAsset": "assets/m4-s4-a3-q05.png",
+      "src": "images/student-illustrations/m4-s4-a3-q05-2b55fd63e8.webp",
+      "bytes": 14044
+    },
+    {
+      "id": "m4-s4-a4-q01",
+      "activityId": "m4-s4-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m4-s4-a4-q01.png",
+      "src": "images/student-illustrations/m4-s4-a4-q01-5d8b0c0159.webp",
+      "bytes": 13476
+    },
+    {
+      "id": "m4-s4-a4-q02",
+      "activityId": "m4-s4-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m4-s4-a4-q02.png",
+      "src": "images/student-illustrations/m4-s4-a4-q02-cd26fbdc61.webp",
+      "bytes": 16680
+    },
+    {
+      "id": "m4-s4-a4-q03",
+      "activityId": "m4-s4-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m4-s4-a4-q03.png",
+      "src": "images/student-illustrations/m4-s4-a4-q03-9ddcb82d36.webp",
+      "bytes": 17328
+    },
+    {
+      "id": "m4-s4-a4-q04",
+      "activityId": "m4-s4-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m4-s4-a4-q04.png",
+      "src": "images/student-illustrations/m4-s4-a4-q04-eb46b25a91.webp",
+      "bytes": 20300
+    },
+    {
+      "id": "m4-s4-a4-q05",
+      "activityId": "m4-s4-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m4-s4-a4-q05.png",
+      "src": "images/student-illustrations/m4-s4-a4-q05-123e1cc03d.webp",
+      "bytes": 18392
+    },
+    {
+      "id": "m4-s5-a1-q01",
+      "activityId": "m4-s5-a1",
+      "dataPath": "data.prompts[0]",
+      "sourceAsset": "assets/m4-s5-a1-q01.png",
+      "src": "images/student-illustrations/m4-s5-a1-q01-042f76ddb1.webp",
+      "bytes": 7178
+    },
+    {
+      "id": "m4-s5-a1-q02",
+      "activityId": "m4-s5-a1",
+      "dataPath": "data.prompts[1]",
+      "sourceAsset": "assets/m4-s5-a1-q02.png",
+      "src": "images/student-illustrations/m4-s5-a1-q02-1fb3076bf7.webp",
+      "bytes": 8246
+    },
+    {
+      "id": "m4-s5-a1-q03",
+      "activityId": "m4-s5-a1",
+      "dataPath": "data.prompts[2]",
+      "sourceAsset": "assets/m4-s5-a1-q03-v2.png",
+      "src": "images/student-illustrations/m4-s5-a1-q03-08861abd1b.webp",
+      "bytes": 11820
+    },
+    {
+      "id": "m4-s5-a1-q04",
+      "activityId": "m4-s5-a1",
+      "dataPath": "data.prompts[3]",
+      "sourceAsset": "assets/m4-s5-a1-q04.png",
+      "src": "images/student-illustrations/m4-s5-a1-q04-5136c7f78b.webp",
+      "bytes": 6984
+    },
+    {
+      "id": "m4-s5-a1-q05",
+      "activityId": "m4-s5-a1",
+      "dataPath": "data.prompts[4]",
+      "sourceAsset": "assets/m4-s5-a1-q05.png",
+      "src": "images/student-illustrations/m4-s5-a1-q05-9ad644d626.webp",
+      "bytes": 13276
+    },
+    {
+      "id": "m4-s5-a2-q01",
+      "activityId": "m4-s5-a2",
+      "dataPath": "data.pairs[0]",
+      "sourceAsset": "assets/m4-s5-a2-q01.png",
+      "src": "images/student-illustrations/m4-s5-a2-q01-ca0e205f9e.webp",
+      "bytes": 15418
+    },
+    {
+      "id": "m4-s5-a2-q02",
+      "activityId": "m4-s5-a2",
+      "dataPath": "data.pairs[1]",
+      "sourceAsset": "assets/m4-s5-a2-q02.png",
+      "src": "images/student-illustrations/m4-s5-a2-q02-190508155f.webp",
+      "bytes": 10072
+    },
+    {
+      "id": "m4-s5-a2-q03",
+      "activityId": "m4-s5-a2",
+      "dataPath": "data.pairs[2]",
+      "sourceAsset": "assets/m4-s5-a2-q03.png",
+      "src": "images/student-illustrations/m4-s5-a2-q03-1cf4537301.webp",
+      "bytes": 11780
+    },
+    {
+      "id": "m4-s5-a2-q04",
+      "activityId": "m4-s5-a2",
+      "dataPath": "data.pairs[3]",
+      "sourceAsset": "assets/m4-s5-a2-q04.png",
+      "src": "images/student-illustrations/m4-s5-a2-q04-a116b50497.webp",
+      "bytes": 13574
+    },
+    {
+      "id": "m4-s5-a2-q05",
+      "activityId": "m4-s5-a2",
+      "dataPath": "data.pairs[4]",
+      "sourceAsset": "assets/m4-s5-a2-q05.png",
+      "src": "images/student-illustrations/m4-s5-a2-q05-bed59e114f.webp",
+      "bytes": 15666
+    },
+    {
+      "id": "m4-s5-a3-q01",
+      "activityId": "m4-s5-a3",
+      "dataPath": "data.lines[0]",
+      "sourceAsset": "assets/m4-s5-a3-q01.png",
+      "src": "images/student-illustrations/m4-s5-a3-q01-eed8e469c5.webp",
+      "bytes": 13414
+    },
+    {
+      "id": "m4-s5-a3-q02",
+      "activityId": "m4-s5-a3",
+      "dataPath": "data.lines[1]",
+      "sourceAsset": "assets/m4-s5-a3-q02.png",
+      "src": "images/student-illustrations/m4-s5-a3-q02-c1d7785a23.webp",
+      "bytes": 18444
+    },
+    {
+      "id": "m4-s5-a3-q03",
+      "activityId": "m4-s5-a3",
+      "dataPath": "data.lines[2]",
+      "sourceAsset": "assets/m4-s5-a3-q03.png",
+      "src": "images/student-illustrations/m4-s5-a3-q03-38ac75d8fb.webp",
+      "bytes": 11386
+    },
+    {
+      "id": "m4-s5-a3-q04",
+      "activityId": "m4-s5-a3",
+      "dataPath": "data.lines[3]",
+      "sourceAsset": "assets/m4-s5-a3-q04.png",
+      "src": "images/student-illustrations/m4-s5-a3-q04-d120358d08.webp",
+      "bytes": 19544
+    },
+    {
+      "id": "m4-s5-a3-q05",
+      "activityId": "m4-s5-a3",
+      "dataPath": "data.lines[4]",
+      "sourceAsset": "assets/m4-s5-a3-q05.png",
+      "src": "images/student-illustrations/m4-s5-a3-q05-e785104ad8.webp",
+      "bytes": 15202
+    },
+    {
+      "id": "m4-s5-a4-q01",
+      "activityId": "m4-s5-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m4-s5-a4-q01.png",
+      "src": "images/student-illustrations/m4-s5-a4-q01-f63fe6e487.webp",
+      "bytes": 21108
+    },
+    {
+      "id": "m4-s5-a4-q02",
+      "activityId": "m4-s5-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m4-s5-a4-q02.png",
+      "src": "images/student-illustrations/m4-s5-a4-q02-0412227da4.webp",
+      "bytes": 11544
+    },
+    {
+      "id": "m4-s5-a4-q03",
+      "activityId": "m4-s5-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m4-s5-a4-q03.png",
+      "src": "images/student-illustrations/m4-s5-a4-q03-8fe0a62a61.webp",
+      "bytes": 16594
+    },
+    {
+      "id": "m4-s5-a4-q04",
+      "activityId": "m4-s5-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m4-s5-a4-q04.png",
+      "src": "images/student-illustrations/m4-s5-a4-q04-19f8690ba2.webp",
+      "bytes": 15714
+    },
+    {
+      "id": "m4-s5-a4-q05",
+      "activityId": "m4-s5-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m4-s5-a4-q05.png",
+      "src": "images/student-illustrations/m4-s5-a4-q05-9a6d0b41f3.webp",
+      "bytes": 16240
+    },
+    {
+      "id": "m4-s6-a1-q01",
+      "activityId": "m4-s6-a1",
+      "dataPath": "data.prompts[0]",
+      "sourceAsset": "assets/m4-s6-a1-q01-v2.png",
+      "src": "images/student-illustrations/m4-s6-a1-q01-95988cc3c2.webp",
+      "bytes": 3728
+    },
+    {
+      "id": "m4-s6-a1-q02",
+      "activityId": "m4-s6-a1",
+      "dataPath": "data.prompts[1]",
+      "sourceAsset": "assets/m4-s6-a1-q02-v2.png",
+      "src": "images/student-illustrations/m4-s6-a1-q02-37d0d1c2ba.webp",
+      "bytes": 6764
+    },
+    {
+      "id": "m4-s6-a1-q03",
+      "activityId": "m4-s6-a1",
+      "dataPath": "data.prompts[2]",
+      "sourceAsset": "assets/m4-s6-a1-q03.png",
+      "src": "images/student-illustrations/m4-s6-a1-q03-86e573ae18.webp",
+      "bytes": 10966
+    },
+    {
+      "id": "m4-s6-a1-q04",
+      "activityId": "m4-s6-a1",
+      "dataPath": "data.prompts[3]",
+      "sourceAsset": "assets/m4-s6-a1-q04-v2.png",
+      "src": "images/student-illustrations/m4-s6-a1-q04-14d78b3f58.webp",
+      "bytes": 13694
+    },
+    {
+      "id": "m4-s6-a1-q05",
+      "activityId": "m4-s6-a1",
+      "dataPath": "data.prompts[4]",
+      "sourceAsset": "assets/m4-s6-a1-q05.png",
+      "src": "images/student-illustrations/m4-s6-a1-q05-13c2a49c84.webp",
+      "bytes": 10394
+    },
+    {
+      "id": "m4-s6-a2-q01",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[0]",
+      "sourceAsset": "assets/m4-s6-a2-q01.png",
+      "src": "images/student-illustrations/m4-s6-a2-q01-98054a4e2c.webp",
+      "bytes": 36610
+    },
+    {
+      "id": "m4-s6-a2-q02",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[1]",
+      "sourceAsset": "assets/m4-s6-a2-q02.png",
+      "src": "images/student-illustrations/m4-s6-a2-q02-7936291795.webp",
+      "bytes": 15334
+    },
+    {
+      "id": "m4-s6-a2-q03",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[2]",
+      "sourceAsset": "assets/m4-s6-a2-q03.png",
+      "src": "images/student-illustrations/m4-s6-a2-q03-bd26cf2687.webp",
+      "bytes": 11406
+    },
+    {
+      "id": "m4-s6-a2-q04",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[3]",
+      "sourceAsset": "assets/m4-s6-a2-q04.png",
+      "src": "images/student-illustrations/m4-s6-a2-q04-4d6b38496c.webp",
+      "bytes": 20746
+    },
+    {
+      "id": "m4-s6-a2-q05",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[4]",
+      "sourceAsset": "assets/m4-s6-a2-q05.png",
+      "src": "images/student-illustrations/m4-s6-a2-q05-15f10988c2.webp",
+      "bytes": 13214
+    },
+    {
+      "id": "m4-s6-a2-q06",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[5]",
+      "sourceAsset": "assets/m4-s6-a2-q06.png",
+      "src": "images/student-illustrations/m4-s6-a2-q06-3b8089daa2.webp",
+      "bytes": 20802
+    },
+    {
+      "id": "m4-s6-a2-q07",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[6]",
+      "sourceAsset": "assets/m4-s6-a2-q07.png",
+      "src": "images/student-illustrations/m4-s6-a2-q07-bc7c9c6fb7.webp",
+      "bytes": 15068
+    },
+    {
+      "id": "m4-s6-a2-q08",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[7]",
+      "sourceAsset": "assets/m4-s6-a2-q08.png",
+      "src": "images/student-illustrations/m4-s6-a2-q08-0c6620062b.webp",
+      "bytes": 11224
+    },
+    {
+      "id": "m4-s6-a2-q09",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[8]",
+      "sourceAsset": "assets/m4-s6-a2-q09.png",
+      "src": "images/student-illustrations/m4-s6-a2-q09-d89f98de4e.webp",
+      "bytes": 24720
+    },
+    {
+      "id": "m4-s6-a2-q10",
+      "activityId": "m4-s6-a2",
+      "dataPath": "data.items[9]",
+      "sourceAsset": "assets/m4-s6-a2-q10.png",
+      "src": "images/student-illustrations/m4-s6-a2-q10-e51ead4fac.webp",
+      "bytes": 17814
+    },
+    {
+      "id": "m4-s6-a3-q01",
+      "activityId": "m4-s6-a3",
+      "dataPath": "data.steps[0]",
+      "sourceAsset": "assets/m4-s6-a3-q01.png",
+      "src": "images/student-illustrations/m4-s6-a3-q01-5b1ad3820e.webp",
+      "bytes": 12404
+    },
+    {
+      "id": "m4-s6-a3-q02",
+      "activityId": "m4-s6-a3",
+      "dataPath": "data.steps[1]",
+      "sourceAsset": "assets/m4-s6-a3-q02.png",
+      "src": "images/student-illustrations/m4-s6-a3-q02-f1da8fa17b.webp",
+      "bytes": 15948
+    },
+    {
+      "id": "m4-s6-a3-q03",
+      "activityId": "m4-s6-a3",
+      "dataPath": "data.steps[2]",
+      "sourceAsset": "assets/m4-s6-a3-q03.png",
+      "src": "images/student-illustrations/m4-s6-a3-q03-23eb19b722.webp",
+      "bytes": 12468
+    },
+    {
+      "id": "m4-s6-a3-q04",
+      "activityId": "m4-s6-a3",
+      "dataPath": "data.steps[3]",
+      "sourceAsset": "assets/m4-s6-a3-q04.png",
+      "src": "images/student-illustrations/m4-s6-a3-q04-64e545605f.webp",
+      "bytes": 12712
+    },
+    {
+      "id": "m4-s6-a3-q05",
+      "activityId": "m4-s6-a3",
+      "dataPath": "data.steps[4]",
+      "sourceAsset": "assets/m4-s6-a3-q05.png",
+      "src": "images/student-illustrations/m4-s6-a3-q05-30d12f4393.webp",
+      "bytes": 11028
+    },
+    {
+      "id": "m4-s6-a4-q01",
+      "activityId": "m4-s6-a4",
+      "dataPath": "data.tasks[0]",
+      "sourceAsset": "assets/m4-s6-a4-q01.png",
+      "src": "images/student-illustrations/m4-s6-a4-q01-9c8ad1fe90.webp",
+      "bytes": 10864
+    },
+    {
+      "id": "m4-s6-a4-q02",
+      "activityId": "m4-s6-a4",
+      "dataPath": "data.tasks[1]",
+      "sourceAsset": "assets/m4-s6-a4-q02-v2.png",
+      "src": "images/student-illustrations/m4-s6-a4-q02-ee8509ea8b.webp",
+      "bytes": 6334
+    },
+    {
+      "id": "m4-s6-a4-q03",
+      "activityId": "m4-s6-a4",
+      "dataPath": "data.tasks[2]",
+      "sourceAsset": "assets/m4-s6-a4-q03.png",
+      "src": "images/student-illustrations/m4-s6-a4-q03-f23d0af1c3.webp",
+      "bytes": 11248
+    },
+    {
+      "id": "m4-s6-a4-q04",
+      "activityId": "m4-s6-a4",
+      "dataPath": "data.tasks[3]",
+      "sourceAsset": "assets/m4-s6-a4-q04.png",
+      "src": "images/student-illustrations/m4-s6-a4-q04-a59267786a.webp",
+      "bytes": 11288
+    },
+    {
+      "id": "m4-s6-a4-q05",
+      "activityId": "m4-s6-a4",
+      "dataPath": "data.tasks[4]",
+      "sourceAsset": "assets/m4-s6-a4-q05.png",
+      "src": "images/student-illustrations/m4-s6-a4-q05-95e6ee9140.webp",
+      "bytes": 14502
+    },
+    {
+      "id": "m4-s7-a1-q01",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[0]",
+      "sourceAsset": "assets/m4-s7-a1-q01.png",
+      "src": "images/student-illustrations/m4-s7-a1-q01-aef75c9ac6.webp",
+      "bytes": 15612
+    },
+    {
+      "id": "m4-s7-a1-q02",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[1]",
+      "sourceAsset": "assets/m4-s7-a1-q02.png",
+      "src": "images/student-illustrations/m4-s7-a1-q02-cc1d718d84.webp",
+      "bytes": 24498
+    },
+    {
+      "id": "m4-s7-a1-q03",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[2]",
+      "sourceAsset": "assets/m4-s7-a1-q03.png",
+      "src": "images/student-illustrations/m4-s7-a1-q03-ff8f738d83.webp",
+      "bytes": 17504
+    },
+    {
+      "id": "m4-s7-a1-q04",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[3]",
+      "sourceAsset": "assets/m4-s7-a1-q04.png",
+      "src": "images/student-illustrations/m4-s7-a1-q04-a096bf6fa3.webp",
+      "bytes": 21868
+    },
+    {
+      "id": "m4-s7-a1-q05",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[4]",
+      "sourceAsset": "assets/m4-s7-a1-q05.png",
+      "src": "images/student-illustrations/m4-s7-a1-q05-b4e5ec7efe.webp",
+      "bytes": 15302
+    },
+    {
+      "id": "m4-s7-a1-q06",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[5]",
+      "sourceAsset": "assets/m4-s7-a1-q06.png",
+      "src": "images/student-illustrations/m4-s7-a1-q06-4bf75bdf5b.webp",
+      "bytes": 36260
+    },
+    {
+      "id": "m4-s7-a1-q07",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[6]",
+      "sourceAsset": "assets/m4-s7-a1-q07.png",
+      "src": "images/student-illustrations/m4-s7-a1-q07-21662a6caf.webp",
+      "bytes": 13668
+    },
+    {
+      "id": "m4-s7-a1-q08",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[7]",
+      "sourceAsset": "assets/m4-s7-a1-q08.png",
+      "src": "images/student-illustrations/m4-s7-a1-q08-5dee7e8760.webp",
+      "bytes": 18128
+    },
+    {
+      "id": "m4-s7-a1-q09",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[8]",
+      "sourceAsset": "assets/m4-s7-a1-q09.png",
+      "src": "images/student-illustrations/m4-s7-a1-q09-61d59c365f.webp",
+      "bytes": 15218
+    },
+    {
+      "id": "m4-s7-a1-q10",
+      "activityId": "m4-s7-a1",
+      "dataPath": "data.items[9]",
+      "sourceAsset": "assets/m4-s7-a1-q10.png",
+      "src": "images/student-illustrations/m4-s7-a1-q10-3e46d830b5.webp",
+      "bytes": 18348
+    },
+    {
+      "id": "m4-s7-a2-q01",
+      "activityId": "m4-s7-a2",
+      "dataPath": "data.prompts[0]",
+      "sourceAsset": "assets/m4-s7-a2-q01.png",
+      "src": "images/student-illustrations/m4-s7-a2-q01-7fdef69cad.webp",
+      "bytes": 10714
+    },
+    {
+      "id": "m4-s7-a2-q02",
+      "activityId": "m4-s7-a2",
+      "dataPath": "data.prompts[1]",
+      "sourceAsset": "assets/m4-s7-a2-q02.png",
+      "src": "images/student-illustrations/m4-s7-a2-q02-7c0f2c1d2a.webp",
+      "bytes": 26530
+    },
+    {
+      "id": "m4-s7-a2-q03",
+      "activityId": "m4-s7-a2",
+      "dataPath": "data.prompts[2]",
+      "sourceAsset": "assets/m4-s7-a2-q03.png",
+      "src": "images/student-illustrations/m4-s7-a2-q03-38b6e63f81.webp",
+      "bytes": 16280
+    },
+    {
+      "id": "m4-s7-a2-q04",
+      "activityId": "m4-s7-a2",
+      "dataPath": "data.prompts[3]",
+      "sourceAsset": "assets/m4-s7-a2-q04.png",
+      "src": "images/student-illustrations/m4-s7-a2-q04-a835feea70.webp",
+      "bytes": 20296
+    },
+    {
+      "id": "m4-s7-a2-q05",
+      "activityId": "m4-s7-a2",
+      "dataPath": "data.prompts[4]",
+      "sourceAsset": "assets/m4-s7-a2-q05.png",
+      "src": "images/student-illustrations/m4-s7-a2-q05-d78b0f9244.webp",
+      "bytes": 11944
+    },
+    {
+      "id": "m4-s7-a3-q01",
+      "activityId": "m4-s7-a3",
+      "dataPath": "data.qs[0]",
+      "sourceAsset": "assets/m4-s7-a3-q01.png",
+      "src": "images/student-illustrations/m4-s7-a3-q01-e806118361.webp",
+      "bytes": 26098
+    },
+    {
+      "id": "m4-s7-a3-q02",
+      "activityId": "m4-s7-a3",
+      "dataPath": "data.qs[1]",
+      "sourceAsset": "assets/m4-s7-a3-q02.png",
+      "src": "images/student-illustrations/m4-s7-a3-q02-dc312ccd56.webp",
+      "bytes": 24598
+    },
+    {
+      "id": "m4-s7-a3-q03",
+      "activityId": "m4-s7-a3",
+      "dataPath": "data.qs[2]",
+      "sourceAsset": "assets/m4-s7-a3-q03-v2.png",
+      "src": "images/student-illustrations/m4-s7-a3-q03-6d905f8d92.webp",
+      "bytes": 40788
+    },
+    {
+      "id": "m4-s7-a3-q04",
+      "activityId": "m4-s7-a3",
+      "dataPath": "data.qs[3]",
+      "sourceAsset": "assets/m4-s7-a3-q04.png",
+      "src": "images/student-illustrations/m4-s7-a3-q04-7d016c43f4.webp",
+      "bytes": 19910
+    },
+    {
+      "id": "m4-s7-a3-q05",
+      "activityId": "m4-s7-a3",
+      "dataPath": "data.qs[4]",
+      "sourceAsset": "assets/m4-s7-a3-q05.png",
+      "src": "images/student-illustrations/m4-s7-a3-q05-f01a3446d9.webp",
+      "bytes": 15662
+    },
+    {
+      "id": "m4-s7-a4-q01",
+      "activityId": "m4-s7-a4",
+      "dataPath": "data.steps[0]",
+      "sourceAsset": "assets/m4-s7-a4-q01.png",
+      "src": "images/student-illustrations/m4-s7-a4-q01-48e19cf5f0.webp",
+      "bytes": 37314
+    },
+    {
+      "id": "m4-s7-a4-q02",
+      "activityId": "m4-s7-a4",
+      "dataPath": "data.steps[1]",
+      "sourceAsset": "assets/m4-s7-a4-q02.png",
+      "src": "images/student-illustrations/m4-s7-a4-q02-e32ab1c313.webp",
+      "bytes": 19794
+    },
+    {
+      "id": "m4-s7-a4-q03",
+      "activityId": "m4-s7-a4",
+      "dataPath": "data.steps[2]",
+      "sourceAsset": "assets/m4-s7-a4-q03-v2.png",
+      "src": "images/student-illustrations/m4-s7-a4-q03-022795b4b9.webp",
+      "bytes": 21782
+    },
+    {
+      "id": "m4-s7-a4-q04",
+      "activityId": "m4-s7-a4",
+      "dataPath": "data.steps[3]",
+      "sourceAsset": "assets/m4-s7-a4-q04.png",
+      "src": "images/student-illustrations/m4-s7-a4-q04-ac71ed0eb2.webp",
+      "bytes": 32682
+    },
+    {
+      "id": "m4-s7-a4-q05",
+      "activityId": "m4-s7-a4",
+      "dataPath": "data.steps[4]",
+      "sourceAsset": "assets/m4-s7-a4-q05.png",
+      "src": "images/student-illustrations/m4-s7-a4-q05-d7b3fa9418.webp",
+      "bytes": 39026
     }
   ]
 }

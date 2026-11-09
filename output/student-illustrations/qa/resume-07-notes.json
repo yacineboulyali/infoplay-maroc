@@ -1,0 +1,22 @@
+[
+  {
+    "id": "m4-s2-a3-q02",
+    "reason": "A web-search interface illustrates file exchange incorrectly.",
+    "direction": "CRITICAL: illustrate digital FILE TRANSFER with two small computer/device endpoints and one plain document card between them, in a close-up composition. No web search box, search results, browser-search icon, captions or the missing words échanger des fichiers. No readable text."
+  },
+  {
+    "id": "m4-s3-a3-q03",
+    "reason": "Search-engine screen suggests the browser/search engine where the sentence refers to the server locating a stored page.",
+    "direction": "CRITICAL: one close-up neutral computer SERVER cabinet with an unlabelled stored-page/document symbol. Absolutely no browser, monitor, search field, magnifying glass, search engine, captions or readable server name. Do not print the missing word serveur."
+  },
+  {
+    "id": "m4-s3-a4-q02",
+    "reason": "Aller is placed on a search-engine form instead of the browser address/navigation control used by the simulation.",
+    "direction": "CRITICAL: one isolated close-up BROWSER ADDRESS BAR with the given URL www.college.exemple and an adjacent button labelled exactly Aller. No body-page search form, magnifying glass, search engine heading, query field or results. The bar is a navigation control for opening a URL."
+  },
+  {
+    "id": "m4-s3-a4-q03",
+    "reason": "Whole page invents a college.fr URL and additional course links absent from the simulation.",
+    "direction": "CRITICAL: ONE isolated close-up blue underlined HYPERTEXT LINK containing exactly Cours d’informatique, optionally with a small hand cursor. No URL, browser address bar, other links, courses, page headings, lists or full website."
+  }
+]

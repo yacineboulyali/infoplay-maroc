@@ -5,8 +5,9 @@
     "failed": 0
   },
   "offlineBrowser": {
-    "loadedImages": 355,
+    "loadedImages": 678,
     "activitiesChecked": 120,
+    "manualNetwork": true,
     "consoleErrors": 0,
     "externalRequests": 0
   },
@@ -15,8 +16,22 @@
       1280,
       390
     ],
-    "screenshots": 12,
+    "screenshots": 22,
     "horizontalOverflow": false
   },
-  "generationPaused": true
+  "mobileAssembly": {
+    "allSlotHintsFit": true,
+    "correctAfterSolve": 6,
+    "total": 6,
+    "horizontalOverflow": false
+  },
+  "sourceIntegrity": {
+    "questions": 678,
+    "generated": 678,
+    "reviewed": 678,
+    "uniqueAssets": 678,
+    "uniqueHashes": 678
+  },
+  "generationPaused": false,
+  "generationPhase": "complete"
 }

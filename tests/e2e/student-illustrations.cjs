@@ -11,6 +11,8 @@ const assert = require('node:assert/strict');
   try {
     const context = await browser.newContext({ offline: true, viewport: { width: 1280, height: 900 } });
     const page = await context.newPage();
+    const fullscreenLater = page.getByRole('button', { name: 'Plus tard', exact: true });
+    await page.addLocatorHandler(fullscreenLater, async () => { await fullscreenLater.click(); });
     const errors = [], external = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
@@ -54,17 +56,34 @@ const assert = require('node:assert/strict');
     }
     assert.equal(seen.size, report.integrated);
     const shots = 'output/student-illustrations/platform'; mkdirSync(shots, { recursive: true });
-    const sample = ['m1-s2-a2', 'm1-s3-a2', 'm1-s1-a4', 'm2-s2-a1', 'm2-s2-a3', 'm3-s1-a4'];
+    const sample = ['m1-s2-a2', 'm1-s3-a2', 'm1-s2-a3', 'm1-s1-a3', 'm1-s1-a4', 'm2-s2-a1', 'm1-s3-a3', 'm4-s1-a3', 'm3-s1-a4', 'm3-s3-a2', 'm2-s2-a3'];
     for (const width of [1280, 390]) {
       await page.setViewportSize({ width, height: 900 });
       for (const id of sample) {
         await visit(activities.find(a => a.id === id));
+        if (await fullscreenLater.isVisible()) await fullscreenLater.click();
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
         assert.equal(overflow, false, `${id} at ${width}px`);
         await page.screenshot({ path: `${shots}/${id}-${width}.png`, fullPage: true });
       }
     }
+    await visit(activities.find(a => a.id === 'm4-s1-a3'));
+    const switchButton = page.getByRole('button', { name: 'Switch', exact: true });
+    await switchButton.hover();
+    await page.mouse.move(1, 1);
+    await page.waitForTimeout(250);
+    const beforeHover = await switchButton.boundingBox();
+    await switchButton.hover();
+    await page.waitForTimeout(250);
+    const afterHover = await switchButton.boundingBox();
+    assert.ok(Math.abs(beforeHover.x - afterHover.x) < 1, 'Network node must remain horizontally centered on hover');
+    for (let index = 1; index <= 5; index++) {
+      await switchButton.click();
+      await page.getByRole('button', { name: `PC ${index}`, exact: true }).click();
+    }
+    const networkResult = await page.evaluate(() => window.__ip.eng.check());
+    assert.equal(networkResult.correct, networkResult.total);
     assert.deepEqual(errors, []); assert.deepEqual(external, []);
-    console.log(JSON.stringify({ loadedImages: seen.size, activitiesChecked: activities.length, errors, external, screenshots: sample.length * 2 }));
+    console.log(JSON.stringify({ loadedImages: seen.size, activitiesChecked: activities.length, manualNetwork: true, errors, external, screenshots: sample.length * 2 }));
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

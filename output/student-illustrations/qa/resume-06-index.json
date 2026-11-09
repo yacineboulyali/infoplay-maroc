@@ -1,0 +1,236 @@
+[
+  {
+    "file": "qa/resume-06-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s7-a2-q03",
+        "asset": "assets/m3-s7-a2-q03-v2.png",
+        "question": "C",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s8-a2-q05",
+        "asset": "assets/m3-s8-a2-q05-v2.png",
+        "question": "Après le if et sa condition, on termine la ligne par [blank]",
+        "activity": "Complète le programme"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s8-a4-q01",
+        "asset": "assets/m3-s8-a4-q01-v2.png",
+        "question": "# Programme : moyenne de deux notes",
+        "activity": "Mission finale : la moyenne"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s8-a4-q04",
+        "asset": "assets/m3-s8-a4-q04-v2.png",
+        "question": "moyenne = (n1 + n2) / 2",
+        "activity": "Mission finale : la moyenne"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s1-a1-q04",
+        "asset": "assets/m4-s1-a1-q04.png",
+        "question": "Liaison (câble ou Wi‑Fi)",
+        "activity": "Associe les éléments du réseau"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s1-a1-q05",
+        "asset": "assets/m4-s1-a1-q05.png",
+        "question": "Imprimante réseau",
+        "activity": "Associe les éléments du réseau"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s1-a2-q01",
+        "asset": "assets/m4-s1-a2-q01.png",
+        "question": "Clique sur le commutateur (switch).",
+        "activity": "Identifie les équipements"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s1-a2-q02",
+        "asset": "assets/m4-s1-a2-q02.png",
+        "question": "Clique sur l’imprimante partagée.",
+        "activity": "Identifie les équipements"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s1-a2-q03",
+        "asset": "assets/m4-s1-a2-q03.png",
+        "question": "Clique sur le serveur.",
+        "activity": "Identifie les équipements"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s1-a2-q04",
+        "asset": "assets/m4-s1-a2-q04.png",
+        "question": "Clique sur l’un des postes de travail.",
+        "activity": "Identifie les équipements"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s1-a2-q05",
+        "asset": "assets/m4-s1-a2-q05.png",
+        "question": "Clique sur l’un des câbles.",
+        "activity": "Identifie les équipements"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s1-a3-q01",
+        "asset": "assets/m4-s1-a3-q01.png",
+        "question": "Switch",
+        "activity": "Construis le réseau de la salle"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s1-a3-q02",
+        "asset": "assets/m4-s1-a3-q02.png",
+        "question": "PC 1",
+        "activity": "Construis le réseau de la salle"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s1-a3-q03",
+        "asset": "assets/m4-s1-a3-q03.png",
+        "question": "PC 2",
+        "activity": "Construis le réseau de la salle"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s1-a3-q04",
+        "asset": "assets/m4-s1-a3-q04.png",
+        "question": "PC 3",
+        "activity": "Construis le réseau de la salle"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s1-a3-q05",
+        "asset": "assets/m4-s1-a3-q05.png",
+        "question": "PC 4",
+        "activity": "Construis le réseau de la salle"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-06-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s1-a3-q06",
+        "asset": "assets/m4-s1-a3-q06.png",
+        "question": "PC 5",
+        "activity": "Construis le réseau de la salle"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s1-a4-q01",
+        "asset": "assets/m4-s1-a4-q01.png",
+        "question": "Le switch est éteint : aucun PC ne communique. Alimente‑le.",
+        "activity": "Mission : le réseau de la classe"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s1-a4-q02",
+        "asset": "assets/m4-s1-a4-q02.png",
+        "question": "Branche le câble du PC 1 pour qu’il rejoigne le réseau.",
+        "activity": "Mission : le réseau de la classe"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s1-a4-q03",
+        "asset": "assets/m4-s1-a4-q03.png",
+        "question": "Branche aussi les PC 2 et 3 (sans débrancher le PC 1).",
+        "activity": "Mission : le réseau de la classe"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s1-a4-q04",
+        "asset": "assets/m4-s1-a4-q04.png",
+        "question": "L’imprimante partagée est éteinte : allume‑la.",
+        "activity": "Mission : le réseau de la classe"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s1-a4-q05",
+        "asset": "assets/m4-s1-a4-q05.png",
+        "question": "Le technicien déplace le PC 3 : débranche seulement son câble.",
+        "activity": "Mission : le réseau de la classe"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s2-a1-q01",
+        "asset": "assets/m4-s2-a1-q01.png",
+        "question": "Les ordinateurs d’une salle d’informatique",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s2-a1-q02",
+        "asset": "assets/m4-s2-a1-q02.png",
+        "question": "Le réseau d’un collège",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s2-a1-q03",
+        "asset": "assets/m4-s2-a1-q03.png",
+        "question": "Deux ordinateurs reliés dans une maison",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s2-a1-q04",
+        "asset": "assets/m4-s2-a1-q04.png",
+        "question": "Le réseau reliant plusieurs écoles d’une même ville",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s2-a1-q05",
+        "asset": "assets/m4-s2-a1-q05.png",
+        "question": "Le réseau reliant les mairies d’arrondissement d’une ville",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s2-a1-q06",
+        "asset": "assets/m4-s2-a1-q06.png",
+        "question": "Le réseau d’une chaîne de bibliothèques d’une même agglomération",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s2-a1-q07",
+        "asset": "assets/m4-s2-a1-q07.png",
+        "question": "Internet",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s2-a1-q08",
+        "asset": "assets/m4-s2-a1-q08.png",
+        "question": "Le réseau d’une banque entre plusieurs pays",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s2-a1-q09",
+        "asset": "assets/m4-s2-a1-q09.png",
+        "question": "Les câbles sous‑marins reliant les continents",
+        "activity": "LAN, MAN ou WAN ?"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s2-a1-q10",
+        "asset": "assets/m4-s2-a1-q10.png",
+        "question": "Le réseau d’une compagnie aérienne présente dans plusieurs pays",
+        "activity": "LAN, MAN ou WAN ?"
+      }
+    ]
+  }
+]

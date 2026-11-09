@@ -1,0 +1,22 @@
+[
+  {
+    "id": "m3-s7-a2-q03",
+    "reason": "Python logo shown for the item C.",
+    "direction": "CRITICAL: the item is the C PROGRAMMING LANGUAGE. Draw one close-up blue hexagonal programming badge with one large white capital C. Absolutely no Python snake logo, JavaScript, C++, extra plus signs, other language names or category labels."
+  },
+  {
+    "id": "m3-s8-a2-q05",
+    "reason": "The image prints the missing colon before a blank positioned after it.",
+    "direction": "CRITICAL: one isolated incomplete Python if-line, with the literal if, neutral condition strokes and an EMPTY outlined slot at the end. Absolutely NO COLON character anywhere, no semicolon, no completed example line and no additional code. The missing line-ending symbol must not appear in the picture."
+  },
+  {
+    "id": "m3-s8-a4-q01",
+    "reason": "Full program template reveals the ordering of input, assignment and output steps.",
+    "direction": "CRITICAL: one close-up code COMMENT badge showing only the supplied comment # Programme : moyenne de deux notes, or a paper header with a # and neutral strokes. No other code, instructions, Lire, input, print, Écrire, variables, formulas, step numbers, ordered sequences or flowchart."
+  },
+  {
+    "id": "m3-s8-a4-q04",
+    "reason": "The whole algorithm includes input and output steps and reveals their order.",
+    "direction": "CRITICAL: ONE isolated close-up code-line badge containing exactly moyenne = (n1 + n2) / 2. No headings, other instructions, Lire, input, print, Écrire, lists of variables/constants, line numbers, whole programs, flowcharts or computed results."
+  }
+]

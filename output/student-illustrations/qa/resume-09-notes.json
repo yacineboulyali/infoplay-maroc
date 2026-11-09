@@ -1,0 +1,17 @@
+[
+  {
+    "id": "m4-s6-a1-q01",
+    "reason": "Recipient field is small inside a complete compose window.",
+    "direction": "CRITICAL: ONE isolated close-up email RECIPIENT field, only the label À followed by one large EMPTY outlined input box and a small contact/person icon. No subject, body, toolbar, full compose window, email address, names or other fields. The field fills the frame."
+  },
+  {
+    "id": "m4-s6-a1-q02",
+    "reason": "Whole email invents addresses and subject content instead of focusing on the requested subject field.",
+    "direction": "CRITICAL: ONE isolated close-up email SUBJECT field, only the literal label Objet and one large EMPTY outlined input box. No sender, recipient, email addresses, invented subject, body, full message window or other fields. The field fills the frame."
+  },
+  {
+    "id": "m4-s6-a1-q04",
+    "reason": "Attachment remains a small strip inside a complete email window.",
+    "direction": "CRITICAL: ONE isolated close-up email ATTACHMENT chip containing a large paperclip and one plain attached document icon. No full email window, message body, sender, recipient, invented filename, email addresses or other UI controls. The attachment fills most of the frame."
+  }
+]

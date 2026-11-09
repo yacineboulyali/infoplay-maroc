@@ -157,119 +157,308 @@
     "id": "m2-s8-a4-q01",
     "reason": "Portrait paper shown for landscape orientation",
     "direction": "Show a landscape sheet wider than tall; no scenery photograph.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s8-a4-q01-v2.png"
   },
   {
     "id": "m2-s8-a4-q04",
     "reason": "Copy count shows 1 instead of the requested 3",
     "direction": "Show a close copies selector with exactly 3.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s8-a4-q04-v2.png"
   },
   {
     "id": "m2-s9-a4-q02",
     "reason": "Single cell highlighted for a pupil record row",
     "direction": "Show a neutral student-record table without highlighting an individual cell or completing the missing word.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s9-a4-q02-v2.png"
   },
   {
     "id": "m2-s10-a1-q03",
     "reason": "B2 highlighted instead of C5",
     "direction": "Draw at least five rows and columns A to C; highlight only C5.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a1-q03-v2.png"
   },
   {
     "id": "m2-s10-a2-q01",
     "reason": "Equals sign supplies the missing answer",
     "direction": "Show an empty formula entry field with cursor and fx; no equals sign.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a2-q01-v2.png"
   },
   {
     "id": "m2-s10-a3-q04",
     "reason": "Source formula placed in a referenced input cell",
     "direction": "Show original =B2*C2 in an isolated formula bar or D2, without copied formula or result.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a3-q04-v2.png"
   },
   {
     "id": "m2-s10-a3-q05",
     "reason": "Invented zero denominator reveals the answer",
     "direction": "Show #DIV/0! alone; no zero denominator, invented input numbers or explanation.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a3-q05-v2.png"
   },
   {
     "id": "m2-s10-a4-q01",
     "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
     "direction": "Highlight blank D2 with Sara in A2. Use no invented grades, names or computed results.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a4-q01-v2.png"
   },
   {
     "id": "m2-s10-a4-q02",
     "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
     "direction": "Highlight blank D3 with Omar in A3. Use no invented grades, names or computed results.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a4-q02-v2.png"
   },
   {
     "id": "m2-s10-a4-q03",
     "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
     "direction": "Highlight blank D4 with Lina in A4. Use no invented grades, names or computed results.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a4-q03-v2.png"
   },
   {
     "id": "m2-s10-a4-q04",
     "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
     "direction": "Highlight blank B5 with Maths in B1. Use no invented grades, names or computed results.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a4-q04-v2.png"
   },
   {
     "id": "m2-s10-a4-q05",
     "reason": "Invented grades or incorrect row/header can contradict the live worksheet",
     "direction": "Highlight blank C5 with Physique in C1. Use no invented grades, names or computed results.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s10-a4-q05-v2.png"
   },
   {
     "id": "m2-s11-a1-q04",
     "reason": "Whole chart instead of the requested close horizontal axis",
     "direction": "Show only a close horizontal axis strip and tick marks.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s11-a1-q04-v2.png"
   },
   {
     "id": "m2-s11-a1-q05",
     "reason": "Whole chart with an undersized legend",
     "direction": "Show a close chart legend box with color chips and neutral series strokes.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s11-a1-q05-v2.png"
   },
   {
     "id": "m2-s11-a4-q02",
     "reason": "Spreadsheet grid shown instead of a chart title",
     "direction": "Show an editable chart title field; moyennes is the only allowed literal word.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s11-a4-q02-v2.png"
   },
   {
     "id": "m2-s11-a4-q04",
     "reason": "Glossary shown instead of a chart legend",
     "direction": "Show a chart legend box with color chips and neutral series strokes, never a glossary.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s11-a4-q04-v2.png"
   },
   {
     "id": "m2-s11-a4-q05",
-    "reason": "Invented averages imply an unsupported winning subject",
-    "direction": "Show neutral statistics context without numbers, subject rankings or a solution.",
-    "resolved": false,
-    "excludedFromIntegration": true
+    "reason": "Unequal chart bars beside a subject list can still imply an invented winning subject.",
+    "direction": "CRITICAL COMPOSITION: ONE close-up blank statistics worksheet with a magnifying glass and a question mark. All cells EMPTY. Absolutely NO bar chart, bars, pie chart, data points, grades, numbers, subject names, titles, rankings or any plotted values. This is a neutral prompt to inspect the real game data, which must remain the only source of the answer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m2-s11-a4-q05-v3.png"
+  },
+  {
+    "id": "m3-s3-a4-q02",
+    "reason": "Vending illustration invents euro prices absent from the source task; the game uses DH.",
+    "direction": "CRITICAL: a close-up cartoon vending-machine product window showing juice and cake only. NO price tags, currency signs, prices, money, totals, computed results or invented numbers anywhere. The actual game supplies all prices. Keep the illustration neutral.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s3-a4-q02-v2.png"
+  },
+  {
+    "id": "m3-s3-a4-q04",
+    "reason": "Vending illustration invents euro prices absent from the source task.",
+    "direction": "CRITICAL: a close-up cartoon vending-machine product window showing juice, cake and water only. NO price tags, currency signs, prices, money, totals, computed results or invented numbers anywhere. The actual game supplies all prices. Keep the illustration neutral.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s3-a4-q04-v2.png"
+  },
+  {
+    "id": "m3-s3-a3-q03",
+    "reason": "An extra Écrire moyenne line supplies the missing function name and other input lines were invented.",
+    "direction": "CRITICAL: ONE isolated code-editor row with an EMPTY function-name slot followed by the literal (moyenne). No other code rows. Do NOT print Écrire, Ecrire, Lire, print or any function name anywhere. No computed result.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s3-a3-q03-v2.png"
+  },
+  {
+    "id": "m3-s4-a3-q01",
+    "reason": "The illustration prints Si, which is the missing word.",
+    "direction": "CRITICAL: one close-up blank code worksheet with an empty keyword slot and neutral short strokes. Absolutely NO readable programming keywords, letters, code examples or captions. Do NOT print Si, Alors, FinSi, Sinon or their English equivalents anywhere. The activity title is context and must never be used to supply a missing answer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s4-a3-q01-v2.png"
+  },
+  {
+    "id": "m3-s4-a3-q02",
+    "reason": "The illustration prints Alors, which is the missing word.",
+    "direction": "CRITICAL: one close-up blank code worksheet with an empty keyword slot and neutral short strokes. Absolutely NO readable programming keywords, letters, code examples or captions. Do NOT print Si, Alors, FinSi, Sinon or their English equivalents anywhere. The activity title is context and must never be used to supply a missing answer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s4-a3-q02-v2.png"
+  },
+  {
+    "id": "m3-s4-a3-q03",
+    "reason": "The illustration prints FinSi, which is the missing word.",
+    "direction": "CRITICAL: one close-up blank code worksheet with an empty keyword slot and neutral short strokes. Absolutely NO readable programming keywords, letters, code examples or captions. Do NOT print Si, Alors, FinSi, Sinon or their English equivalents anywhere. The activity title is context and must never be used to supply a missing answer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s4-a3-q03-v2.png"
+  },
+  {
+    "id": "m3-s5-a2-q02",
+    "reason": "The image prints Sinon, which is precisely the missing word.",
+    "direction": "CRITICAL: one close-up blank code worksheet with neutral short navy strokes and an EMPTY keyword slot. Absolutely NO readable letters, programming words, example code or captions anywhere. Do NOT print Sinon, else, Si, Alors, FinSi or any equivalent keyword. No whole conditional example; the image must not contain the missing answer.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s5-a2-q02-v2.png"
+  },
+  {
+    "id": "m3-s6-a3-q01",
+    "reason": "Invented program differs from the interactive scene instead of showing its actual input line.",
+    "direction": "CRITICAL: draw ONE isolated close-up code-instruction pill containing exactly Lire(prix). No other instructions, variables, values, line numbers, whole programs or line-position markers. The live game already contains the full scene.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s6-a3-q01-v2.png"
+  },
+  {
+    "id": "m3-s6-a3-q02",
+    "reason": "Invented x assignment and other lines differ from the actual quantite assignment in the interactive scene.",
+    "direction": "CRITICAL: draw ONE isolated close-up code-instruction pill containing exactly quantite ← 3. No other instructions, variables, values, line numbers, whole programs or line-position markers. The live game already contains the full scene.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s6-a3-q02-v2.png"
+  },
+  {
+    "id": "m3-s6-a3-q03",
+    "reason": "Invented summation loop differs from the actual multiplication in the interactive scene.",
+    "direction": "CRITICAL: draw ONE isolated close-up code-instruction pill containing exactly total ← prix * quantite. No loop, extra instructions, extra values, line numbers, computed result or line-position markers. The live game already contains the full scene.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s6-a3-q03-v2.png"
+  },
+  {
+    "id": "m3-s6-a3-q04",
+    "reason": "Invented loop around the output instruction differs from the interactive scene.",
+    "direction": "CRITICAL: draw ONE isolated close-up code-instruction pill containing exactly Écrire(total). No other instructions, variables, values, line numbers, whole programs or line-position markers. The live game already contains the full scene.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s6-a3-q04-v2.png"
+  },
+  {
+    "id": "m3-s6-a3-q05",
+    "reason": "Invented Bonjour output differs from the actual Merci output in the interactive scene.",
+    "direction": "CRITICAL: draw ONE isolated close-up code-instruction pill containing exactly Écrire(\"Merci\"). No Bonjour, other instructions, variables, line numbers, whole programs or line-position markers. The live game already contains the full scene.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s6-a3-q05-v2.png"
+  },
+  {
+    "id": "m3-s7-a2-q03",
+    "reason": "Python logo shown for the item C.",
+    "direction": "CRITICAL: the item is the C PROGRAMMING LANGUAGE. Draw one close-up blue hexagonal programming badge with one large white capital C. Absolutely no Python snake logo, JavaScript, C++, extra plus signs, other language names or category labels.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s7-a2-q03-v2.png"
+  },
+  {
+    "id": "m3-s8-a2-q05",
+    "reason": "The image prints the missing colon before a blank positioned after it.",
+    "direction": "CRITICAL: one isolated incomplete Python if-line, with the literal if, neutral condition strokes and an EMPTY outlined slot at the end. Absolutely NO COLON character anywhere, no semicolon, no completed example line and no additional code. The missing line-ending symbol must not appear in the picture.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s8-a2-q05-v2.png"
+  },
+  {
+    "id": "m3-s8-a4-q01",
+    "reason": "Full program template reveals the ordering of input, assignment and output steps.",
+    "direction": "CRITICAL: one close-up code COMMENT badge showing only the supplied comment # Programme : moyenne de deux notes, or a paper header with a # and neutral strokes. No other code, instructions, Lire, input, print, Écrire, variables, formulas, step numbers, ordered sequences or flowchart.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s8-a4-q01-v2.png"
+  },
+  {
+    "id": "m3-s8-a4-q04",
+    "reason": "The whole algorithm includes input and output steps and reveals their order.",
+    "direction": "CRITICAL: ONE isolated close-up code-line badge containing exactly moyenne = (n1 + n2) / 2. No headings, other instructions, Lire, input, print, Écrire, lists of variables/constants, line numbers, whole programs, flowcharts or computed results.",
+    "resolved": true,
+    "acceptedAsset": "assets/m3-s8-a4-q04-v2.png"
+  },
+  {
+    "id": "m4-s2-a3-q02",
+    "reason": "A web-search interface illustrates file exchange incorrectly.",
+    "direction": "CRITICAL: illustrate digital FILE TRANSFER with two small computer/device endpoints and one plain document card between them, in a close-up composition. No web search box, search results, browser-search icon, captions or the missing words échanger des fichiers. No readable text.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s2-a3-q02-v2.png"
+  },
+  {
+    "id": "m4-s3-a3-q03",
+    "reason": "Search-engine screen suggests the browser/search engine where the sentence refers to the server locating a stored page.",
+    "direction": "CRITICAL: one close-up neutral computer SERVER cabinet with an unlabelled stored-page/document symbol. Absolutely no browser, monitor, search field, magnifying glass, search engine, captions or readable server name. Do not print the missing word serveur.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s3-a3-q03-v2.png"
+  },
+  {
+    "id": "m4-s3-a4-q02",
+    "reason": "Aller is placed on a search-engine form instead of the browser address/navigation control used by the simulation.",
+    "direction": "CRITICAL: one isolated close-up BROWSER ADDRESS BAR with the given URL www.college.exemple and an adjacent button labelled exactly Aller. No body-page search form, magnifying glass, search engine heading, query field or results. The bar is a navigation control for opening a URL.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s3-a4-q02-v2.png"
+  },
+  {
+    "id": "m4-s3-a4-q03",
+    "reason": "Whole page invents a college.fr URL and additional course links absent from the simulation.",
+    "direction": "CRITICAL: ONE isolated close-up blue underlined HYPERTEXT LINK containing exactly Cours d’informatique, optionally with a small hand cursor. No URL, browser address bar, other links, courses, page headings, lists or full website.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s3-a4-q03-v2.png"
+  },
+  {
+    "id": "m4-s5-a1-q03",
+    "reason": "Refresh button remains tiny inside a complete browser/page illustration.",
+    "direction": "CRITICAL: ONE isolated close-up browser REFRESH/RELOAD button, a bold navy circular arrow in a rounded pale-blue square. The button fills most of the image. No full browser window, webpage content, address bar, tabs, other navigation buttons or text.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s5-a1-q03-v2.png"
+  },
+  {
+    "id": "m4-s6-a1-q01",
+    "reason": "Recipient field is small inside a complete compose window.",
+    "direction": "CRITICAL: ONE isolated close-up email RECIPIENT field, only the label À followed by one large EMPTY outlined input box and a small contact/person icon. No subject, body, toolbar, full compose window, email address, names or other fields. The field fills the frame.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s6-a1-q01-v2.png"
+  },
+  {
+    "id": "m4-s6-a1-q02",
+    "reason": "Whole email invents addresses and subject content instead of focusing on the requested subject field.",
+    "direction": "CRITICAL: ONE isolated close-up email SUBJECT field, only the literal label Objet and one large EMPTY outlined input box. No sender, recipient, email addresses, invented subject, body, full message window or other fields. The field fills the frame.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s6-a1-q02-v2.png"
+  },
+  {
+    "id": "m4-s6-a1-q04",
+    "reason": "Attachment remains a small strip inside a complete email window.",
+    "direction": "CRITICAL: ONE isolated close-up email ATTACHMENT chip containing a large paperclip and one plain attached document icon. No full email window, message body, sender, recipient, invented filename, email addresses or other UI controls. The attachment fills most of the frame.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s6-a1-q04-v2.png"
+  },
+  {
+    "id": "m4-s6-a4-q02",
+    "reason": "The word devoir appears in the message body instead of the requested subject field.",
+    "direction": "CRITICAL: ONE isolated close-up email SUBJECT row. Show the literal label Objet followed by an input field containing exactly devoir. No message body, recipient, other fields, toolbar or full compose window. The word devoir must appear only in the subject input.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s6-a4-q02-v2.png"
+  },
+  {
+    "id": "m4-s7-a3-q03",
+    "reason": "Physical classroom bullying shown without the online class-group context of the Internet activity.",
+    "direction": "CRITICAL: show the STARTING PROBLEM of cyberbullying in a class-group CHAT on a close-up laptop screen, with several anonymous classmate avatars and unlabelled mocking/angry speech bubbles, plus one worried student's face beside the screen. No real readable insults, advice, refusal gesture, block/report buttons, correct-choice markers or solution. Do not draw a group physically bullying someone in a classroom.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s7-a3-q03-v2.png"
+  },
+  {
+    "id": "m4-s7-a4-q03",
+    "reason": "Chat with a suspicious contact is shown without the requested block/report action.",
+    "direction": "CRITICAL: ONE close-up contact-action panel with a small anonymous avatar and TWO large action buttons. First button labelled exactly Bloquer with a circle-and-slash symbol. Second labelled exactly Signaler with a flag symbol. No chat messages, gift, prize, hoodie figure, full phone, other actions, advice, step numbers or sequence. These two actions are explicitly given in the learner's instruction.",
+    "resolved": true,
+    "acceptedAsset": "assets/m4-s7-a4-q03-v2.png"
   }
 ]

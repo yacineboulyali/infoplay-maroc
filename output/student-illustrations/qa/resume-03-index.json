@@ -1,0 +1,236 @@
+[
+  {
+    "file": "qa/resume-03-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s3-a3-q03",
+        "asset": "assets/m3-s3-a3-q03-v2.png",
+        "question": "Ligne 4 : [blank](moyenne)",
+        "activity": "Complète et débogue"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s4-a3-q01",
+        "asset": "assets/m3-s4-a3-q01-v2.png",
+        "question": "La structure sélective simple commence par [blank] suivi d’une condition.",
+        "activity": "Si … Alors … FinSi"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s4-a3-q02",
+        "asset": "assets/m3-s4-a3-q02-v2.png",
+        "question": "Après la condition, on écrit le mot [blank].",
+        "activity": "Si … Alors … FinSi"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s4-a3-q03",
+        "asset": "assets/m3-s4-a3-q03-v2.png",
+        "question": "Le bloc se termine par [blank].",
+        "activity": "Si … Alors … FinSi"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s5-a2-q01",
+        "asset": "assets/m3-s5-a2-q01.png",
+        "question": "Si note >= 10 [blank] Écrire(\"Admis\")",
+        "activity": "Si … Sinon … FinSi"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s5-a2-q02",
+        "asset": "assets/m3-s5-a2-q02.png",
+        "question": "Pour exécuter autre chose quand la condition est fausse, on utilise [blank].",
+        "activity": "Si … Sinon … FinSi"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s5-a2-q03",
+        "asset": "assets/m3-s5-a2-q03.png",
+        "question": "Dans Si … Alors … Sinon … FinSi, exactement [blank] des deux blocs est exécuté.",
+        "activity": "Si … Sinon … FinSi"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s5-a2-q04",
+        "asset": "assets/m3-s5-a2-q04.png",
+        "question": "Le contraire de la condition n > 0 est n [blank] 0.",
+        "activity": "Si … Sinon … FinSi"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s5-a2-q05",
+        "asset": "assets/m3-s5-a2-q05.png",
+        "question": "Un algorithme qui affiche « pair » ou « impair » utilise une structure sélective [blank].",
+        "activity": "Si … Sinon … FinSi"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s5-a3-q01",
+        "asset": "assets/m3-s5-a3-q01.png",
+        "question": "« Admis si la note est d’au moins 10. » Quel est le défaut ?\nSi note > 10 Alors\nÉcrire(\"Admis\")\nSinon\nÉcrire(\"Refusé\")\nFinSi",
+        "activity": "Corrige les erreurs de logique"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s5-a3-q02",
+        "asset": "assets/m3-s5-a3-q02.png",
+        "question": "Pour tester « n est pair », que penser de cette condition ?\nSi n mod 2 = 1 Alors\nÉcrire(\"pair\")\nFinSi",
+        "activity": "Corrige les erreurs de logique"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s5-a3-q03",
+        "asset": "assets/m3-s5-a3-q03.png",
+        "question": "Quel est le défaut ?\nSi age < 18 Alors\nÉcrire(\"majeur\")\nFinSi",
+        "activity": "Corrige les erreurs de logique"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s5-a3-q04",
+        "asset": "assets/m3-s5-a3-q04.png",
+        "question": "Que se passe‑t‑il si a est plus petit que b ?\nSi a > b Alors\nm ← a\nFinSi\nÉcrire(m)",
+        "activity": "Corrige les erreurs de logique"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s5-a3-q05",
+        "asset": "assets/m3-s5-a3-q05.png",
+        "question": "Où est l’erreur de structure ?\nSi x > 5 Alors\nÉcrire(\"grand\")\nFinSi\nSinon\nÉcrire(\"petit\")",
+        "activity": "Corrige les erreurs de logique"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s5-a4-q01",
+        "asset": "assets/m3-s5-a4-q01.png",
+        "question": "Moyenne 12",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s5-a4-q02",
+        "asset": "assets/m3-s5-a4-q02.png",
+        "question": "Moyenne 10",
+        "activity": "Mission bulletin"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-03-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s5-a4-q03",
+        "asset": "assets/m3-s5-a4-q03.png",
+        "question": "Moyenne 15,25",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s5-a4-q04",
+        "asset": "assets/m3-s5-a4-q04.png",
+        "question": "Moyenne 10,5",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s5-a4-q05",
+        "asset": "assets/m3-s5-a4-q05.png",
+        "question": "Moyenne 13",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s5-a4-q06",
+        "asset": "assets/m3-s5-a4-q06.png",
+        "question": "Moyenne 9,5",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s5-a4-q07",
+        "asset": "assets/m3-s5-a4-q07.png",
+        "question": "Moyenne 7",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s5-a4-q08",
+        "asset": "assets/m3-s5-a4-q08.png",
+        "question": "Moyenne 9,99",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s5-a4-q09",
+        "asset": "assets/m3-s5-a4-q09.png",
+        "question": "Moyenne 4",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s5-a4-q10",
+        "asset": "assets/m3-s5-a4-q10.png",
+        "question": "Moyenne 8",
+        "activity": "Mission bulletin"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s6-a1-q01",
+        "asset": "assets/m3-s6-a1-q01.png",
+        "question": "Code source",
+        "activity": "Le vocabulaire du programme"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s6-a1-q02",
+        "asset": "assets/m3-s6-a1-q02.png",
+        "question": "Programme",
+        "activity": "Le vocabulaire du programme"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s6-a1-q03",
+        "asset": "assets/m3-s6-a1-q03.png",
+        "question": "Exécution",
+        "activity": "Le vocabulaire du programme"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s6-a1-q04",
+        "asset": "assets/m3-s6-a1-q04.png",
+        "question": "Résultat (sortie)",
+        "activity": "Le vocabulaire du programme"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s6-a1-q05",
+        "asset": "assets/m3-s6-a1-q05.png",
+        "question": "Interpréteur",
+        "activity": "Le vocabulaire du programme"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s6-a2-q01",
+        "asset": "assets/m3-s6-a2-q01.png",
+        "question": "Analyser le problème",
+        "activity": "Du problème au programme"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s6-a2-q02",
+        "asset": "assets/m3-s6-a2-q02.png",
+        "question": "Écrire l’algorithme",
+        "activity": "Du problème au programme"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s6-a2-q03",
+        "asset": "assets/m3-s6-a2-q03.png",
+        "question": "Écrire le code du programme",
+        "activity": "Du problème au programme"
+      }
+    ]
+  }
+]

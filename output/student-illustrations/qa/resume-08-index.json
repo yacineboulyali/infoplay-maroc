@@ -1,0 +1,236 @@
+[
+  {
+    "file": "qa/resume-08-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s2-a3-q02",
+        "asset": "assets/m4-s2-a3-q02-v2.png",
+        "question": "Les utilisateurs peuvent [blank] rapidement.",
+        "activity": "Les avantages du réseau"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s3-a3-q03",
+        "asset": "assets/m4-s3-a3-q03-v2.png",
+        "question": "Le [blank] cherche la page demandée.",
+        "activity": "Client, réseau, serveur"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s3-a4-q02",
+        "asset": "assets/m4-s3-a4-q02-v2.png",
+        "question": "Envoie la requête : clique sur « Aller ».",
+        "activity": "Mission : requête et réponse"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s3-a4-q03",
+        "asset": "assets/m4-s3-a4-q03-v2.png",
+        "question": "Clique sur le lien « Cours d’informatique ».",
+        "activity": "Mission : requête et réponse"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s3-a4-q05",
+        "asset": "assets/m4-s3-a4-q05.png",
+        "question": "Tape l’adresse www.inconnu.exemple puis clique sur « Aller ».",
+        "activity": "Mission : requête et réponse"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s4-a1-q01",
+        "asset": "assets/m4-s4-a1-q01.png",
+        "question": "Clique sur une antenne Wi‑Fi.",
+        "activity": "Le routeur vu de l’arrière"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s4-a1-q02",
+        "asset": "assets/m4-s4-a1-q02.png",
+        "question": "Clique sur l’un des ports Ethernet du réseau local (LAN).",
+        "activity": "Le routeur vu de l’arrière"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s4-a1-q03",
+        "asset": "assets/m4-s4-a1-q03.png",
+        "question": "Clique sur le bouton et la prise d’alimentation.",
+        "activity": "Le routeur vu de l’arrière"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s4-a1-q04",
+        "asset": "assets/m4-s4-a1-q04.png",
+        "question": "Clique sur le port qui reçoit la ligne vers Internet (WAN).",
+        "activity": "Le routeur vu de l’arrière"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s4-a1-q05",
+        "asset": "assets/m4-s4-a1-q05.png",
+        "question": "Clique sur les voyants lumineux.",
+        "activity": "Le routeur vu de l’arrière"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s4-a2-q01",
+        "asset": "assets/m4-s4-a2-q01.png",
+        "question": "Modem",
+        "activity": "Matériel de connexion"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s4-a2-q02",
+        "asset": "assets/m4-s4-a2-q02.png",
+        "question": "Routeur",
+        "activity": "Matériel de connexion"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s4-a2-q03",
+        "asset": "assets/m4-s4-a2-q03.png",
+        "question": "Wi‑Fi",
+        "activity": "Matériel de connexion"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s4-a2-q04",
+        "asset": "assets/m4-s4-a2-q04.png",
+        "question": "Câble Ethernet",
+        "activity": "Matériel de connexion"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s4-a2-q05",
+        "asset": "assets/m4-s4-a2-q05.png",
+        "question": "Fournisseur d’accès (FAI)",
+        "activity": "Matériel de connexion"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s4-a3-q01",
+        "asset": "assets/m4-s4-a3-q01.png",
+        "question": "Brancher le modem/routeur à la prise électrique.",
+        "activity": "Les étapes de la connexion"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-08-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s4-a3-q02",
+        "asset": "assets/m4-s4-a3-q02.png",
+        "question": "Brancher la ligne de l’opérateur au modem.",
+        "activity": "Les étapes de la connexion"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s4-a3-q03",
+        "asset": "assets/m4-s4-a3-q03.png",
+        "question": "Attendre que les voyants indiquent la connexion.",
+        "activity": "Les étapes de la connexion"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s4-a3-q04",
+        "asset": "assets/m4-s4-a3-q04.png",
+        "question": "Connecter l’ordinateur (câble Ethernet, ou Wi‑Fi avec le mot de passe).",
+        "activity": "Les étapes de la connexion"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s4-a3-q05",
+        "asset": "assets/m4-s4-a3-q05.png",
+        "question": "Ouvrir le navigateur et tester une page web.",
+        "activity": "Les étapes de la connexion"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s4-a4-q01",
+        "asset": "assets/m4-s4-a4-q01.png",
+        "question": "Tous les voyants sont éteints : alimente le routeur.",
+        "activity": "Mission diagnostic"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s4-a4-q02",
+        "asset": "assets/m4-s4-a4-q02.png",
+        "question": "Le voyant Internet est rouge : la ligne de l’opérateur est coupée. Rétablis la ligne (simulation).",
+        "activity": "Mission diagnostic"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s4-a4-q03",
+        "asset": "assets/m4-s4-a4-q03.png",
+        "question": "Le PC essaie de se connecter en Wi‑Fi : active le Wi‑Fi du PC.",
+        "activity": "Mission diagnostic"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s4-a4-q04",
+        "asset": "assets/m4-s4-a4-q04.png",
+        "question": "Le Wi‑Fi refuse la connexion : saisis le bon mot de passe.",
+        "activity": "Mission diagnostic"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s4-a4-q05",
+        "asset": "assets/m4-s4-a4-q05.png",
+        "question": "Vérifie : l’accès à Internet doit fonctionner.",
+        "activity": "Mission diagnostic"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s5-a1-q01",
+        "asset": "assets/m4-s5-a1-q01.png",
+        "question": "Clique sur la barre d’adresse.",
+        "activity": "Le navigateur"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s5-a1-q02",
+        "asset": "assets/m4-s5-a1-q02.png",
+        "question": "Clique sur l’onglet.",
+        "activity": "Le navigateur"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s5-a1-q03",
+        "asset": "assets/m4-s5-a1-q03.png",
+        "question": "Clique sur le bouton qui actualise la page.",
+        "activity": "Le navigateur"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s5-a1-q04",
+        "asset": "assets/m4-s5-a1-q04.png",
+        "question": "Clique sur le bouton Retour.",
+        "activity": "Le navigateur"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s5-a1-q05",
+        "asset": "assets/m4-s5-a1-q05.png",
+        "question": "Clique sur la zone qui affiche le contenu de la page.",
+        "activity": "Le navigateur"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s5-a2-q01",
+        "asset": "assets/m4-s5-a2-q01.png",
+        "question": "URL",
+        "activity": "Vocabulaire du Web"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s5-a2-q02",
+        "asset": "assets/m4-s5-a2-q02.png",
+        "question": "Onglet",
+        "activity": "Vocabulaire du Web"
+      }
+    ]
+  }
+]

@@ -1,0 +1,236 @@
+[
+  {
+    "file": "qa/resume-02-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s3-a4-q02",
+        "asset": "assets/m3-s3-a4-q02-v2.png",
+        "question": "Achète 1 jus et 1 gâteau, puis saisis le total.",
+        "activity": "Mission distributeur"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s3-a4-q04",
+        "asset": "assets/m3-s3-a4-q04-v2.png",
+        "question": "Achète 3 jus, 1 gâteau et 2 eaux, puis saisis le total.",
+        "activity": "Mission distributeur"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s3-a2-q01",
+        "asset": "assets/m3-s3-a2-q01.png",
+        "question": "Lire(a)\nLire(b)\nc ← a * b\nÉcrire(c)",
+        "activity": "Prédis le résultat"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s3-a2-q02",
+        "asset": "assets/m3-s3-a2-q02.png",
+        "question": "x ← 20\nx ← x - 5\nx ← x * 2\nÉcrire(x)",
+        "activity": "Prédis le résultat"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s3-a2-q03",
+        "asset": "assets/m3-s3-a2-q03.png",
+        "question": "Lire(n)\nd ← n * 2\nt ← d + n\nÉcrire(t)",
+        "activity": "Prédis le résultat"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s3-a2-q04",
+        "asset": "assets/m3-s3-a2-q04.png",
+        "question": "a ← 5\nb ← a + 2\na ← b * 2\nÉcrire(a)",
+        "activity": "Prédis le résultat"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s3-a2-q05",
+        "asset": "assets/m3-s3-a2-q05.png",
+        "question": "Lire(p)\nr ← p * 20 / 100\nÉcrire(r)",
+        "activity": "Prédis le résultat"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s3-a3-q01",
+        "asset": "assets/m3-s3-a3-q01.png",
+        "question": "Ligne 1 : [blank](note1)",
+        "activity": "Complète et débogue"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s3-a3-q02",
+        "asset": "assets/m3-s3-a3-q02.png",
+        "question": "Ligne 3 : moyenne ← (note1 + note2) [blank] 2",
+        "activity": "Complète et débogue"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s3-a3-q03",
+        "asset": "assets/m3-s3-a3-q03.png",
+        "question": "Ligne 4 : [blank](moyenne)",
+        "activity": "Complète et débogue"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s4-a1-q09",
+        "asset": "assets/m3-s4-a1-q09.png",
+        "question": "15 >= 20",
+        "activity": "Vrai ou faux ?"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s4-a1-q10",
+        "asset": "assets/m3-s4-a1-q10.png",
+        "question": "6 - 1 = 4",
+        "activity": "Vrai ou faux ?"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s4-a2-q01",
+        "asset": "assets/m3-s4-a2-q01.png",
+        "question": "Si age < 18",
+        "activity": "Condition et action"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s4-a2-q02",
+        "asset": "assets/m3-s4-a2-q02.png",
+        "question": "Si temperature > 30",
+        "activity": "Condition et action"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s4-a2-q03",
+        "asset": "assets/m3-s4-a2-q03.png",
+        "question": "Si solde = 0",
+        "activity": "Condition et action"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s4-a2-q04",
+        "asset": "assets/m3-s4-a2-q04.png",
+        "question": "Si note >= 10",
+        "activity": "Condition et action"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-02-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s4-a2-q05",
+        "asset": "assets/m3-s4-a2-q05.png",
+        "question": "Si mdp = \"ok\"",
+        "activity": "Condition et action"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s4-a3-q01",
+        "asset": "assets/m3-s4-a3-q01.png",
+        "question": "La structure sélective simple commence par [blank] suivi d’une condition.",
+        "activity": "Si … Alors … FinSi"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s4-a3-q02",
+        "asset": "assets/m3-s4-a3-q02.png",
+        "question": "Après la condition, on écrit le mot [blank].",
+        "activity": "Si … Alors … FinSi"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s4-a3-q03",
+        "asset": "assets/m3-s4-a3-q03.png",
+        "question": "Le bloc se termine par [blank].",
+        "activity": "Si … Alors … FinSi"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s4-a3-q04",
+        "asset": "assets/m3-s4-a3-q04.png",
+        "question": "Les instructions entre Alors et FinSi ne sont exécutées que si la condition est [blank].",
+        "activity": "Si … Alors … FinSi"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s4-a3-q05",
+        "asset": "assets/m3-s4-a3-q05.png",
+        "question": "Si la condition est fausse, l’algorithme [blank].",
+        "activity": "Si … Alors … FinSi"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s4-a4-q01",
+        "asset": "assets/m3-s4-a4-q01.png",
+        "question": "Lire(age)\nSi age >= 12 Alors\nÉcrire(\"Accès autorisé\")\nFinSi",
+        "activity": "Mission accès"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s4-a4-q02",
+        "asset": "assets/m3-s4-a4-q02.png",
+        "question": "Lire(code)\nSi code = 1234 Alors\nÉcrire(\"Porte ouverte\")\nFinSi",
+        "activity": "Mission accès"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s4-a4-q03",
+        "asset": "assets/m3-s4-a4-q03.png",
+        "question": "Lire(note)\nSi note >= 10 Alors\nÉcrire(\"Réussi\")\nFinSi",
+        "activity": "Mission accès"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s4-a4-q04",
+        "asset": "assets/m3-s4-a4-q04.png",
+        "question": "Lire(t)\nSi t > 30 Alors\nÉcrire(\"Chaud\")\nFinSi",
+        "activity": "Mission accès"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s4-a4-q05",
+        "asset": "assets/m3-s4-a4-q05.png",
+        "question": "Lire(a)\nLire(b)\nSi a > b Alors\nÉcrire(\"a est plus grand\")\nFinSi",
+        "activity": "Mission accès"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s5-a1-q01",
+        "asset": "assets/m3-s5-a1-q01.png",
+        "question": "Lire(n)\nSi n > 0 Alors\nÉcrire(\"positif\")\nSinon\nÉcrire(\"négatif ou nul\")\nFinSi",
+        "activity": "Quelle branche est exécutée ?"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s5-a1-q02",
+        "asset": "assets/m3-s5-a1-q02.png",
+        "question": "Lire(n)\nSi n > 0 Alors\nÉcrire(\"positif\")\nSinon\nÉcrire(\"négatif ou nul\")\nFinSi",
+        "activity": "Quelle branche est exécutée ?"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s5-a1-q03",
+        "asset": "assets/m3-s5-a1-q03.png",
+        "question": "Lire(note)\nSi note >= 10 Alors\nÉcrire(\"Admis\")\nSinon\nÉcrire(\"Refusé\")\nFinSi",
+        "activity": "Quelle branche est exécutée ?"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s5-a1-q04",
+        "asset": "assets/m3-s5-a1-q04.png",
+        "question": "Lire(a)\nLire(b)\nSi a > b Alors\nm ← a\nSinon\nm ← b\nFinSi\nÉcrire(m)",
+        "activity": "Quelle branche est exécutée ?"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s5-a1-q05",
+        "asset": "assets/m3-s5-a1-q05.png",
+        "question": "Lire(age)\nSi age >= 18 Alors\nÉcrire(\"majeur\")\nSinon\nÉcrire(\"mineur\")\nFinSi",
+        "activity": "Quelle branche est exécutée ?"
+      }
+    ]
+  }
+]

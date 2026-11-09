@@ -1,0 +1,262 @@
+[
+  {
+    "file": "qa/resume-07-live-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s2-a2-q01",
+        "asset": "assets/m4-s2-a2-q01.png",
+        "question": "LAN",
+        "activity": "Type de réseau et étendue"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s2-a2-q02",
+        "asset": "assets/m4-s2-a2-q02.png",
+        "question": "MAN",
+        "activity": "Type de réseau et étendue"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s2-a2-q03",
+        "asset": "assets/m4-s2-a2-q03.png",
+        "question": "WAN",
+        "activity": "Type de réseau et étendue"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s2-a2-q04",
+        "asset": "assets/m4-s2-a2-q04.png",
+        "question": "PAN",
+        "activity": "Type de réseau et étendue"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s2-a2-q05",
+        "asset": "assets/m4-s2-a2-q05.png",
+        "question": "Internet",
+        "activity": "Type de réseau et étendue"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s2-a3-q01",
+        "asset": "assets/m4-s2-a3-q01.png",
+        "question": "Un réseau permet de [blank] des ressources comme une imprimante.",
+        "activity": "Les avantages du réseau"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s2-a3-q02",
+        "asset": "assets/m4-s2-a3-q02.png",
+        "question": "Les utilisateurs peuvent [blank] rapidement.",
+        "activity": "Les avantages du réseau"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s2-a3-q03",
+        "asset": "assets/m4-s2-a3-q03.png",
+        "question": "Partager une seule connexion Internet permet d’[blank].",
+        "activity": "Les avantages du réseau"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s2-a3-q04",
+        "asset": "assets/m4-s2-a3-q04.png",
+        "question": "Un réseau facilite la [blank] entre utilisateurs (messagerie, visioconférence).",
+        "activity": "Les avantages du réseau"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s2-a3-q05",
+        "asset": "assets/m4-s2-a3-q05.png",
+        "question": "Les données importantes peuvent être [blank].",
+        "activity": "Les avantages du réseau"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s2-a4-q01",
+        "asset": "assets/m4-s2-a4-q01.png",
+        "question": "Une salle de 20 PC doit partager une imprimante. Quelle solution ?",
+        "activity": "Mission : choisis la solution"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s2-a4-q02",
+        "asset": "assets/m4-s2-a4-q02.png",
+        "question": "Un collège veut relier ses trois bâtiments voisins. Quelle solution ?",
+        "activity": "Mission : choisis la solution"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s2-a4-q03",
+        "asset": "assets/m4-s2-a4-q03.png",
+        "question": "Une académie veut relier les établissements d’une même ville. Quelle solution ?",
+        "activity": "Mission : choisis la solution"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s2-a4-q04",
+        "asset": "assets/m4-s2-a4-q04.png",
+        "question": "Une entreprise a des bureaux à Casablanca et à Paris. Quelle solution ?",
+        "activity": "Mission : choisis la solution"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s2-a4-q05",
+        "asset": "assets/m4-s2-a4-q05.png",
+        "question": "Un élève veut envoyer une photo de son téléphone vers l’ordinateur sans fil, à 1 mètre. Quelle solution ?",
+        "activity": "Mission : choisis la solution"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s3-a1-q01",
+        "asset": "assets/m4-s3-a1-q01.png",
+        "question": "Internet",
+        "activity": "Internet, Web, navigateur, site"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-07-live-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s3-a1-q02",
+        "asset": "assets/m4-s3-a1-q02.png",
+        "question": "Web",
+        "activity": "Internet, Web, navigateur, site"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s3-a1-q03",
+        "asset": "assets/m4-s3-a1-q03.png",
+        "question": "Navigateur",
+        "activity": "Internet, Web, navigateur, site"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s3-a1-q04",
+        "asset": "assets/m4-s3-a1-q04.png",
+        "question": "Site web",
+        "activity": "Internet, Web, navigateur, site"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s3-a1-q05",
+        "asset": "assets/m4-s3-a1-q05.png",
+        "question": "Serveur web",
+        "activity": "Internet, Web, navigateur, site"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s3-a2-q01",
+        "asset": "assets/m4-s3-a2-q01.png",
+        "question": "Le Web",
+        "activity": "Service ou infrastructure ?"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s3-a2-q02",
+        "asset": "assets/m4-s3-a2-q02.png",
+        "question": "La messagerie électronique",
+        "activity": "Service ou infrastructure ?"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s3-a2-q05",
+        "asset": "assets/m4-s3-a2-q05.png",
+        "question": "La messagerie instantanée (chat)",
+        "activity": "Service ou infrastructure ?"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s3-a2-q06",
+        "asset": "assets/m4-s3-a2-q06.png",
+        "question": "Le câble de fibre optique",
+        "activity": "Service ou infrastructure ?"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s3-a2-q07",
+        "asset": "assets/m4-s3-a2-q07.png",
+        "question": "Le routeur",
+        "activity": "Service ou infrastructure ?"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s3-a2-q08",
+        "asset": "assets/m4-s3-a2-q08.png",
+        "question": "Un serveur (la machine)",
+        "activity": "Service ou infrastructure ?"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s3-a2-q09",
+        "asset": "assets/m4-s3-a2-q09.png",
+        "question": "Un satellite de télécommunication",
+        "activity": "Service ou infrastructure ?"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s3-a2-q10",
+        "asset": "assets/m4-s3-a2-q10.png",
+        "question": "Le modem",
+        "activity": "Service ou infrastructure ?"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s3-a3-q01",
+        "asset": "assets/m4-s3-a3-q01.png",
+        "question": "Quand tu tapes une adresse, ton ordinateur joue le rôle de [blank].",
+        "activity": "Client, réseau, serveur"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s3-a3-q02",
+        "asset": "assets/m4-s3-a3-q02.png",
+        "question": "Ta demande traverse le [blank] jusqu’au serveur.",
+        "activity": "Client, réseau, serveur"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s3-a3-q03",
+        "asset": "assets/m4-s3-a3-q03.png",
+        "question": "Le [blank] cherche la page demandée.",
+        "activity": "Client, réseau, serveur"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s3-a3-q04",
+        "asset": "assets/m4-s3-a3-q04.png",
+        "question": "Le serveur envoie la [blank] vers ton ordinateur.",
+        "activity": "Client, réseau, serveur"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-07-live-003.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s3-a3-q05",
+        "asset": "assets/m4-s3-a3-q05.png",
+        "question": "Enfin, le [blank] affiche la page à l’écran.",
+        "activity": "Client, réseau, serveur"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s3-a4-q01",
+        "asset": "assets/m4-s3-a4-q01.png",
+        "question": "Dans la barre d’adresse, tape www.college.exemple",
+        "activity": "Mission : requête et réponse"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s3-a4-q02",
+        "asset": "assets/m4-s3-a4-q02.png",
+        "question": "Envoie la requête : clique sur « Aller ».",
+        "activity": "Mission : requête et réponse"
+      }
+    ]
+  }
+]

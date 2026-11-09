@@ -1,0 +1,236 @@
+[
+  {
+    "file": "qa/resume-10-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s6-a1-q01",
+        "asset": "assets/m4-s6-a1-q01-v2.png",
+        "question": "Clique sur la zone du destinataire.",
+        "activity": "Les parties d’un e‑mail"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s6-a1-q02",
+        "asset": "assets/m4-s6-a1-q02-v2.png",
+        "question": "Clique sur l’objet du message.",
+        "activity": "Les parties d’un e‑mail"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s6-a1-q04",
+        "asset": "assets/m4-s6-a1-q04-v2.png",
+        "question": "Clique sur la pièce jointe.",
+        "activity": "Les parties d’un e‑mail"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s6-a3-q04",
+        "asset": "assets/m4-s6-a3-q04.png",
+        "question": "Rédiger le message (et joindre un fichier).",
+        "activity": "Envoyer un e‑mail"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s6-a3-q05",
+        "asset": "assets/m4-s6-a3-q05.png",
+        "question": "Cliquer sur « Envoyer ».",
+        "activity": "Envoyer un e‑mail"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s6-a4-q01",
+        "asset": "assets/m4-s6-a4-q01.png",
+        "question": "Dans « À », écris prof.info@ecole.exemple",
+        "activity": "Mission : écrire et envoyer (simulation)"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s6-a4-q02",
+        "asset": "assets/m4-s6-a4-q02.png",
+        "question": "Écris un objet qui contient le mot « devoir ».",
+        "activity": "Mission : écrire et envoyer (simulation)"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s6-a4-q03",
+        "asset": "assets/m4-s6-a4-q03.png",
+        "question": "Rédige un message qui commence par « Bonjour ».",
+        "activity": "Mission : écrire et envoyer (simulation)"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s6-a4-q04",
+        "asset": "assets/m4-s6-a4-q04.png",
+        "question": "Joins le fichier devoir.docx.",
+        "activity": "Mission : écrire et envoyer (simulation)"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s6-a4-q05",
+        "asset": "assets/m4-s6-a4-q05.png",
+        "question": "Clique sur Envoyer (simulation : rien n’est transmis).",
+        "activity": "Mission : écrire et envoyer (simulation)"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s7-a1-q01",
+        "asset": "assets/m4-s7-a1-q01.png",
+        "question": "Trouver rapidement des informations",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s7-a1-q02",
+        "asset": "assets/m4-s7-a1-q02.png",
+        "question": "Communiquer avec des personnes éloignées",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s7-a1-q03",
+        "asset": "assets/m4-s7-a1-q03.png",
+        "question": "Étudier avec des ressources en ligne",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s7-a1-q04",
+        "asset": "assets/m4-s7-a1-q04.png",
+        "question": "Les messages d’hameçonnage (phishing)",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s7-a1-q05",
+        "asset": "assets/m4-s7-a1-q05.png",
+        "question": "Un virus téléchargé par erreur",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s7-a1-q06",
+        "asset": "assets/m4-s7-a1-q06.png",
+        "question": "Le harcèlement en ligne",
+        "activity": "Avantage, risque ou protection ?"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-10-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s7-a1-q07",
+        "asset": "assets/m4-s7-a1-q07.png",
+        "question": "Utiliser un mot de passe fort",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s7-a1-q08",
+        "asset": "assets/m4-s7-a1-q08.png",
+        "question": "Mettre à jour l’antivirus",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s7-a1-q09",
+        "asset": "assets/m4-s7-a1-q09.png",
+        "question": "Ne pas partager ses données personnelles",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s7-a1-q10",
+        "asset": "assets/m4-s7-a1-q10.png",
+        "question": "Vérifier les sources avant de croire une information",
+        "activity": "Avantage, risque ou protection ?"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s7-a2-q01",
+        "asset": "assets/m4-s7-a2-q01.png",
+        "question": "Clique sur l’adresse d’expéditeur douteuse.",
+        "activity": "Détecte le message suspect"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s7-a2-q02",
+        "asset": "assets/m4-s7-a2-q02.png",
+        "question": "Clique sur la phrase qui met la pression avec une menace.",
+        "activity": "Détecte le message suspect"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s7-a2-q03",
+        "asset": "assets/m4-s7-a2-q03.png",
+        "question": "Clique sur le lien suspect.",
+        "activity": "Détecte le message suspect"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s7-a2-q04",
+        "asset": "assets/m4-s7-a2-q04.png",
+        "question": "Clique sur la demande d’informations confidentielles.",
+        "activity": "Détecte le message suspect"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s7-a2-q05",
+        "asset": "assets/m4-s7-a2-q05.png",
+        "question": "Clique sur la salutation impersonnelle.",
+        "activity": "Détecte le message suspect"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s7-a3-q01",
+        "asset": "assets/m4-s7-a3-q01.png",
+        "question": "Un message dit : « Tu as gagné un téléphone, donne ton mot de passe ! » Que fais‑tu ?",
+        "activity": "Choisis la bonne réaction"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s7-a3-q02",
+        "asset": "assets/m4-s7-a3-q02.png",
+        "question": "Un inconnu te demande ton adresse et ta photo. Que fais‑tu ?",
+        "activity": "Choisis la bonne réaction"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s7-a3-q03",
+        "asset": "assets/m4-s7-a3-q03.png",
+        "question": "Un camarade est moqué dans le groupe de classe. Que fais‑tu ?",
+        "activity": "Choisis la bonne réaction"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s7-a3-q04",
+        "asset": "assets/m4-s7-a3-q04.png",
+        "question": "Un site demande de télécharger un programme gratuit inconnu pour voir une vidéo. Que fais‑tu ?",
+        "activity": "Choisis la bonne réaction"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s7-a3-q05",
+        "asset": "assets/m4-s7-a3-q05.png",
+        "question": "Tu trouves une information choquante sans source. Que fais‑tu ?",
+        "activity": "Choisis la bonne réaction"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s7-a4-q01",
+        "asset": "assets/m4-s7-a4-q01.png",
+        "question": "Ne pas répondre sur le coup à la personne qui t’agresse.",
+        "activity": "Mission cybercitoyen"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s7-a4-q02",
+        "asset": "assets/m4-s7-a4-q02.png",
+        "question": "Garder une preuve (capture d’écran).",
+        "activity": "Mission cybercitoyen"
+      }
+    ]
+  }
+]

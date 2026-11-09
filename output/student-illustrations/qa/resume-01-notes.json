@@ -1,0 +1,12 @@
+[
+  {
+    "id": "m3-s3-a4-q02",
+    "reason": "Vending illustration invents euro prices absent from the source task; the game uses DH.",
+    "direction": "CRITICAL: a close-up cartoon vending-machine product window showing juice and cake only. NO price tags, currency signs, prices, money, totals, computed results or invented numbers anywhere. The actual game supplies all prices. Keep the illustration neutral."
+  },
+  {
+    "id": "m3-s3-a4-q04",
+    "reason": "Vending illustration invents euro prices absent from the source task.",
+    "direction": "CRITICAL: a close-up cartoon vending-machine product window showing juice, cake and water only. NO price tags, currency signs, prices, money, totals, computed results or invented numbers anywhere. The actual game supplies all prices. Keep the illustration neutral."
+  }
+]

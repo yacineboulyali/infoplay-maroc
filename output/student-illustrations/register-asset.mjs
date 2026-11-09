@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, copyFileSync, renameSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,5 +20,6 @@ const log = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : {};
 if (Object.values(log).some(entry => entry.sha256 === hash)) throw Error('Duplicate image bytes: separate illustration required');
 copyFileSync(source, destination);
 log[id] = { source, asset, sha256: hash, reviewed: reviewed === 'true', prompt: manifest.questions.find(q => q.id === id).prompt, tool: 'image_gen', width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20), ...(log[id] ? { previous: log[id] } : {}) };
-writeFileSync(file, JSON.stringify(log, null, 2) + '\n');
+writeFileSync(file + '.tmp', JSON.stringify(log, null, 2) + '\n');
+renameSync(file + '.tmp', file);
 console.log(JSON.stringify({ id, asset, count: Object.keys(log).length }));

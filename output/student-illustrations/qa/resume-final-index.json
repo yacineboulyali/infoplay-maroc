@@ -1,0 +1,42 @@
+[
+  {
+    "file": "qa/resume-final-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s6-a4-q02",
+        "asset": "assets/m4-s6-a4-q02-v2.png",
+        "question": "Écris un objet qui contient le mot « devoir ».",
+        "activity": "Mission : écrire et envoyer (simulation)"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s7-a3-q03",
+        "asset": "assets/m4-s7-a3-q03-v2.png",
+        "question": "Un camarade est moqué dans le groupe de classe. Que fais‑tu ?",
+        "activity": "Choisis la bonne réaction"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s7-a4-q03",
+        "asset": "assets/m4-s7-a4-q03.png",
+        "question": "Bloquer ou signaler le contact sur la plateforme.",
+        "activity": "Mission cybercitoyen"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s7-a4-q04",
+        "asset": "assets/m4-s7-a4-q04.png",
+        "question": "En parler à un adulte de confiance (parent, enseignant).",
+        "activity": "Mission cybercitoyen"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s7-a4-q05",
+        "asset": "assets/m4-s7-a4-q05.png",
+        "question": "Continuer à utiliser Internet avec prudence et respect.",
+        "activity": "Mission cybercitoyen"
+      }
+    ]
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "file": "qa/resumed-repairs-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s8-a4-q01",
+        "question": "Choisis l’orientation paysage.",
+        "activity": "Mission Impression"
+      },
+      {
+        "cell": 2,
+        "id": "m2-s8-a4-q04",
+        "question": "Règle le nombre de copies sur 3.",
+        "activity": "Mission Impression"
+      },
+      {
+        "cell": 3,
+        "id": "m2-s9-a4-q02",
+        "question": "Chaque élève occupe une [blank] du tableau.",
+        "activity": "Mission Notes : construire le tableau"
+      },
+      {
+        "cell": 4,
+        "id": "m2-s10-a1-q03",
+        "question": "C5",
+        "activity": "Adresses et plages"
+      },
+      {
+        "cell": 5,
+        "id": "m2-s10-a2-q01",
+        "question": "Une formule commence toujours par le signe [blank].",
+        "activity": "Complète les formules"
+      },
+      {
+        "cell": 6,
+        "id": "m2-s10-a3-q04",
+        "question": "La formule =B2*C2 est recopiée une ligne plus bas. Elle devient :",
+        "activity": "Débogue les formules"
+      },
+      {
+        "cell": 7,
+        "id": "m2-s10-a3-q05",
+        "question": "Une cellule affiche #DIV/0! avec =A1/B1. Cause probable :",
+        "activity": "Débogue les formules"
+      },
+      {
+        "cell": 8,
+        "id": "m2-s10-a4-q01",
+        "question": "En D2, calcule la moyenne de Sara avec une formule (=MOYENNE(B2:C2)).",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 9,
+        "id": "m2-s10-a4-q02",
+        "question": "En D3, calcule la moyenne d’Omar avec une formule.",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 10,
+        "id": "m2-s10-a4-q03",
+        "question": "En D4, calcule la moyenne de Lina avec une formule.",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 11,
+        "id": "m2-s10-a4-q04",
+        "question": "En B5, calcule le total des notes de Maths avec SOMME.",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 12,
+        "id": "m2-s10-a4-q05",
+        "question": "En C5, trouve la meilleure note de Physique avec MAX.",
+        "activity": "Mission Moyennes"
+      },
+      {
+        "cell": 13,
+        "id": "m2-s11-a1-q04",
+        "question": "Clique sur l’axe horizontal du diagramme en barres.",
+        "activity": "Reconnais les graphiques"
+      },
+      {
+        "cell": 14,
+        "id": "m2-s11-a1-q05",
+        "question": "Clique sur la légende.",
+        "activity": "Reconnais les graphiques"
+      },
+      {
+        "cell": 15,
+        "id": "m2-s11-a4-q02",
+        "question": "Donne un titre qui contient le mot « moyennes ».",
+        "activity": "Mission Statistiques"
+      },
+      {
+        "cell": 16,
+        "id": "m2-s11-a4-q04",
+        "question": "Affiche la légende.",
+        "activity": "Mission Statistiques"
+      }
+    ]
+  },
+  {
+    "file": "qa/resumed-repairs-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s11-a4-q05",
+        "question": "Interprète : quelle matière a la meilleure moyenne ?",
+        "activity": "Mission Statistiques"
+      }
+    ]
+  }
+]

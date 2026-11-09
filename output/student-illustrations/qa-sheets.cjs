@@ -4,6 +4,11 @@ const path = require('node:path');
 const { PNG } = require('pngjs');
 const root = __dirname;
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.json')));
+const currentLog = JSON.parse(fs.readFileSync(path.join(root, 'generation-log.json')));
+for (const q of manifest.questions) if (currentLog[q.id]) {
+  q.asset = currentLog[q.id].asset || `assets/${q.id}.png`;
+  q.readyForIntegration = !!currentLog[q.id].reviewed && !currentLog[q.id].needsRegeneration;
+}
 const all = process.argv.includes('--all');
 let items = manifest.questions.filter(q => q.asset && (all || !q.readyForIntegration));
 if (process.argv.includes('--findings')) {
@@ -11,7 +16,7 @@ if (process.argv.includes('--findings')) {
   items = ids.map(id => manifest.questions.find(q => q.id === id)).filter(q => q.asset);
 }
 const idsAt = process.argv.indexOf('--ids');
-if (idsAt >= 0) items = process.argv[idsAt + 1].split(',').map(id => manifest.questions.find(q => q.id === id));
+if (idsAt >= 0) items = process.argv[idsAt + 1].split(',').map(id => manifest.questions.find(q => q.id === id)).filter(q => q?.asset);
 const recentAt = process.argv.indexOf('--recent');
 if (recentAt >= 0) {
   const log = JSON.parse(fs.readFileSync(path.join(root, 'generation-log.json')));
@@ -41,7 +46,7 @@ for (let start = 0; start < items.length; start += 16) {
   });
   const name = `${prefix}-${String(pages.length + 1).padStart(3, '0')}.png`;
   fs.writeFileSync(path.join(folder, name), PNG.sync.write(sheet));
-  pages.push({ file: `qa/${name}`, items: batch.map((q, index) => ({ cell: index + 1, id: q.id, question: q.question, activity: q.activityTitle })) });
+  pages.push({ file: `qa/${name}`, items: batch.map((q, index) => ({ cell: index + 1, id: q.id, asset: q.asset, question: q.question, activity: q.activityTitle })) });
 }
 fs.writeFileSync(path.join(folder, `${prefix}-index.json`), JSON.stringify(pages, null, 2));
 console.log(JSON.stringify(pages.map(page => ({ file: page.file, count: page.items.length }))));

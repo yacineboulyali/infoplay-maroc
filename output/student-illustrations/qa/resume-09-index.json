@@ -1,0 +1,236 @@
+[
+  {
+    "file": "qa/resume-09-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s5-a1-q03",
+        "asset": "assets/m4-s5-a1-q03-v2.png",
+        "question": "Clique sur le bouton qui actualise la page.",
+        "activity": "Le navigateur"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s5-a2-q03",
+        "asset": "assets/m4-s5-a2-q03.png",
+        "question": "Lien hypertexte",
+        "activity": "Vocabulaire du Web"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s5-a2-q04",
+        "asset": "assets/m4-s5-a2-q04.png",
+        "question": "Moteur de recherche",
+        "activity": "Vocabulaire du Web"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s5-a2-q05",
+        "asset": "assets/m4-s5-a2-q05.png",
+        "question": "Favoris (marque‑pages)",
+        "activity": "Vocabulaire du Web"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s5-a3-q01",
+        "asset": "assets/m4-s5-a3-q01.png",
+        "question": "Dans https://www.ecole.ma/cours/info.html, « https » est le [blank].",
+        "activity": "Décode une adresse"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s5-a3-q02",
+        "asset": "assets/m4-s5-a3-q02.png",
+        "question": "« www.ecole.ma » est le [blank].",
+        "activity": "Décode une adresse"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s5-a3-q03",
+        "asset": "assets/m4-s5-a3-q03.png",
+        "question": "« /cours/ » indique le [blank].",
+        "activity": "Décode une adresse"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s5-a3-q04",
+        "asset": "assets/m4-s5-a3-q04.png",
+        "question": "« info.html » est le nom de la [blank].",
+        "activity": "Décode une adresse"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s5-a3-q05",
+        "asset": "assets/m4-s5-a3-q05.png",
+        "question": "Le « https » indique que la connexion est [blank].",
+        "activity": "Décode une adresse"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s5-a4-q01",
+        "asset": "assets/m4-s5-a4-q01.png",
+        "question": "Cherche « capitale Maroc » et ouvre le résultat qui donne le nom de la capitale.",
+        "activity": "Mission recherche"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s5-a4-q02",
+        "asset": "assets/m4-s5-a4-q02.png",
+        "question": "Reviens à la liste des résultats avec le bouton Retour.",
+        "activity": "Mission recherche"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s5-a4-q03",
+        "asset": "assets/m4-s5-a4-q03.png",
+        "question": "Cherche « montagnes Atlas » et ouvre le bon résultat.",
+        "activity": "Mission recherche"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s5-a4-q04",
+        "asset": "assets/m4-s5-a4-q04.png",
+        "question": "Cherche « port économique Casablanca » et ouvre le bon résultat.",
+        "activity": "Mission recherche"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s5-a4-q05",
+        "asset": "assets/m4-s5-a4-q05.png",
+        "question": "Cherche « cours informatique » et ouvre le résultat du collège.",
+        "activity": "Mission recherche"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s6-a1-q01",
+        "asset": "assets/m4-s6-a1-q01.png",
+        "question": "Clique sur la zone du destinataire.",
+        "activity": "Les parties d’un e‑mail"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s6-a1-q02",
+        "asset": "assets/m4-s6-a1-q02.png",
+        "question": "Clique sur l’objet du message.",
+        "activity": "Les parties d’un e‑mail"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-09-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m4-s6-a1-q03",
+        "asset": "assets/m4-s6-a1-q03.png",
+        "question": "Clique sur le corps du message.",
+        "activity": "Les parties d’un e‑mail"
+      },
+      {
+        "cell": 2,
+        "id": "m4-s6-a1-q04",
+        "asset": "assets/m4-s6-a1-q04.png",
+        "question": "Clique sur la pièce jointe.",
+        "activity": "Les parties d’un e‑mail"
+      },
+      {
+        "cell": 3,
+        "id": "m4-s6-a1-q05",
+        "asset": "assets/m4-s6-a1-q05.png",
+        "question": "Clique sur le bouton d’envoi.",
+        "activity": "Les parties d’un e‑mail"
+      },
+      {
+        "cell": 4,
+        "id": "m4-s6-a2-q01",
+        "asset": "assets/m4-s6-a2-q01.png",
+        "question": "Envoyer un document officiel à un professeur",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 5,
+        "id": "m4-s6-a2-q02",
+        "asset": "assets/m4-s6-a2-q02.png",
+        "question": "Écrire une lettre avec objet et formule de politesse",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 6,
+        "id": "m4-s6-a2-q03",
+        "asset": "assets/m4-s6-a2-q03.png",
+        "question": "Joindre un devoir en pièce jointe",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 7,
+        "id": "m4-s6-a2-q04",
+        "asset": "assets/m4-s6-a2-q04.png",
+        "question": "Répondre plus tard, quand on a le temps",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 8,
+        "id": "m4-s6-a2-q05",
+        "asset": "assets/m4-s6-a2-q05.png",
+        "question": "Garder une trace écrite formelle",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 9,
+        "id": "m4-s6-a2-q06",
+        "asset": "assets/m4-s6-a2-q06.png",
+        "question": "Discuter en direct avec un camarade pendant un exercice",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 10,
+        "id": "m4-s6-a2-q07",
+        "asset": "assets/m4-s6-a2-q07.png",
+        "question": "Poser une question rapide en temps réel",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 11,
+        "id": "m4-s6-a2-q08",
+        "asset": "assets/m4-s6-a2-q08.png",
+        "question": "Envoyer un petit message « ok »",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 12,
+        "id": "m4-s6-a2-q09",
+        "asset": "assets/m4-s6-a2-q09.png",
+        "question": "Discuter à plusieurs en direct dans un groupe de classe",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 13,
+        "id": "m4-s6-a2-q10",
+        "asset": "assets/m4-s6-a2-q10.png",
+        "question": "Échanger rapidement des messages courts",
+        "activity": "E‑mail ou chat ?"
+      },
+      {
+        "cell": 14,
+        "id": "m4-s6-a3-q01",
+        "asset": "assets/m4-s6-a3-q01.png",
+        "question": "Ouvrir la messagerie.",
+        "activity": "Envoyer un e‑mail"
+      },
+      {
+        "cell": 15,
+        "id": "m4-s6-a3-q02",
+        "asset": "assets/m4-s6-a3-q02.png",
+        "question": "Cliquer sur « Nouveau message ».",
+        "activity": "Envoyer un e‑mail"
+      },
+      {
+        "cell": 16,
+        "id": "m4-s6-a3-q03",
+        "asset": "assets/m4-s6-a3-q03.png",
+        "question": "Saisir l’adresse du destinataire et l’objet.",
+        "activity": "Envoyer un e‑mail"
+      }
+    ]
+  }
+]

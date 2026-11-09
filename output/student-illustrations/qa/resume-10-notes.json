@@ -1,0 +1,12 @@
+[
+  {
+    "id": "m4-s6-a4-q02",
+    "reason": "The word devoir appears in the message body instead of the requested subject field.",
+    "direction": "CRITICAL: ONE isolated close-up email SUBJECT row. Show the literal label Objet followed by an input field containing exactly devoir. No message body, recipient, other fields, toolbar or full compose window. The word devoir must appear only in the subject input."
+  },
+  {
+    "id": "m4-s7-a3-q03",
+    "reason": "Physical classroom bullying shown without the online class-group context of the Internet activity.",
+    "direction": "CRITICAL: show the STARTING PROBLEM of cyberbullying in a class-group CHAT on a close-up laptop screen, with several anonymous classmate avatars and unlabelled mocking/angry speech bubbles, plus one worried student's face beside the screen. No real readable insults, advice, refusal gesture, block/report buttons, correct-choice markers or solution. Do not draw a group physically bullying someone in a classroom."
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "phase": "complete",
+  "publishedCommit": "107208aaa1e2e67e38322846fd0af79d74fa6f89",
+  "initialMissingImages": 306,
+  "initialRepairs": 17,
+  "targetItems": 678,
+  "mode": "built-in image_gen; one independent illustration per question"
+}

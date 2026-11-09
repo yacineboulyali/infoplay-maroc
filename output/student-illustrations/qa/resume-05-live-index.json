@@ -1,0 +1,173 @@
+[
+  {
+    "file": "qa/resume-05-live-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s6-a3-q01",
+        "asset": "assets/m3-s6-a3-q01-v2.png",
+        "question": "Clique sur la ligne qui demande une saisie à l’utilisateur.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s6-a3-q02",
+        "asset": "assets/m3-s6-a3-q02-v2.png",
+        "question": "Clique sur la ligne qui range directement la valeur 3 dans une variable.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s6-a3-q03",
+        "asset": "assets/m3-s6-a3-q03-v2.png",
+        "question": "Clique sur la ligne qui calcule le total.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s6-a3-q04",
+        "asset": "assets/m3-s6-a3-q04-v2.png",
+        "question": "Clique sur la ligne qui affiche la variable total.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s6-a3-q05",
+        "asset": "assets/m3-s6-a3-q05-v2.png",
+        "question": "Clique sur la ligne qui affiche un texte fixe.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s7-a2-q03",
+        "asset": "assets/m3-s7-a2-q03.png",
+        "question": "C",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s7-a2-q04",
+        "asset": "assets/m3-s7-a2-q04.png",
+        "question": "IDLE",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s7-a2-q05",
+        "asset": "assets/m3-s7-a2-q05.png",
+        "question": "Thonny",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s7-a2-q06",
+        "asset": "assets/m3-s7-a2-q06.png",
+        "question": "Visual Studio Code",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s8-a1-q01",
+        "asset": "assets/m3-s8-a1-q01.png",
+        "question": "Écrire(x)",
+        "activity": "Pseudo‑code ↔ Python"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s8-a1-q02",
+        "asset": "assets/m3-s8-a1-q02.png",
+        "question": "x ← 5",
+        "activity": "Pseudo‑code ↔ Python"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s8-a1-q03",
+        "asset": "assets/m3-s8-a1-q03.png",
+        "question": "Lire(n) (nombre entier)",
+        "activity": "Pseudo‑code ↔ Python"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s8-a1-q04",
+        "asset": "assets/m3-s8-a1-q04.png",
+        "question": "Si a > b Alors",
+        "activity": "Pseudo‑code ↔ Python"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s8-a2-q03",
+        "asset": "assets/m3-s8-a2-q03.png",
+        "question": "Ligne 4 : [blank](s)",
+        "activity": "Complète le programme"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s8-a2-q04",
+        "asset": "assets/m3-s8-a2-q04.png",
+        "question": "Pour tester l’égalité en Python on écrit if a [blank] b:",
+        "activity": "Complète le programme"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s8-a2-q05",
+        "asset": "assets/m3-s8-a2-q05.png",
+        "question": "Après le if et sa condition, on termine la ligne par [blank]",
+        "activity": "Complète le programme"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-05-live-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s8-a3-q01",
+        "asset": "assets/m3-s8-a3-q01.png",
+        "question": "Le programme doit afficher 10 pour a = 4 et b = 6. Quelle correction ?\na = 4\nb = 6\nprint(a * b)",
+        "activity": "Compare avec le résultat attendu"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s8-a3-q02",
+        "asset": "assets/m3-s8-a3-q02.png",
+        "question": "Le programme doit afficher « Admis » pour note = 12. Quelle correction ?\nnote = 12\nif note >= 10\n    print(\"Admis\")",
+        "activity": "Compare avec le résultat attendu"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s8-a3-q03",
+        "asset": "assets/m3-s8-a3-q03.png",
+        "question": "Le programme doit afficher la moyenne de 8 et 12, soit 10. Quelle correction ?\nm = 8 + 12 / 2\nprint(m)",
+        "activity": "Compare avec le résultat attendu"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s8-a3-q04",
+        "asset": "assets/m3-s8-a3-q04.png",
+        "question": "Le programme doit afficher 25. Quelle correction ?\nx = 5\nprint(x x)",
+        "activity": "Compare avec le résultat attendu"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s8-a3-q05",
+        "asset": "assets/m3-s8-a3-q05.png",
+        "question": "Le programme doit afficher 7 pour a = 3 et b = 4. Quelle correction ?\na = 3\nb = 4\nprint(a + c)",
+        "activity": "Compare avec le résultat attendu"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s8-a4-q01",
+        "asset": "assets/m3-s8-a4-q01.png",
+        "question": "# Programme : moyenne de deux notes",
+        "activity": "Mission finale : la moyenne"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s8-a4-q02",
+        "asset": "assets/m3-s8-a4-q02.png",
+        "question": "n1 = float(input(\"Note 1 : \"))",
+        "activity": "Mission finale : la moyenne"
+      }
+    ]
+  }
+]

@@ -1,5 +1,6 @@
 import { ACTIVITIES, CATALOG } from '../../src/data/index.js';
-import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { SCENES } from '../../src/games/scenes.js';
+import { mkdirSync, writeFileSync, readFileSync, existsSync, renameSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join, dirname } from 'node:path';
 
@@ -9,6 +10,8 @@ const logFile = join(root, 'generation-log.json');
 const generated = existsSync(logFile) ? JSON.parse(readFileSync(logFile, 'utf8')) : {};
 const integrationFile = join(root, 'integration-report.json');
 const integration = existsSync(integrationFile) ? JSON.parse(readFileSync(integrationFile, 'utf8')) : null;
+const generationStateFile = join(root, 'generation-state.json');
+const generationState = existsSync(generationStateFile) ? JSON.parse(readFileSync(generationStateFile, 'utf8')) : null;
 const directionsFile = join(root, 'visual-directions.json');
 const findingsFile = join(root, 'review-findings.json');
 const findings = existsSync(findingsFile) ? JSON.parse(readFileSync(findingsFile, 'utf8')) : [];
@@ -33,12 +36,34 @@ const questions = ACTIVITIES.flatMap(a => {
   return (a.data[field] || []).map((item, index) => {
     const text = clean(typeof item === 'string' ? item : Array.isArray(item) ? item[a.type === 'hot' ? 1 : 0] : item.name || item.label || `Robot level ${index + 1}`);
     const key = `${a.id}-q${String(index + 1).padStart(2, '0')}`;
+    const sceneText = a.type === 'hot' && a.data.scene === 'phish'
+      ? SCENES.phish.shapes.find(shape => shape[1] === item[0])?.[7]
+      : null;
+    const itemConstraints = sceneText
+      ? `This is a training thumbnail for one field of an existing fictional phishing-message simulation. Draw ONLY that individual message field close up. If readable text is necessary, copy this exact existing scene text: ${JSON.stringify(sceneText)}. Otherwise use neutral text strokes. Never invent a different email address, URL, greeting or message. Do not draw the whole email or add advice, answers, other fields or links.`
+      : a.type === 'prog'
+      ? 'Required composition: one close-up programming worksheet or code-editor card with an EMPTY output/trace area. Do not print input guesses, final variable values, branch choices, calculations or a solved/corrected version of the program. Any readable code must be copied literally from the supplied item; neutral short code strokes are safer.'
+      : a.type === 'fill'
+        ? 'CRITICAL FOR BLANKS: every [blank] must stay visibly EMPTY. Never print its completion anywhere else in the image, including another example line, caption, heading, label or footer. Do not expand an incomplete code line into a whole program. The activity title is context only: do not copy its keywords as answers. Prefer one incomplete line or a relevant neutral object without readable explanatory text.'
+      : a.moduleId === 3 && a.type === 'quiz'
+        ? 'Required composition: ONE close-up neutral code-editor card with short unreadable code strokes and a question mark. Do not typeset the program, repair its syntax, point to an error position, highlight the faulty token, print a correction or show a computed output. The original editable/readable code stays in the game outside this image.'
+      : a.type === 'order'
+        ? 'Required composition: depict ONLY the single supplied step or action. Never include earlier/later steps, a whole program, a complete procedure, a numbered list, a full flowchart or arrows that reveal the sequence. For a code item, typeset only the literal supplied line/comment, without surrounding instructions.'
+      : a.moduleId === 3 && a.type === 'sort' && a.sessionIndex === 4
+        ? `Required composition: a close-up expression card containing exactly "${text}". Preserve this expression even when mathematically false. Do not evaluate, correct, classify or mark it; no check marks, crosses, true/false labels or success/failure colors.`
+        : a.moduleId === 3 && a.type === 'sort' && a.sessionIndex === 5
+          ? `Required composition: a neutral close-up school grade card with the literal given value "${text}". No invented grades, class averages, pass/fail text, trophies, red/green grading, smiling/sad faces or outcome indicators.`
+          : a.moduleId === 3 && a.sessionIndex === 7
+            ? 'Technical disambiguation: Python, Scratch, JavaScript, C and Pascal are PROGRAMMING LANGUAGES; never draw a realistic snake, scratch marks or a portrait of Pascal. IDLE, Thonny and Visual Studio Code are code editors, not sleeping people or human names. Writer is a word processor; Calc is a SPREADSHEET application, never a handheld calculator; Lecteur de musique is a music player. Use a close-up recognizable badge or application element for the explicitly named item, without printing its sorting category.'
+            : a.moduleId === 4 && a.sessionIndex === 5 && a.type === 'sim'
+              ? 'Required composition: a close-up browser search field or navigation control reflecting only the stated starting action. Copy the supplied search words literally when useful. Do not invent search results, result rankings, place answers, page content or the correct destination.'
+              : '';
     const context = a.moduleId === 2 && a.sessionIndex >= 4 && a.sessionIndex <= 8
       ? 'Technical meaning: this is a WORD-PROCESSING document activity. Image means an inserted photograph/picture, NOT a monitor. Tableau means a small data table with rows and columns, NOT a whiteboard and NOT an Excel application. Forme means an inserted circle/rectangle/arrow, NOT a folder. Numéro de page means a numeral in the document footer, NOT a printer. Titre and texte mean printed text regions on the paper document, NOT a monitor. Format du papier means a sheet with paper dimensions, NOT a printer. A font selector is a dropdown field, a title bar is the thin top strip of a software window, and a status bar is the thin bottom strip; show these strips close up when named.'
       : a.moduleId === 2 && a.sessionIndex >= 9
         ? 'Technical meaning: this is SPREADSHEET education. Cellule is a spreadsheet cell, NOT a biological cell. Ligne is a cell row, colonne is a cell column (not an architectural pillar), feuille is a spreadsheet worksheet (not a plant leaf), classeur is a digital workbook. Plage means a rectangular range of cells, NEVER a beach. Adresse means a cell reference such as A1, not a postal address. Barre de formule is the formula-entry field. Graphique means a statistical data chart, not an illustration. Secteur is a pie-chart wedge. Show the precise named element close up, not a whole unrelated computer.'
       : a.moduleId === 4
-        ? 'Technical meaning: this is computer networking and Internet education. Switch is a network switch, serveur is a computer server (not a waiter), client is a network computer, routeur is a networking router, port is a network socket (not a harbor), moteur de recherche is a search interface (not an engine), Web means websites (not a spider web), sources means information sources (not water springs). LAN, MAN and WAN are network scales; MAN never means a human man. Bus, étoile and anneau refer to network topologies, not a vehicle, a celestial star or jewelry. Phishing and virus refer to digital security threats.'
+        ? 'Technical meaning: this is computer networking and Internet education. Switch is a network switch, serveur is a computer server (not a waiter), client is a network computer, routeur is a networking router, port is a network socket (not a harbor), moteur de recherche is a search interface (not an engine), Web means websites (not a spider web), sources means information sources (not water springs). LAN, MAN, WAN and PAN are network scales; MAN never means a human man and PAN never means a cooking pan. Bus, étoile and anneau refer to network topologies, not a vehicle, a celestial star or jewelry. Phishing and virus refer to digital security threats.'
         : a.moduleId === 3
           ? 'Technical meaning: this is algorithmic programming education. Variables and constants refer to computer memory/data, expression means a code expression (not a facial expression), instruction means a code instruction, boucle means an instruction loop (not hair), and langage means a programming language. Lire is program input and Écrire is program output. Never invent or display a computed result or corrected code when the learner must supply it.'
           : a.moduleId === 2 && a.sessionIndex === 3
@@ -53,13 +78,13 @@ const questions = ACTIVITIES.flatMap(a => {
       ...(integration?.entries.find(e => e.id === key) ? { integratedAsset: integration.entries.find(e => e.id === key).src } : {}),
       ...(generated[key] ? { asset: generated[key].asset || `assets/${key}.png`, generation: generated[key] } : {}),
       placement: placements[a.type],
-      prompt: `Use case: scientific-educational. Asset: a single square close-up cartoon illustration for a school computing game. Activity context: ${a.title}. Learner-facing item: ${text}. ${context} Focus on the precise object or situation stated in the learner-facing item. When one object or interface element is named, draw only that element large and fully visible against the empty background; avoid collections and complete computer setups. For questions asking which tool/component/command to choose, depict the starting problem situation, never the solution tool or highlighted correct choice. For abstract code tasks, use a neutral code worksheet without computed results. Clean hand-drawn textbook cartoon, bold navy outlines, gentle flat shading, plain cream background, centered composition with generous margin. Main palette pastel blue and teal; use any other color explicitly required by the item (red text must be red). Clearly a drawing, never a photograph or realistic 3D render. No watermark, category labels, explanatory captions, missing-word completions, computed answers, solution arrows, or highlighted correct choices. Literal text or numbers already given in the item may appear only when necessary and copied exactly; never invent meaningful text. Keep the question itself outside the bitmap as live game text. ${directions[key] || ''}`.trim(),
+      prompt: `Use case: scientific-educational. Asset: a single square close-up cartoon illustration for a school computing game. Activity context: ${a.title}. Learner-facing item: ${text}. ${context} Focus on the precise object or situation stated in the learner-facing item. When one object or interface element is named, draw only that element large and fully visible against the empty background; avoid collections and complete computer setups. For questions asking which tool/component/command to choose, depict the starting problem situation, never the solution tool or highlighted correct choice. For abstract code tasks, use a neutral code worksheet without computed results. Clean hand-drawn textbook cartoon, bold navy outlines, gentle flat shading, plain cream background, centered composition with generous margin. Main palette pastel blue and teal; use any other color explicitly required by the item (red text must be red). Clearly a drawing, never a photograph or realistic 3D render. No watermark, category labels, explanatory captions, missing-word completions, computed answers, solution arrows, or highlighted correct choices. Literal text or numbers already given in the item may appear only when necessary and copied exactly; never invent meaningful text. Keep the question itself outside the bitmap as live game text. ${itemConstraints} ${directions[key] || ''}`.trim(),
     };
   });
 });
 const manifest = {
   scope: 'Tronc commun — modules 1 à 4 uniquement; M205 exclu',
-  mode: integration ? 'Generation paused by user. Reviewed images integrated in the platform.' : 'Preparation only. No runtime game files modified.',
+  mode: generationState?.phase === 'generating' ? 'Generating remaining images and reviewing them; earlier reviewed images are integrated.' : integration ? 'Reviewed images integrated in the platform.' : 'Preparation only. No runtime game files modified.',
   generatedWith: 'Built-in image_gen tool',
   imagePolicy: 'One independently generated illustration per question or interactive item. No shared image references.',
   activities: ACTIVITIES.length, questionCount: questions.length,
@@ -67,7 +92,8 @@ const manifest = {
   modules: CATALOG.map(m => ({ id: m.id, title: m.title, activities: ACTIVITIES.filter(a => a.moduleId === m.id).length, questions: questions.filter(q => q.moduleId === m.id).length })),
   questions,
 };
-writeFileSync(join(root, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+writeFileSync(join(root, 'manifest.json.tmp'), JSON.stringify(manifest, null, 2) + '\n');
+renameSync(join(root, 'manifest.json.tmp'), join(root, 'manifest.json'));
 writeFileSync(join(root, 'prompts.jsonl'), questions.filter(q => !q.asset).map(q => JSON.stringify({ id: q.id, out: q.plannedAsset, prompt: q.prompt })).join('\n') + '\n');
 writeFileSync(join(root, 'generated-prompts.jsonl'), manifest.generatedAssets.map(a => JSON.stringify({ id: a.id, out: a.path, prompt: a.prompt })).join('\n') + '\n');
 const cols = ['id', 'activityTitle', 'type', 'source', 'dataPath', 'question', 'status', 'asset', 'integratedAsset', 'plannedAsset', 'placement'];
@@ -120,7 +146,7 @@ ${ready.map(q => `| ${q.asset.split('/').at(-1)} | ${q.activityTitle.replaceAll(
 `);
 if (integration) writeFileSync(join(root, 'README.md'), `# صور التلاميذ — حالة الدمج
 
-توقف التوليد بناءً على طلب المستخدم. دُمجت ${integration.integrated} صورة مستقلة مراجعة في ${new Set(integration.entries.map(e => e.activityId)).size} نشاطًا. حُفظت ${manifest.generatedAssets.length} صورة؛ أُجّلت ${integration.excluded} صورة تحتاج تصحيحًا، ويتبقى ${questions.filter(q => !q.asset).length} عنصرًا دون صورة مولدة.
+${generationState?.phase === 'generating' ? 'استؤنف التوليد بعد نشر التحديث السابق على Git.' : 'حالة الحزمة الحالية.'} دُمجت ${integration.integrated} صورة مستقلة مراجعة في ${new Set(integration.entries.map(e => e.activityId)).size} نشاطًا. حُفظت ${manifest.generatedAssets.length} صورة؛ يوجد ${questions.filter(q => q.status === 'needs-regeneration').length} صورة تحتاج تصحيحًا و${questions.filter(q => q.status === 'generated-awaiting-review').length} صورة تنتظر المراجعة، ويتبقى ${questions.filter(q => !q.asset).length} عنصرًا دون صورة مولدة.
 
 النطاق هو الوحدات الأربع فقط، دون M205. الصور المتاحة تغطي الوحدتين الأولى والثانية وبداية الثالثة. تستخدم المنصة نسخ WebP محلية بدقة 512×512؛ الأصول الأصلية محفوظة هنا. لا يوجد توليد تلقائي أثناء البناء.
 

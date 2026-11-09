@@ -1,0 +1,114 @@
+[
+  {
+    "file": "qa/resume-live-15-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m2-s11-a4-q05",
+        "question": "Interprète : quelle matière a la meilleure moyenne ?",
+        "activity": "Mission Statistiques"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s2-a3-q01",
+        "question": "a ← 5\nb ← 3\na ← a + b\nÉcrire(a)",
+        "activity": "Simule les variables"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s2-a3-q02",
+        "question": "x ← 10\ny ← x\nx ← 4\nÉcrire(y)",
+        "activity": "Simule les variables"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s2-a3-q03",
+        "question": "n ← 2\nn ← n * n\nn ← n + 1",
+        "activity": "Simule les variables"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s2-a3-q04",
+        "question": "a ← 7\nb ← 2\nt ← a\na ← b\nb ← t",
+        "activity": "Simule les variables"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s2-a3-q05",
+        "question": "Lire(x)\nx ← x + 3\nÉcrire(x)",
+        "activity": "Simule les variables"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s2-a4-q01",
+        "question": "Début",
+        "activity": "Mission calculatrice"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s2-a4-q02",
+        "question": "Lire(a)",
+        "activity": "Mission calculatrice"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s2-a4-q03",
+        "question": "Lire(b)",
+        "activity": "Mission calculatrice"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s3-a3-q04",
+        "question": "Dans un algorithme séquentiel, les instructions sont exécutées [blank].",
+        "activity": "Complète et débogue"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s3-a3-q05",
+        "question": "Si on écrit Écrire(moyenne) avant de calculer moyenne, l’algorithme est [blank].",
+        "activity": "Complète et débogue"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s3-a4-q01",
+        "question": "Achète 2 jus (5 DH l’un), puis saisis le total à payer.",
+        "activity": "Mission distributeur"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s3-a4-q02",
+        "question": "Achète 1 jus et 1 gâteau, puis saisis le total.",
+        "activity": "Mission distributeur"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s3-a4-q03",
+        "question": "Achète 2 gâteaux et 3 eaux, puis saisis le total.",
+        "activity": "Mission distributeur"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s3-a4-q04",
+        "question": "Achète 3 jus, 1 gâteau et 2 eaux, puis saisis le total.",
+        "activity": "Mission distributeur"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s3-a4-q05",
+        "question": "Achète 1 jus, 2 gâteaux et 4 eaux, puis saisis le total.",
+        "activity": "Mission distributeur"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-live-15-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s4-a1-q01",
+        "question": "7 > 3",
+        "activity": "Vrai ou faux ?"
+      }
+    ]
+  }
+]

@@ -1,0 +1,255 @@
+[
+  {
+    "file": "qa/resume-04-recovered-001.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s5-a2-q02",
+        "asset": "assets/m3-s5-a2-q02-v2.png",
+        "question": "Pour exécuter autre chose quand la condition est fausse, on utilise [blank].",
+        "activity": "Si … Sinon … FinSi"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s6-a2-q04",
+        "asset": "assets/m3-s6-a2-q04.png",
+        "question": "Exécuter le programme",
+        "activity": "Du problème au programme"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s6-a2-q05",
+        "asset": "assets/m3-s6-a2-q05.png",
+        "question": "Tester et corriger les erreurs",
+        "activity": "Du problème au programme"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s6-a3-q01",
+        "asset": "assets/m3-s6-a3-q01.png",
+        "question": "Clique sur la ligne qui demande une saisie à l’utilisateur.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s6-a3-q02",
+        "asset": "assets/m3-s6-a3-q02.png",
+        "question": "Clique sur la ligne qui range directement la valeur 3 dans une variable.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s6-a3-q03",
+        "asset": "assets/m3-s6-a3-q03.png",
+        "question": "Clique sur la ligne qui calcule le total.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s6-a3-q04",
+        "asset": "assets/m3-s6-a3-q04.png",
+        "question": "Clique sur la ligne qui affiche la variable total.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s6-a3-q05",
+        "asset": "assets/m3-s6-a3-q05.png",
+        "question": "Clique sur la ligne qui affiche un texte fixe.",
+        "activity": "Lignes et instructions"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s6-a4-q01",
+        "asset": "assets/m3-s6-a4-q01.png",
+        "question": "Lire(n)\nÉcrire(n * 2)",
+        "activity": "Mission exécution"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s6-a4-q02",
+        "asset": "assets/m3-s6-a4-q02.png",
+        "question": "Lire(a)\nLire(b)\nÉcrire(a + b)",
+        "activity": "Mission exécution"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s6-a4-q03",
+        "asset": "assets/m3-s6-a4-q03.png",
+        "question": "Lire(x)\nÉcrire(x * x)",
+        "activity": "Mission exécution"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s6-a4-q04",
+        "asset": "assets/m3-s6-a4-q04.png",
+        "question": "Lire(c)\nÉcrire(c * 9 / 5 + 32)",
+        "activity": "Mission exécution"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s6-a4-q05",
+        "asset": "assets/m3-s6-a4-q05.png",
+        "question": "Lire(p)\nÉcrire(p - p * 20 / 100)",
+        "activity": "Mission exécution"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s7-a1-q01",
+        "asset": "assets/m3-s7-a1-q01.png",
+        "question": "Python",
+        "activity": "Reconnais les langages"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s7-a1-q02",
+        "asset": "assets/m3-s7-a1-q02.png",
+        "question": "Scratch",
+        "activity": "Reconnais les langages"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s7-a1-q03",
+        "asset": "assets/m3-s7-a1-q03.png",
+        "question": "JavaScript",
+        "activity": "Reconnais les langages"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-04-recovered-002.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s7-a1-q04",
+        "asset": "assets/m3-s7-a1-q04.png",
+        "question": "C",
+        "activity": "Reconnais les langages"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s7-a1-q05",
+        "asset": "assets/m3-s7-a1-q05.png",
+        "question": "Pascal",
+        "activity": "Reconnais les langages"
+      },
+      {
+        "cell": 3,
+        "id": "m3-s7-a2-q01",
+        "asset": "assets/m3-s7-a2-q01.png",
+        "question": "Python",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 4,
+        "id": "m3-s7-a2-q02",
+        "asset": "assets/m3-s7-a2-q02.png",
+        "question": "JavaScript",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 5,
+        "id": "m3-s7-a2-q07",
+        "asset": "assets/m3-s7-a2-q07.png",
+        "question": "Writer",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 6,
+        "id": "m3-s7-a2-q08",
+        "asset": "assets/m3-s7-a2-q08.png",
+        "question": "Calc",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 7,
+        "id": "m3-s7-a2-q09",
+        "asset": "assets/m3-s7-a2-q09.png",
+        "question": "Lecteur de musique",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 8,
+        "id": "m3-s7-a2-q10",
+        "asset": "assets/m3-s7-a2-q10.png",
+        "question": "Scratch",
+        "activity": "Langage, IDE ou application ?"
+      },
+      {
+        "cell": 9,
+        "id": "m3-s7-a3-q01",
+        "asset": "assets/m3-s7-a3-q01.png",
+        "question": "En Python, pour afficher un message on écrit [blank](\"Bonjour\").",
+        "activity": "Complète le code Python"
+      },
+      {
+        "cell": 10,
+        "id": "m3-s7-a3-q02",
+        "asset": "assets/m3-s7-a3-q02.png",
+        "question": "Pour lire une valeur saisie on écrit nom = [blank](\"Ton nom ? \").",
+        "activity": "Complète le code Python"
+      },
+      {
+        "cell": 11,
+        "id": "m3-s7-a3-q03",
+        "asset": "assets/m3-s7-a3-q03.png",
+        "question": "En Python, l’affectation s’écrit avec le signe [blank], par exemple x = 5.",
+        "activity": "Complète le code Python"
+      },
+      {
+        "cell": 12,
+        "id": "m3-s7-a3-q04",
+        "asset": "assets/m3-s7-a3-q04.png",
+        "question": "Les commentaires commencent par le caractère [blank].",
+        "activity": "Complète le code Python"
+      },
+      {
+        "cell": 13,
+        "id": "m3-s7-a3-q05",
+        "asset": "assets/m3-s7-a3-q05.png",
+        "question": "Les fichiers Python ont l’extension [blank].",
+        "activity": "Complète le code Python"
+      },
+      {
+        "cell": 14,
+        "id": "m3-s7-a4-q01",
+        "asset": "assets/m3-s7-a4-q01.png",
+        "question": "Quelle est l’erreur ?\nprint(\"Bonjour\"",
+        "activity": "Mission débogage"
+      },
+      {
+        "cell": 15,
+        "id": "m3-s7-a4-q02",
+        "asset": "assets/m3-s7-a4-q02.png",
+        "question": "Quelle est l’erreur ?\nPrint(\"Salut\")",
+        "activity": "Mission débogage"
+      },
+      {
+        "cell": 16,
+        "id": "m3-s7-a4-q03",
+        "asset": "assets/m3-s7-a4-q03.png",
+        "question": "Quelle est l’erreur ?\nx = 5\nprint(y)",
+        "activity": "Mission débogage"
+      }
+    ]
+  },
+  {
+    "file": "qa/resume-04-recovered-003.png",
+    "items": [
+      {
+        "cell": 1,
+        "id": "m3-s7-a4-q04",
+        "asset": "assets/m3-s7-a4-q04.png",
+        "question": "Quelle est l’erreur ?\nif x > 3\n    print(\"grand\")",
+        "activity": "Mission débogage"
+      },
+      {
+        "cell": 2,
+        "id": "m3-s7-a4-q05",
+        "asset": "assets/m3-s7-a4-q05.png",
+        "question": "Quelle est l’erreur ?\nnom = input(\"Nom ? \")\n print(nom)",
+        "activity": "Mission débogage"
+      }
+    ]
+  }
+]
