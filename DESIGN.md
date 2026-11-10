@@ -29,3 +29,6 @@ Prévu pour 1366×768 et 1024×768 (vérifié par captures dans Chromium), mise 
 
 ## 2,5D et 3D
 Assemblage de l'ordinateur : boîtier en perspective CSS pivotant (curseur) ; scènes SVG isométriques simples. **Pas de 3D réelle** (voir IMPLEMENTATION_PLAN.md).
+
+## Thème v3 « sobre » (`src/styles/clean.css`)
+Chargé en dernier, il remplace l'habillage « jeu » : mise en page pleine largeur, barre latérale fixe à partir de 1100 px (barre du haut + menu repliable en dessous), surfaces blanches à bordure fine, une seule couleur d'action (`#1d4ed8`), police système (Segoe UI), rayons 8–12 px, ombres légères, aucune animation décorative (inclinaison 3D, halos, pulsations, ondes). La barre d'action des activités est ancrée en bas de page. Contrôle : `node scripts/scan-layout.cjs` parcourt toutes les routes en 1440, 1024 et 390 px (débordements, chevauchements, textes coupés, erreurs JS).

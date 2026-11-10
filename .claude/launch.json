@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "infoplay", "runtimeExecutable": "node", "runtimeArgs": ["scripts/lan-server.mjs"], "port": 8765 }
+  ]
+}
