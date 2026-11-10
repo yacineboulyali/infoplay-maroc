@@ -3,6 +3,8 @@ import { h, norm, fmtNum } from '../utils/dom.js';
 import { VIEWS2 } from './sims2.js';
 import { ribbonView } from './ribbon.js';
 import { officeArt, officeConcept } from '../pro/visuals.js';
+import { m205StepArt } from '../data/pro/step-art.js';
+import { generatedArt } from '../utils/generated-item-art.js';
 import { itemVisual } from '../utils/item-visuals.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 
@@ -96,6 +98,8 @@ export function simGame(root, d) {
   function stepVisual() {
     const reviewed = studentIllustration(d, step, 'student-illustration-task');
     if (reviewed) return reviewed;
+    const artwork = m205StepArt(d.illustrationActivityId, step);
+    if (artwork) return generatedArt(...artwork);
     const label = d.tasks[step][0];
     const visual = itemVisual(label);
     if (visual.matches('svg') && officeConcept(label, d.visualPart) >= 0) return officeArt(label, d.visualPart);

@@ -60,13 +60,17 @@ export function generatedItemArt(normalized) {
     const cell = cells.find(([, pattern]) => pattern.test(normalized));
     if (!cell) continue;
     const [index] = cell;
-    return h('span', {
-      class: 'generated-item-art',
-      'aria-hidden': 'true',
-      'data-art': sheet + '-' + (index + 1),
-      style: 'background-image:url(images/activity-art/generated/' + sheet + '.webp);'
-        + 'background-position:' + (index % 3 * 50) + '% ' + (index < 3 ? '0%' : '100%'),
-    });
+    return generatedArt(sheet, index);
   }
   return null;
+}
+
+export function generatedArt(sheet, index) {
+  return h('span', {
+    class: 'generated-item-art',
+    'aria-hidden': 'true',
+    'data-art': sheet + '-' + (index + 1),
+    style: 'background-image:url(images/activity-art/generated/' + sheet + '.webp);'
+      + 'background-position:' + (index % 3 * 50) + '% ' + (index < 3 ? '0%' : '100%'),
+  });
 }
