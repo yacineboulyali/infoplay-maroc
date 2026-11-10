@@ -1,6 +1,7 @@
 import { h, shuffle } from '../utils/dom.js';
 import { artFor, visualLabel } from './basic.js';
 import { audio } from '../audio/audio.js';
+import { slotVisual } from '../utils/item-visuals.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 
 // ---- Assemblage 2,5D de l'ordinateur (CSS) ----
@@ -22,7 +23,7 @@ export function asmGame(root, d) {
     tray.replaceChildren(...parts.filter((p) => !used.has(p)).map((p) => h('button', { type: 'button', class: 'chip' + (studentIllustration(d, p) || artFor(d.parts[p].name) ? ' has-art' : '') + (sel === p ? ' sel' : ''), 'aria-pressed': String(sel === p), onclick: () => { sel = sel === p ? null : p; if (sel != null) audio.play('select'); draw(); } }, visualLabel(d.parts[p].name, null, studentIllustration(d, p)))));
     if (!tray.children.length) tray.append(h('em', { class: 'muted' }, 'Tous les composants sont posés.'));
     slotEls.forEach((el, i) => { const p = put[i]; el.className = 'slot' + (p != null ? ' filled' : '') + (i === 0 ? ' base' : '');
-      el.replaceChildren(p != null ? h('span', { class: 'placed' }, d.parts[p].name) : h('span', { class: 'slot-hint' }, d.slots[i].hint));
+      el.replaceChildren(p != null ? h('span', { class: 'placed' }, d.parts[p].name) : h('span', { class: 'slot-hint' }, slotVisual(d.slots[i]), d.slots[i].hint));
       el.setAttribute('aria-label', `Emplacement ${i + 1} : ${d.slots[i].hint}${p != null ? '. Contient : ' + d.parts[p].name : '. Vide'}`); });
   }
   root.append(h('p', { class: 'muted' }, 'Lis l’indice de chaque emplacement, choisis le composant, puis clique sur l’emplacement. Le curseur fait pivoter la vue.'), tray, h('div', { class: 'stage' }, case3d), h('label', { class: 'rot' }, 'Vue : ', rot), live);

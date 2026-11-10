@@ -1,5 +1,5 @@
 import { h, norm, svgFrom } from '../utils/dom.js';
-import { semanticIcon } from '../utils/semantic-icons.js';
+import { itemVisual } from '../utils/item-visuals.js';
 import { STUDENT_ILLUSTRATIONS } from '../data/student-illustrations.js';
 import { ports, portPictures } from '../data/egtsi106/lesson.js';
 
@@ -44,14 +44,13 @@ const shapes = [
   [/^ecran$|affiche le resultat/, 'output'],
 ];
 
-export function conceptVisual(label, renderPicture, source, context = label) {
+export function conceptVisual(label, renderPicture, source) {
   const text = norm(label);
   const image = source || exact.get(text);
   if (image) return renderPicture(image);
   const key = shapes.find(([pattern]) => pattern.test(text))?.[1];
   const illustration = key ? svgFrom('<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + drawings[key] + '</svg>')
-    : semanticIcon(label, { large: true });
+    : itemVisual(label);
   if (key) illustration.dataset.symbol = key;
-  const fallback = illustration.dataset.symbol === 'text' && context !== label ? semanticIcon(context, { large: true }) : illustration;
-  return h('span', { class: 'egtsi-concept-visual', 'aria-hidden': 'true' }, fallback);
+  return h('span', { class: 'egtsi-concept-visual', 'aria-hidden': 'true' }, illustration);
 }

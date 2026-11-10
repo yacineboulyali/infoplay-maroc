@@ -1,5 +1,5 @@
 import { h } from '../utils/dom.js';
-import { semanticIcon } from '../utils/semantic-icons.js';
+import { itemVisual } from '../utils/item-visuals.js';
 
 // Cell order follows the generated, local 6 × 4 educational atlas.
 const rows = { word: 0, excel: 1, ppt: 2, outlook: 3 };
@@ -18,7 +18,7 @@ export function officeArt(label, part, cell) {
   if (!(part in rows)) return null;
   const found = officeConcept(label, part);
   // An unmapped concept gets a small sign, never a misleading ribbon screenshot.
-  if (cell == null && found < 0) return semanticIcon(label, { large: true });
+  if (cell == null && found < 0) return itemVisual(label);
   const column = cell ?? found;
   return h('span', { class: 'office-art', role: 'img', 'aria-label': `Repère visuel ${part} : ${label}`,
     style: `--office-x:${column * 20}%;--office-y:${rows[part] * 100 / 3}%` });

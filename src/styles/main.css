@@ -472,3 +472,7 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .egtsi-practice .egtsi-activity-visual .egtsi-picture{width:3.25rem}
 .egtsi-practice .stage-card .egtsi-concept-visual{width:2.65rem;height:2.65rem}
 .egtsi-practice .stage-card .egtsi-concept-visual svg{width:1.8rem;height:1.8rem}
+.item-visual-image{display:inline-block;flex:0 0 auto;width:3.25rem;height:3.25rem;object-fit:contain;border-radius:.45rem;vertical-align:middle}
+.egtsi-concept-visual .item-visual-image{width:2.8rem;height:2.8rem}
+.taskbox>.item-visual-svg,.q>.item-visual-svg{width:2rem;height:2rem}
+.slot-hint>.item-visual-svg{width:1.15rem;height:1.15rem;margin-inline-end:.2rem}

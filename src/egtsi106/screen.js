@@ -29,7 +29,7 @@ function picture(source, label = '', className = '') {
   return h('img', { class: 'egtsi-picture ' + className, src: source, alt: label, loading: 'lazy', decoding: 'async', draggable: 'false' });
 }
 
-const visual = (label, source, context) => conceptVisual(label, picture, source, context);
+const visual = (label, source) => conceptVisual(label, picture, source);
 
 function heading(title, eyebrow, text) {
   return h('section', { class: 'egtsi-hero' },
@@ -110,7 +110,7 @@ function lessonBlocks(course, session) {
       h('details', { open: true },
         h('summary', null, 'Explications du cours'),
         h('dl', { class: 'egtsi-facts' }, lesson.entries.map(([term, text, source]) =>
-          h('div', null, visual(term, source, lesson.title), h('dt', null, term), h('dd', null, text)))),
+          h('div', null, visual(term, source), h('dt', null, term), h('dd', null, text)))),
         !session && index === 3 ? h('div', { class: 'egtsi-ports' }, ports.map(([name], i) =>
           h('figure', null, picture(portPictures[i]), h('figcaption', null, name)))) : null),
       h('h4', null, 'Activités de la leçon'),
@@ -118,7 +118,7 @@ function lessonBlocks(course, session) {
         const activity = course.activities[i];
         return h('li', null, h('a', { href: href(i, session), class: 'card egtsi-activity-link' },
           h('span', { class: 'egtsi-number' }, order + 1),
-          visual(activity.title, null, lesson.title),
+          visual(activity.title, null),
           h('span', null, h('strong', null, activity.title), h('span', { class: 'muted' }, activity.objective))));
       })) )));
 }
@@ -164,7 +164,7 @@ function practice(index, session, course) {
     check.disabled = false;
     feedback.replaceChildren();
     const data = activity.data;
-    const items = data.pairs || data.items || data.steps || data.qs || data.lines || data.prompts || data.terms || [];
+    const items = data.pairs || data.items || data.steps || data.qs || data.lines || data.tasks || data.prompts || data.terms || [];
     const label = (item) => Array.isArray(item) ? item[0] : item;
     engine = (activity.mech === 'type-name' ? typeName : engineOf(activity.mech))(stage, {
       ...data,
@@ -176,10 +176,10 @@ function practice(index, session, course) {
         const original = activity.id && STUDENT_ILLUSTRATIONS[activity.id + '-q' + String(i + 1).padStart(2, '0')];
         const text = activity.mech === 'type-name' || activity.mech === 'hot' ? item[1] : label(item);
         const safeText = String(text).replace(/\[\[.+?\]\]/g, '…');
-        return visual(safeText, activity.pictures?.[i] || original, lesson.title);
+        return visual(safeText, activity.pictures?.[i] || original);
       },
-      answerPicture: (i) => data.pairs && visual(data.pairs[i][1], activity.answers?.[i], lesson.title),
-      optionPicture: (i, k) => visual(data.qs[i][1][k], null, lesson.title),
+      answerPicture: (i) => data.pairs && visual(data.pairs[i][1], activity.answers?.[i]),
+      optionPicture: (i, k) => visual(data.qs[i][1][k], null),
     });
   }
 

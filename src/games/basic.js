@@ -6,6 +6,7 @@ import { arHint } from '../i18n/arhint.js';
 import { officeArt } from '../pro/visuals.js';
 import { semanticIcon } from '../utils/semantic-icons.js';
 import { audio } from '../audio/audio.js';
+import { itemVisual } from '../utils/item-visuals.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 
 const letter = (i) => String.fromCharCode(65 + i);
@@ -87,7 +88,7 @@ export function artFor(label) {
 export const visualLabel = (label, part, illustration = null, textOnly = false) => {
   const ar = arText(label);
   return h('span', { class: 'visual-label' },
-    illustration || (textOnly ? null : part ? officeArt(label, part) : (artFor(label) || semanticIcon(label))),
+    illustration || (textOnly ? null : part ? officeArt(label, part) : (artFor(label) || itemVisual(label))),
     h('span', { class: 'visual-text' },
       label,
       arHint(ar)
@@ -100,7 +101,6 @@ export const visualLabel = (label, part, illustration = null, textOnly = false) 
 // -----------------------------------------------------------------
 export function matchGame(root, d) {
   const n = d.pairs.length;
-  const illustrated = d.pairs.some((_, i) => studentIllustration(d, i));
   const order = shuffle([...Array(n).keys()]);
   const map = Array(n).fill(null);
   let sel = null;
@@ -216,7 +216,7 @@ export function matchGame(root, d) {
       },
     },
     h('span', { class: 'num', 'aria-hidden': 'true' }, letter(k)),
-    h('span', { class: 'txt' }, visualLabel(d.pairs[o][1], d.visualPart, d.answerPicture?.(o), illustrated || d.textOnly)),
+    h('span', { class: 'txt' }, visualLabel(d.pairs[o][1], d.visualPart, d.answerPicture?.(o) || itemVisual(d.pairs[o][1]), true)),
     h('span', { class: 'tag', 'aria-hidden': 'true' })
     );
     rb.push(btn);
@@ -547,7 +547,7 @@ export function fillGame(root, d) {
   const lines = d.lines.map((ln) => (Array.isArray(ln) ? ln : [ln, '']));
 
   lines.forEach(([text, why], index) => {
-    const p = h('p', { class: 'fill-line' }, semanticIcon(text.replace(/\[\[.+?\]\]/g, '…')));
+    const p = h('p', { class: 'fill-line' }, itemVisual(text.replace(/\[\[.+?\]\]/g, '…')));
     const illustration = studentIllustration(d, index);
     if (illustration) p.replaceChildren(illustration);
     const re = /\[\[(.+?)\]\]/g;
@@ -652,7 +652,7 @@ export function quizGame(root, d) {
       },
       inputs[j],
       h('span', { class: 'opt-letter', 'aria-hidden': 'true' }, isTrueFalse ? (isVrai ? '✔' : '✖') : letter(j)),
-      visualLabel(optText, d.visualPart, d.optionPicture?.(i, k), d.textOnly || !!studentIllustration(d, i))
+      visualLabel(optText, d.visualPart, d.optionPicture?.(i, k) || itemVisual(optText), true)
       );
     });
 
@@ -664,7 +664,7 @@ export function quizGame(root, d) {
           modeBanner,
           h('span', { class: 'q-title-text' }, lines[0], arHint(qar))
         ),
-        studentIllustration(d, i, 'student-illustration-question'),
+        studentIllustration(d, i, 'student-illustration-question') || itemVisual(lines[0]),
         lines.length > 1 ? h('pre', { class: 'code' }, lines.slice(1).join('\n')) : null,
         h('div', { class: 'quiz-options-grid' + (isTrueFalse ? ' tf-grid' : '') }, labels)
       )

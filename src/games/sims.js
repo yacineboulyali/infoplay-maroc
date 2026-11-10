@@ -2,6 +2,7 @@
 import { h, norm, fmtNum } from '../utils/dom.js';
 import { VIEWS2 } from './sims2.js';
 import { ribbonView } from './ribbon.js';
+import { itemVisual } from '../utils/item-visuals.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 
 const MODE = /^[~=^]/;
@@ -93,7 +94,7 @@ export function simGame(root, d) {
   const btn = h('button', { type: 'button', class: 'btn primary', onclick: validate }, 'Valider l’étape');
   function drawTask() {
     taskBox.replaceChildren(h('p', { class: 'step-h' }, step < n ? `Étape ${step + 1} sur ${n}` : 'Terminé'), h('p', { class: 'step-t' }, step < n ? d.tasks[step][0] : 'Toutes les étapes sont faites : clique sur « Vérifier ».'), ...(step < n ? [btn] : []));
-    const illustration = step < n ? studentIllustration(d, step, 'student-illustration-task') : null;
+    const illustration = step < n ? (studentIllustration(d, step, 'student-illustration-task') || itemVisual(d.tasks[step][0])) : null;
     if (illustration) taskBox.prepend(illustration);
   }
   function validate() {
