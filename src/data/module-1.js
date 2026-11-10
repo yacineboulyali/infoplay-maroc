@@ -82,11 +82,11 @@ export default {
     ] },
     { title: 'Types de logiciels et domaines d’application', topics: ['logiciel de base', 'logiciel d’application', 'domaines d’utilisation'], acts: [
       match('Associe les logiciels', 'Associer des logiciels courants à leur fonction.', [
-        ['Windows', 'Système d’exploitation de nombreux PC : il gère le matériel et lance les programmes'], ['Android', 'Système d’exploitation des téléphones et tablettes'], ['Writer', 'Application pour rédiger des documents'], ['Calc', 'Application pour faire des calculs dans un tableau'], ['Navigateur web', 'Application pour consulter des pages sur Internet'],
+        ['Windows', 'Système d’exploitation de nombreux PC : il gère le matériel et lance les programmes'], ['Android', 'Système d’exploitation des téléphones et tablettes'], ['Microsoft Word', 'Application pour rédiger des documents'], ['Microsoft Excel', 'Application pour faire des calculs dans un tableau'], ['Navigateur web', 'Application pour consulter des pages sur Internet'],
       ]),
       sort('Classe les logiciels', 'Distinguer logiciels de base et logiciels d’application.', ['Logiciel de base', 'Logiciel d’application'], [
         ['Windows', 0, 'C’est un système d’exploitation.'], ['Linux', 0, 'C’est un système d’exploitation.'], ['Android', 0, 'C’est un système d’exploitation.'], ['macOS', 0, 'C’est un système d’exploitation.'], ['iOS', 0, 'C’est un système d’exploitation.'],
-        ['Writer', 1, 'Application de rédaction.'], ['Calc', 1, 'Application de calcul.'], ['Navigateur web', 1, 'Application de navigation.'], ['Lecteur de musique', 1, 'Application multimédia.'], ['Logiciel de dessin', 1, 'Application graphique.'],
+        ['Microsoft Word', 1, 'Application de rédaction.'], ['Microsoft Excel', 1, 'Application de calcul.'], ['Navigateur web', 1, 'Application de navigation.'], ['Lecteur de musique', 1, 'Application multimédia.'], ['Logiciel de dessin', 1, 'Application graphique.'],
       ]),
       quiz('Trouve le bon outil', 'Choisir le logiciel adapté à un besoin.', [
         ['Tu dois écrire une lettre à la directrice. Quel outil choisis‑tu ?', ['Un traitement de texte', 'Un tableur', 'Un navigateur', 'Un lecteur de musique'], 'Le traitement de texte sert à rédiger.'],

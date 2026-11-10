@@ -6,7 +6,8 @@ import { arHint } from '../i18n/arhint.js';
 import { officeArt } from '../pro/visuals.js';
 import { semanticIcon } from '../utils/semantic-icons.js';
 import { audio } from '../audio/audio.js';
-import { itemVisual } from '../utils/item-visuals.js';
+import { itemVisual, labelIllustration } from '../utils/item-visuals.js';
+import { labelKey } from '../utils/label-key.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 
 const letter = (i) => String.fromCharCode(65 + i);
@@ -87,8 +88,8 @@ export function artFor(label) {
 
 export const visualLabel = (label, part, illustration = null, textOnly = false) => {
   const ar = arText(label);
-  return h('span', { class: 'visual-label' },
-    illustration || (textOnly ? null : part ? officeArt(label, part) : (artFor(label) || itemVisual(label))),
+  return h('span', { class: 'visual-label', 'data-label-key': labelKey(label) },
+    illustration || labelIllustration(label) || (textOnly ? null : part ? officeArt(label, part) : (artFor(label) || itemVisual(label))),
     h('span', { class: 'visual-text' },
       label,
       arHint(ar)

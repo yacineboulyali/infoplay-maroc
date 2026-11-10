@@ -3,6 +3,14 @@ import { generatedItemArt } from './generated-item-art.js';
 import { semanticIcon, semanticKind } from './semantic-icons.js';
 import { STUDENT_ILLUSTRATIONS } from '../data/student-illustrations.js';
 import { ACTIVITIES } from '../data/index.js';
+import { LABEL_ILLUSTRATIONS } from '../data/label-illustrations.js';
+import { labelKey } from './label-key.js';
+
+/** Image générée pour ce libellé précis (toutes activités confondues), sinon null. */
+export function labelIllustration(label) {
+  const key = labelKey(label); const src = LABEL_ILLUSTRATIONS[key];
+  return src ? h('img', { class: 'student-illustration label-illustration', src, alt: '', 'aria-hidden': 'true', 'data-label-key': key, width: 512, height: 512, loading: 'lazy', decoding: 'async', draggable: 'false', onerror: (event) => event.currentTarget.remove() }) : null;
+}
 
 const images = new Map();
 // Reuse the reviewed image when the exact concept is found elsewhere.
@@ -23,6 +31,9 @@ for (const [label, index] of [
 }
 
 const drawings = [
+  [/(tableur|excel|classeur|feuille de calcul)/, 'spreadsheet', '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>'],
+  [/(word|traitement de texte)/, 'document', '<path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5M9 12h8m-8 4h8m-8-8h3"/>'],
+  [/(navigateur)/, 'browser', '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20M5 6.5h.01M8 6.5h.01"/>'],
   [/\b(switch|commutateur)\b/, 'switch', '<rect x="2" y="7" width="20" height="10" rx="2"/><path d="M5 10h3v4H5zm6 0h3v4h-3zm6 0h3v4h-3z"/>'],
   [/\b(microphone|micro)\b/, 'microphone', '<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 11a7 7 0 0 0 14 0m-7 7v4m-4 0h8"/>'],
   [/videoprojecteur/, 'projector', '<rect x="2" y="7" width="16" height="12" rx="2"/><circle cx="13" cy="13" r="3"/><path d="m20 11 3-3m-3 7 3 3"/>'],
@@ -65,12 +76,19 @@ function wordmark(label) {
   return svg;
 }
 
-export function itemVisual(label, { allowImage = true } = {}) {
+export function itemVisual(label, options) {
+  const own = labelIllustration(label); if (own) return own;
+  const visual = fallbackVisual(label, options);
+  if (visual?.dataset) visual.dataset.labelKey = labelKey(label);
+  return visual;
+}
+
+function fallbackVisual(label, { allowImage = true } = {}) {
   const normalized = norm(label);
   const exact = normalized.replace(/^(?:(?:un|une|le|la|les|des)\s+|l')/, '');
   const src = allowImage && (images.get(normalized) || images.get(exact));
   if (src) return h('img', { class: 'item-visual-image', src, alt: '', loading: 'lazy', draggable: 'false',
-    onerror: event => event.currentTarget.replaceWith(itemVisual(label, { allowImage: false })) });
+    onerror: event => event.currentTarget.replaceWith(fallbackVisual(label, { allowImage: false })) });
   const generated = allowImage && generatedItemArt(normalized);
   if (generated) return generated;
   const drawing = drawings.find(([pattern]) => pattern.test(normalized));

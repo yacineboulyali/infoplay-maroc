@@ -8,7 +8,7 @@
   --ink:#0f172a;--muted:#475569;--bg:#f5f6f8;--card:#fff;--line:#e2e5ea;--line-strong:#c5ccd6;
   --primary:#1d4ed8;--primary-d:#1e3a8a;--primary-bg:#e8eefc;--accent:#c2410c;--gold:#f5b301;
   --ok:#15703f;--ok-bg:#e6f4ec;--ko:#b3261e;--ko-bg:#fdecea;
-  --surface-2:#f1f3f6;--r:12px;--side:256px;
+  --surface-2:#f1f3f6;--r:12px;--side:256px;--pad:clamp(.4rem,1vw,1rem);
   --sh:0 1px 2px rgba(15,23,42,.06);--sh-lg:0 6px 20px rgba(15,23,42,.10);
   --grad:var(--primary);--grad-warm:var(--accent);
   --m1:#1d4ed8;--m2:#0f766e;--m3:#c2410c;--m4:#6d28d9;--m5:#0e7490;
@@ -27,13 +27,14 @@ h1{font-size:1.75rem}h2{font-size:1.3rem}
 .rp-pane,.rp-chip,.rp-levelup,.rp-badge,.rp-star.on,.rp-card-ic,.rp-card.in,.answer-pin,.result-bar{animation:cl-fade .2s ease-out both}
 
 /* ---------- mise en page pleine largeur ---------- */
-main{max-width:1920px;margin:0 auto;padding:1.5rem clamp(1rem,2.5vw,2.5rem) 4rem}
+/* Marges de page réduites de 60 % (étaient 1.5rem / clamp(1rem,2.5vw,2.5rem)). */
+main{max-width:1920px;margin:0 auto;padding:.6rem var(--pad) 4rem}
 .activity-page,.welcome-page{max-width:none}
 .floating-home{display:none!important}
 
 /* ---------- en-tête / navigation ---------- */
 header.top{background:#fff;color:var(--ink);border-bottom:1px solid var(--line);box-shadow:none}
-header.top .in{max-width:none;padding:.6rem clamp(1rem,2.5vw,2.5rem)}
+header.top .in{max-width:none;padding:.6rem var(--pad)}
 .brand{color:var(--ink);font-weight:700;font-size:1.15rem}
 .brand b{color:var(--primary)}
 .brand .logo{background:var(--primary);color:#fff;box-shadow:none;border-radius:8px}
@@ -154,7 +155,7 @@ input[type=text],input[type=number],select,textarea{border:1px solid var(--line-
 .act-hero .arh-btn.is-open{background:var(--primary);border-color:var(--primary);color:#fff}
 .arh-btn:hover{transform:none}
 /* Barre d'action : ancrée en bas sur toute la largeur, elle ne flotte plus au-dessus des réponses. */
-.activity-actions{position:sticky;bottom:0;width:auto;max-width:none;margin:1.25rem calc(-1*clamp(1rem,2.5vw,2.5rem)) 0;padding:.7rem 1rem;border:0;border-top:1px solid var(--line);border-radius:0;background:#fff;box-shadow:0 -4px 14px rgba(15,23,42,.06);backdrop-filter:none;justify-content:center}
+.activity-actions{position:sticky;bottom:0;width:auto;max-width:none;margin:1.25rem calc(-1*var(--pad)) 0;padding:.7rem 1rem;border:0;border-top:1px solid var(--line);border-radius:0;background:#fff;box-shadow:0 -4px 14px rgba(15,23,42,.06);backdrop-filter:none;justify-content:center}
 
 /* ---------- éléments d'exercice ---------- */
 .card.pick,.pick{border-width:1.5px;border-radius:10px}
@@ -253,7 +254,7 @@ input[type=text],input[type=number],select,textarea{border:1px solid var(--line-
 body.high-contrast header.top{border-color:#000}
 body.high-contrast .dash-hero,body.high-contrast .act-hero{background:#fff;border:2px solid #000}
 @media (max-width:820px){
-  main{padding:.8rem .75rem calc(5.5rem + env(safe-area-inset-bottom,0px))}
+  main{padding:.32rem .3rem calc(5.5rem + env(safe-area-inset-bottom,0px))}
   .activity-actions{border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh-lg)}
   .activity-brief::after{background:linear-gradient(transparent,#f3f6fd 55%)}
 }

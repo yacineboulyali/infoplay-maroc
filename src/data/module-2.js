@@ -12,8 +12,8 @@ export default {
         ['Gestion des périphériques', 'Dialoguer avec le clavier, la souris ou l’imprimante grâce aux pilotes'], ['Interface utilisateur', 'Permettre à l’utilisateur de dialoguer avec l’ordinateur (bureau, fenêtres, icônes)'],
       ]),
       quiz('Identifie les systèmes d’exploitation', 'Reconnaître des exemples de systèmes d’exploitation.', [
-        ['Lequel de ces logiciels est un système d’exploitation ?', ['Windows', 'Writer', 'Calc', 'Un navigateur web'], 'Windows gère le matériel et lance les autres logiciels.'],
-        ['Quel système équipe la plupart des smartphones de la classe (hors iPhone) ?', ['Android', 'Writer', 'Calc', 'Un tableur'], 'Android est un système d’exploitation pour téléphones et tablettes.'],
+        ['Lequel de ces logiciels est un système d’exploitation ?', ['Windows', 'Microsoft Word', 'Microsoft Excel', 'Un navigateur web'], 'Windows gère le matériel et lance les autres logiciels.'],
+        ['Quel système équipe la plupart des smartphones de la classe (hors iPhone) ?', ['Android', 'Microsoft Word', 'Microsoft Excel', 'Un tableur'], 'Android est un système d’exploitation pour téléphones et tablettes.'],
         ['Linux est :', ['Un système d’exploitation libre', 'Un traitement de texte', 'Un navigateur', 'Un type de clé USB'], 'Linux existe en de nombreuses versions gratuites.'],
         ['macOS est le système d’exploitation :', ['Des ordinateurs de la marque Apple', 'De toutes les imprimantes', 'Des clés USB', 'Des routeurs uniquement'], 'Chaque famille de machines a ses systèmes.'],
         ['Un système d’exploitation s’installe :', ['Avant les logiciels d’application, car ils en ont besoin pour fonctionner', 'Après chaque document créé', 'Uniquement dans l’imprimante', 'Dans la souris'], 'Il est la base sur laquelle tournent les applications.'],

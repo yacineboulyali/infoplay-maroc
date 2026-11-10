@@ -122,7 +122,7 @@ export default {
       sort('Langage, IDE ou application ?', 'Distinguer un langage, un environnement de développement et une application ordinaire.', ['Langage de programmation', 'Environnement de développement (IDE)', 'Application ordinaire'], [
         ['Python', 0, 'On écrit du code dans ce langage.'], ['JavaScript', 0, 'C’est un langage.'], ['C', 0, 'C’est un langage.'],
         ['IDLE', 1, 'Éditeur fourni avec Python.'], ['Thonny', 1, 'Éditeur pour débutants.'], ['Visual Studio Code', 1, 'Éditeur de code.'],
-        ['Writer', 2, 'Traitement de texte, pas un outil de programmation.'], ['Calc', 2, 'Tableur.'], ['Lecteur de musique', 2, 'Application multimédia.'], ['Scratch', 0, 'Langage visuel.'],
+        ['Microsoft Word', 2, 'Traitement de texte, pas un outil de programmation.'], ['Microsoft Excel', 2, 'Tableur.'], ['Lecteur de musique', 2, 'Application multimédia.'], ['Scratch', 0, 'Langage visuel.'],
       ]),
       fill('Complète le code Python', 'Compléter de courts extraits de code source.', [
         ['En Python, pour afficher un message on écrit [[print|Ecrire|show]]("Bonjour").', 'print affiche.'],

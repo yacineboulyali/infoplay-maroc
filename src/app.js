@@ -388,7 +388,7 @@ function homeScreen() {
             h('span', { class: 'mode-badge' }, 'Nouveau · OFPPT'),
             h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '💼'),
             h('h2', { id: 'mode-pro-h' }, 'M205 · Bureautique avancée'),
-            h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint et Outlook avancés, Simulator type MOS, révision espacée, défi mixte et quêtes du jour.'),
+            h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint et Outlook avancés, simulateur de type MOS, révision espacée, défi mixte et quêtes du jour.'),
             arHint('المكتبيات المتقدمة للتكوين المهني: 20 حصة و80 نشاطاً تفاعلياً'),
             h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => { if (store.active()) go('#/pro'); else { const el = document.getElementById('entry-zone'); if (el) { el.scrollIntoView({ block: 'start', behavior: 'smooth' }); setTimeout(() => name.focus({ preventScroll: true }), 250); } } } }, '💼 Ouvrir le parcours M205 →')
           ),
@@ -795,7 +795,7 @@ function activityScreen(mi, si, ai) {
     h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link(modHref(mi), modLabel(mi)), ' › ', link(`#/m/${mi}/s/${si}`, 'Séance ' + si), ' › Activité ', ai),
     h('header', { class: 'act-hero', 'data-reveal': '' },
       h('div', { class: 'act-hero-main' },
-        h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulator' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
+        h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
         h('h1', { tabindex: '-1' }, act.title, arSub(arActivity(act.id))),
         h('p', { class: 'act-obj' }, h('b', null, 'Objectif : '), act.objective)),
       h('div', { class: 'act-hero-side' }, dots, h('div', { class: 'act-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null, h('span', { class: 'chip-meta' }, `~${act.estimatedMinutes} min · /5`)), hud)),
