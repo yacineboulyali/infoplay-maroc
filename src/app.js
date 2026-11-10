@@ -2,7 +2,7 @@ import { egtsiScreen } from './egtsi106/screen.js';
 import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
 import { mechanicIcon } from './utils/semantic-icons.js';
-import { h, downloadText, frDate, celebrate } from './utils/dom.js';
+import { h, downloadText, frDate, celebrate, svgFrom } from './utils/dom.js';
 import { createStore, localAdapter, MAX_IMPORT_BYTES } from './storage/store.js';
 import { CATALOG, ACTIVITIES, getActivity, getModule, getSession, isActivityId, TOTAL_POINTS } from './data/index.js';
 import { engineOf } from './games/index.js';
@@ -109,6 +109,15 @@ function header(prof) {
     const open = !document.body.classList.contains('nav-open'); document.body.classList.toggle('nav-open', open);
     navToggle.setAttribute('aria-expanded', String(open)); navToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu'); navToggle.textContent = open ? '✕' : '☰';
   } }, '☰');
+  // Liens secondaires (réseau, course, suivi, données) regroupés derrière une seule icône.
+  const more = (...links) => {
+    const menu = h('div', { class: 'nav-more-menu', id: 'nav-more-menu' }, links);
+    const btn = h('button', { type: 'button', class: 'nav-more-btn', 'aria-expanded': 'false', 'aria-controls': 'nav-more-menu', 'aria-label': 'Plus : réseau, course, suivi et données', title: 'Réseau, course, suivi et données', onclick: (e) => {
+      e.stopPropagation(); const open = !wrap.classList.contains('open'); wrap.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open));
+    } }, svgFrom('<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="5" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>'));
+    const wrap = h('div', { class: 'nav-more' + (links.some((l) => l.getAttribute('aria-current')) ? ' has-current' : '') }, btn, menu);
+    return wrap;
+  };
   return h('header', { class: 'top' },
     h('div', { class: 'in' },
       h('a', { class: 'brand', href: '#/profils' },
@@ -122,18 +131,12 @@ function header(prof) {
         a('#/progres', 'Mon progrès', 'progres'),
         a('#/pro', '💼 M205 OFPPT', 'pro'),
         a('#/egtsi106', 'EGTSI106', 'egtsi106'),
-        a('#/multijoueur', 'Multijoueur LAN', 'multijoueur'),
-        a('#/course', '🏁 Course', 'course'),
-        a('#/suivi', '👀 Suivi', 'suivi'),
-        a('#/donnees', 'Profil et données', 'donnees'),
+        more(a('#/multijoueur', '🌐 Multijoueur LAN', 'multijoueur'), a('#/course', '🏁 Course', 'course'), a('#/suivi', '👀 Suivi', 'suivi'), a('#/donnees', '📊 Profil et données', 'donnees')),
         soundButton(prof),
         h('span', { class: 'who' }, '👤 ' + prof.displayName),
         h('button', { type: 'button', onclick: () => { store.logout(); go('#/profils'); } }, 'Changer')
       ) : h('nav', { class: 'main', id: 'main-nav', 'aria-label': 'Navigation principale' },
-        a('#/multijoueur', 'Salon Multijoueur', 'multijoueur'),
-        a('#/course', '🏁 Course', 'course'),
-        a('#/suivi', '👀 Suivi enseignant', 'suivi'),
-        a('#/donnees', 'Données', 'donnees')
+        more(a('#/multijoueur', '🌐 Salon Multijoueur', 'multijoueur'), a('#/course', '🏁 Course', 'course'), a('#/suivi', '👀 Suivi enseignant', 'suivi'), a('#/donnees', '📊 Données', 'donnees'))
       )
     )
   );
@@ -171,7 +174,7 @@ function homeScreen() {
         store.createProfile(name.value);
         const active = store.active();
         lanManager.updateProfile({ displayName: active.displayName, className: active.className });
-        go('#/dash');
+        closeEntry(); go(entryTarget);
       } catch (x) {
         err.textContent = x.message;
       }
@@ -196,7 +199,7 @@ function homeScreen() {
         onclick: () => {
           store.setActive(p.id);
           lanManager.updateProfile({ displayName: p.displayName, className: p.className });
-          go('#/dash');
+          closeEntry(); go(entryTarget);
         },
       },
       h('span', { class: 'prof-ava', 'aria-hidden': 'true' }, avatarFor(p.displayName)),
@@ -210,14 +213,16 @@ function homeScreen() {
   ) : null;
 
   const entrySection = h('section', {
-    class: 'welcome-entry-box',
+    class: 'welcome-entry-box entry-modal',
     id: 'entry-zone',
+    role: 'dialog',
+    'aria-modal': 'true',
     'aria-label': 'Connexion à InfoPlay Maroc',
   },
+  h('button', { type: 'button', class: 'rp-close', 'aria-label': 'Fermer', onclick: () => closeEntry() }, '✕'),
   h('div', { class: 'entry-inner' },
     h('div', { class: 'entry-header' },
-      h('span', { class: 'entry-badge' }, '🎮 Accès Direct & Autonome'),
-      h('h2', null, 'Espace Joueur · Connexion'),
+      h('h2', null, 'Qui es-tu ?'),
       h('p', { class: 'muted' }, 'Aucun mot de passe requis. Tes scores, étoiles et progrès restent enregistrés en local sur cet ordinateur.')
     ),
     form,
@@ -225,186 +230,53 @@ function homeScreen() {
   )
   );
 
-  const enterSoloBtn = h('button', {
-    type: 'button',
-    class: 'btn primary',
-    onclick: () => {
-      const el = document.getElementById('entry-zone');
-      if (el) {
-        el.scrollIntoView({ block: 'start', behavior: 'smooth' });
-        setTimeout(() => name.focus({ preventScroll: true }), 250);
-      }
-    },
-  }, '🎮 Entrer et Jouer (Solo) →');
-
-  const enterLanBtn = h('button', {
-    type: 'button',
-    class: 'btn accent',
-    onclick: () => go('#/multijoueur'),
-  }, '🌐 Salon Multijoueur LAN →');
-
-  const enterRaceBtn = h('a', {
-    class: 'btn ghost',
-    href: '#/course',
-  }, '🏁 Course en Direct');
-
-  const enterDataBtn = h('a', {
-    class: 'btn ghost',
-    href: '#/donnees',
-  }, '📊 Données & Enseignant');
-
-  // Métriques Clés
-  const metricsRibbon = h('div', { class: 'metrics-ribbon' },
-    h('div', { class: 'metric-card' },
-      h('span', { class: 'metric-icon', 'aria-hidden': 'true' }, '📚'),
-      h('div', { class: 'metric-val' }, '4 Modules'),
-      h('div', { class: 'metric-desc' }, 'Système, Bureau, Réseaux, Code')
-    ),
-    h('div', { class: 'metric-card' },
-      h('span', { class: 'metric-icon', 'aria-hidden': 'true' }, '🎯'),
-      h('div', { class: 'metric-val' }, '120 Activités'),
-      h('div', { class: 'metric-desc' }, '100% interactives & immersives')
-    ),
-    h('div', { class: 'metric-card' },
-      h('span', { class: 'metric-icon', 'aria-hidden': 'true' }, '🌐'),
-      h('div', { class: 'metric-val' }, 'Multijoueur LAN'),
-      h('div', { class: 'metric-desc' }, 'Course et défis sans Internet')
-    ),
-    h('div', { class: 'metric-card' },
-      h('span', { class: 'metric-icon', 'aria-hidden': 'true' }, '⭐'),
-      h('div', { class: 'metric-val' }, '600 Points'),
-      h('div', { class: 'metric-desc' }, 'Étoiles d’excellence & médailles')
-    )
-  );
-
-  // 4 Mécaniques Interactives mises en avant
-  const mechanicsSection = h('section', { class: 'mechanics-section', 'aria-label': 'Mécaniques interactives' },
-    h('div', { class: 'section-heading' },
-      h('span', { class: 'section-tag' }, '🕹️ Interactions Riches'),
-      h('h2', null, 'Des activités immersives pour apprendre par l’action'),
-      h('p', { class: 'muted' }, 'Conçues selon les principes de la pédagogie active : manipuler, expérimenter et déduire.')
-    ),
-    h('div', { class: 'mechanics-grid' },
-      h('div', { class: 'mech-card' },
-        h('div', { class: 'mech-icon-box' }, '🎯'),
-        h('h3', null, 'Cliquer-Déposer & Drag and Drop'),
-        h('p', null, 'Classe les éléments dans les bons bacs, associe les notions par paires et ordonne les étapes chronologiques d’un simple glissement ou clic.'),
-        h('div', { class: 'mech-badge' }, 'Tactile & Souris')
-      ),
-      h('div', { class: 'mech-card' },
-        h('div', { class: 'mech-icon-box' }, '🖥️'),
-        h('h3', null, 'Simulations Réalistes & Bureau'),
-        h('p', null, 'Explore une interface fidèle du bureau Windows avec ses icônes, fenêtres actives, menu Démarrer, composants matériels et câbles réseau.'),
-        h('div', { class: 'mech-badge' }, 'Haute Fidélité')
-      ),
-      h('div', { class: 'mech-card' },
-        h('div', { class: 'mech-icon-box' }, '❓'),
-        h('h3', null, 'Bonne Réponse, L’Intrus & Vrai/Faux'),
-        h('p', null, 'Trouve la réponse exacte, détecte la fausse réponse (l’intrus) ou relève le défi Vrai ou Faux avec validation sonore instantanée.'),
-        h('div', { class: 'mech-badge' }, 'Vrai ou Faux', arHint('صحيح أم خطأ'))
-      ),
-      h('div', { class: 'mech-card' },
-        h('div', { class: 'mech-icon-box' }, '🌐'),
-        h('h3', null, 'Jeu Collectif en Réseau Local (LAN)'),
-        h('p', null, 'Découvre automatiquement les camarades connectés sur le même réseau dans la salle d’informatique, dispute des courses en direct sans Internet !'),
-        h('div', { class: 'mech-badge' }, 'Zéro Internet requis')
-      )
-    )
-  );
-
-  // Aperçu du Programme en 4 Modules
-  const modulesPreview = h('section', { class: 'curriculum-preview', 'aria-label': 'Programme des modules' },
-    h('div', { class: 'section-heading' },
-      h('span', { class: 'section-tag' }, '📚 Parcours Pédagogique'),
-      h('h2', null, '30 Séances réparties en 4 Grands Modules'),
-      h('p', { class: 'muted' }, 'Un programme complet et progressif de l’ordinateur jusqu’au code.')
-    ),
-    h('div', { class: 'modules-grid' },
-      h('div', { class: 'module-preview-card mod-c1' },
-        h('div', { class: 'mod-head' },
-          h('span', { class: 'mod-num' }, 'Module 1'),
-          h('span', { class: 'mod-count' }, '6 séances · 24 activités')
-        ),
-        h('h3', null, '🖥️ Ordinateur & Système d’exploitation'),
-        h('p', null, 'Périphériques, unité centrale, composants internes, fonctions du système et gestion des fenêtres.')
-      ),
-      h('div', { class: 'module-preview-card mod-c2' },
-        h('div', { class: 'mod-head' },
-          h('span', { class: 'mod-num' }, 'Module 2'),
-          h('span', { class: 'mod-count' }, '11 séances · 44 activités')
-        ),
-        h('h3', null, '📝 Bureautique & Documents Numériques'),
-        h('p', null, 'Traitement de texte, mise en page, insertion d’images, tableur, formules de calcul et graphiques statistiques.')
-      ),
-      h('div', { class: 'module-preview-card mod-c3' },
-        h('div', { class: 'mod-head' },
-          h('span', { class: 'mod-num' }, 'Module 3'),
-          h('span', { class: 'mod-count' }, '8 séances · 32 activités')
-        ),
-        h('h3', null, '🌐 Réseaux Informatiques & Internet'),
-        h('p', null, 'Architecture d’un réseau local (LAN), équipements, navigation web sécurisée, courrier électronique et cybercitoyenneté.')
-      ),
-      h('div', { class: 'module-preview-card mod-c4' },
-        h('div', { class: 'mod-head' },
-          h('span', { class: 'mod-num' }, 'Module 4'),
-          h('span', { class: 'mod-count' }, '7 séances · 28 activités')
-        ),
-        h('h3', null, '🤖 Algorithmique & Programmation'),
-        h('p', null, 'Notion d’algorithme, variables, tests conditionnels, boucles, programmation par blocs et pilotage de robot.')
-      )
-    )
-  );
+  // Fenêtre de connexion : ouverte seulement quand un parcours demande un profil.
+  let entryTarget = '#/dash';
+  const entryBg = h('div', { class: 'modal-bg', onclick: (e) => { if (e.target === entryBg) closeEntry(); }, onkeydown: (e) => { if (e.key === 'Escape') closeEntry(); } }, entrySection);
+  function closeEntry() { entryBg.remove(); document.body.classList.remove('entry-open'); }
+  const openPath = (target) => {
+    if (store.active()) return go(target);
+    entryTarget = target; document.body.classList.add('entry-open'); document.body.append(entryBg); setTimeout(() => name.focus(), 30);
+  };
 
   return h('main', { id: 'main', class: 'welcome-page' },
     h('section', { class: 'welcome-hero' },
       h('div', { class: 'welcome-copy' },
-        // Badge officiel Créateur Yacine BOULYALI
-        h('div', { class: 'creator-pill' },
-          h('span', { class: 'creator-star', 'aria-hidden': 'true' }, '✨'),
-          h('span', { class: 'creator-latin' }, 'Conçu et développé par ', h('b', null, 'Yacine BOULYALI')),
-          h('span', { class: 'creator-sep' }, '·'),
-          h('span', { class: 'creator-ar', lang: 'ar', dir: 'rtl' }, 'منشئ ومطور المنصة: ', h('b', null, 'ياسين بوليالي'))
-        ),
         // Titre principal
         h('h1', { tabindex: '-1' },
           h('span', { class: 'hero-title-top' }, 'Plateforme Éducative d’Informatique'),
           'InfoPlay ', h('b', { class: 'hero-brand-gold' }, 'Maroc')
         ),
         // Description bilingue
-        h('p', { class: 'welcome-lead-fr' },
-          'Apprends l’informatique en t’amusant : 30 séances, 120 activités immersives (cliquer-déposer, glisser-déposer, simulations réelles, trouver la bonne ou la fausse réponse, vrai ou faux) et jeu multijoueur sur réseau local.',
-          arHint('المنصة التعليمية التفاعلية الأولى بالمغرب لتعلم المعلوميات والبرمجة والشبكات عبر 120 نشاطاً تفاعلياً غامراً، مع إمكانية اللعب الجماعي داخل نفس الشبكة المحلية.')
-        ),
+        h('p', { class: 'welcome-lead-fr' }, 'Choisis ton parcours pour commencer.'),
         // Choix de mode de jeu
         h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Choisis ta façon de jouer' },
           h('section', { class: 'mode-card mode-classic', 'aria-labelledby': 'mode-classic-h' },
             h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '📚'),
-            h('h2', { id: 'mode-classic-h' }, 'InfoPlay Classique'),
-            h('p', null, 'Toutes les activités dans une interface claire et rapide, en solo ou en multijoueur sur le réseau local de la classe.'),
-            arHint('الواجهة الكلاسيكية: تدريب فردي أو تحدي جماعي'),
-            h('div', { class: 'welcome-cta-group' }, enterSoloBtn, enterLanBtn, enterRaceBtn, enterDataBtn)
+            h('h2', { id: 'mode-classic-h' }, 'Tronc commun'),
+            h('p', null, '4 modules, 30 séances, 120 activités.'),
+            h('button', { type: 'button', class: 'btn primary mode-go welcome-cta', onclick: () => openPath('#/dash') }, 'Ouvrir le parcours →')
           ),
           h('section', { class: 'mode-card mode-pro', 'aria-labelledby': 'mode-pro-h' },
             h('span', { class: 'mode-badge' }, 'Nouveau · OFPPT'),
             h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '💼'),
             h('h2', { id: 'mode-pro-h' }, 'M205 · Bureautique avancée'),
-            h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint et Outlook avancés, simulateur de type MOS, révision espacée, défi mixte et quêtes du jour.'),
-            arHint('المكتبيات المتقدمة للتكوين المهني: 20 حصة و80 نشاطاً تفاعلياً'),
-            h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => { if (store.active()) go('#/pro'); else { const el = document.getElementById('entry-zone'); if (el) { el.scrollIntoView({ block: 'start', behavior: 'smooth' }); setTimeout(() => name.focus({ preventScroll: true }), 250); } } } }, '💼 Ouvrir le parcours M205 →')
+            h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint, Outlook.'),
+            h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/pro') }, 'Ouvrir le parcours →')
           ),
           h('section', { class: 'mode-card mode-pro', 'aria-labelledby': 'mode-egtsi-h' },
             h('span', { class: 'mode-badge' }, 'OFPPT · Partie 1'),
             h('h2', { id: 'mode-egtsi-h' }, 'EGTSI106 · Culture et techniques du numérique'),
-            h('p', null, 'Trois séances sur les fondamentaux du digital, les appareils et réseaux, puis Windows, les fichiers et le stockage.'),
-            h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir la séance →')
+            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🖥️'),
+            h('p', null, '3 séances : numérique, appareils et réseaux, Windows.'),
+            h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir le parcours →')
           ),
           h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
             h('span', { class: 'mode-badge' }, 'Nouveau · 3D'),
             h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🏝️'),
             h('h2', { id: 'mode-3d-h' }, 'InfoPlay Immersif 3D'),
-            h('p', null, 'Explore un monde en 3D : quatre îles thématiques, un portail pour chaque séance et un robot à programmer en volume.'),
-            arHint('عالم ثلاثي الأبعاد: جزر وبوابات وروبوت تفاعلي'),
-            h('a', { class: 'btn accent mode-go', href: 'immersive.html' }, '🥽 Entrer dans le monde 3D →')
+            h('p', null, 'Les mêmes séances dans un monde en 3D.'),
+            h('a', { class: 'btn primary mode-go', href: 'immersive.html' }, 'Ouvrir le parcours →')
           )
         )
       ),
@@ -429,10 +301,6 @@ function homeScreen() {
         )
       )
     ),
-    metricsRibbon,
-    entrySection,
-    mechanicsSection,
-    modulesPreview,
     h('footer', { class: 'welcome-footer' },
       h('div', { class: 'footer-main' },
         h('p', { class: 'footer-credit' },
@@ -1125,6 +993,10 @@ installInterfaceSounds(document);
 installInteractions(document);
 autoHideHeader();
 window.addEventListener('hashchange', () => document.body.classList.remove('nav-open', 'hdr-hidden'));
+// Le menu « Plus » se referme au clic ailleurs ou avec Échap.
+const closeMore = () => document.querySelectorAll('.nav-more.open').forEach((n) => { n.classList.remove('open'); n.querySelector('.nav-more-btn')?.setAttribute('aria-expanded', 'false'); });
+document.addEventListener('click', (e) => { if (!e.target.closest?.('.nav-more-btn')) closeMore(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMore(); });
 suggestFullscreen();
 window.addEventListener('error', () => toast('Une erreur est survenue. Recharge la page si besoin.'));
 

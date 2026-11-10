@@ -8,7 +8,7 @@
   --ink:#0f172a;--muted:#475569;--bg:#f5f6f8;--card:#fff;--line:#e2e5ea;--line-strong:#c5ccd6;
   --primary:#1d4ed8;--primary-d:#1e3a8a;--primary-bg:#e8eefc;--accent:#c2410c;--gold:#f5b301;
   --ok:#15703f;--ok-bg:#e6f4ec;--ko:#b3261e;--ko-bg:#fdecea;
-  --surface-2:#f1f3f6;--r:12px;--side:256px;--pad:clamp(.4rem,1vw,1rem);
+  --surface-2:#f1f3f6;--r:12px;--pad:clamp(.25rem,.6vw,.6rem);
   --sh:0 1px 2px rgba(15,23,42,.06);--sh-lg:0 6px 20px rgba(15,23,42,.10);
   --grad:var(--primary);--grad-warm:var(--accent);
   --m1:#1d4ed8;--m2:#0f766e;--m3:#c2410c;--m4:#6d28d9;--m5:#0e7490;
@@ -48,19 +48,14 @@ nav.main a[aria-current=page]{background:var(--primary-bg);color:var(--primary-d
 .fs-btn:hover{background:var(--surface-2)}
 .who-mini{background:var(--surface-2)}
 
-/* Ordinateur : barre latérale fixe, le contenu occupe tout le reste de la page. */
+/* Ordinateur : barre du haut sur toute la largeur, navigation sur une ligne. */
 @media (min-width:1100px){
-  body:not(.immersive){padding-left:var(--side)}
-  header.top{position:fixed;inset:0 auto 0 0;width:var(--side);border-bottom:0;border-right:1px solid var(--line);z-index:20}
-  header.top .in{height:100%;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:.6rem;padding:1.1rem .8rem;overflow-y:auto}
-  .brand{padding:.2rem .5rem .6rem}
-  .lan-badge{justify-content:center;border-radius:8px}
-  header.top .in>nav.main{order:2;flex-direction:column;align-items:stretch;flex-wrap:nowrap;margin-left:0;gap:2px}
-  nav.main a,nav.main button{justify-content:flex-start;padding:.55rem .75rem;min-height:42px;text-align:left}
-  nav.main .who{margin-top:.8rem;padding:.5rem .75rem;overflow-wrap:anywhere}
-  .top-tools{order:3;margin:auto 0 0;padding-top:.6rem;justify-content:flex-start}
-  .ach-stack{top:1rem}
-  .fs-suggest.desktop{top:1rem}
+  header.top{position:sticky;top:0}
+  header.top .in{flex-wrap:nowrap;gap:.75rem}
+  header.top .in>nav.main{order:2;margin-left:1rem;flex:1;flex-wrap:nowrap;gap:.15rem}
+  nav.main a,nav.main button{white-space:nowrap}
+  nav.main .nav-more{margin-left:auto}
+  .top-tools{order:3;margin-left:0}
 }
 /* Tablette et petit écran : barre du haut sur une seule ligne, menu repliable. */
 @media (max-width:1099px){
@@ -73,7 +68,7 @@ nav.main a[aria-current=page]{background:var(--primary-bg);color:var(--primary-d
   body.nav-open header.top nav.main{opacity:1;visibility:visible;transform:none}
   header.top nav.main a,header.top nav.main button,header.top nav.main .who{display:flex;align-items:center;justify-content:flex-start;min-height:46px;text-align:left;background:var(--surface-2);border-radius:8px}
 }
-@media print{body:not(.immersive){padding-left:0}header.top{display:none}}
+@media print{header.top{display:none}}
 
 /* ---------- surfaces ---------- */
 .card{border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);transition:border-color .15s,box-shadow .15s}
@@ -283,3 +278,45 @@ ol.prompts li{border-width:1.5px}
 .profile-btn{border:1px solid var(--line-strong);border-radius:8px}
 .profile-btn:hover{background:var(--surface-2)}
 .btn kbd{opacity:1;color:inherit}.btn.primary kbd,.btn.accent kbd{background:rgba(0,0,0,.28);color:#fff}
+
+/* ---------- menu « Plus » : réseau, course, suivi, données derrière une icône ---------- */
+.nav-more{position:relative;display:flex}
+nav.main .nav-more-btn{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1px solid var(--line-strong);background:#fff;color:var(--ink)}
+.nav-more.open .nav-more-btn,.nav-more.has-current .nav-more-btn{background:var(--primary-bg);border-color:#bccdf5;color:var(--primary-d)}
+.nav-more-menu{display:none;position:absolute;right:0;top:calc(100% + .4rem);z-index:40;min-width:230px;padding:.35rem;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--sh-lg)}
+.nav-more.open .nav-more-menu{display:grid;gap:2px}
+nav.main .nav-more-menu a{justify-content:flex-start;padding:.55rem .75rem;min-height:42px}
+@media (max-width:1099px){
+  .nav-more{display:contents}
+  nav.main .nav-more-btn{display:none}
+  .nav-more-menu{display:contents}
+}
+
+/* ---------- accueil épuré : titre, cartes de parcours, crédit discret ---------- */
+.welcome-page{gap:1rem}
+.welcome-hero{grid-template-columns:1fr;gap:1.25rem;padding:.5rem 0 0;align-items:start}
+.welcome-copy{max-width:none}
+.welcome-hero h1{font-size:clamp(1.6rem,2.6vw,2.2rem);margin:.1rem 0 .3rem}
+.hero-title-top{font-size:.8rem}
+.welcome-lead-fr{margin:0 0 .25rem;max-width:none}
+.mode-choice{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:.9rem}
+.mode-card{min-height:190px}
+.mode-card .mode-go{align-self:flex-start}
+.portrait-frame{order:0;max-width:none;width:max-content;margin:0;padding:.4rem .9rem .4rem .4rem;flex-direction:row;align-items:center;gap:.6rem;box-shadow:none;background:transparent;border-color:var(--line)}
+.portrait-img-wrap{flex:none;width:40px;height:40px;border-radius:50%}
+.portrait-frame img{width:40px;height:40px;max-height:none;border-radius:50%;object-fit:cover}
+.portrait-badge,.cap-role-ar{display:none}
+.portrait-frame figcaption{background:none;padding:0;text-align:left;gap:0;font-size:.8rem;line-height:1.3}
+.creator-name-block{justify-content:flex-start;gap:.4rem;font-weight:700}
+.cap-role{color:var(--muted)!important;font-size:.75rem}
+.welcome-footer{margin-top:.5rem;padding:.8rem 0 .2rem;text-align:left;font-size:.8rem;color:var(--muted)}
+.welcome-footer p{margin:.1rem 0}
+/* fenêtre de connexion */
+.entry-modal{position:relative;width:min(560px,100%);max-height:calc(100dvh - 2rem);overflow:auto;margin:0}
+.entry-modal .entry-inner{padding:1.4rem 1.5rem;box-shadow:var(--sh-lg)}
+.entry-modal .entry-header h2{font-size:1.3rem;padding-right:2.5rem}
+.entry-modal .rp-close{z-index:2}
+.cap-name-latin,.cap-name-ar{font-size:.85rem;font-weight:700;letter-spacing:0}
+body.entry-open .fs-suggest{display:none}
+.mode-card .mode-ico{order:-1}
+@media (max-width:1099px){header.top nav.main button.nav-more-btn{display:none}}
