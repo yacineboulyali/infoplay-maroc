@@ -2,6 +2,7 @@
 import { h, norm, fmtNum } from '../utils/dom.js';
 import { VIEWS2 } from './sims2.js';
 import { ribbonView } from './ribbon.js';
+import { officeArt, officeConcept } from '../pro/visuals.js';
 import { itemVisual } from '../utils/item-visuals.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 
@@ -92,9 +93,17 @@ export function simGame(root, d) {
   const api = VIEWS[d.view](host, st, { cfg: d.cfg || {} });
   const taskBox = h('div', { class: 'taskbox', 'aria-live': 'polite' }); const log = h('ul', { class: 'steplog' });
   const btn = h('button', { type: 'button', class: 'btn primary', onclick: validate }, 'Valider l’étape');
+  function stepVisual() {
+    const reviewed = studentIllustration(d, step, 'student-illustration-task');
+    if (reviewed) return reviewed;
+    const label = d.tasks[step][0];
+    const visual = itemVisual(label);
+    if (visual.matches('svg') && officeConcept(label, d.visualPart) >= 0) return officeArt(label, d.visualPart);
+    return visual;
+  }
   function drawTask() {
     taskBox.replaceChildren(h('p', { class: 'step-h' }, step < n ? `Étape ${step + 1} sur ${n}` : 'Terminé'), h('p', { class: 'step-t' }, step < n ? d.tasks[step][0] : 'Toutes les étapes sont faites : clique sur « Vérifier ».'), ...(step < n ? [btn] : []));
-    const illustration = step < n ? (studentIllustration(d, step, 'student-illustration-task') || itemVisual(d.tasks[step][0])) : null;
+    const illustration = step < n ? stepVisual() : null;
     if (illustration) taskBox.prepend(illustration);
   }
   function validate() {

@@ -476,3 +476,6 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .egtsi-concept-visual .item-visual-image{width:2.8rem;height:2.8rem}
 .taskbox>.item-visual-svg,.q>.item-visual-svg{width:2rem;height:2rem}
 .slot-hint>.item-visual-svg{width:1.15rem;height:1.15rem;margin-inline-end:.2rem}
+.generated-item-art{display:inline-block;flex:0 0 auto;width:3.25rem;height:3.25rem;border-radius:.5rem;background-color:#e5f5fa;background-repeat:no-repeat;background-size:300% 200%;vertical-align:middle}
+.taskbox:has(>.generated-item-art){display:flow-root}
+.taskbox>.generated-item-art{float:right;width:clamp(88px,15vw,120px);height:clamp(88px,15vw,120px);margin:0 0 .6rem .85rem}

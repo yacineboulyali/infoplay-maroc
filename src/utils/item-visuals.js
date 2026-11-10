@@ -1,4 +1,5 @@
 import { h, norm, svgFrom } from './dom.js';
+import { generatedItemArt } from './generated-item-art.js';
 import { semanticIcon, semanticKind } from './semantic-icons.js';
 import { STUDENT_ILLUSTRATIONS } from '../data/student-illustrations.js';
 import { ACTIVITIES } from '../data/index.js';
@@ -70,6 +71,8 @@ export function itemVisual(label, { allowImage = true } = {}) {
   const src = allowImage && (images.get(normalized) || images.get(exact));
   if (src) return h('img', { class: 'item-visual-image', src, alt: '', loading: 'lazy', draggable: 'false',
     onerror: event => event.currentTarget.replaceWith(itemVisual(label, { allowImage: false })) });
+  const generated = allowImage && generatedItemArt(normalized);
+  if (generated) return generated;
   const drawing = drawings.find(([pattern]) => pattern.test(normalized));
   if (drawing) return vector(drawing[1], drawing[2]);
   const kind = semanticKind(label);
