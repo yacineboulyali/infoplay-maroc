@@ -344,3 +344,24 @@ body.entry-open .fs-suggest{display:none}
 body.high-contrast .chev-step>a,body.high-contrast .chev-step>span{background:#000;color:#fff}
 body.high-contrast .chev-step.cur>span{background:#fff;color:#000;outline:2px solid #000;outline-offset:-2px}
 ol.prompts li>.arh-btn{flex:none}
+
+/* ---------- barre de présence : utilisateurs connectés sur le même réseau ---------- */
+.lan-bar{display:flex;align-items:center;gap:.6rem;min-height:36px;padding:.25rem var(--pad);background:#fff;border-bottom:1px solid var(--line);font-size:.82rem}
+.lan-bar-title{display:inline-flex;align-items:center;gap:.4rem;flex:none;font-weight:700;color:var(--ok);text-decoration:none;white-space:nowrap}
+.lan-bar-title:hover{text-decoration:underline}
+.lan-bar-list{display:flex;gap:.35rem;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.lan-chip{display:inline-flex;align-items:center;gap:.3rem;flex:none;padding:.12rem .55rem .12rem .2rem;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);white-space:nowrap}
+.lan-chip.me{background:var(--primary-bg);border-color:#bccdf5;font-weight:700}
+.lan-chip-ava{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#fff;font-size:.85rem}
+.lan-chip-score{color:var(--muted);font-variant-numeric:tabular-nums}
+.lan-chip.empty{padding-left:.55rem;color:var(--muted);background:none;border-style:dashed}
+.lan-chip.more{padding-left:.55rem;background:none}
+@media (max-width:820px){.lan-bar{font-size:.76rem;gap:.4rem}.lan-chip-score{display:none}}
+@media print{.lan-bar{display:none}}
+
+/* ---------- association : flèche en attente accrochée à l'élément choisi ---------- */
+.match-wire.pending{fill:none;stroke:var(--primary);stroke-width:3;stroke-dasharray:8 6;stroke-linecap:round;animation:match-dash .7s linear infinite}
+.match-arrow-tip{fill:var(--primary)}
+@keyframes match-dash{to{stroke-dashoffset:-14}}
+body.reduced-motion .match-wire.pending{animation:none}
+.match-wires{z-index:3}

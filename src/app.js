@@ -32,6 +32,17 @@ const STATUS = { todo: 'Pas commencée', doing: 'En cours', done: 'Terminée' };
 const arSub = (text) => arHint(text);
 // Parcours M205 : libellés et périmètre de jeu propres (le Tronc Commun garde les siens).
 const isPro = (mi) => Number(mi) === PRO.id;
+// Un seul parcours à la fois : 'tc' (Tronc commun), 'pro' (M205) ou 'egtsi'. On en change depuis l'accueil.
+let currentTrack = null;
+function trackOf(hash) {
+  const q = hash.replace(/^#\/?/, '').replace(/\?.*$/, '').split('/').filter(Boolean);
+  if (!q.length || q[0] === 'profils' || q[0] === 'accueil') return null;
+  if (q[0] === 'pro' || (q[0] === 'm' && isPro(q[1]))) return 'pro';
+  if (q[0] === 'egtsi106') return 'egtsi';
+  if (q[0] === 'dash' || q[0] === 'progres' || q[0] === 'm') return 'tc';
+  return currentTrack; // pages communes : on reste dans le parcours en cours
+}
+const homeStep = (mi) => (isPro(mi) ? ['🏠', 'Accueil', '#/profils'] : ['🏠', 'Tableau de bord', '#/dash']);
 const modLabel = (mi) => (isPro(mi) ? 'M205' : 'Module ' + mi);
 const modHref = (mi) => (isPro(mi) ? '#/pro' : '#/m/' + mi);
 const scopeOf = (mi, pid) => (isPro(mi) ? proScope(pid, recOf(pid)) : undefined);
@@ -102,6 +113,7 @@ export function crumbs(...steps) {
 // ---------- En-tête principal ----------
 function header(prof) {
   const cur = location.hash.split('/')[1] || '';
+  const track = (currentTrack = trackOf(location.hash));
   const a = (href, label, key) => h('a', { href, 'aria-current': cur === key ? 'page' : null }, label);
   const lanState = lanManager.getState();
   const lanPill = h('a', {
@@ -136,10 +148,11 @@ function header(prof) {
       lanPill,
       h('div', { class: 'top-tools' }, prof ? h('span', { class: 'who-mini', 'aria-hidden': 'true' }, avatarFor(prof.displayName)) : null, fsButton('fs-btn'), navToggle),
       prof ? h('nav', { class: 'main', id: 'main-nav', 'aria-label': 'Navigation principale' },
-        a('#/dash', 'Tableau de bord', 'dash'),
-        a('#/progres', 'Mon progrès', 'progres'),
-        a('#/pro', '💼 M205 OFPPT', 'pro'),
-        a('#/egtsi106', 'EGTSI106', 'egtsi106'),
+        // Seuls les liens du parcours en cours sont affichés ; les autres parcours s'ouvrent depuis l'accueil.
+        ...(track === 'tc' ? [a('#/dash', 'Tableau de bord', 'dash'), a('#/progres', 'Mon progrès', 'progres')]
+          : track === 'pro' ? [a('#/pro', '💼 M205 Bureautique avancée', 'pro')]
+          : track === 'egtsi' ? [a('#/egtsi106', '🖥️ EGTSI106', 'egtsi106')] : []),
+        track ? a('#/profils', '↩ Changer de parcours', 'profils') : null,
         more(a('#/multijoueur', '🌐 Multijoueur LAN', 'multijoueur'), a('#/course', '🏁 Course', 'course'), a('#/suivi', '👀 Suivi', 'suivi'), a('#/donnees', '📊 Profil et données', 'donnees')),
         soundButton(prof),
         h('span', { class: 'who' }, '👤 ' + prof.displayName),
@@ -149,6 +162,26 @@ function header(prof) {
       )
     )
   );
+}
+
+// ---------- Barre de présence : qui est connecté sur le même réseau ----------
+const lanBarEl = h('aside', { class: 'lan-bar noprint', 'aria-label': 'Utilisateurs connectés sur le réseau local' });
+let lanBarSig = '';
+function drawLanBar(st) {
+  const players = st.players.filter((p) => p.role !== 'observer');
+  const sig = JSON.stringify(players.map((p) => [p.peerId, p.name, p.avatar, p.score, p.isMe]));
+  if (sig === lanBarSig && lanBarEl.childElementCount) return; lanBarSig = sig;
+  const shown = players.slice(0, 10); const rest = players.length - shown.length;
+  lanBarEl.replaceChildren(
+    h('a', { class: 'lan-bar-title', href: '#/multijoueur', title: 'Ouvrir le salon réseau' },
+      h('span', { class: 'lan-pulse-dot', 'aria-hidden': 'true' }), `En ligne · ${players.length}`),
+    h('ul', { class: 'lan-bar-list' },
+      shown.length ? shown.map((p) => h('li', { class: 'lan-chip' + (p.isMe ? ' me' : ''), title: `${p.name}${p.activity ? ' — ' + p.activity : ''}` },
+        h('span', { class: 'lan-chip-ava', 'aria-hidden': 'true' }, p.avatar || '🎮'),
+        h('span', { class: 'lan-chip-name' }, p.isMe ? p.name + ' (moi)' : p.name),
+        Number.isFinite(p.score) ? h('span', { class: 'lan-chip-score' }, p.score + ' pts') : null))
+        : h('li', { class: 'lan-chip empty' }, 'Personne pour l’instant : ouvre un profil pour apparaître ici.'),
+      rest > 0 ? h('li', { class: 'lan-chip more' }, h('a', { href: '#/multijoueur' }, `+${rest} autres`)) : null));
 }
 
 function floatingHome(prof) {
@@ -430,7 +463,7 @@ function multiplayerScreen() {
       chatForm
     ),
     h('div', { class: 'row', style: 'margin-top:1.5rem' },
-      prof ? h('a', { class: 'btn primary', href: '#/dash' }, '← Mon Tableau de bord') : h('a', { class: 'btn primary', href: '#/profils' }, '← Choisir mon pseudo')
+      prof ? h('a', { class: 'btn primary', href: currentTrack === 'pro' ? '#/pro' : currentTrack === 'egtsi' ? '#/egtsi106' : '#/dash' }, '← Retour à mon parcours') : h('a', { class: 'btn primary', href: '#/profils' }, '← Choisir mon pseudo')
     )
   );
 }
@@ -469,7 +502,6 @@ function dashScreen() {
         h('span', { class: 'cta-play', 'aria-hidden': 'true' }, '▶'),
         h('span', null, h('small', null, `Module ${next.moduleId} · Séance ${next.sessionIndex} · Activité ${next.index}`), h('b', null, `Continuer : ${next.title}`)))
         : h('span', { class: 'pill done' }, '🏆 Tout est fait !'),
-      h('a', { class: 'btn accent', href: '#/pro' }, '💼 M205 Bureautique avancée'),
       h('a', { class: 'btn ghost', href: '#/course' }, '🏁 Course de la classe'),
       h('a', { class: 'btn ghost', href: '#/multijoueur' }, '🌐 Joueurs du réseau')),
     h('h2', { class: 'section-h', 'data-reveal': '' }, 'Les 4 modules'),
@@ -541,7 +573,7 @@ function sessionScreen(mi, si) {
   lanManager.setActivity(`m${mi}-s${si}`, `Séance ${si} : ${s.title}`);
 
   return h('main', { id: 'main' },
-    crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si]),
+    crumbs(homeStep(mi), ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si]),
     h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`, arSub(arSess(s))),
     s.situation ? h('section', { class: 'mission-brief', 'data-reveal': '' },
       h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, s.situation.ico),
@@ -663,7 +695,7 @@ function activityScreen(mi, si, ai) {
   let hud = gameHud(computeGame(rec, prof.id, scopeOf(mi, prof.id)), { compact: true });
   const bestT = bestTime(prof.id, act.id);
   const view = h('main', { id: 'main', class: `activity-page ${m.color}` },
-    crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si, `#/m/${mi}/s/${si}`], ['🎯', 'Activité ' + ai]),
+    crumbs(homeStep(mi), ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si, `#/m/${mi}/s/${si}`], ['🎯', 'Activité ' + ai]),
     h('header', { class: 'act-hero', 'data-reveal': '' },
       h('div', { class: 'act-hero-main' },
         h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
@@ -704,7 +736,7 @@ function summaryScreen(mi, si) {
   const nextS = getSession(mi, si + 1);
 
   return h('main', { id: 'main' },
-    crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', modLabel(mi), modHref(mi)], ['📊', 'Bilan de la séance ' + si]),
+    crumbs(homeStep(mi), ['📚', modLabel(mi), modHref(mi)], ['📊', 'Bilan de la séance ' + si]),
     h('h1', { tabindex: '-1' }, `Bilan — Séance ${si} : ${s.title}`),
     h('p', { class: 'muted' }, `Élève : ${p.displayName}${p.className ? ' · ' + p.className : ''} · ${frDate(new Date().toISOString())}`),
     h('div', { class: 'card row', style: 'justify-content:space-around' },
@@ -981,7 +1013,8 @@ function render() {
 
     view = view || notFound();
     revealIn(view);
-    app.replaceChildren(header(prof), view, floatingHome(prof));
+    drawLanBar(lanManager.getState());
+    app.replaceChildren(header(prof), lanBarEl, view, floatingHome(prof));
   } catch (e) {
     app.replaceChildren(header(null), errorScreen(e));
   }
@@ -1012,6 +1045,7 @@ lanManager.subscribe((st) => {
     (kind) => { if (kind === 'race-start' || kind === 'overtake' || (kind === 'join' && live)) audio.play(kind); });
   const badge = document.querySelector('.lan-badge span:last-child');
   if (badge) badge.textContent = `Réseau local (${st.playerCount})`;
+  drawLanBar(st);
   const cur = location.hash.split('/')[1] || '';
   if (live && (cur === 'course' || cur === 'suivi')) { live.update(st); return; }
   if (cur === 'multijoueur' || cur === 'salon') {

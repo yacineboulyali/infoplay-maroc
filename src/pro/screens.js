@@ -12,7 +12,7 @@ import { dueCards, review, defiDeck, finishDefi, quests, mastery, MASTERY, proSc
 
 const kids = (...k) => k.filter((x) => x != null && x !== false); // replaceChildren() écrirait « null »
 const step = (icon, label, href) => h('li', { class: 'chev-step s1' + (href ? '' : ' cur'), 'aria-current': href ? null : 'page' }, h(href ? 'a' : 'span', href ? { href } : null, h('span', { class: 'chev-ico', 'aria-hidden': 'true' }, icon), h('span', { class: 'chev-txt' }, label)));
-const crumbs = (...steps) => h('nav', { class: 'crumbs chev', 'aria-label': 'Fil d’Ariane' }, h('ol', null, step('🏠', 'Tableau de bord', '#/dash'), ...steps.map(([icon, label, href], i) => { const li = step(icon, label, href); li.classList.add('s' + Math.min(i + 2, 4)); return li; })));
+const crumbs = (...steps) => h('nav', { class: 'crumbs chev', 'aria-label': 'Fil d’Ariane' }, h('ol', null, step('🏠', 'Accueil', '#/profils'), ...steps.map(([icon, label, href], i) => { const li = step(icon, label, href); li.classList.add('s' + Math.min(i + 2, 4)); return li; })));
 
 // ---------- TABLEAU DE BORD M205 ----------
 export function proHub({ prof, rec }) {

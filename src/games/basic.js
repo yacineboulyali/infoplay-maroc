@@ -111,7 +111,9 @@ export function matchGame(root, d) {
   wires.classList.add('match-wires');
   wires.setAttribute('aria-hidden', 'true');
   let justLinked = null;
+  let pointer = null; // position du pointeur pendant qu'un élément attend sa liaison
   const lb = [], rb = [];
+  const SVG = 'http://www.w3.org/2000/svg';
 
   const drawWires = () => {
     wires.replaceChildren();
@@ -133,6 +135,27 @@ export function matchGame(root, d) {
       wires.append(path);
     });
     justLinked = null;
+    // Élément choisi mais pas encore relié : une flèche en pointillés reste accrochée à lui
+    // et suit le pointeur (ou se cale sur la réponse survolée) jusqu'au clic suivant.
+    if (sel != null && lb[sel]) {
+      const a = lb[sel].getBoundingClientRect();
+      const x1 = a.right - box.left, y1 = a.top + a.height / 2 - box.top;
+      let x2 = x1 + 64, y2 = y1;
+      if (pointer) {
+        const over = rb.find((b) => { const r = b.getBoundingClientRect(); return pointer.x >= r.left && pointer.x <= r.right && pointer.y >= r.top && pointer.y <= r.bottom; });
+        if (over) { const r = over.getBoundingClientRect(); x2 = r.left - box.left - 4; y2 = r.top + r.height / 2 - box.top; }
+        else { x2 = pointer.x - box.left; y2 = pointer.y - box.top; }
+      }
+      const defs = document.createElementNS(SVG, 'defs'); const marker = document.createElementNS(SVG, 'marker');
+      for (const [k, v] of Object.entries({ id: 'match-arrow', viewBox: '0 0 10 10', refX: '8', refY: '5', markerWidth: '7', markerHeight: '7', orient: 'auto-start-reverse' })) marker.setAttribute(k, v);
+      const tip = document.createElementNS(SVG, 'path'); tip.setAttribute('d', 'M0 0 L10 5 L0 10 z'); tip.setAttribute('class', 'match-arrow-tip'); marker.append(tip); defs.append(marker);
+      const path = document.createElementNS(SVG, 'path');
+      const bend = Math.max(24, Math.abs(x2 - x1) * 0.45);
+      path.setAttribute('d', `M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`);
+      path.setAttribute('class', 'match-wire pending');
+      path.setAttribute('marker-end', 'url(#match-arrow)');
+      wires.append(defs, path);
+    }
   };
 
   const paint = () => {
@@ -157,7 +180,7 @@ export function matchGame(root, d) {
     if (prev >= 0) map[prev] = null;
     justLinked = leftIdx;
     map[leftIdx] = rightItem;
-    sel = null;
+    sel = null; pointer = null;
     live.textContent = 'Association enregistrée. Clique sur Vérifier pour savoir si elle est correcte.';
     audio.play('snap');
     paint();
@@ -231,6 +254,12 @@ export function matchGame(root, d) {
       h('div', { class: 'col' }, rb)
     )
   );
+
+  // La flèche en attente suit la souris, le doigt ou le glisser-déposer.
+  const track = (e) => { if (sel == null) return; pointer = { x: e.clientX, y: e.clientY }; drawWires(); };
+  matchArea.addEventListener('pointermove', track);
+  matchArea.addEventListener('dragover', track);
+  matchArea.addEventListener('pointerleave', () => { if (sel != null && pointer) { pointer = null; drawWires(); } });
 
   root.append(
     h('div', { class: 'match-intro-banner' },
