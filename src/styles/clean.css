@@ -432,3 +432,17 @@ body.reduced-motion .taskbox.step-ok,body.reduced-motion .step-pass-ic,body.redu
 .rot input{width:min(320px,70%);vertical-align:middle}
 @media (max-width:620px){.case3d{--d:36px}.stage{perspective:800px}}
 body.high-contrast .case3d .slot{border-color:#fff}
+
+/* ---------- assemblage : glisser-déposer des composants dans le boîtier ---------- */
+.asm-tray .chip{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.asm-tray .chip.dragging,.case3d .slot.dragging{opacity:.35}
+.asm-tray.drag-over{outline:2px dashed var(--primary);outline-offset:2px;background:var(--primary-bg)}
+.case3d .slot.filled{cursor:grab;touch-action:none}
+.case3d .slot.drag-over{background:rgba(96,165,250,.35);border-color:#93c5fd;border-style:solid;box-shadow:0 0 0 3px rgba(147,197,253,.6)}
+.asm-ghost{position:fixed;left:0;top:0;z-index:200;pointer-events:none;padding:.5rem .8rem;border-radius:8px;border:1px solid #0b0f17;background:linear-gradient(160deg,#e8ecf2,#b8c1cd);color:#111;font-weight:700;font-size:.85rem;white-space:nowrap;box-shadow:0 12px 24px rgba(15,23,42,.35);cursor:grabbing}
+.asm-ghost[data-part=board]{background:linear-gradient(140deg,#0f6b47,#0a4d34);color:#fff}
+.asm-ghost[data-part=ram]{background:repeating-linear-gradient(90deg,#126b4b 0 18%,#0b0f17 18% 25%);color:#fff;text-shadow:0 1px 2px #000}
+.asm-ghost[data-part=ssd],.asm-ghost[data-part=psu],.asm-ghost[data-part=fan]{background:linear-gradient(160deg,#3a4350,#161b22);color:#fff}
+/* La carte mère reste toujours derrière les emplacements qu'elle porte (processeur, RAM, ventilateur). */
+.case3d .slot{transform:translateZ(9px)}
+.case3d .slot.base,.case3d .slot.filled.base{transform:translateZ(2px)}

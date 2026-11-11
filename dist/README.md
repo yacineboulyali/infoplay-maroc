@@ -40,17 +40,21 @@ Second parcours, indépendant du Tronc Commun (il ne change ni ses 120 activité
 
 ## Démonstrations animées
 
-### Classer par clic ou glisser-déposer
+### Associer les câbles à leurs ports (EGTSI106)
 
-![Démonstration animée d'une activité de classement](docs/gifs/01-classement-glisser-deposer.gif)
+![Association de cinq câbles à leurs ports et affichage du corrigé](docs/gifs/01-associer-les-cables.gif)
 
-### Associer des éléments avec des liens visuels
+### Classer les périphériques selon leur rôle
 
-![Démonstration animée d'une activité d'association](docs/gifs/02-association-avec-liens.gif)
+![Classement du clavier, de l’écran et du processeur](docs/gifs/02-classer-les-peripheriques.gif)
 
 ### Programmer le robot pas à pas
 
-![Démonstration animée de la programmation du robot](docs/gifs/03-programmation-robot.gif)
+![Ajout de commandes Avancer et exécution du programme](docs/gifs/03-programmer-le-robot.gif)
+
+### Personnaliser le ruban Word (M205)
+
+![Création et validation d’un nouvel onglet dans le simulateur Word](docs/gifs/04-simuler-le-ruban-word.gif)
 
 ---
 
