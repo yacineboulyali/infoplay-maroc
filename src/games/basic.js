@@ -3,6 +3,7 @@
 import { h, shuffle, norm } from '../utils/dom.js';
 import { arText } from '../i18n/ar.js';
 import { arHint } from '../i18n/arhint.js';
+import { arQuestion } from '../i18n/ar-questions.js';
 import { officeArt } from '../pro/visuals.js';
 import { semanticIcon } from '../utils/semantic-icons.js';
 import { audio } from '../audio/audio.js';
@@ -575,7 +576,7 @@ export function fillGame(root, d) {
       });
       last = m.index + m[0].length;
     }
-    p.append(text.slice(last));
+    p.append(text.slice(last), arHint(arQuestion(d.illustrationActivityId, index)));
     root.append(p);
   });
 
@@ -657,7 +658,7 @@ export function quizGame(root, d) {
       );
     });
 
-    const qar = arText(lines[0]);
+    const qar = arText(lines[0]) || arQuestion(d.illustrationActivityId, i);
     root.append(
       h('fieldset', { class: 'q quiz-fieldset' + (isTrueFalse ? ' is-tf' : isFindFalse ? ' is-find-false' : '') },
         h('legend', null,

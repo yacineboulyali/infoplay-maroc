@@ -11,7 +11,8 @@ import { gameHud } from '../fx/popup.js';
 import { dueCards, review, defiDeck, finishDefi, quests, mastery, MASTERY, proScope, proState, dayStreak, PRO_BADGES, BOX_DAYS, openedSessions } from './engine.js';
 
 const kids = (...k) => k.filter((x) => x != null && x !== false); // replaceChildren() écrirait « null »
-const crumbs = (...k) => h('p', { class: 'crumbs' }, h('a', { href: '#/dash' }, 'Tableau de bord'), ' › ', ...k);
+const step = (icon, label, href) => h('li', { class: 'chev-step s1' + (href ? '' : ' cur'), 'aria-current': href ? null : 'page' }, h(href ? 'a' : 'span', href ? { href } : null, h('span', { class: 'chev-ico', 'aria-hidden': 'true' }, icon), h('span', { class: 'chev-txt' }, label)));
+const crumbs = (...steps) => h('nav', { class: 'crumbs chev', 'aria-label': 'Fil d’Ariane' }, h('ol', null, step('🏠', 'Tableau de bord', '#/dash'), ...steps.map(([icon, label, href], i) => { const li = step(icon, label, href); li.classList.add('s' + Math.min(i + 2, 4)); return li; })));
 
 // ---------- TABLEAU DE BORD M205 ----------
 export function proHub({ prof, rec }) {
@@ -62,7 +63,7 @@ export function proHub({ prof, rec }) {
     })));
 
   const view = h('main', { id: 'main', class: 'pro-page' },
-    crumbs('M205 Bureautique avancée'),
+    crumbs(['💼', 'M205 Bureautique avancée']),
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, 'OFPPT · M205 · 20 séances × 2 h · Formateur : ', PRO.trainer),
@@ -148,7 +149,7 @@ export function reviewScreen({ prof, rec }) {
   }
   show();
   return h('main', { id: 'main', class: 'pro-page' },
-    crumbs(h('a', { href: '#/pro' }, 'M205'), ' › Révision espacée'),
+    crumbs(['💼', 'M205', '#/pro'], ['🧠', 'Révision espacée']),
     h('h1', { tabindex: '-1' }, '🧠 Révision espacée', arHint('المراجعة المتباعدة')),
     h('p', { class: 'muted' }, `${deck.length} carte(s) aujourd’hui. Indique ta certitude, réponds, puis lis la correction : c’est le geste qui fixe la mémoire.`),
     prog, stage);
@@ -191,7 +192,7 @@ export function defiScreen({ prof, rec }) {
   if (!reduced()) stage.classList.add('defi-go');
   show();
   return h('main', { id: 'main', class: 'pro-page' },
-    crumbs(h('a', { href: '#/pro' }, 'M205'), ' › Défi mixte'),
+    crumbs(['💼', 'M205', '#/pro'], ['⚡', 'Défi mixte']),
     h('h1', { tabindex: '-1' }, '⚡ Défi mixte', arHint('تحدٍّ مختلط')),
     h('p', { class: 'muted' }, 'Questions entrelacées de plusieurs séances. Chaque bonne réponse augmente le combo (jusqu’à ×4) ; une réponse rapide (< 8 s) rapporte +5. Trois erreurs et la partie s’arrête.'),
     hud, stage);

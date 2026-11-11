@@ -7,6 +7,8 @@ import { m205StepArt } from '../data/pro/step-art.js';
 import { generatedArt } from '../utils/generated-item-art.js';
 import { itemVisual } from '../utils/item-visuals.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
+import { arHint } from '../i18n/arhint.js';
+import { arQuestion } from '../i18n/ar-questions.js';
 
 const MODE = /^[~=^]/;
 export function matchVal(exp, act) {
@@ -106,7 +108,7 @@ export function simGame(root, d) {
     return visual;
   }
   function drawTask() {
-    taskBox.replaceChildren(h('p', { class: 'step-h' }, step < n ? `Étape ${step + 1} sur ${n}` : 'Terminé'), h('p', { class: 'step-t' }, step < n ? d.tasks[step][0] : 'Toutes les étapes sont faites : clique sur « Vérifier ».'), ...(step < n ? [btn] : []));
+    taskBox.replaceChildren(h('p', { class: 'step-h' }, step < n ? `Étape ${step + 1} sur ${n}` : 'Terminé'), h('p', { class: 'step-t' }, step < n ? d.tasks[step][0] : 'Toutes les étapes sont faites : clique sur « Vérifier ».', step < n ? arHint(arQuestion(d.illustrationActivityId, step)) : null), ...(step < n ? [btn] : []));
     const illustration = step < n ? stepVisual() : null;
     if (illustration) taskBox.prepend(illustration);
   }

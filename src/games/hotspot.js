@@ -2,6 +2,8 @@ import { h, svgFrom } from '../utils/dom.js';
 import { SCENES, regionIds } from './scenes.js';
 import { audio } from '../audio/audio.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
+import { arHint } from '../i18n/arhint.js';
+import { arQuestion } from '../i18n/ar-questions.js';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 function shapeMarkup(s) {
@@ -84,6 +86,7 @@ export function hotspotGame(root, d) {
         'aria-current': i === cur ? 'step' : null,
         onclick: () => { cur = i; audio.play('select'); draw(); },
       }, studentIllustration(d, i), p[1]),
+      arHint(arQuestion(d.illustrationActivityId, i)),
       h('span', { class: 'ans' }, ans[i] ? zoneName(ans[i]) : '—')
     )));
     root.querySelectorAll('[data-r]').forEach((g) => {

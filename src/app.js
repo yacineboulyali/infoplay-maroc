@@ -90,6 +90,15 @@ function soundButton(prof) {
   );
 }
 
+// ---------- Fil d'Ariane : étapes en chevrons (icône, libellé, lien facultatif) ----------
+export function crumbs(...steps) {
+  return h('nav', { class: 'crumbs chev', 'aria-label': 'Fil d’Ariane' },
+    h('ol', null, steps.map(([icon, label, href], i) => {
+      const inner = [h('span', { class: 'chev-ico', 'aria-hidden': 'true' }, icon), h('span', { class: 'chev-txt' }, label)];
+      return h('li', { class: 'chev-step s' + Math.min(i + 1, 4) + (href ? '' : ' cur'), 'aria-current': href ? null : 'page' }, href ? h('a', { href }, inner) : h('span', null, inner));
+    })));
+}
+
 // ---------- En-tête principal ----------
 function header(prof) {
   const cur = location.hash.split('/')[1] || '';
@@ -475,12 +484,6 @@ function dashScreen() {
         h('small', null, `${s.done}/${s.n} activités · ${fmt(s.best)}/${s.max} points`),
         h('span', { class: 'btn' }, 'Ouvrir le module →')
       );
-    })),
-    h('h2', { class: 'section-h', 'data-reveal': '' }, `Mes badges · ${game.badges.size}/${BADGES.length}`),
-    h('div', { class: 'badge-shelf', 'data-reveal': '' }, BADGES.map((b) => {
-      const got = game.badges.has(b.id);
-      return h('div', { class: 'badge-tile' + (got ? ' got' : ''), title: b.desc, tabindex: '0', 'aria-label': `${b.title} : ${got ? 'débloqué' : 'à débloquer'}. ${b.desc}` },
-        h('span', { class: 'ico', 'aria-hidden': 'true' }, got ? b.icon : '🔒'), h('b', null, b.title), h('small', null, b.desc));
     }))
   );
   revealIn(view);
@@ -519,7 +522,7 @@ function moduleScreen(mi) {
   const ms = moduleStats(m, rec);
 
   return h('main', { id: 'main' },
-    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › Module ', m.id),
+    crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', 'Module ' + m.id]),
     h('h1', { tabindex: '-1' }, `${m.icon} Module ${m.id} — ${m.title}`, arSub(arModule(m.id))),
     h('p', { class: 'muted' }, `${m.sessions.length} séances · ${m.sessions.length * 4} activités · ${fmt(ms.best)} / ${ms.max} points`),
     m.languageNote ? h('p', { class: 'notice' }, m.languageNote) : null,
@@ -538,7 +541,7 @@ function sessionScreen(mi, si) {
   lanManager.setActivity(`m${mi}-s${si}`, `Séance ${si} : ${s.title}`);
 
   return h('main', { id: 'main' },
-    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link(modHref(mi), modLabel(mi)), ' › Séance ', si),
+    crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si]),
     h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`, arSub(arSess(s))),
     s.situation ? h('section', { class: 'mission-brief', 'data-reveal': '' },
       h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, s.situation.ico),
@@ -660,7 +663,7 @@ function activityScreen(mi, si, ai) {
   let hud = gameHud(computeGame(rec, prof.id, scopeOf(mi, prof.id)), { compact: true });
   const bestT = bestTime(prof.id, act.id);
   const view = h('main', { id: 'main', class: `activity-page ${m.color}` },
-    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link(modHref(mi), modLabel(mi)), ' › ', link(`#/m/${mi}/s/${si}`, 'Séance ' + si), ' › Activité ', ai),
+    crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si, `#/m/${mi}/s/${si}`], ['🎯', 'Activité ' + ai]),
     h('header', { class: 'act-hero', 'data-reveal': '' },
       h('div', { class: 'act-hero-main' },
         h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
@@ -701,7 +704,7 @@ function summaryScreen(mi, si) {
   const nextS = getSession(mi, si + 1);
 
   return h('main', { id: 'main' },
-    h('p', { class: 'crumbs' }, link('#/dash', 'Tableau de bord'), ' › ', link(modHref(mi), modLabel(mi)), ' › Bilan de la séance ', si),
+    crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', modLabel(mi), modHref(mi)], ['📊', 'Bilan de la séance ' + si]),
     h('h1', { tabindex: '-1' }, `Bilan — Séance ${si} : ${s.title}`),
     h('p', { class: 'muted' }, `Élève : ${p.displayName}${p.className ? ' · ' + p.className : ''} · ${frDate(new Date().toISOString())}`),
     h('div', { class: 'card row', style: 'justify-content:space-around' },
