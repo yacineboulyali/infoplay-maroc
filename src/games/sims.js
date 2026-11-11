@@ -1,5 +1,6 @@
 // Moteur de simulation guidée : une vue interactive + des étapes validées une à une.
-import { h, norm, fmtNum } from '../utils/dom.js';
+import { h, norm, fmtNum, reduced } from '../utils/dom.js';
+import { audio } from '../audio/audio.js';
 import { VIEWS2 } from './sims2.js';
 import { ribbonView } from './ribbon.js';
 import { officeArt, officeConcept } from '../pro/visuals.js';
@@ -96,7 +97,23 @@ export function simGame(root, d) {
   const host = h('div', { class: 'sim sim-' + d.view }); const n = d.tasks.length; let step = 0; const results = [];
   const api = VIEWS[d.view](host, st, { cfg: d.cfg || {} });
   const taskBox = h('div', { class: 'taskbox', 'aria-live': 'polite' }); const log = h('ul', { class: 'steplog' });
-  const btn = h('button', { type: 'button', class: 'btn primary', onclick: validate }, 'Valider l’étape');
+  // L'étape se valide toute seule dès que l'action attendue est faite ; ce bouton sert seulement à passer.
+  const btn = h('button', { type: 'button', class: 'btn ghost small step-skip', onclick: () => { clearTimeout(watch); validate(); } }, 'Passer cette étape');
+  const dots = h('ol', { class: 'sim-steps', 'aria-label': 'Progression des étapes' });
+  let watch = null; let busy = false;
+  const reached = () => { try { return step < n && goalOk(d.tasks[step][1], st, api); } catch { return false; } };
+  // Surveille la simulation : après chaque action, on regarde si le but de l'étape est atteint.
+  function autoCheck(delay) {
+    clearTimeout(watch); if (step >= n || busy) return;
+    watch = setTimeout(() => { if (!busy && reached()) celebrate(); }, delay);
+  }
+  function celebrate() {
+    busy = true; btn.disabled = true; taskBox.classList.add('step-ok'); audio.play('snap');
+    taskBox.append(h('p', { class: 'step-pass', role: 'status' }, h('span', { class: 'step-pass-ic', 'aria-hidden': 'true' }, '✔'), 'Étape réussie : validée automatiquement', h('i', { class: 'step-pass-bar', 'aria-hidden': 'true' })));
+    setTimeout(() => { busy = false; btn.disabled = false; taskBox.classList.remove('step-ok'); validate(); }, reduced() ? 350 : 1200);
+  }
+  for (const type of ['click', 'change', 'drop', 'pointerup']) host.addEventListener(type, () => autoCheck(220), true);
+  for (const type of ['input', 'keyup']) host.addEventListener(type, () => autoCheck(750), true);
   function stepVisual() {
     const reviewed = studentIllustration(d, step, 'student-illustration-task');
     if (reviewed) return reviewed;
@@ -111,11 +128,14 @@ export function simGame(root, d) {
     taskBox.replaceChildren(h('p', { class: 'step-h' }, step < n ? `Étape ${step + 1} sur ${n}` : 'Terminé'), h('p', { class: 'step-t' }, step < n ? d.tasks[step][0] : 'Toutes les étapes sont faites : clique sur « Vérifier ».', step < n ? arHint(arQuestion(d.illustrationActivityId, step)) : null), ...(step < n ? [btn] : []));
     const illustration = step < n ? stepVisual() : null;
     if (illustration) taskBox.prepend(illustration);
+    dots.replaceChildren(...d.tasks.map((_, i) => h('li', { class: i < results.length ? (results[i].ok ? 'ok' : 'ko') : i === step ? 'cur' : '', 'aria-label': `Étape ${i + 1}${i < results.length ? (results[i].ok ? ' : réussie' : ' : passée') : i === step ? ' : en cours' : ''}` }, i < results.length ? (results[i].ok ? '✔' : '–') : String(i + 1))));
+    taskBox.append(dots);
+    autoCheck(900); // une étape déjà satisfaite (simple vérification) se valide seule
   }
   function validate() {
     if (step >= n) return; const t = d.tasks[step]; const ok = goalOk(t[1], st, api);
     results.push({ ok, msg: t[0] + (t[2] ? ' — ' + t[2] : '') });
-    log.append(h('li', { class: ok ? 'ok' : 'ko' }, (ok ? '✔ Réussi. ' : '✖ Pas encore tout à fait. ') + (t[2] || ''))); step++; drawTask();
+    log.append(h('li', { class: ok ? 'ok' : 'ko' }, (ok ? '✔ Réussi. ' : '✖ Étape passée. ') + (t[2] || ''))); step++; drawTask();
   }
   root.append(taskBox, host, log); drawTask();
   return {
@@ -123,7 +143,7 @@ export function simGame(root, d) {
       if (step < n) return { incomplete: `Valide d’abord les ${n - step} étape(s) restante(s) de la simulation.` };
       return { correct: results.filter((r) => r.ok).length, total: n, items: results, unanswered: 0 };
     },
-    reveal() { btn.disabled = true; },
+    reveal() { clearTimeout(watch); btn.disabled = true; },
     solve() {
       while (step < n) { const t = d.tasks[step]; const sol = t[3];
         if (typeof sol === 'function') sol(st, api); else if (sol && typeof sol === 'object') Object.assign(st, sol); else if (typeof t[1] !== 'function') { if (t[1].c) api.solveCell(t[1]); else for (const [k, e] of Object.entries(t[1])) st[k] = strip(e); }

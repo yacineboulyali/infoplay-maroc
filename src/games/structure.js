@@ -4,15 +4,17 @@ import { audio } from '../audio/audio.js';
 import { slotVisual } from '../utils/item-visuals.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 
-// ---- Assemblage 2,5D de l'ordinateur (CSS) ----
+// ---- Assemblage de l'ordinateur : boîtier en volume (CSS 3D), composants posés en relief ----
+const partKind = (name) => { const t = name.toLowerCase(); return /carte m/.test(t) ? 'board' : /processeur|cpu/.test(t) ? 'cpu' : /ram|mémoire/.test(t) ? 'ram' : /ssd|disque/.test(t) ? 'ssd' : /ventil/.test(t) ? 'fan' : /aliment/.test(t) ? 'psu' : 'part'; };
 export function asmGame(root, d) {
   const n = d.slots.length; const put = Array(n).fill(null); let sel = null; const used = new Set();
   const live = h('p', { class: 'hint-line', 'aria-live': 'polite' });
   const tray = h('div', { class: 'tray', role: 'group', 'aria-label': 'Composants disponibles' });
   const slotEls = d.slots.map((s, i) => h('button', { type: 'button', class: 'slot', style: `left:${s.x}%;top:${s.y}%;width:${s.w}%;height:${s.h}%`, onclick: () => place(i) }));
-  const case3d = h('div', { class: 'case3d' }, slotEls);
-  const rot = h('input', { type: 'range', min: '-25', max: '25', value: '-12', 'aria-label': 'Faire pivoter la vue du boîtier', oninput: () => { case3d.style.transform = `rotateY(${rot.value}deg) rotateX(8deg)`; } });
-  case3d.style.transform = 'rotateY(-12deg) rotateX(8deg)';
+  const wall = (side) => h('div', { class: 'case-wall ' + side, 'aria-hidden': 'true' });
+  const case3d = h('div', { class: 'case3d' }, wall('l'), wall('r'), wall('t'), wall('b'), h('div', { class: 'case-grille', 'aria-hidden': 'true' }), h('div', { class: 'case-io', 'aria-hidden': 'true' }), slotEls);
+  const rot = h('input', { type: 'range', min: '-38', max: '38', value: '-18', 'aria-label': 'Faire pivoter la vue du boîtier', oninput: () => { case3d.style.transform = `rotateY(${rot.value}deg) rotateX(10deg)`; } });
+  case3d.style.transform = 'rotateY(-18deg) rotateX(10deg)';
   const parts = shuffle(d.parts.map((_, i) => i));
   function place(i) {
     if (put[i] != null) { used.delete(put[i]); sel = put[i]; put[i] = null; audio.play('pop'); draw(); return; }
@@ -22,7 +24,7 @@ export function asmGame(root, d) {
   function draw() {
     tray.replaceChildren(...parts.filter((p) => !used.has(p)).map((p) => h('button', { type: 'button', class: 'chip' + (studentIllustration(d, p) || artFor(d.parts[p].name) ? ' has-art' : '') + (sel === p ? ' sel' : ''), 'aria-pressed': String(sel === p), onclick: () => { sel = sel === p ? null : p; if (sel != null) audio.play('select'); draw(); } }, visualLabel(d.parts[p].name, null, studentIllustration(d, p)))));
     if (!tray.children.length) tray.append(h('em', { class: 'muted' }, 'Tous les composants sont posés.'));
-    slotEls.forEach((el, i) => { const p = put[i]; el.className = 'slot' + (p != null ? ' filled' : '') + (i === 0 ? ' base' : '');
+    slotEls.forEach((el, i) => { const p = put[i]; el.className = 'slot' + (p != null ? ' filled' : '') + (i === 0 ? ' base' : ''); el.dataset.part = p != null ? partKind(d.parts[p].name) : '';
       el.replaceChildren(p != null ? h('span', { class: 'placed' }, d.parts[p].name) : h('span', { class: 'slot-hint' }, slotVisual(d.slots[i]), d.slots[i].hint));
       el.setAttribute('aria-label', `Emplacement ${i + 1} : ${d.slots[i].hint}${p != null ? '. Contient : ' + d.parts[p].name : '. Vide'}`); });
   }

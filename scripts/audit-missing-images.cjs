@@ -56,11 +56,23 @@ const inspect = () => {
     if (steps && a.moduleId <= 4) steps.forEach((t, i) => { if (!STUDENT_ILLUSTRATIONS[`${a.id}-q${String(i + 1).padStart(2, '0')}`]) missingSteps.push({ label: `Étape ${i + 1} : ${Array.isArray(t) ? t[0] : t.goal || t.title || t.q || ''}`.slice(0, 160), kind: 'étape sans image', role: 'étape de simulation' }); });
     rows.push({ id: a.id, module: a.moduleId, session: a.sessionIndex, index: a.index, title: a.title, mech: a.mech, route: `#/m/${a.moduleId}/s/${a.sessionIndex}/a/${a.index}`, rasters: r.rasters, missing: [...r.items, ...missingSteps] });
   }
+  // Parcours EGTSI106 : ses pages ne sont pas dans ACTIVITIES, on les découvre en suivant les liens.
+  const seen = new Set(); const queue = ['#/egtsi106'];
+  while (queue.length) {
+    const route = queue.shift(); if (seen.has(route)) continue; seen.add(route);
+    await page.evaluate((r) => { location.hash = r; }, route); await page.waitForTimeout(350);
+    const links = await page.evaluate(() => [...document.querySelectorAll('#main a[href^="#/egtsi106"]')].map((a) => a.getAttribute('href').split('?')[0]));
+    links.forEach((l) => { if (!seen.has(l)) queue.push(l); });
+    if (!/\/activite\/\d+$/.test(route)) continue;
+    const r = await page.evaluate(inspect); const title = await page.evaluate(() => document.querySelector('#main h1')?.textContent.replace(/\?\s*AR/g, '').trim() || '');
+    const m = route.match(/seance\/(\d+)/); const session = m ? Number(m[1]) : 1; const index = Number(route.split('/').pop());
+    rows.push({ id: `egtsi106-s${session}-a${index}`, module: 106, session, index, title, mech: 'egtsi', route, rasters: r.rasters, missing: r.items });
+  }
   await browser.close();
   const withMissing = rows.filter((r) => r.missing.length);
   const total = withMissing.reduce((n, r) => n + r.missing.length, 0);
   const unique = new Map();
-  for (const r of withMissing) for (const m of r.missing) { const k = m.key || m.label.toLowerCase(); if (!unique.has(k)) unique.set(k, { id: m.key, label: m.label, kind: m.kind, role: m.role, file: m.key ? 'public/images/label-illustrations/' + m.key + '.webp' : null, activities: [] }); const u = unique.get(k); u.activities.push(r.id); u.context = u.context || ('Module ' + r.module + ' · ' + r.title); }
+  for (const r of withMissing) for (const m of r.missing) { const k = m.key || m.label.toLowerCase(); if (!unique.has(k)) unique.set(k, { id: m.key, label: m.label, kind: m.kind, role: m.role, file: m.key ? 'public/images/label-illustrations/' + m.key + '.webp' : null, activities: [] }); const u = unique.get(k); u.activities.push(r.id); u.context = u.context || ((r.module === 106 ? 'EGTSI106' : 'Module ' + r.module) + ' · ' + r.title); }
   const byKind = {}; for (const r of withMissing) for (const m of r.missing) byKind[m.kind] = (byKind[m.kind] || 0) + 1;
   const byModule = {}; for (const r of rows) { const b = (byModule[r.module] = byModule[r.module] || { activites: 0, incompletes: 0, elements: 0 }); b.activites++; if (r.missing.length) { b.incompletes++; b.elements += r.missing.length; } }
   fs.mkdirSync('output/missing-images', { recursive: true });

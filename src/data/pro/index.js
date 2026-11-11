@@ -3,7 +3,7 @@
 import raw from './m205.js';
 import { INSTR, HINT } from '../dsl.js';
 
-const INSTR_PRO = { ...INSTR, sim: 'Simulator : retrouve dans le ruban la commande qui réalise la tâche (Onglet › Commande › Option), puis clique sur « Valider l’étape ». C’est le même réflexe qu’à l’examen MOS.' };
+const INSTR_PRO = { ...INSTR, sim: 'Simulateur : retrouve dans le ruban la commande qui réalise la tâche (Onglet › Commande › Option) ; l’étape se valide automatiquement dès qu’elle est réussie. C’est le même réflexe qu’à l’examen MOS.' };
 const HINT_PRO = { ...HINT, sim: 'Lis bien le verbe de la consigne (insérer, mettre en page, référencer…) : il t’indique souvent l’onglet.' };
 
 const m = raw;

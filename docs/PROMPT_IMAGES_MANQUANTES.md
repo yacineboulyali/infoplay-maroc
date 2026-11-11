@@ -1,8 +1,9 @@
 # Prompt — générer et intégrer les images manquantes d'InfoPlay Maroc
 
 À copier tel quel dans Codex (ou ChatGPT avec accès au dépôt). L'inventaire a été produit par
-`node scripts/audit-missing-images.cjs` : 980 libellés affichés sans image illustrée dans 100 activités
-(Module 1 : 53 · Module 2 : 165 · Module 3 : 92 · Module 4 : 62 · M205 : 608).
+`node scripts/audit-missing-images.cjs` : il reste 1 136 libellés affichés sans image illustrée dans 142 activités
+(Module 1 : 1 · Module 2 : 165 · Module 3 : 92 · Module 4 : 62 · EGTSI106 : 208 · M205 : 608). Les 53 images du module 1 sont déjà intégrées.
+La liste de travail ne contient que ce qui reste à produire.
 
 ---
 
@@ -23,9 +24,9 @@ Lis `output/missing-images/worklist.jsonl`. Chaque ligne décrit une image à pr
 - `label` : texte affiché à l'élève, c'est le sujet de l'image.
 - `role` : place de l'élément (option de QCM, carte à associer, étape à ordonner, étiquette à classer, phrase à compléter).
 - `context` et `activities` : module et activité, pour comprendre le sens du libellé. Les données complètes de
-  l'activité sont dans `src/data/module-1.js` … `module-4.js` et `src/data/pro/m205.js` (cherche l'identifiant, ex. `m1-s1-a1`).
+  l'activité sont dans `src/data/module-1.js` … `module-4.js`, `src/data/pro/m205.js` et `src/data/egtsi106/` (cherche l'identifiant, ex. `m1-s1-a1`).
 
-Traite les modules dans cet ordre : 1, 2, 3, 4, puis 205. Travaille par lots de 20 à 30 images.
+Traite les parcours dans cet ordre : modules 1, 2, 3, 4, puis EGTSI106, puis 205. Travaille par lots de 20 à 30 images.
 
 ## 2. Style (identique aux 678 images existantes)
 
@@ -61,8 +62,7 @@ Regarde d'abord 6 à 8 images de `public/images/student-illustrations/` et repro
    node scripts/sync-label-illustrations.mjs
    npm run build
    ```
-   Le premier script régénère `src/data/label-illustrations.js` et affiche `restantes` (images encore à produire)
-   et `fichiersHorsInventaire` (doit rester une liste vide).
+   Le premier script régénère `src/data/label-illustrations.js` et affiche `restantes` (lignes de la liste dont l'image manque encore).
 3. À la fin, vérifie :
    ```bash
    node scripts/audit-missing-images.cjs

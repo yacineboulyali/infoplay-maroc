@@ -23,7 +23,7 @@ export const INSTR = {
   net: 'Relie les équipements deux par deux en cliquant dessus. Ne branche que les câbles nécessaires.',
   robot: 'Programme le robot niveau par niveau : ajoute des commandes, exécute, corrige. Clique sur « Vérifier » quand tu as fini.',
   prog: 'Réponds en suivant l’algorithme pas à pas, comme le ferait l’ordinateur.',
-  sim: 'Fais l’action demandée dans la simulation, puis clique sur « Valider l’étape ». Rien de réel n’est modifié sur ton ordinateur.',
+  sim: 'Fais l’action demandée dans la simulation : chaque étape se valide automatiquement dès qu’elle est réussie. Rien de réel n’est modifié sur ton ordinateur.',
 };
 export const HINT = {
   match: 'Commence par les associations dont tu es sûr(e), les autres deviennent plus faciles.',
