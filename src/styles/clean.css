@@ -446,3 +446,18 @@ body.high-contrast .case3d .slot{border-color:#fff}
 /* La carte mère reste toujours derrière les emplacements qu'elle porte (processeur, RAM, ventilateur). */
 .case3d .slot{transform:translateZ(9px)}
 .case3d .slot.base,.case3d .slot.filled.base{transform:translateZ(2px)}
+
+/* ---------- repérage sur image : glisser la consigne sur l'élément ; scène « pc » en boîtier 3D ---------- */
+ol.prompts li{position:relative}
+.drag-grip{flex:none;display:grid;place-items:center;width:1.9rem;height:2.4rem;border-radius:6px;color:var(--muted);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.drag-grip:hover{background:var(--surface-2);color:var(--primary)}
+.prompt-btn{cursor:grab}
+ol.prompts li.dragging{opacity:.4}
+.hot-ghost{position:fixed;left:0;top:0;z-index:200;pointer-events:none;display:flex;align-items:center;gap:.5rem;max-width:min(320px,80vw);padding:.45rem .7rem;border-radius:8px;border:1px solid #bccdf5;background:#fff;color:var(--ink);font-weight:600;font-size:.85rem;box-shadow:var(--sh-lg)}
+.hot-ghost b{display:grid;place-items:center;flex:none;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--primary);color:#fff;font-size:.8rem}
+.reg[data-r].drag-over{filter:drop-shadow(0 0 8px rgba(59,130,246,.95))}
+.reg[data-r].drag-over .sv{stroke:var(--primary);stroke-width:4}
+.hot-3d .stage{padding:2.4rem 1.2rem 2.6rem}
+.case3d.hot-case{width:92%;aspect-ratio:auto;overflow:visible;background:#1a2029;border-radius:6px}
+.case3d.hot-case svg.scene{position:relative;transform:translateZ(3px);border-radius:4px}
+@media (max-width:620px){.activity-page .case3d.hot-case{aspect-ratio:auto}.hot-3d .stage{padding:1.6rem .6rem 2rem}}

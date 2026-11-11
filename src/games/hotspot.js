@@ -36,7 +36,7 @@ export function hotspotGame(root, d) {
   let cur = 0;
   const live = h('p', { class: 'hint-line', 'aria-live': 'polite' });
   const list = h('ol', { class: 'prompts' });
-  let figure, regionButtons = [], desc = {}, ids = [];
+  let figure, case3d = null, regionButtons = [], desc = {}, ids = [];
 
   if (d.scene === 'lines') {
     ids = d.lines.map((_, i) => 'l' + (i + 1));
@@ -58,7 +58,13 @@ export function hotspotGame(root, d) {
       const g = e.target.closest('[data-r]');
       if (g) pick(g.getAttribute('data-r'));
     });
-    figure = h('div', { class: 'figure' }, svg);
+    if (d.scene === 'pc') {
+      const wall = (side) => h('div', { class: 'case-wall ' + side, 'aria-hidden': 'true' });
+      case3d = h('div', { class: 'figure case3d hot-case' }, wall('l'), wall('r'), wall('t'), wall('b'), svg);
+      case3d.style.transform = 'rotateY(-16deg) rotateX(9deg)';
+      const rot = h('input', { type: 'range', min: '-36', max: '36', value: '-16', 'aria-label': 'Faire pivoter la vue du boîtier', oninput: () => { case3d.style.transform = `rotateY(${rot.value}deg) rotateX(9deg)`; } });
+      figure = h('div', { class: 'hot-3d' }, h('div', { class: 'stage' }, case3d), h('label', { class: 'rot' }, 'Vue : ', rot));
+    } else figure = h('div', { class: 'figure' }, svg);
     regionButtons = ids.map((id, k) => h('button', {
       type: 'button',
       class: 'chip',
@@ -78,13 +84,43 @@ export function hotspotGame(root, d) {
     draw();
   }
 
+  // ---- Glisser une consigne sur l'élément de l'image (souris, doigt, stylet) ; le clic reste possible ----
+  let drag = null; let justDragged = false;
+  const regionAt = (x, y) => { const el = document.elementFromPoint(x, y); const g = el && el.closest('[data-r]'); return g && root.contains(g) ? g : null; };
+  const mark = (g) => root.querySelectorAll('[data-r].drag-over').forEach((n) => { if (n !== g) n.classList.remove('drag-over'); }) || (g && g.classList.add('drag-over'));
+  function startDrag(e, i) {
+    if (e.button || d.scene === 'lines') return;
+    drag = { i, sx: e.clientX, sy: e.clientY, ghost: null, src: e.currentTarget.closest('li') };
+    window.addEventListener('pointermove', onMove); window.addEventListener('pointerup', onUp); window.addEventListener('pointercancel', onCancel);
+  }
+  function onMove(e) {
+    if (!drag) return;
+    if (!drag.ghost) {
+      if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < 7) return;
+      drag.ghost = h('div', { class: 'hot-ghost', 'aria-hidden': 'true' }, h('b', null, drag.i + 1), prompts[drag.i][1]);
+      document.body.append(drag.ghost); drag.src.classList.add('dragging'); audio.play('select');
+    }
+    drag.ghost.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 14}px)`;
+    mark(regionAt(e.clientX, e.clientY)); e.preventDefault();
+  }
+  function stop() { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); window.removeEventListener('pointercancel', onCancel); if (drag && drag.ghost) drag.ghost.remove(); if (drag) drag.src.classList.remove('dragging'); mark(null); }
+  function onCancel() { stop(); drag = null; }
+  function onUp(e) {
+    const g = drag; stop(); drag = null; if (!g || !g.ghost) return; // simple clic : géré par onclick
+    justDragged = true; setTimeout(() => { justDragged = false; }, 0);
+    const region = regionAt(e.clientX, e.clientY);
+    if (region) { cur = g.i; pick(region.getAttribute('data-r')); } else { live.textContent = 'Dépose la consigne sur un élément de l’image.'; }
+  }
+
   function draw() {
     list.replaceChildren(...prompts.map((p, i) => h('li', { class: i === cur ? 'cur' : '' },
+      d.scene === 'lines' ? null : h('span', { class: 'drag-grip', 'aria-hidden': 'true', title: 'Glisser vers l’image', onpointerdown: (e) => startDrag(e, i) }, '⠿'),
       h('button', {
         type: 'button',
         class: 'prompt-btn',
         'aria-current': i === cur ? 'step' : null,
-        onclick: () => { cur = i; audio.play('select'); draw(); },
+        onpointerdown: (e) => { if (e.pointerType === 'mouse') startDrag(e, i); },
+        onclick: () => { if (justDragged) return; cur = i; audio.play('select'); draw(); },
       }, studentIllustration(d, i), p[1]),
       arHint(arQuestion(d.illustrationActivityId, i)),
       h('span', { class: 'ans' }, ans[i] ? zoneName(ans[i]) : '—')
@@ -106,7 +142,7 @@ export function hotspotGame(root, d) {
         )
       ),
       h('div', null,
-        h('p', { class: 'muted' }, '👉 Clique directement sur l’élément correspondant dans l’image ci-contre.'),
+        h('p', { class: 'muted' }, d.scene === 'lines' ? '👉 Clique directement sur l’élément correspondant dans l’image ci-contre.' : '👉 Fais glisser chaque consigne sur l’élément correspondant de l’image, ou clique directement dessus.'),
         list
       )
     ),
