@@ -365,3 +365,11 @@ ol.prompts li>.arh-btn{flex:none}
 @keyframes match-dash{to{stroke-dashoffset:-14}}
 body.reduced-motion .match-wire.pending{animation:none}
 .match-wires{z-index:3}
+
+/* Réduire les illustrations des cartes manipulables sans modifier la cible de dépôt. */
+:is(.match-draggable,.match-droptarget,.sort-chip,.order-draggable-row)
+:is(img,.item-art,.office-art,.generated-item-art,.egtsi-picture):not(.egtsi-concept-visual *),
+:is(.match-draggable,.match-droptarget,.sort-chip,.order-draggable-row)
+.egtsi-concept-visual:has(img,.generated-item-art) {
+  zoom: .7;
+}
