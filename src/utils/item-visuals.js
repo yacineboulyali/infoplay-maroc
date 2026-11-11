@@ -9,7 +9,7 @@ import { labelKey } from './label-key.js';
 /** Image générée pour ce libellé précis (toutes activités confondues), sinon null. */
 export function labelIllustration(label) {
   const key = labelKey(label); const src = LABEL_ILLUSTRATIONS[key];
-  return src ? h('img', { class: 'student-illustration label-illustration', src, alt: '', 'aria-hidden': 'true', 'data-label-key': key, width: 512, height: 512, loading: 'lazy', decoding: 'async', draggable: 'false', onerror: (event) => event.currentTarget.remove() }) : null;
+  return src ? h('img', { class: 'label-illustration', src, alt: '', 'aria-hidden': 'true', 'data-label-key': key, width: 512, height: 512, loading: 'lazy', decoding: 'async', draggable: 'false', onerror: (event) => event.currentTarget.remove() }) : null;
 }
 
 const images = new Map();

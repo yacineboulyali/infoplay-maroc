@@ -320,3 +320,10 @@ nav.main .nav-more-menu a{justify-content:flex-start;padding:.55rem .75rem;min-h
 body.entry-open .fs-suggest{display:none}
 .mode-card .mode-ico{order:-1}
 @media (max-width:1099px){header.top nav.main button.nav-more-btn{display:none}}
+
+/* ---------- images de libellé (options, réponses, étapes) : calque distinct des images de question ---------- */
+.label-illustration{display:block;width:96px;height:96px;max-width:100%;flex:0 0 auto;object-fit:contain;border:1px solid var(--line);border-radius:10px;background:#fffaf0;pointer-events:none}
+.quiz-card .label-illustration,label.opt .label-illustration,.ord-row .label-illustration{width:72px;height:72px}
+.chip .label-illustration{width:112px;height:112px}
+.chip:has(.label-illustration) .visual-label{flex-direction:column}
+.fill-line>.label-illustration{float:left;width:88px;height:88px;margin:0 .85rem .4rem 0}
