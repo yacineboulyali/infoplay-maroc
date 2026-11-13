@@ -33,6 +33,7 @@ export const LABEL_ILLUSTRATIONS = {
   "lbl-9687036a": "images/label-illustrations/lbl-9687036a.webp",
   "lbl-9b2eb8f9": "images/label-illustrations/lbl-9b2eb8f9.webp",
   "lbl-9bb55022": "images/label-illustrations/lbl-9bb55022.webp",
+  "lbl-9fe33b3c": "images/label-illustrations/lbl-9fe33b3c.webp",
   "lbl-a25bf92d": "images/label-illustrations/lbl-a25bf92d.webp",
   "lbl-a455dcdc": "images/label-illustrations/lbl-a455dcdc.webp",
   "lbl-a98cd577": "images/label-illustrations/lbl-a98cd577.webp",
