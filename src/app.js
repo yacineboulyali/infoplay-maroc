@@ -2,6 +2,7 @@ import { egtsiScreen } from './egtsi106/screen.js';
 import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
 import { mechanicIcon } from './utils/semantic-icons.js';
+import { STUDENT_ILLUSTRATIONS } from './data/student-illustrations.js';
 import { h, downloadText, frDate, celebrate, svgFrom } from './utils/dom.js';
 import { createStore, localAdapter, MAX_IMPORT_BYTES } from './storage/store.js';
 import { CATALOG, ACTIVITIES, getActivity, getModule, getSession, isActivityId, TOTAL_POINTS } from './data/index.js';
@@ -20,7 +21,7 @@ import { fsButton, suggestFullscreen, autoHideHeader } from './fx/fullscreen.js'
 import { PRO, PRO_ACTIVITIES } from './data/index.js';
 import { PRO_POINTS } from './data/pro/index.js';
 import { proHub, reviewScreen, defiScreen } from './pro/screens.js';
-import { proScope } from './pro/engine.js';
+import { proScope, MASTERY } from './pro/engine.js';
 
 const store = createStore(localAdapter(), isActivityId);
 const app = document.getElementById('app');
@@ -112,76 +113,20 @@ export function crumbs(...steps) {
 
 // ---------- En-tête principal ----------
 function header(prof) {
-  const cur = location.hash.split('/')[1] || '';
-  const track = (currentTrack = trackOf(location.hash));
-  const a = (href, label, key) => h('a', { href, 'aria-current': cur === key ? 'page' : null }, label);
-  const lanState = lanManager.getState();
-  const lanPill = h('a', {
-    href: '#/multijoueur',
-    class: 'lan-badge',
-    title: 'Salon multijoueur sur réseau local',
-  },
-  h('span', { class: 'lan-pulse-dot' }),
-  h('span', null, `Réseau local (${lanState.playerCount})`)
-  );
-
-  // Sur téléphone, la navigation se replie derrière un bouton ☰ pour laisser l'écran au jeu.
-  const navToggle = h('button', { type: 'button', class: 'nav-toggle', 'aria-expanded': 'false', 'aria-controls': 'main-nav', 'aria-label': 'Ouvrir le menu', onclick: () => {
-    const open = !document.body.classList.contains('nav-open'); document.body.classList.toggle('nav-open', open);
-    navToggle.setAttribute('aria-expanded', String(open)); navToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu'); navToggle.textContent = open ? '✕' : '☰';
-  } }, '☰');
-  // Liens secondaires (réseau, course, suivi, données) regroupés derrière une seule icône.
-  const more = (...links) => {
-    const menu = h('div', { class: 'nav-more-menu', id: 'nav-more-menu' }, links);
-    const btn = h('button', { type: 'button', class: 'nav-more-btn', 'aria-expanded': 'false', 'aria-controls': 'nav-more-menu', 'aria-label': 'Plus : réseau, course, suivi et données', title: 'Réseau, course, suivi et données', onclick: (e) => {
-      e.stopPropagation(); const open = !wrap.classList.contains('open'); wrap.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open));
-    } }, svgFrom('<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><circle cx="5" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>'));
-    const wrap = h('div', { class: 'nav-more' + (links.some((l) => l.getAttribute('aria-current')) ? ' has-current' : '') }, btn, menu);
-    return wrap;
-  };
-  return h('header', { class: 'top' },
+  currentTrack = trackOf(location.hash);
+  // En-tête épuré : logo, son, changement d'utilisateur et plein écran uniquement.
+  return h('header', { class: 'top top-slim' },
     h('div', { class: 'in' },
       h('a', { class: 'brand', href: '#/profils' },
         h('span', { class: 'logo', 'aria-hidden': 'true' }, '🎮'),
         h('span', null, 'InfoPlay ', h('b', null, 'Maroc'))
       ),
-      lanPill,
-      h('div', { class: 'top-tools' }, prof ? h('span', { class: 'who-mini', 'aria-hidden': 'true' }, avatarFor(prof.displayName)) : null, fsButton('fs-btn'), navToggle),
-      prof ? h('nav', { class: 'main', id: 'main-nav', 'aria-label': 'Navigation principale' },
-        // Seuls les liens du parcours en cours sont affichés ; les autres parcours s'ouvrent depuis l'accueil.
-        ...(track === 'tc' ? [a('#/dash', 'Tableau de bord', 'dash'), a('#/progres', 'Mon progrès', 'progres')]
-          : track === 'pro' ? [a('#/pro', '💼 M205 Bureautique avancée', 'pro')]
-          : track === 'egtsi' ? [a('#/egtsi106', '🖥️ EGTSI106', 'egtsi106')] : []),
-        track ? a('#/profils', '↩ Changer de parcours', 'profils') : null,
-        more(a('#/multijoueur', '🌐 Multijoueur LAN', 'multijoueur'), a('#/course', '🏁 Course', 'course'), a('#/suivi', '👀 Suivi', 'suivi'), a('#/donnees', '📊 Profil et données', 'donnees')),
+      h('div', { class: 'top-tools' },
         soundButton(prof),
-        h('span', { class: 'who' }, '👤 ' + prof.displayName),
-        h('button', { type: 'button', onclick: () => { store.logout(); go('#/profils'); } }, 'Changer')
-      ) : h('nav', { class: 'main', id: 'main-nav', 'aria-label': 'Navigation principale' },
-        more(a('#/multijoueur', '🌐 Salon Multijoueur', 'multijoueur'), a('#/course', '🏁 Course', 'course'), a('#/suivi', '👀 Suivi enseignant', 'suivi'), a('#/donnees', '📊 Données', 'donnees'))
-      )
+        prof ? h('button', { type: 'button', class: 'switch-user', title: `Connecté : ${prof.displayName}`, onclick: () => { store.logout(); go('#/profils'); } }, '👤 ', h('span', { class: 'switch-label' }, 'Changer l’utilisateur')) : null,
+        fsButton('fs-btn'))
     )
   );
-}
-
-// ---------- Barre de présence : qui est connecté sur le même réseau ----------
-const lanBarEl = h('aside', { class: 'lan-bar noprint', 'aria-label': 'Utilisateurs connectés sur le réseau local' });
-let lanBarSig = '';
-function drawLanBar(st) {
-  const players = st.players.filter((p) => p.role !== 'observer');
-  const sig = JSON.stringify(players.map((p) => [p.peerId, p.name, p.avatar, p.score, p.isMe]));
-  if (sig === lanBarSig && lanBarEl.childElementCount) return; lanBarSig = sig;
-  const shown = players.slice(0, 10); const rest = players.length - shown.length;
-  lanBarEl.replaceChildren(
-    h('a', { class: 'lan-bar-title', href: '#/multijoueur', title: 'Ouvrir le salon réseau' },
-      h('span', { class: 'lan-pulse-dot', 'aria-hidden': 'true' }), `En ligne · ${players.length}`),
-    h('ul', { class: 'lan-bar-list' },
-      shown.length ? shown.map((p) => h('li', { class: 'lan-chip' + (p.isMe ? ' me' : ''), title: `${p.name}${p.activity ? ' — ' + p.activity : ''}` },
-        h('span', { class: 'lan-chip-ava', 'aria-hidden': 'true' }, p.avatar || '🎮'),
-        h('span', { class: 'lan-chip-name' }, p.isMe ? p.name + ' (moi)' : p.name),
-        Number.isFinite(p.score) ? h('span', { class: 'lan-chip-score' }, p.score + ' pts') : null))
-        : h('li', { class: 'lan-chip empty' }, 'Personne pour l’instant : ouvre un profil pour apparaître ici.'),
-      rest > 0 ? h('li', { class: 'lan-chip more' }, h('a', { href: '#/multijoueur' }, `+${rest} autres`)) : null));
 }
 
 function floatingHome(prof) {
@@ -194,6 +139,15 @@ function floatingHome(prof) {
   h('span', { 'aria-hidden': 'true' }, '🏠'),
   h('span', { class: 'floating-home-label' }, 'Accueil')
   );
+}
+
+// Charge dist/hero3d.js (Three.js) une seule fois, puis anime le canvas de l'accueil.
+function mountHero3D(canvas) {
+  const run = () => requestAnimationFrame(() => window.InfoPlayHero3D?.mount(canvas));
+  if (window.InfoPlayHero3D) return run();
+  let s = document.querySelector('script[data-hero3d]');
+  if (!s) { s = document.createElement('script'); s.src = 'hero3d.js'; s.dataset.hero3d = ''; s.onerror = () => canvas.classList.add('lp-nogl'); document.head.append(s); }
+  s.addEventListener('load', run, { once: true });
 }
 
 // ---------- ÉCRAN 1 : ACCUEIL INFOPLAY & CRÉATEUR YACINE BOULYALI ----------
@@ -281,16 +235,53 @@ function homeScreen() {
     entryTarget = target; document.body.classList.add('entry-open'); document.body.append(entryBg); setTimeout(() => name.focus(), 30);
   };
 
-  return h('main', { id: 'main', class: 'welcome-page' },
-    h('section', { class: 'welcome-hero' },
-      h('div', { class: 'welcome-copy' },
-        // Titre principal
-        h('h1', { tabindex: '-1' },
-          h('span', { class: 'hero-title-top' }, 'Plateforme Éducative d’Informatique'),
-          'InfoPlay ', h('b', { class: 'hero-brand-gold' }, 'Maroc')
+  // Fond Three.js (nappes floues + formes flottantes), chargé à la demande.
+  const canvas = h('canvas', { class: 'lp-canvas', 'aria-hidden': 'true' });
+  mountHero3D(canvas);
+  const toPaths = (e) => { e.preventDefault(); const t = document.getElementById('parcours'); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); t.querySelector('h2')?.focus({ preventScroll: true }); };
+  const portrait = h('figure', { class: 'lp-portrait' },
+    h('div', { class: 'lp-portrait-card' },
+      h('img', { src: 'images/yacine-sebouali-profile.jpg', alt: 'Portrait de Yacine BOULYALI, créateur d’InfoPlay Maroc', width: '400', height: '460' }),
+      h('figcaption', { class: 'lp-glass' }, h('b', null, 'Yacine BOULYALI'), ' · Créateur d’InfoPlay Maroc')
+    ),
+    h('span', { class: 'lp-chip lp-chip-a', 'aria-hidden': 'true' }, '🎮 120 activités'),
+    h('span', { class: 'lp-chip lp-chip-b', 'aria-hidden': 'true' }, '⚡ 100 % hors ligne')
+  );
+  // Inclinaison douce du portrait au survol.
+  portrait.addEventListener('pointermove', (e) => {
+    const r = portrait.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - 0.5; const y = (e.clientY - r.top) / r.height - 0.5;
+    portrait.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg'); portrait.style.setProperty('--ry', (x * 10).toFixed(2) + 'deg');
+  });
+  portrait.addEventListener('pointerleave', () => { portrait.style.setProperty('--rx', '0deg'); portrait.style.setProperty('--ry', '0deg'); });
+
+  return h('main', { id: 'main', class: 'welcome-page lp' },
+    h('section', { class: 'lp-hero' },
+      h('div', { class: 'lp-bg', 'aria-hidden': 'true' }, h('i', { class: 'lp-blob b1' }), h('i', { class: 'lp-blob b2' }), h('i', { class: 'lp-blob b3' }), canvas),
+      h('div', { class: 'lp-hero-in' },
+        h('div', { class: 'lp-copy' },
+          h('p', { class: 'lp-eyebrow' }, 'Yacine BOULYALI · Portfolio éducatif'),
+          h('h1', { tabindex: '-1', class: 'lp-title' }, 'Bienvenue ', h('span', null, 'dans mon'), ' ', h('em', null, 'univers')),
+          h('p', { class: 'lp-lead' }, 'Apprends l’informatique en jouant : 30 séances, 120 activités, et une progression qui reste sur cet ordinateur.'),
+          h('div', { class: 'lp-actions' },
+            h('a', { class: 'btn primary lp-cta', href: '#parcours', onclick: toPaths }, 'Entrer dans InfoPlay Maroc →'),
+            h('a', { class: 'btn lp-ghost', href: 'immersive.html' }, '🏝️ Monde 3D')
+          ),
+          h('ul', { class: 'lp-stats', 'aria-label': 'En bref' },
+            h('li', null, h('b', null, '4'), h('span', null, 'parcours')),
+            h('li', null, h('b', null, '200+'), h('span', null, 'activités')),
+            h('li', null, h('b', null, '0'), h('span', null, 'mot de passe'))
+          )
         ),
-        // Description bilingue
-        h('p', { class: 'welcome-lead-fr' }, 'Choisis ton parcours pour commencer.'),
+        portrait
+      ),
+      h('a', { class: 'lp-scroll', href: '#parcours', onclick: toPaths, 'aria-label': 'Voir les parcours' }, h('span', { 'aria-hidden': 'true' }))
+    ),
+    h('section', { class: 'lp-paths', id: 'parcours', 'aria-labelledby': 'parcours-h' },
+      h('div', { class: 'lp-paths-head' },
+        h('h2', { id: 'parcours-h', tabindex: '-1' }, 'Choisis ton parcours'),
+        h('p', { class: 'muted' }, 'Chaque parcours garde tes scores, tes étoiles et ta progression.')
+      ),
+      h('div', { class: 'welcome-copy' },
         // Choix de mode de jeu
         h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Choisis ta façon de jouer' },
           h('section', { class: 'mode-card mode-classic', 'aria-labelledby': 'mode-classic-h' },
@@ -322,25 +313,10 @@ function homeScreen() {
           )
         )
       ),
-      // Carte Portrait de Yacine BOULYALI
-      h('figure', { class: 'portrait-frame' },
-        h('div', { class: 'portrait-img-wrap' },
-          h('img', {
-            src: 'images/yacine-sebouali-profile.jpg',
-            alt: 'Portrait de Yacine BOULYALI, créateur et développeur de la plateforme InfoPlay Maroc',
-            width: '400',
-            height: '400',
-          }),
-          h('div', { class: 'portrait-badge' }, '⭐ Concepteur & Développeur')
-        ),
-        h('figcaption', null,
-          h('div', { class: 'creator-name-block' },
-            h('span', { class: 'cap-name-latin' }, 'Yacine BOULYALI'),
-            h('span', { class: 'cap-name-ar', lang: 'ar', dir: 'rtl' }, 'ياسين بوليالي')
-          ),
-          h('span', { class: 'cap-role' }, 'Créateur de la plateforme InfoPlay Maroc'),
-          h('span', { class: 'cap-role-ar', lang: 'ar', dir: 'rtl' }, 'منشئ ومطور منصة InfoPlay Maroc')
-        )
+      h('aside', { class: 'lp-notice lp-glass' },
+        h('b', null, 'À savoir : '),
+        'ce profil sert seulement à retrouver tes résultats sur cet ordinateur. Il n’y a pas de mot de passe et il n’est pas sécurisé. N’écris ni ton nom complet, ni ton adresse, ni ton numéro de téléphone. Sur un ordinateur partagé, tes résultats restent dans ce navigateur : pense à les sauvegarder dans « ',
+        h('a', { href: '#/donnees' }, 'Profil et données'), ' ».'
       )
     ),
     h('footer', { class: 'welcome-footer' },
@@ -482,41 +458,45 @@ function dashScreen() {
   lanManager.setActivity('dash', 'Tableau de bord');
   lanManager.updateProfile({ score: t.best });
 
-  const view = h('main', { id: 'main', class: 'dash-page' },
-    h('section', { class: 'dash-hero', 'data-reveal': '' },
-      h('div', { class: 'dash-hero-id' },
-        h('span', { class: 'dash-ava', 'aria-hidden': 'true' }, avatarFor(p.displayName)),
-        h('div', null,
-          h('p', { class: 'eyebrow' }, `Niveau ${game.level} · ${game.rank}`),
-          h('h1', { tabindex: '-1' }, `Bonjour ${p.displayName} 👋`),
-          h('div', { class: 'xpbar', role: 'progressbar', 'aria-valuenow': game.pct, 'aria-valuemin': 0, 'aria-valuemax': 100, 'aria-label': `Niveau ${game.level} : ${game.into} XP sur ${game.need}` }, h('i', { style: `width:${game.pct}%` })),
-          h('small', { class: 'muted' }, `${game.into} / ${game.need} XP avant le niveau ${game.level + 1} · ${game.xp} XP au total`))),
-      h('div', { class: 'dash-kpis' },
-        ring(pct, `Progression totale ${pct} %`),
-        h('div', { class: 'kpi' }, h('b', null, fmt(t.best)), h('span', null, `points / ${TOTAL_POINTS}`)),
+  // Même présentation que le parcours M205 : héros + « Carte des compétences »,
+  // une colonne par module avec ses séances rangées dessous.
+  const parts = CATALOG.map((m) => {
+    const ms = moduleStats(m, rec);
+    const done = ms.n && ms.sessionsDone === m.sessions.length && ms.best / ms.max >= 0.7;
+    return h('section', { class: 'card pro-part tc-part ' + m.color },
+      h('header', null,
+        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
+        h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.id} · ${m.short || m.title}`)), h('small', { class: 'muted' }, `${ms.done}/${ms.n} activités · ${fmt(ms.best)}/${ms.max} pts`)),
+        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validé' : '🔒 À valider')),
+      h('ol', { class: 'pp-nodes' }, m.sessions.map((s) => {
+        const lv = tcMastery(s, rec); const ss = sessionStats(s, rec);
+        return h('li', null, h('a', { class: 'pp-node lv' + lv, href: `#/m/${m.id}/s/${s.index}`, title: `${MASTERY[lv].label} · ${STATUS[ss.status]} · ${fmt(ss.best)}/20` },
+          h('span', { class: 'pp-n', 'aria-hidden': 'true' }, MASTERY[lv].icon),
+          h('span', { class: 'pp-t' }, h('b', null, `S${s.index}`), ' ', s.title),
+          h('small', null, `${fmt(ss.best)}/20`)));
+      })));
+  });
+
+  const view = h('main', { id: 'main', class: 'pro-page tc-dash' },
+    crumbs(['🏠', 'Accueil', '#/profils'], ['📚', 'Tronc commun']),
+    h('section', { class: 'pro-hero', 'data-reveal': '' },
+      h('div', { class: 'pro-hero-main' },
+        h('p', { class: 'eyebrow' }, 'Lycée · Tronc commun · 4 modules · 30 séances'),
+        h('h1', { tabindex: '-1' }, '📚 Informatique — Tronc commun'),
+        h('p', { class: 'pro-story' }, `Bonjour ${p.displayName} ! Choisis un module, puis une séance : chaque séance contient 4 activités interactives.`),
+        gameHud(game),
+        h('div', { class: 'row' },
+          next ? h('a', { class: 'btn primary', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : M${next.moduleId} · S${next.sessionIndex} · ${next.title}`) : h('span', { class: 'pill done' }, '🏆 Parcours terminé'),
+          h('a', { class: 'btn ghost', href: '#/progres' }, '📊 Mon progrès'))),
+      h('div', { class: 'pro-kpis' },
+        h('div', { class: 'kpi' }, h('b', null, fmt(t.best)), h('span', null, `pts / ${TOTAL_POINTS}`)),
         h('div', { class: 'kpi' }, h('b', null, `${t.done}/${t.n}`), h('span', null, 'activités')),
-        h('div', { class: 'kpi' + (game.streak >= 3 ? ' hot' : '') }, h('b', null, `🔥 ${game.streak}`), h('span', null, `série (record ${game.bestStreak})`)),
+        h('div', { class: 'kpi' }, h('b', null, `${pct} %`), h('span', null, 'progression')),
         h('div', { class: 'kpi' }, h('b', null, `${t.sessionsDone}/30`), h('span', null, 'séances')))),
-    h('div', { class: 'dash-cta', 'data-reveal': '' },
-      next ? h('a', { class: 'cta-card', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}`, 'data-tilt': '' },
-        h('span', { class: 'cta-play', 'aria-hidden': 'true' }, '▶'),
-        h('span', null, h('small', null, `Module ${next.moduleId} · Séance ${next.sessionIndex} · Activité ${next.index}`), h('b', null, `Continuer : ${next.title}`)))
-        : h('span', { class: 'pill done' }, '🏆 Tout est fait !'),
-      h('a', { class: 'btn ghost', href: '#/course' }, '🏁 Course de la classe'),
-      h('a', { class: 'btn ghost', href: '#/multijoueur' }, '🌐 Joueurs du réseau')),
-    h('h2', { class: 'section-h', 'data-reveal': '' }, 'Les 4 modules'),
-    h('div', { class: 'grid g4' }, CATALOG.map((m) => {
-      const s = moduleStats(m, rec);
-      return h('a', { class: 'card mod ' + m.color, href: `#/m/${m.id}`, 'aria-label': `Module ${m.id} : ${m.title}, ${s.pct} %`, 'data-tilt': '', 'data-reveal': '' },
-        h('span', { class: 'mod-glare', 'aria-hidden': 'true' }),
-        h('span', { class: 'em', 'aria-hidden': 'true' }, m.icon),
-        h('h2', null, `Module ${m.id}`),
-        h('p', { style: 'margin:0;font-weight:700' }, m.title, arSub(arModule(m.id))),
-        bar(s.pct, `Module ${m.id} : ${s.pct} %`),
-        h('small', null, `${s.done}/${s.n} activités · ${fmt(s.best)}/${s.max} points`),
-        h('span', { class: 'btn' }, 'Ouvrir le module →')
-      );
-    }))
+    h('section', { class: 'pro-map', 'data-reveal': '' },
+      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
+      h('div', { class: 'pro-parts' }, parts))
   );
   revealIn(view);
   return view;
@@ -530,36 +510,71 @@ function moduleScreen(mi) {
 
   lanManager.setActivity('m' + mi, `Module ${mi} : ${m.title}`);
 
-  const row = (s) => {
-    const st = sessionStats(s, rec);
-    return h('a', { class: 'card srow ' + st.status, href: `#/m/${m.id}/s/${s.index}`, 'data-reveal': '' },
-      h('span', { class: 'n' }, st.status === 'done' ? '✓' : s.index),
-      h('span', null,
-        h('b', null, `Séance ${s.index} — ${s.title}`),
-        arSub(arSession(s.id)),
-        h('small', { class: 'muted' }, s.topics.join(' · '))
-      ),
-      h('span', { style: 'text-align:right' },
-        h('span', { class: 'pill ' + st.status }, STATUS[st.status]),
-        h('br'),
-        h('small', null, `${fmt(st.best)}/20`)
-      )
-    );
+  // Même organisation que le parcours M205 : héros + « Carte des compétences » (parties → séances).
+  const ms = moduleStats(m, rec);
+  const next = m.sessions.flatMap((s) => s.acts).find((a) => !rec(a.id)?.attempts.length);
+  const groups = m.groups
+    ? m.groups.map((g) => ({ label: g.label, sessions: g.sessions.map((k) => m.sessions[k - 1]) }))
+    : [{ label: m.title, sessions: m.sessions }];
+
+  const node = (s) => {
+    const lv = tcMastery(s, rec);
+    const ss = sessionStats(s, rec);
+    return h('li', null, h('a', { class: 'pp-node lv' + lv, href: `#/m/${m.id}/s/${s.index}`, title: `${MASTERY[lv].label} · ${STATUS[ss.status]} · ${fmt(ss.best)}/20` },
+      h('span', { class: 'pp-n', 'aria-hidden': 'true' }, MASTERY[lv].icon),
+      h('span', { class: 'pp-t' }, h('b', null, `S${s.index}`), ' ', s.title, h('small', { class: 'muted pp-topics' }, s.topics.join(' · '))),
+      h('small', null, `${fmt(ss.best)}/20`)));
   };
 
-  const body = m.groups ? m.groups.flatMap((g) => [
-    h('h3', { class: 'group-h' }, g.label),
-    h('div', { class: 'sessions' }, g.sessions.map((k) => row(m.sessions[k - 1])))
-  ]) : [h('div', { class: 'sessions' }, m.sessions.map(row))];
-  const ms = moduleStats(m, rec);
+  const parts = groups.map((g) => {
+    const gs = moduleStats({ sessions: g.sessions }, rec);
+    const done = gs.n && gs.sessionsDone === g.sessions.length && gs.best / gs.max >= 0.7;
+    return h('section', { class: 'card pro-part tc-part ' + m.color },
+      h('header', null,
+        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
+        h('div', null, h('h3', null, g.label), h('small', { class: 'muted' }, `${gs.done}/${gs.n} activités · ${fmt(gs.best)}/${gs.max} pts`)),
+        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validée' : '🔒 À valider')),
+      h('ol', { class: 'pp-nodes' }, g.sessions.map(node)));
+  });
 
-  return h('main', { id: 'main' },
+  return h('main', { id: 'main', class: 'pro-page tc-module' },
     crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', 'Module ' + m.id]),
-    h('h1', { tabindex: '-1' }, `${m.icon} Module ${m.id} — ${m.title}`, arSub(arModule(m.id))),
-    h('p', { class: 'muted' }, `${m.sessions.length} séances · ${m.sessions.length * 4} activités · ${fmt(ms.best)} / ${ms.max} points`),
-    m.languageNote ? h('p', { class: 'notice' }, m.languageNote) : null,
-    ...body
+    h('section', { class: 'pro-hero', 'data-reveal': '' },
+      h('div', { class: 'pro-hero-main' },
+        h('p', { class: 'eyebrow' }, `Tronc commun · Module ${m.id} · ${m.sessions.length} séances`),
+        h('h1', { tabindex: '-1' }, `${m.icon} ${m.title}`, arSub(arModule(m.id))),
+        m.languageNote ? h('p', { class: 'notice' }, m.languageNote) : null,
+        h('div', { class: 'row' },
+          next ? h('a', { class: 'btn primary', href: `#/m/${m.id}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : S${next.sessionIndex} · ${next.title}`) : h('span', { class: 'pill done' }, '🏆 Module terminé'),
+          h('a', { class: 'btn ghost', href: '#/dash' }, '← Tableau de bord'))),
+      h('div', { class: 'pro-kpis' },
+        h('div', { class: 'kpi' }, h('b', null, fmt(ms.best)), h('span', null, `pts / ${ms.max}`)),
+        h('div', { class: 'kpi' }, h('b', null, `${ms.done}/${ms.n}`), h('span', null, 'activités')),
+        h('div', { class: 'kpi' }, h('b', null, `${ms.pct} %`), h('span', null, 'progression')),
+        h('div', { class: 'kpi' }, h('b', null, `${ms.sessionsDone}/${m.sessions.length}`), h('span', null, 'séances')))),
+    h('section', { class: 'pro-map', 'data-reveal': '' },
+      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
+      h('div', { class: 'pro-parts' }, parts))
   );
+}
+
+// Image de tuile d'une activité du Tronc Commun (même format que les repères Office du M205) :
+// première illustration validée de l'activité, sinon l'icône de la mécanique.
+function activityArt(a) {
+  const key = Object.keys(STUDENT_ILLUSTRATIONS).find((k) => k.startsWith(a.id + '-q'));
+  if (!key) return mechanicIcon(a.type);
+  return h('img', { class: 'office-art tc-art', src: STUDENT_ILLUSTRATIONS[key], alt: '', 'aria-hidden': 'true', width: 112, height: 112, loading: 'lazy', decoding: 'async', draggable: 'false',
+    onerror: (e) => e.currentTarget.replaceWith(mechanicIcon(a.type)) });
+}
+
+// Niveau de maîtrise d'une séance du Tronc Commun (mêmes seuils que le M205, sans la révision espacée).
+function tcMastery(s, rec) {
+  const st = sessionStats(s, rec);
+  if (!st.done) return 0;
+  const ratio = st.best / st.max;
+  if (st.status !== 'done' || ratio < 0.6) return st.status === 'done' ? 2 : 1;
+  return ratio < 0.8 ? 2 : 3;
 }
 
 function sessionScreen(mi, si) {
@@ -584,7 +599,7 @@ function sessionScreen(mi, si) {
       const r = rec(a.id);
       const best = r?.attempts.length ? Math.max(...r.attempts.map((x) => x.score)) : null;
       return h('a', { class: 'card act-tile', href: `#/m/${mi}/s/${si}/a/${a.index}`, style: 'text-decoration:none;color:inherit', 'data-tilt': '', 'data-reveal': '' },
-        mi === 205 ? officeArt(a.title, s.part) : mechanicIcon(a.type),
+        mi === 205 ? officeArt(a.title, s.part) : activityArt(a),
         h('div', { class: 'row', style: 'justify-content:space-between' },
           h('span', { class: 'pill' }, `${a.index}. ${KIND[a.type]}`),
           best != null ? h('span', { class: 'pill done' }, `${fmt(best)}/5 ★`) : h('span', { class: 'pill' }, `~${a.estimatedMinutes} min`)
@@ -1013,8 +1028,7 @@ function render() {
 
     view = view || notFound();
     revealIn(view);
-    drawLanBar(lanManager.getState());
-    app.replaceChildren(header(prof), lanBarEl, view, floatingHome(prof));
+    app.replaceChildren(header(prof), view, floatingHome(prof));
   } catch (e) {
     app.replaceChildren(header(null), errorScreen(e));
   }
@@ -1043,9 +1057,6 @@ let salonSig = '';
 lanManager.subscribe((st) => {
   trackRace(st, (who) => { if (st.race && !st.race.ended) { audio.play('overtaken'); toast(`🏁 ${who} vient de te dépasser ! À toi de jouer.`); } },
     (kind) => { if (kind === 'race-start' || kind === 'overtake' || (kind === 'join' && live)) audio.play(kind); });
-  const badge = document.querySelector('.lan-badge span:last-child');
-  if (badge) badge.textContent = `Réseau local (${st.playerCount})`;
-  drawLanBar(st);
   const cur = location.hash.split('/')[1] || '';
   if (live && (cur === 'course' || cur === 'suivi')) { live.update(st); return; }
   if (cur === 'multijoueur' || cur === 'salon') {

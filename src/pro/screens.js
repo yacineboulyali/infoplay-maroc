@@ -8,7 +8,7 @@ import { PRO, PRO_ACTIVITIES, PRO_PARTS, PRO_POINTS } from '../data/pro/index.js
 import { moduleStats, sessionStats, fmt } from '../scoring/scoring.js';
 import { computeGame } from '../fx/game.js';
 import { gameHud } from '../fx/popup.js';
-import { dueCards, review, defiDeck, finishDefi, quests, mastery, MASTERY, proScope, proState, dayStreak, PRO_BADGES, BOX_DAYS, openedSessions } from './engine.js';
+import { dueCards, review, defiDeck, finishDefi, quests, mastery, MASTERY, proScope, proState, dayStreak, BOX_DAYS, openedSessions } from './engine.js';
 
 const kids = (...k) => k.filter((x) => x != null && x !== false); // replaceChildren() écrirait « null »
 const step = (icon, label, href) => h('li', { class: 'chev-step s1' + (href ? '' : ' cur'), 'aria-current': href ? null : 'page' }, h(href ? 'a' : 'span', href ? { href } : null, h('span', { class: 'chev-ico', 'aria-hidden': 'true' }, icon), h('span', { class: 'chev-txt' }, label)));
@@ -79,19 +79,7 @@ export function proHub({ prof, rec }) {
         h('div', { class: 'kpi' + (streak >= 3 ? ' hot' : '') }, h('b', null, `📅 ${streak}`), h('span', null, 'jour(s) d’affilée')),
         h('div', { class: 'kpi' }, h('b', null, `${all.sessionsDone}/20`), h('span', null, 'séances')))),
     h('div', { class: 'grid g2 pro-row' }, questCard, tools),
-    map,
-    h('h2', { class: 'section-h', 'data-reveal': '' }, `🏅 Badges M205 · ${game.badges.size}/${PRO_BADGES.length}`),
-    h('div', { class: 'badge-shelf', 'data-reveal': '' }, PRO_BADGES.map((b) => { const got = game.badges.has(b.id);
-      return h('div', { class: 'badge-tile' + (got ? ' got' : ''), title: b.desc, tabindex: '0', 'aria-label': `${b.title} : ${got ? 'débloqué' : 'à débloquer'}. ${b.desc}` }, h('span', { class: 'ico', 'aria-hidden': 'true' }, got ? b.icon : '🔒'), h('b', null, b.title), h('small', null, b.desc)); })),
-    h('details', { class: 'card pro-science', 'data-reveal': '' },
-      h('summary', null, h('b', null, '🔬 Pourquoi ces mécaniques ? (ce que dit la recherche)')),
-      h('ul', null,
-        h('li', null, h('b', null, 'Se tester plutôt que relire'), ' — l’effet de test (Roediger & Karpicke, 2006) : récupérer une connaissance en mémoire la consolide davantage qu’une relecture.'),
-        h('li', null, h('b', null, 'Répétition espacée'), ' — boîtes de Leitner : réviser juste avant d’oublier (Cepeda et al., 2006) multiplie la rétention à long terme.'),
-        h('li', null, h('b', null, 'Indice de certitude'), ' — une erreur faite avec assurance puis corrigée se retient très bien (effet d’hypercorrection, Butterfield & Metcalfe, 2001) ; juger sa certitude développe la métacognition.'),
-        h('li', null, h('b', null, 'Pratique entrelacée'), ' — le Défi mixte mélange les séances : il faut choisir la bonne méthode, ce qui améliore le transfert (Rohrer & Taylor, 2007).'),
-        h('li', null, h('b', null, 'Simulator et situations professionnelles'), ' — apprendre en situation authentique (missions Atlas Services, ruban réaliste type MOS) favorise le transfert vers le poste de travail.'),
-        h('li', null, h('b', null, 'Ludification et motivation'), ' — points, niveaux, badges, récit et retour immédiat ont des effets positifs mesurés sur l’apprentissage et la motivation (méta-analyse Sailer & Homner, 2020) ; objectifs courts et précis (quêtes) et sentiment de compétence (théorie de l’autodétermination).'))));
+    map);
   return view;
 }
 

@@ -135,3 +135,7 @@
 .office-activity-visual figcaption{display:grid;gap:.4rem}.office-activity-visual .office-art{width:144px;height:144px;flex-basis:144px}
 .office-practice{margin-top:1.5rem}.office-practice summary{cursor:pointer;font-weight:800;padding:.6rem}.office-practice .row{margin:1rem 0}.office-practice button[aria-pressed=true]{outline:3px solid var(--accent,#4256c5);outline-offset:2px}.office-practice-stage{margin:1rem 0}.pro-part>.office-art{float:right;margin-bottom:.6rem}
 @media(max-width:620px){.office-art{width:88px;height:88px;flex-basis:88px}.office-activity-visual .office-art{width:96px;height:96px;flex-basis:96px}.office-practice .row{align-items:stretch;flex-direction:column}}
+/* Modules du Tronc Commun présentés comme le M205 (carte des compétences) */
+.tc-part{border-top:4px solid var(--mc,var(--primary))}
+.pp-node .pp-topics{display:block;font-weight:600;font-size:.78rem;margin-top:.15rem}
+.office-art.tc-art{object-fit:cover;background:#faf8f2}

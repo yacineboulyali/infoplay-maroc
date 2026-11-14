@@ -59,11 +59,10 @@ export function resultPopup(opts) {
       h('div', { class: 'rp-level-bar' }, fill));
     setTimeout(() => { fill.style.width = g.after.pct + '%'; }, reduced() ? 0 : 500);
   }
-  const badges = g && g.newBadges.length ? h('div', { class: 'rp-badges' }, h('b', null, 'Nouveau badge !'), g.newBadges.map((b) => h('span', { class: 'rp-badge', title: b.desc }, h('span', { class: 'ico' }, b.icon), b.title))) : null;
   const scoreTab = h('section', { class: 'rp-pane rp-score' },
     h('div', { class: 'rp-hero' }, ring, h('div', null, h('h2', { id: 'rp-title', tabindex: '-1' }, opts.msg, arHint(opts.arMsg)), stars, h('p', { class: 'rp-sub' }, opts.attemptLine))),
     h('div', { class: 'rp-tally' }, h('span', { class: 'ok' }, `✔ ${okN} juste${okN > 1 ? 's' : ''}`), h('span', { class: 'ko' }, `✖ ${koN} à revoir`)),
-    chips, levelBox, badges);
+    chips, levelBox);
 
   // ---------- onglet Réponses : une carte par réponse ----------
   const card = h('div', { class: 'rp-card', 'aria-live': 'polite' });
@@ -151,7 +150,6 @@ export function gameHud(game, { compact = false } = {}) {
   return h('div', { class: 'ghud' + (compact ? ' compact' : ''), role: 'group', 'aria-label': `Niveau ${game.level}, ${game.into} XP sur ${game.need}, série ${game.streak}` },
     h('span', { class: 'ghud-lvl', title: game.rank }, h('b', null, game.level), h('small', null, 'niv.')),
     h('span', { class: 'ghud-xp' }, h('span', { class: 'ghud-xp-top' }, h('b', null, game.rank), h('small', null, `${game.into}/${game.need} XP`)), h('span', { class: 'ghud-bar' }, h('i', { style: `width:${game.pct}%` }))),
-    h('span', { class: 'ghud-chip' + (game.streak >= 3 ? ' hot' : ''), title: `Meilleure série : ${game.bestStreak}` }, '🔥 ', game.streak),
-    h('span', { class: 'ghud-chip', title: 'Badges débloqués' }, '🏅 ', game.badges.size));
+    h('span', { class: 'ghud-chip' + (game.streak >= 3 ? ' hot' : ''), title: `Meilleure série : ${game.bestStreak}` }, '🔥 ', game.streak));
 }
 export { RANKS };

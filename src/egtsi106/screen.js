@@ -16,7 +16,8 @@ const courses = [
 ];
 
 const base = '#/egtsi106';
-const sessionHref = (session) => session ? base + '/seance/' + session.id : base;
+// La séance 1 (sans entrée dans partOneSessions) vit désormais sous #/egtsi106/seance/1 ; #/egtsi106 est l'accueil du parcours.
+const sessionHref = (session) => base + '/seance/' + (session ? session.id : '1');
 const href = (index, session) => sessionHref(session) + '/activite/' + (index + 1);
 const button = (url, label, primary = false) => h('a', { class: 'btn' + (primary ? ' primary' : ''), href: url }, label);
 
@@ -40,7 +41,7 @@ function heading(title, eyebrow, text) {
 
 function lesson() {
   return h('main', { id: 'main', class: 'egtsi-page' },
-    h('p', { class: 'crumbs' }, button('#/profils', '← Accueil InfoPlay')),
+    h('p', { class: 'crumbs' }, button(base, '← EGTSI106')),
     heading(title, 'OFPPT · EGTSI106 · Séance 01 · 2 h',
       'Reconnaître le matériel et les logiciels, expliquer le fonctionnement du poste et choisir les bons branchements.'),
     partOneNav(),
@@ -94,7 +95,7 @@ function additionalLesson(session) {
 
 function lessonBlocks(course, session) {
   const requested = Number(new URLSearchParams(globalThis.location?.hash.split('?')[1]).get('lecon'));
-  if (requested > 0 && requested <= course.lessons.length) requestAnimationFrame(() => {
+  if (requested > 0 && requested <= course.lessons.length) setTimeout(() => {
     const target = document.getElementById('egtsi-lecon-' + requested);
     target?.focus();
     target?.scrollIntoView();
@@ -219,13 +220,50 @@ function practice(index, session, course) {
   return view;
 }
 
+// Accueil du parcours, même présentation que le M205 : héros + une colonne par séance, leçons dessous.
+const SESSIONS = [{ id: '1', title: 'Fondamentaux du digital', session: null }, ...partOneSessions.map((x) => ({ id: x.id, title: x.title, session: x }))];
+function hub() {
+  const nLessons = courses.reduce((n, c) => n + c.lessons.length, 0);
+  const nActs = courses.reduce((n, c) => n + c.activities.length, 0);
+  const icons = ['💡', '🔌', '🪟'];
+  return h('main', { id: 'main', class: 'pro-page egtsi-hub' },
+    h('p', { class: 'crumbs' }, button('#/profils', '← Accueil InfoPlay')),
+    h('section', { class: 'pro-hero' },
+      h('div', { class: 'pro-hero-main' },
+        h('p', { class: 'eyebrow' }, 'OFPPT · EGTSI106 · Partie 1 · ' + SESSIONS.length + ' séances × 2 h'),
+        h('h1', { tabindex: '-1' }, '🖥️ Culture et techniques du numérique'),
+        h('p', { class: 'pro-story' }, 'Choisis une séance, puis une leçon : chaque leçon contient son cours illustré et ses activités de mise en pratique.'),
+        h('div', { class: 'row' }, button(sessionHref(null), '▶ Commencer : Séance 1', true))),
+      h('div', { class: 'pro-kpis' },
+        h('div', { class: 'kpi' }, h('b', null, SESSIONS.length), h('span', null, 'séances')),
+        h('div', { class: 'kpi' }, h('b', null, nLessons), h('span', null, 'leçons')),
+        h('div', { class: 'kpi' }, h('b', null, nActs), h('span', null, 'activités')),
+        h('div', { class: 'kpi' }, h('b', null, '6 h'), h('span', null, 'de formation')))),
+    h('section', { class: 'pro-map' },
+      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('div', { class: 'pro-parts' }, SESSIONS.map((x, i) => {
+        const course = courses[i];
+        return h('section', { class: 'card pro-part egtsi-part' },
+          h('header', null,
+            h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, icons[i] || '📘'),
+            h('div', null, h('h3', null, h('a', { href: sessionHref(x.session) }, 'Séance 0' + x.id + ' · ' + x.title)), h('small', { class: 'muted' }, course.lessons.length + ' leçons · ' + course.activities.length + ' activités'))),
+          h('ol', { class: 'pp-nodes' }, course.lessons.map((l, k) => h('li', null,
+            h('a', { class: 'pp-node lv0', href: sessionHref(x.session) + '?lecon=' + (k + 1) },
+              h('span', { class: 'pp-n', 'aria-hidden': 'true' }, k + 1),
+              h('span', { class: 'pp-t' }, h('b', null, 'L' + (k + 1)), ' ', l.title),
+              h('small', null, l.indices.length + ' act.'))))));
+      }))));
+}
+
 export function egtsiScreen(route) {
-  if (route.length === 1) return lesson();
-  const session = route[1] === 'seance' ? partOneSessions.find((entry) => entry.id === route[2]) : null;
-  if (route[1] === 'seance' && !session) return null;
+  if (route.length === 1) return hub();
+  const first = route[1] === 'seance' && route[2] === '1';
+  const session = route[1] === 'seance' && !first ? partOneSessions.find((entry) => entry.id === route[2]) : null;
+  if (route[1] === 'seance' && !first && !session) return null;
+  if (first && route.length === 3) return lesson();
   if (session && route.length === 3) return additionalLesson(session);
   const course = courses[session ? Number(session.id) - 1 : 0];
-  const offset = session ? 3 : 1;
+  const offset = route[1] === 'seance' ? 3 : 1;
   const number = route[offset + 1];
   const index = Number(number) - 1;
   if (route.length === offset + 2 && route[offset] === 'activite' && /^[1-9]\d*$/.test(number)

@@ -6,7 +6,7 @@ import { h, reduced } from '../utils/dom.js';
 import { audio } from '../audio/audio.js';
 import { fmt, MAX } from '../scoring/scoring.js';
 import { computeGame, diffGame, saveTime, bestTime, fmtTime } from './game.js';
-import { answerPins, resultPopup, badgePopup } from './popup.js';
+import { answerPins, resultPopup } from './popup.js';
 
 export const MSG = (ratio) => ratio === 1 ? 'Parfait ! 🎉' : ratio >= 0.8 ? 'Très bien !' : ratio >= 0.6 ? 'Bien, tu y es presque.' : ratio >= 0.4 ? 'Pas mal, relis les explications.' : 'Courage : lis les corrections puis réessaie.';
 export const AR_MSG = (ratio) => ratio === 1 ? 'ممتاز! إجابة كاملة ومتقنة 🎉' : ratio >= 0.8 ? 'أحسنت جداً! أداء متميز 👍' : ratio >= 0.6 ? 'جيد، اقتربت من الإجابة التامة ✨' : ratio >= 0.4 ? 'لا بأس، راجع الشروحات وأعد المحاولة 🔄' : 'اقرأ الشرح جيداً ثم حاول مجدداً 💪';
@@ -37,7 +37,7 @@ export function presentResult(o) {
     });
   };
   setTimeout(() => { open(); o.onPeak && o.onPeak(ratio); }, openAt);
-  badgePopup(d.newBadges, openAt / 1000 + 1.4);
+  // Les badges ne sont plus annoncés : ils ont été retirés de l'interface.
 
   const stars = '★'.repeat(Math.round(o.score)) + '☆'.repeat(5 - Math.round(o.score));
   const bar = h('section', { class: 'result-bar' + (ratio === 1 ? ' perfect' : ratio >= 0.6 ? ' good' : ' low'), 'aria-label': 'Résultat' },

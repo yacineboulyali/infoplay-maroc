@@ -9,7 +9,7 @@ import { arModule, arSession, arActivity, arInstruction } from '../i18n/ar.js';
 import { arHint } from '../i18n/arhint.js';
 import { createWorld, webglAvailable, MODULE_COLORS } from './world.js';
 import { robot3dGame } from './robot3d.js';
-import { computeGame, bestTime, fmtTime, BADGES } from '../fx/game.js';
+import { computeGame, bestTime, fmtTime } from '../fx/game.js';
 import { gameHud } from '../fx/popup.js';
 import { presentResult, makeChrono } from '../fx/flow.js';
 import { installInteractions } from '../fx/interact.js';
@@ -135,7 +135,7 @@ function hubPanel(prof) {
     next ? h('a', { class: 'btn primary block', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : ${next.title}`) : h('p', { class: 'pill done' }, '🏆 Tout est terminé !'),
     (() => { const g = computeGame(rec, prof.id); return h('div', { class: 'panel-game' },
       h('div', { class: 'pg-head' }, h('span', { class: 'pg-lvl' }, g.level), h('div', null, h('b', null, `Niveau ${g.level} · ${g.rank}`), h('small', null, `${g.into} / ${g.need} XP · 🔥 série ${g.streak} (record ${g.bestStreak})`), h('div', { class: 'xpbar' }, h('i', { style: `width:${g.pct}%` })))),
-      h('div', { class: 'pg-badges', 'aria-label': `Badges : ${g.badges.size} sur ${BADGES.length}` }, BADGES.map((b) => h('span', { class: 'pg-badge' + (g.badges.has(b.id) ? ' got' : ''), title: `${b.title} — ${b.desc}` }, g.badges.has(b.id) ? b.icon : '🔒')))); })(),
+      ); })(),
     h('h2', null, 'Les 4 îles'),
     h('div', { class: 'island-list' }, CATALOG.map((m) => { const s = moduleStats(m, rec);
       return h('a', { class: 'island-btn', href: `#/m/${m.id}`, style: `--c:${MODULE_COLORS[m.id]}` }, h('span', { class: 'em', 'aria-hidden': 'true' }, m.icon), h('span', null, h('b', null, `Module ${m.id} — ${m.short || m.title}`), arSub(arModule(m.id)), bar(s.pct, `Module ${m.id} : ${s.pct} %`)), h('span', { class: 'pct' }, `${s.pct} %`)); }))];

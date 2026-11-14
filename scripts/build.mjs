@@ -7,10 +7,12 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..'); const dist = j
 rmSync(dist, { recursive: true, force: true }); mkdirSync(dist, { recursive: true });
 await build({ entryPoints: [join(root, 'src/app.js')], bundle: true, minify: true, format: 'iife', target: 'chrome100', outfile: join(dist, 'app.js'), legalComments: 'none' });
 // Feuille principale + thème v2 (le thème surcharge main.css, il doit donc venir après).
-const css = ['main.css', 'theme.css', 'pro.css', 'clean.css'].map((f) => readFileSync(join(root, 'src/styles', f), 'utf8')).join('\n');
+const css = ['main.css', 'theme.css', 'pro.css', 'clean.css', 'home.css'].map((f) => readFileSync(join(root, 'src/styles', f), 'utf8')).join('\n');
 writeFileSync(join(dist, 'app.css'), (await transform(css, { loader: 'css', minify: true })).code);
 // Mode immersif 3D (Three.js embarqué dans le paquet : aucun CDN).
 await build({ entryPoints: [join(root, 'src/immersive/main.js')], bundle: true, minify: true, format: 'iife', target: 'chrome100', outfile: join(dist, 'immersive.js'), legalComments: 'none' });
+// Fond animé de l'accueil (Three.js), chargé à la demande par app.js.
+await build({ entryPoints: [join(root, 'src/fx/hero3d.js')], bundle: true, minify: true, format: 'iife', target: 'chrome100', outfile: join(dist, 'hero3d.js'), legalComments: 'none' });
 await build({ entryPoints: [join(root, 'src/styles/immersive.css')], bundle: false, minify: true, outfile: join(dist, 'immersive.css') });
 copyFileSync(join(root, 'index.html'), join(dist, 'index.html'));
 copyFileSync(join(root, 'immersive.html'), join(dist, 'immersive.html'));
