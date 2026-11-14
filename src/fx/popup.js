@@ -152,6 +152,6 @@ export function gameHud(game, { compact = false } = {}) {
     h('span', { class: 'ghud-lvl', title: game.rank }, h('b', null, game.level), h('small', null, 'niv.')),
     h('span', { class: 'ghud-xp' }, h('span', { class: 'ghud-xp-top' }, h('b', null, game.rank), h('small', null, `${game.into}/${game.need} XP`)), h('span', { class: 'ghud-bar' }, h('i', { style: `width:${game.pct}%` }))),
     h('span', { class: 'ghud-chip' + (game.streak >= 3 ? ' hot' : ''), title: `Meilleure série : ${game.bestStreak}` }, '🔥 ', game.streak),
-    h('span', { class: 'ghud-chip', title: 'Badges débloqués' }, '🏅 ', game.badges.size));
+    game.badgesOn === false ? null : h('span', { class: 'ghud-chip', title: 'Badges débloqués' }, '🏅 ', game.badges.size));
 }
 export { RANKS };

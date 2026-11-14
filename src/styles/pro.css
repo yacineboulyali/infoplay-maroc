@@ -27,18 +27,6 @@
 .pro-kpis .kpi{background:rgba(255,255,255,.12);border-radius:16px;padding:.7rem;text-align:center;display:flex;flex-direction:column}
 .pro-kpis .kpi b{font-size:1.5rem}.pro-kpis .kpi span{font-size:.85rem;color:#cffafe}
 .pro-kpis .kpi.hot{background:rgba(249,115,22,.35)}
-.pro-row{align-items:stretch;margin-bottom:1.2rem}
-.pro-tools{gap:.8rem}
-.pro-tool{display:flex;flex-direction:column;gap:.35rem;text-decoration:none;color:inherit}
-.pro-tool h3{margin:0}.pro-tool p{margin:0;font-weight:700}
-.pro-tool .pt-ico{font-size:2rem}
-.pro-tool .btn{align-self:flex-start;margin-top:auto}
-.pro-tool.review{border-top:4px solid #7c3aed}.pro-tool.defi{border-top:4px solid #f97316}
-.pro-quests h2{margin-top:0}
-.quest-list{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
-.quest{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:center;padding:.55rem .7rem;border-radius:14px;background:#f8fafc;border:1px solid var(--line)}
-.quest.done{background:var(--ok-bg);border-color:#a7f3d0}
-.quest .q-ico{font-size:1.4rem}.quest .q-txt{display:grid;gap:.3rem}.quest .q-xp{font-weight:800;font-size:.85rem;color:var(--muted)}
 .pro-map .legend{display:flex;flex-wrap:wrap;gap:.8rem}
 .pro-parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
 .pro-part header{display:flex;gap:.7rem;align-items:center;margin-bottom:.6rem}
@@ -51,31 +39,7 @@
 .pp-node .pp-t{font-size:.9rem;line-height:1.25}.pp-node small{font-weight:800;color:var(--muted)}
 .pp-node.lv3{background:#ecfdf5;border-color:#a7f3d0}.pp-node.lv4{background:linear-gradient(90deg,#ecfeff,#f5f3ff);border-color:#a5b4fc}
 .pp-node.lv1,.pp-node.lv2{background:#fffbeb;border-color:#fde68a}
-.pro-science{margin-top:1.2rem}.pro-science li{margin:.35rem 0}
 
-/* cartes de révision et défi */
-.flash-stage{min-height:320px}
-.flash-meta{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;margin:0}
-.pill.new{background:#ede9fe;color:#5b21b6}
-.flash-q{font-size:1.3rem;margin:.7rem 0}
-.conf{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.3rem 0 .9rem}
-.conf-btn{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:.35rem .8rem;font:inherit;font-weight:700;cursor:pointer}
-.conf-btn.on{border-color:var(--primary);background:#eef2ff;color:var(--primary-d)}
-.card-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.6rem}
-.card-opt{text-align:left;border:2px solid var(--line);background:#fff;border-radius:14px;padding:.8rem .9rem;font:inherit;font-weight:700;cursor:pointer;transition:transform .12s,border-color .2s,background .2s}
-.card-opt:hover:not(:disabled){transform:translateY(-2px);border-color:var(--primary)}
-.card-opt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
-.card-opt.ko{background:var(--ko-bg);border-color:var(--ko);color:var(--ko)}
-.card-fb{margin-top:.9rem}.card-fb p{margin:.35rem 0}
-.card-fb .good{color:var(--ok);font-weight:800}.card-fb .bad{color:var(--ko);font-weight:800}
-.card-fb .hyper{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:.5rem .7rem}
-.card-fb .why{background:#f8fafc;border-radius:12px;padding:.5rem .7rem}
-.flash-end{text-align:center;padding:1rem}
-.flash-end .row{justify-content:center}
-.defi-hud{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0}
-.defi-hud .dh{background:#fff;border:1px solid var(--line);border-radius:999px;padding:.3rem .8rem;font-weight:800;box-shadow:var(--sh)}
-.defi-hud .combo.hot{background:var(--grad-warm);color:#fff;border-color:transparent;animation:pop-in .3s}
-.defi-score b{font-size:2.6rem;color:var(--accent)}
 
 /* ===== Simulateur de ruban Office ===== */
 .rb-app{--rb:#2b579a;border:1px solid #cbd5e1;border-radius:14px;overflow:hidden;background:#f3f4f6;box-shadow:var(--sh);font-size:.9rem}

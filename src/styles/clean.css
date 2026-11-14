@@ -42,8 +42,6 @@ nav.main a,nav.main button{color:#334155;border-radius:8px;font-weight:600;trans
 nav.main a:hover,nav.main button:hover{background:var(--surface-2);transform:none}
 nav.main a[aria-current=page]{background:var(--primary-bg);color:var(--primary-d);box-shadow:none;font-weight:700}
 .who{background:var(--surface-2);color:var(--ink);border-radius:8px}
-.lan-badge{background:var(--ok-bg);color:var(--ok)!important;border:1px solid #b5dcc4;font-weight:600}
-.lan-badge:hover{background:#d8eddf!important;transform:none}
 .fs-btn,.nav-toggle{border:1px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:8px}
 .fs-btn:hover{background:var(--surface-2)}
 .who-mini{background:var(--surface-2)}
@@ -172,7 +170,6 @@ input[type=text],input[type=number],select,textarea{border:1px solid var(--line-
 .result{border:1px solid var(--line);box-shadow:var(--sh)}
 .result.perfect{background:#fffdf5;border-color:#e6c766;box-shadow:var(--sh)}
 .answer-pin.ok{background:var(--ok)}.answer-pin.ko{background:var(--ko)}
-.card-opt{border-width:1.5px;border-radius:10px}.card-opt:hover:not(:disabled){transform:none}
 .pp-node:hover{transform:none;border-color:var(--line-strong)}
 .pp-node.lv4{background:#eef2ff}
 .race-banner,.podium-step{border:1px solid var(--line-strong);box-shadow:none;border-radius:var(--r)}
@@ -241,9 +238,7 @@ input[type=text],input[type=number],select,textarea{border:1px solid var(--line-
 .egtsi-hero{padding:clamp(1.25rem,3vw,2.25rem)}
 .mission-brief{background:#f2f9fb;border-radius:var(--r)}
 .mission-brief .mb-ava{box-shadow:none;border:1px solid var(--line)}
-.quest,.pp-node{border-radius:8px}
-.defi-hud .dh{box-shadow:none}
-.defi-hud .combo.hot{background:var(--accent)}
+.pp-node{border-radius:8px}
 
 /* ---------- confort ---------- */
 body.high-contrast header.top{border-color:#000}
@@ -255,7 +250,7 @@ body.high-contrast .dash-hero,body.high-contrast .act-hero{background:#fff;borde
 }
 
 /* ---------- finitions : accueil, salon réseau, listes ---------- */
-.mode-card .arh-btn,.pro-tool .arh-btn{align-self:flex-start}
+.mode-card .arh-btn{align-self:flex-start}
 .portrait-frame{border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
 .portrait-img-wrap,.portrait-frame img{border-radius:8px}
 .portrait-badge{background:rgba(15,23,42,.85);color:#fff;border:0;border-radius:6px;font-weight:600;backdrop-filter:none}
@@ -346,18 +341,13 @@ body.high-contrast .chev-step.cur>span{background:#fff;color:#000;outline:2px so
 ol.prompts li>.arh-btn{flex:none}
 
 /* ---------- barre de présence : utilisateurs connectés sur le même réseau ---------- */
-.lan-bar{display:flex;align-items:center;gap:.6rem;min-height:36px;padding:.25rem var(--pad);background:#fff;border-bottom:1px solid var(--line);font-size:.82rem}
-.lan-bar-title{display:inline-flex;align-items:center;gap:.4rem;flex:none;font-weight:700;color:var(--ok);text-decoration:none;white-space:nowrap}
-.lan-bar-title:hover{text-decoration:underline}
-.lan-bar-list{display:flex;gap:.35rem;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
 .lan-chip{display:inline-flex;align-items:center;gap:.3rem;flex:none;padding:.12rem .55rem .12rem .2rem;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);white-space:nowrap}
 .lan-chip.me{background:var(--primary-bg);border-color:#bccdf5;font-weight:700}
 .lan-chip-ava{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#fff;font-size:.85rem}
 .lan-chip-score{color:var(--muted);font-variant-numeric:tabular-nums}
 .lan-chip.empty{padding-left:.55rem;color:var(--muted);background:none;border-style:dashed}
 .lan-chip.more{padding-left:.55rem;background:none}
-@media (max-width:820px){.lan-bar{font-size:.76rem;gap:.4rem}.lan-chip-score{display:none}}
-@media print{.lan-bar{display:none}}
+@media (max-width:820px){.lan-chip-score{display:none}}
 
 /* ---------- association : flèche en attente accrochée à l'élément choisi ---------- */
 .match-wire.pending{fill:none;stroke:var(--primary);stroke-width:3;stroke-dasharray:8 6;stroke-linecap:round;animation:match-dash .7s linear infinite}

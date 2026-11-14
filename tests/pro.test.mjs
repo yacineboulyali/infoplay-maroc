@@ -4,7 +4,7 @@ import { CATALOG, ACTIVITIES, getActivity, getSession, isActivityId } from '../s
 import { PRO, PRO_ACTIVITIES, PRO_PARTS, PRO_POINTS } from '../src/data/pro/index.js';
 import { RIBBONS, allPaths } from '../src/games/ribbon.js';
 import { goalOk } from '../src/games/sims.js';
-import { cardsOf, ALL_CARDS, BOX_DAYS } from '../src/pro/engine.js';
+import { cardsOf, ALL_CARDS, proScope } from '../src/pro/engine.js';
 import { computeGame } from '../src/fx/game.js';
 
 const uniq = (a) => new Set(a).size === a.length;
@@ -54,17 +54,18 @@ for (const a of PRO_ACTIVITIES) {
     }
   });
 }
-test('cartes de révision : chaque séance en fournit, avec une bonne réponse distincte des distracteurs', () => {
+test('cartes tirées des activités : chaque séance en fournit, avec une bonne réponse distincte des distracteurs', () => {
   for (const s of PRO.sessions) {
     const cs = cardsOf(s, () => 0.3); assert.ok(cs.length >= 15, s.id + ' : ' + cs.length);
     cs.forEach((c) => { assert.ok(str(c.q) && str(c.answer)); assert.ok(!c.wrong.includes(c.answer), c.id); });
   }
   assert.ok(uniq(ALL_CARDS().map((c) => c.id)));
-  assert.deepEqual(BOX_DAYS, [0, 1, 3, 7, 16, 35]);
 });
 test('moteur XP : périmètre M205 indépendant', () => {
   const rec = (id) => (id === 'm205-s1-a1' ? { attempts: [{ score: 5, completedAt: '2026-11-08T10:00:00Z' }] } : undefined);
-  const g = computeGame(rec, null, { activities: PRO_ACTIVITIES, groups: PRO_PARTS, ranks: ['Stagiaire'], badges: [] });
-  assert.equal(g.done, 1); assert.ok(g.badges.has('first') && g.badges.has('perfect')); assert.equal(g.rank, 'Stagiaire');
+  const g = computeGame(rec, null, proScope());
+  assert.equal(g.done, 1); assert.equal(g.rank, 'Stagiaire');
+  assert.equal(g.badges.size, 0, 'le M205 ne débloque pas de badges'); assert.equal(g.badgesOn, false);
+  assert.ok(computeGame(rec, null, { activities: PRO_ACTIVITIES, groups: PRO_PARTS }).badges.has('first'), 'les badges restent actifs ailleurs');
   assert.equal(computeGame(rec).done, 0, 'le Tronc Commun ne compte pas les activités M205');
 });

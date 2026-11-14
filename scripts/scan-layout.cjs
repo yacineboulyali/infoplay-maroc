@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const shotsDir = process.argv[2] || 'shots/scan';
 const WIDTHS = [1440, 1024, 390];
-const SHOTS = ['#/profils', '#/dash', '#/m/1', '#/m/1/s/1', '#/m/1/s/1/a/1', '#/m/2/s/3/a/4', '#/m/3/s/1/a/4', '#/pro', '#/m/205/s/1/a/1', '#/egtsi106', '#/multijoueur', '#/course', '#/suivi', '#/progres', '#/donnees', '#/pro/defi'];
+const SHOTS = ['#/profils', '#/dash', '#/m/1', '#/m/1/s/1', '#/m/1/s/1/a/1', '#/m/2/s/3/a/4', '#/m/3/s/1/a/4', '#/pro', '#/m/205/s/1/a/1', '#/egtsi106', '#/multijoueur', '#/course', '#/suivi', '#/progres', '#/donnees'];
 
 const inspect = () => {
   const vis = (el) => { if (el.closest('details:not([open])') && !el.matches('summary')) return false; const r = el.getBoundingClientRect(); const s = getComputedStyle(el); return r.width > 2 && r.height > 2 && s.visibility !== 'hidden' && s.display !== 'none' && +s.opacity > 0.05; };
@@ -45,7 +45,7 @@ const inspect = () => {
   await page.goto(pathToFileURL(path.resolve('dist/index.html')).href + '?test=1');
   await page.evaluate(() => { window.__ip.store.createProfile('Scan'); try { localStorage.setItem('infoplay_fs_dismissed', '1'); } catch {} });
   const mods = [...CATALOG, PRO];
-  const routes = ['#/profils', '#/dash', '#/progres', '#/donnees', '#/pro', '#/pro/defi', '#/pro/revision', '#/egtsi106', '#/multijoueur', '#/course', '#/suivi',
+  const routes = ['#/profils', '#/dash', '#/progres', '#/donnees', '#/pro', '#/egtsi106', '#/multijoueur', '#/course', '#/suivi',
     ...mods.map((m) => (m.id === PRO.id ? '#/pro' : `#/m/${m.id}`)),
     ...mods.flatMap((m) => m.sessions.flatMap((s) => [`#/m/${m.id}/s/${s.index}`, `#/m/${m.id}/s/${s.index}/bilan`])),
     ...[...ACTIVITIES, ...PRO_ACTIVITIES].map((a) => `#/m/${a.moduleId}/s/${a.sessionIndex}/a/${a.index}`)];

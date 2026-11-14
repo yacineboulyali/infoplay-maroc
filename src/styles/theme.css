@@ -266,8 +266,6 @@ header.top{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
   header.top .in{padding:.45rem .7rem;gap:.5rem;flex-wrap:nowrap}
   .top-tools{margin-left:auto}
   .brand{font-size:1.05rem}.brand .logo{width:1.9rem;height:1.9rem}
-  .lan-badge{padding:.2rem .5rem!important;font-size:.75rem!important}
-  .lan-badge span:last-child{max-width:0;overflow:hidden;white-space:nowrap;display:inline-block;vertical-align:middle}
   .nav-toggle{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font:inherit;font-size:1.25rem;font-weight:900;cursor:pointer}
   .who-mini{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.14);font-size:1.2rem}
   header.top nav.main{position:absolute;left:.6rem;right:.6rem;top:calc(100% + .4rem);display:grid;grid-template-columns:1fr 1fr;gap:.35rem;padding:.7rem;margin:0;border-radius:20px;background:linear-gradient(160deg,#1e1b4b,#3b2a8a);box-shadow:0 20px 50px rgba(0,0,0,.4);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transition:opacity .2s,transform .25s cubic-bezier(.2,.9,.3,1.2),visibility .2s}

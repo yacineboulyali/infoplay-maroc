@@ -67,7 +67,9 @@ export function computeGame(rec, pid = null, scope = {}) {
   if (bestStreak >= 3) unlocked.add('streak3'); if (bestStreak >= 7) unlocked.add('streak7'); if (sessionsDone >= 1) unlocked.add('session');
   if (done >= 10) unlocked.add('ten'); if (modulesDone >= 1) unlocked.add('module'); if (speed) unlocked.add('speed'); if (comeback) unlocked.add('comeback');
   if (done >= Math.ceil(ACTS.length / 2)) unlocked.add('half'); if (done >= ACTS.length) unlocked.add('all');
-  return { xp, level, into: rest, need: needFor(level), pct: Math.round((rest / needFor(level)) * 100), rank: RK[Math.min(RK.length - 1, Math.floor((level - 1) / 2))], streak, bestStreak, done, perfectActs, firstPerfect, sessionsDone, modulesDone, badges: unlocked };
+  const badgesOn = !(Array.isArray(scope.badges) && !scope.badges.length); // le M205 n'a pas de badges
+  if (!badgesOn) unlocked.clear();
+  return { xp, level, into: rest, need: needFor(level), pct: Math.round((rest / needFor(level)) * 100), rank: RK[Math.min(RK.length - 1, Math.floor((level - 1) / 2))], streak, bestStreak, done, perfectActs, firstPerfect, sessionsDone, modulesDone, badges: unlocked, badgesOn };
 }
 
 /** Différence avant/après un essai : XP gagnée, montée de niveau, nouveaux badges. */

@@ -20,7 +20,7 @@ import { installTouchDrag } from './fx/touch-drag.js';
 import { fsButton, suggestFullscreen, autoHideHeader } from './fx/fullscreen.js';
 import { PRO, PRO_ACTIVITIES } from './data/index.js';
 import { PRO_POINTS } from './data/pro/index.js';
-import { proHub, reviewScreen, defiScreen } from './pro/screens.js';
+import { proHub } from './pro/screens.js';
 import { proScope } from './pro/engine.js';
 
 const store = createStore(localAdapter(), isActivityId);
@@ -46,7 +46,7 @@ function trackOf(hash) {
 const homeStep = (mi) => (isPro(mi) ? ['🏠', 'Accueil', '#/profils'] : ['🏠', 'Tableau de bord', '#/dash']);
 const modLabel = (mi) => (isPro(mi) ? 'M205' : 'Module ' + mi);
 const modHref = (mi) => (isPro(mi) ? '#/pro' : '#/m/' + mi);
-const scopeOf = (mi, pid) => (isPro(mi) ? proScope(pid, recOf(pid)) : undefined);
+const scopeOf = (mi) => (isPro(mi) ? proScope() : undefined);
 const arSess = (s) => s.ar || arSession(s.id);
 
 // ---------- Petits composants & utilitaires ----------
@@ -151,26 +151,6 @@ function header(prof) {
       )
     )
   );
-}
-
-// ---------- Barre de présence : qui est connecté sur le même réseau ----------
-const lanBarEl = h('aside', { class: 'lan-bar noprint', 'aria-label': 'Utilisateurs connectés sur le réseau local' });
-let lanBarSig = '';
-function drawLanBar(st) {
-  const players = st.players.filter((p) => p.role !== 'observer');
-  const sig = JSON.stringify(players.map((p) => [p.peerId, p.name, p.avatar, p.score, p.isMe]));
-  if (sig === lanBarSig && lanBarEl.childElementCount) return; lanBarSig = sig;
-  const shown = players.slice(0, 10); const rest = players.length - shown.length;
-  lanBarEl.replaceChildren(
-    h('a', { class: 'lan-bar-title', href: '#/multijoueur', title: 'Ouvrir le salon réseau' },
-      h('span', { class: 'lan-pulse-dot', 'aria-hidden': 'true' }), `En ligne · ${players.length}`),
-    h('ul', { class: 'lan-bar-list' },
-      shown.length ? shown.map((p) => h('li', { class: 'lan-chip' + (p.isMe ? ' me' : ''), title: `${p.name}${p.activity ? ' — ' + p.activity : ''}` },
-        h('span', { class: 'lan-chip-ava', 'aria-hidden': 'true' }, p.avatar || '🎮'),
-        h('span', { class: 'lan-chip-name' }, p.isMe ? p.name + ' (moi)' : p.name),
-        Number.isFinite(p.score) ? h('span', { class: 'lan-chip-score' }, p.score + ' pts') : null))
-        : h('li', { class: 'lan-chip empty' }, 'Personne pour l’instant : ouvre un profil pour apparaître ici.'),
-      rest > 0 ? h('li', { class: 'lan-chip more' }, h('a', { href: '#/multijoueur' }, `+${rest} autres`)) : null));
 }
 
 function floatingHome(prof) {
@@ -987,7 +967,7 @@ function render() {
     } else if (q[0] === 'pro') {
       const ctx = prof ? { prof, rec: recOf(prof.id) } : null;
       if (prof) lanManager.setActivity('pro', 'M205 Bureautique avancée');
-      view = !prof ? homeScreen() : q[1] === 'revision' ? reviewScreen(ctx) : q[1] === 'defi' ? defiScreen(ctx) : proHub(ctx);
+      view = !prof ? homeScreen() : proHub(ctx);
     } else if (q[0] === 'm' && isPro(q[1]) && !q[2]) {
       view = prof ? proHub({ prof, rec: recOf(prof.id) }) : homeScreen();
     } else if (q[0] === 'm' && (/^[1-4]$/.test(q[1] || '') || isPro(q[1]))) {
@@ -1002,7 +982,6 @@ function render() {
 
     view = view || notFound();
     revealIn(view);
-    drawLanBar(lanManager.getState());
     app.replaceChildren(header(prof), view, floatingHome(prof));
   } catch (e) {
     app.replaceChildren(header(null), errorScreen(e));
@@ -1033,9 +1012,6 @@ let salonSig = '';
 lanManager.subscribe((st) => {
   trackRace(st, (who) => { if (st.race && !st.race.ended) { audio.play('overtaken'); toast(`🏁 ${who} vient de te dépasser ! À toi de jouer.`); } },
     (kind) => { if (kind === 'race-start' || kind === 'overtake' || (kind === 'join' && live)) audio.play(kind); });
-  const badge = document.querySelector('.lan-badge span:last-child');
-  if (badge) badge.textContent = `Réseau local (${st.playerCount})`;
-  drawLanBar(st);
   const cur = location.hash.split('/')[1] || '';
   if (live && (cur === 'course' || cur === 'suivi')) { live.update(st); return; }
   if (cur === 'multijoueur' || cur === 'salon') {

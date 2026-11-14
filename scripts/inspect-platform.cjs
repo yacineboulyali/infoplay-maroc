@@ -14,7 +14,7 @@ const fs = require('fs');
   await page.goto(pathToFileURL(path.resolve('dist/index.html')).href + '?test=1');
   await page.evaluate(() => window.__ip.store.createProfile('Inspection'));
   const activities = [...ACTIVITIES, ...PRO_ACTIVITIES];
-  const routes = ['#/dash', '#/pro', '#/progres', '#/donnees', '#/pro/defi',
+  const routes = ['#/dash', '#/pro', '#/progres', '#/donnees',
     ...[...CATALOG, PRO].flatMap(m => m.sessions.map(s => `#/m/${m.id}/s/${s.index}`)),
     ...activities.map(a => `#/m/${a.moduleId}/s/${a.sessionIndex}/a/${a.index}`)];
   for (const route of routes) {
@@ -27,7 +27,7 @@ const fs = require('fs');
     }));
     report.routes.push({ route, ...state });
   }
-  const samples = ['#/m/1/s/1/a/2', '#/m/205/s/1', '#/m/205/s/1/a/1', '#/m/205/s/3/a/2', '#/m/205/s/9/a/3', '#/pro/defi'];
+  const samples = ['#/m/1/s/1/a/2', '#/m/205/s/1', '#/m/205/s/1/a/1', '#/m/205/s/3/a/2', '#/m/205/s/9/a/3'];
   const axe = fs.readFileSync('node_modules/axe-core/axe.min.js', 'utf8');
   for (const width of [1366, 390]) {
     await page.setViewportSize({ width, height: 900 });
