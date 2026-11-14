@@ -116,15 +116,6 @@ function header(prof) {
   const cur = location.hash.split('/')[1] || '';
   const track = (currentTrack = trackOf(location.hash));
   const a = (href, label, key) => h('a', { href, 'aria-current': cur === key ? 'page' : null }, label);
-  const lanState = lanManager.getState();
-  const lanPill = h('a', {
-    href: '#/multijoueur',
-    class: 'lan-badge',
-    title: 'Salon multijoueur sur réseau local',
-  },
-  h('span', { class: 'lan-pulse-dot' }),
-  h('span', null, `Réseau local (${lanState.playerCount})`)
-  );
 
   // Sur téléphone, la navigation se replie derrière un bouton ☰ pour laisser l'écran au jeu.
   const navToggle = h('button', { type: 'button', class: 'nav-toggle', 'aria-expanded': 'false', 'aria-controls': 'main-nav', 'aria-label': 'Ouvrir le menu', onclick: () => {
@@ -146,14 +137,11 @@ function header(prof) {
         h('span', { class: 'logo', 'aria-hidden': 'true' }, '🎮'),
         h('span', null, 'InfoPlay ', h('b', null, 'Maroc'))
       ),
-      lanPill,
       h('div', { class: 'top-tools' }, prof ? h('span', { class: 'who-mini', 'aria-hidden': 'true' }, avatarFor(prof.displayName)) : null, fsButton('fs-btn'), navToggle),
       prof ? h('nav', { class: 'main', id: 'main-nav', 'aria-label': 'Navigation principale' },
         // Seuls les liens du parcours en cours sont affichés ; les autres parcours s'ouvrent depuis l'accueil.
         ...(track === 'tc' ? [a('#/dash', 'Tableau de bord', 'dash'), a('#/progres', 'Mon progrès', 'progres')]
-          : track === 'pro' ? [a('#/pro', '💼 M205 Bureautique avancée', 'pro')]
-          : track === 'egtsi' ? [a('#/egtsi106', '🖥️ EGTSI106', 'egtsi106')] : []),
-        track ? a('#/profils', '↩ Changer de parcours', 'profils') : null,
+          : []),
         more(a('#/multijoueur', '🌐 Multijoueur LAN', 'multijoueur'), a('#/course', '🏁 Course', 'course'), a('#/suivi', '👀 Suivi', 'suivi'), a('#/donnees', '📊 Profil et données', 'donnees')),
         soundButton(prof),
         h('span', { class: 'who' }, '👤 ' + prof.displayName),
@@ -1015,7 +1003,7 @@ function render() {
     view = view || notFound();
     revealIn(view);
     drawLanBar(lanManager.getState());
-    app.replaceChildren(header(prof), lanBarEl, view, floatingHome(prof));
+    app.replaceChildren(header(prof), view, floatingHome(prof));
   } catch (e) {
     app.replaceChildren(header(null), errorScreen(e));
   }
