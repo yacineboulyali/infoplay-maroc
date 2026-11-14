@@ -299,6 +299,7 @@ function practice(index, session, course) {
       },
       answerPicture: (i) => data.pairs && visual(data.pairs[i][1], activity.answers?.[i]),
       optionPicture: (i, k) => visual(data.qs[i][1][k], null),
+      categoryPicture: (category) => visual(category),
     });
   }
 

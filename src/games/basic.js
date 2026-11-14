@@ -325,7 +325,7 @@ export function sortGame(root, d) {
       class: 'bucket-head',
       onclick: () => put(ci),
     },
-    h('span', { class: 'bucket-title-box' }, semanticIcon(c), h('b', null, c), countBadge),
+    h('span', { class: 'bucket-title-box' }, d.categoryPicture?.(c) || semanticIcon(c), h('b', null, c), countBadge),
     h('small', { class: 'bucket-cta' }, '📥 Déposer ici')
     );
 
