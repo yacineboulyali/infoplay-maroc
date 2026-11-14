@@ -16,6 +16,7 @@ import { computeGame, bestTime, fmtTime, BADGES } from './fx/game.js';
 import { gameHud } from './fx/popup.js';
 import { presentResult, makeChrono } from './fx/flow.js';
 import { installInteractions, revealIn } from './fx/interact.js';
+import { installTouchDrag } from './fx/touch-drag.js';
 import { fsButton, suggestFullscreen, autoHideHeader } from './fx/fullscreen.js';
 import { PRO, PRO_ACTIVITIES } from './data/index.js';
 import { PRO_POINTS } from './data/pro/index.js';
@@ -1027,6 +1028,7 @@ function render() {
 window.addEventListener('hashchange', render);
 installInterfaceSounds(document);
 installInteractions(document);
+installTouchDrag(document);
 autoHideHeader();
 window.addEventListener('hashchange', () => document.body.classList.remove('nav-open', 'hdr-hidden'));
 // Le menu « Plus » se referme au clic ailleurs ou avec Échap.

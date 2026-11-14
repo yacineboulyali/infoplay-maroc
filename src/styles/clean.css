@@ -461,3 +461,53 @@ ol.prompts li.dragging{opacity:.4}
 .case3d.hot-case{width:92%;aspect-ratio:auto;overflow:visible;background:#1a2029;border-radius:6px}
 .case3d.hot-case svg.scene{position:relative;transform:translateZ(3px);border-radius:4px}
 @media (max-width:620px){.activity-page .case3d.hot-case{aspect-ratio:auto}.hot-3d .stage{padding:1.6rem .6rem 2rem}}
+
+/* ---------- glisser au doigt (src/fx/touch-drag.js) ---------- */
+@media (pointer:coarse){
+  [draggable="true"]{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+}
+.touch-ghost{box-shadow:0 12px 28px rgba(15,23,42,.28)!important;border-color:var(--primary)!important;background:#fff;opacity:.92;transition:none!important}
+.touch-ghost .ripple-wrap{display:none}
+.touch-dragging{opacity:.35}
+html.touch-drag-on,html.touch-drag-on body{overscroll-behavior:none}
+html.touch-drag-on .drag-over{outline:3px solid var(--primary);outline-offset:2px}
+
+/* ---------- activités sur téléphone (≤ 620 px) ----------
+   Objectif : l'élément à prendre et l'endroit où le poser tiennent sur le même écran,
+   cartes compactes, cibles tactiles d'au moins 40 px. */
+@media (max-width:700px){
+  /* Illustrations plus petites dans toutes les cartes manipulables. */
+  :is(.match-draggable,.match-droptarget,.sort-chip,.order-draggable-row) :is(.label-illustration,.student-illustration){width:64px;height:64px;zoom:1}
+  :is(.match-draggable,.match-droptarget,.sort-chip,.order-draggable-row) .item-art{flex-basis:84px;width:84px;height:62px;zoom:1}
+  :is(.match-draggable,.match-droptarget,.sort-chip,.order-draggable-row) .visual-label{gap:.35rem}
+  :is(.match-draggable,.match-droptarget,.sort-chip) .grip-icon{display:none}
+
+  /* Associer : les deux colonnes restent côte à côte, le choix et la réponse sont visibles ensemble. */
+  .match-area .two-col{grid-template-columns:1fr 1fr;gap:.9rem}
+  .match-area .match-wires{display:block}
+  .match-area .col{gap:.45rem}
+  .match-area .card.pick{flex-direction:column;align-items:flex-start;gap:.3rem;padding:.45rem .5rem;min-height:48px;font-size:.86rem;line-height:1.3;overflow-wrap:anywhere;hyphens:auto}
+  .match-area .card.pick .num{width:1.5rem;height:1.5rem;font-size:.75rem}
+  .match-area .card.pick .txt{width:100%}
+  .match-area .card.pick .visual-label{align-items:flex-start;width:100%}
+  .match-area .card.pick .tag{position:absolute;top:.3rem;right:.3rem}
+
+  /* Classer : trois cartes par ligne, les catégories arrivent plus vite sous la réserve. */
+  .sort-pool{gap:.4rem;padding:.45rem}
+  .sort-pool .sort-chip,.bucket-body .sort-chip{flex:1 1 calc(33.333% - .4rem);min-width:0;max-width:100%;padding:.4rem;font-size:.82rem;line-height:1.25;overflow-wrap:anywhere;border-radius:10px}
+  .sort-chip.has-art,.sort-chip:has(.label-illustration,.student-illustration){min-width:0}
+  .sort-chip .visual-label{flex-direction:column;align-items:center;text-align:center;width:100%}
+  .buckets{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem;margin-top:.6rem}
+  .bucket-head{min-height:44px;padding:.4rem .5rem}
+  .bucket-body{gap:.35rem}
+
+  /* Ordonner : lignes plus basses, les flèches gardent 44 px. */
+  ol.order{gap:.4rem}
+  .ord-row{gap:.45rem;padding:.4rem .5rem;font-size:.9rem}
+  .ord-row .num{width:1.7rem;height:1.7rem;font-size:.8rem}
+  .ord-row .visual-label{flex-direction:row;align-items:center}
+
+  /* Cibles tactiles : numéros d'activité, commandes du ruban Office. */
+  .dots a{width:40px;height:40px}
+  .rb-cmd,.rb-opt{min-height:40px}
+}
