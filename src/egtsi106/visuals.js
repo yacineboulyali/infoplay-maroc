@@ -1,5 +1,6 @@
 import { h, norm, svgFrom } from '../utils/dom.js';
-import { itemVisual } from '../utils/item-visuals.js';
+import { itemVisual, labelIllustration } from '../utils/item-visuals.js';
+import { labelKey } from '../utils/label-key.js';
 import { STUDENT_ILLUSTRATIONS } from '../data/student-illustrations.js';
 import { ports, portPictures } from '../data/egtsi106/lesson.js';
 
@@ -44,13 +45,38 @@ const shapes = [
   [/^ecran$|affiche le resultat/, 'output'],
 ];
 
+// Une seule représentation par notion : une image (fournie, connue ou générée dans le registre
+// des illustrations) remplace toujours le pictogramme ; le pictogramme n'est qu'un repli.
 export function conceptVisual(label, renderPicture, source) {
   const text = norm(label);
-  const image = source || exact.get(text);
+  const image = source || exact.get(text) || aliasImage(text);
   if (image) return renderPicture(image);
+  // « Entrée » : l'image du registre montre la touche du clavier (module 2), pas la saisie de données.
+  const own = !AMBIGUOUS.has(labelKey(label)) && labelIllustration(label);
+  if (own) return h('span', { class: 'egtsi-concept-visual has-image', 'aria-hidden': 'true' }, own);
   const key = shapes.find(([pattern]) => pattern.test(text))?.[1];
   const illustration = key ? svgFrom('<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + drawings[key] + '</svg>')
     : itemVisual(label);
-  if (key) illustration.dataset.symbol = key;
+  if (key) { illustration.dataset.symbol = key; illustration.dataset.labelKey = labelKey(label); illustration.classList.add('egtsi-pictogram'); }
   return h('span', { class: 'egtsi-concept-visual', 'aria-hidden': 'true' }, illustration);
 }
+
+const AMBIGUOUS = new Set(['lbl-0891ea66']);
+
+// Images connues pour une notion sous un autre nom : « CPU » reprend l'image de « Processeur (CPU) ».
+const aliases = new Map();
+function addAliases(label, image) {
+  if (!image) return;
+  const text = norm(label);
+  const inner = text.match(/\(([^)]+)\)/)?.[1];
+  const outer = text.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
+  for (const k of [text, inner, outer]) if (k && !aliases.has(k)) aliases.set(k, image);
+}
+function aliasImage(text) {
+  if (aliases.has(text)) return aliases.get(text);
+  const inner = text.match(/\(([^)]+)\)/)?.[1];
+  const outer = text.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
+  return (inner && aliases.get(inner)) || aliases.get(outer) || null;
+}
+/** Enregistre les images du cours (terme → image) pour qu'une notion garde la même image partout. */
+export function registerConceptImages(pairs) { pairs.forEach(([label, image]) => addAliases(label, image)); }

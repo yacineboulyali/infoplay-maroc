@@ -1009,7 +1009,7 @@ function render() {
     } else if (q[0] === 'progres') {
       view = prof ? progressScreen() : homeScreen();
     } else if (q[0] === 'egtsi106') {
-      view = egtsiScreen(q);
+      view = egtsiScreen(q, prof?.id);
     } else if (q[0] === 'pro') {
       const ctx = prof ? { prof, rec: recOf(prof.id) } : null;
       if (prof) lanManager.setActivity('pro', 'M205 Bureautique avancée');

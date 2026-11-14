@@ -7,7 +7,8 @@ import { partOneSessions } from '../data/egtsi106/part-one.js';
 
 import { lessonPlans, organizeLessons } from '../data/egtsi106/lesson-plans.js';
 
-import { conceptVisual } from './visuals.js';
+import { conceptVisual, registerConceptImages } from './visuals.js';
+import { mechanicIcon } from '../utils/semantic-icons.js';
 import { MASTERY } from '../pro/engine.js';
 import { STUDENT_ILLUSTRATIONS } from '../data/student-illustrations.js';
 
@@ -15,6 +16,9 @@ const courses = [
   organizeLessons(topics, activities, lessonPlans[0]),
   ...partOneSessions.map((session, i) => organizeLessons(session.topics, session.activities, lessonPlans[i + 1])),
 ];
+
+// Une notion garde la même image partout dans le parcours (ex. « CPU » = image de « Processeur (CPU) »).
+registerConceptImages(courses.flatMap((c) => c.lessons.flatMap((l) => l.entries.map(([term, , source]) => [term, source]))));
 
 const base = '#/egtsi106';
 // La séance 1 (sans entrée dans partOneSessions) vit désormais sous #/egtsi106/seance/1 ; #/egtsi106 est l'accueil du parcours.
@@ -51,43 +55,97 @@ function crumbs(...steps) {
 }
 
 const KIND = { 'type-name': 'Écrire', match: 'Associer', sort: 'Classer', order: 'Ordonner', fill: 'Compléter', quiz: 'Questions', hot: 'Repérer', asm: 'Assembler', net: 'Relier', sim: 'Simulation', tf: 'Vrai ou faux' };
+const MECH_ICON = { 'type-name': 'fill', tf: 'quiz' };
 const lessonHref = (session, k) => sessionHref(session) + '/lecon/' + k;
 
-// Carte d'activité, même format que les tuiles des séances du M205.
-function activityTile(course, session, i, order) {
-  const a = course.activities[i];
-  return h('a', { class: 'card act-tile egtsi-tile', href: href(i, session), style: 'text-decoration:none;color:inherit' },
-    h('span', { class: 'egtsi-tile-art' }, visual(a.title, null)),
-    h('div', { class: 'row', style: 'justify-content:space-between' },
-      h('span', { class: 'pill' }, (order + 1) + '. ' + (KIND[a.mech] || 'Activité')),
-      h('span', { class: 'pill' }, '~5 min')),
-    h('h3', { style: 'margin-top:.5rem' }, a.title),
-    h('p', { class: 'muted', style: 'margin:0' }, a.objective));
+// ---------- Progression locale (par profil) : scores des activités et notions comprises ----------
+let PID = 'invite';
+const storeKey = () => 'ip-egtsi106-' + PID;
+function loadProgress() {
+  try { const p = JSON.parse(localStorage.getItem(storeKey())); if (p && p.acts && p.read) return p; } catch { /* stockage indisponible */ }
+  return { acts: {}, read: {} };
+}
+function saveProgress(p) { try { localStorage.setItem(storeKey(), JSON.stringify(p)); } catch { /* stockage indisponible */ } }
+const sid = (session) => (session ? session.id : '1');
+const actKey = (session, i) => 's' + sid(session) + '-a' + (i + 1);
+const readKey = (session, k) => 's' + sid(session) + '-l' + k;
+function recordResult(session, i, ratio) {
+  const p = loadProgress(); const k = actKey(session, i);
+  if (!(k in p.acts) || ratio > p.acts[k]) { p.acts[k] = ratio; saveProgress(p); }
+}
+// Niveau de maîtrise d'une leçon, mêmes repères que le M205 (0 à découvrir … 3 maîtrisée).
+function lessonLevel(l, session, k, p = loadProgress()) {
+  const scores = l.indices.map((i) => p.acts[actKey(session, i)]).filter((v) => v != null);
+  if (!scores.length) return (p.read[readKey(session, k)] || []).length ? 1 : 0;
+  if (scores.length < l.indices.length) return 1;
+  const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+  return avg >= 0.8 ? 3 : 2;
+}
+
+// ---------- Carte d'activité : clairement une activité, avec son type, son titre et son état ----------
+function activityTile(course, session, i, order, p = loadProgress()) {
+  const a = course.activities[i]; const score = p.acts[actKey(session, i)];
+  const done = score != null; const pct = done ? Math.round(score * 100) : 0;
+  return h('a', { class: 'egtsi-act' + (done ? ' done' : ''), href: href(i, session), 'aria-label': `Activité ${order + 1} : ${a.title}. ${KIND[a.mech] || 'Activité'}. ${done ? 'Réussie à ' + pct + ' %' : 'Pas encore faite'}` },
+    h('span', { class: 'egtsi-act-top' },
+      h('span', { class: 'egtsi-act-ico', 'aria-hidden': 'true' }, mechanicIcon(MECH_ICON[a.mech] || a.mech)),
+      h('span', { class: 'egtsi-act-num' }, 'Activité ' + (order + 1)),
+      h('span', { class: 'egtsi-act-kind' }, KIND[a.mech] || 'Activité')),
+    h('span', { class: 'egtsi-act-title' }, a.title),
+    h('span', { class: 'egtsi-act-goal' }, a.objective),
+    h('span', { class: 'egtsi-act-foot' },
+      h('span', { class: 'egtsi-act-state' }, done ? (pct >= 80 ? '✓ Réussie · ' : '◐ À consolider · ') + pct + ' %' : '○ À faire · ~5 min'),
+      h('span', { class: 'egtsi-act-go', 'aria-hidden': 'true' }, done ? 'Refaire ↻' : 'Commencer ▶')));
+}
+
+function bar(value, max, label) {
+  const pct = max ? Math.round((value / max) * 100) : 0;
+  return h('span', { class: 'egtsi-bar', role: 'progressbar', 'aria-valuenow': pct, 'aria-valuemin': 0, 'aria-valuemax': 100, 'aria-label': label }, h('i', { style: `width:${pct}%` }));
 }
 
 const MISSION_1 = { who: 'Préparer un poste pour le service administratif', text: 'Dans une PME, tu dois préparer un poste de travail et expliquer à l’équipe comment le matériel, les logiciels et les périphériques fonctionnent ensemble.' };
 
-// Page d'une séance : mission, notions, puis les activités en tuiles, rangées par leçon.
+// ---------- Page d'une séance : sommaire des leçons, puis chaque leçon (cours) suivie de ses activités ----------
 function sessionPage(i) {
-  const x = SESSIONS[i]; const course = courses[i]; const session = x.session;
+  const x = SESSIONS[i]; const course = courses[i]; const session = x.session; const p = loadProgress();
   const mission = session ? { who: 'Mission du service', text: session.mission } : MISSION_1;
   const following = SESSIONS[i + 1];
+  const doneActs = course.activities.filter((_, ai) => p.acts[actKey(session, ai)] != null).length;
+  const firstTodo = course.lessons.flatMap((l) => l.indices).find((ai) => p.acts[actKey(session, ai)] == null) ?? course.lessons[0].indices[0];
   return h('main', { id: 'main', class: 'egtsi-page egtsi-session' },
     crumbs(['📖', 'Séance ' + x.id]),
     h('h1', { tabindex: '-1' }, 'Séance ' + x.id + ' — ' + x.title),
     h('section', { class: 'mission-brief' },
       h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, ICONS[i] || '📘'),
       h('div', null, h('p', { class: 'eyebrow' }, 'Mission · situation professionnelle'), h('b', null, mission.who), h('p', null, mission.text))),
-    h('p', null, h('b', null, 'Notions : '), course.lessons.map((l) => l.title).join(', '), '.'),
-    h('p', { class: 'muted' }, course.lessons.length + ' leçons · ' + course.activities.length + ' activités interactives · 2 h'),
-    course.lessons.map((l, k) => h('section', { class: 'egtsi-group' },
-      h('div', { class: 'egtsi-group-head' },
-        h('h2', { class: 'section-h' }, 'Leçon ' + (k + 1) + ' · ' + l.title),
-        h('a', { class: 'btn small', href: lessonHref(session, k + 1) }, '📖 Voir le cours')),
-      h('div', { class: 'grid g2' }, l.indices.map((ai, order) => activityTile(course, session, ai, order))))),
+    h('section', { class: 'egtsi-overview card' },
+      h('div', { class: 'egtsi-overview-head' },
+        h('div', null, h('b', null, `${doneActs} / ${course.activities.length} activités faites`), h('small', { class: 'muted' }, ` · ${course.lessons.length} leçons · 2 h`)),
+        button(href(firstTodo, session), doneActs ? '▶ Reprendre' : '▶ Commencer la séance', true)),
+      bar(doneActs, course.activities.length, 'Progression de la séance'),
+      h('nav', { class: 'egtsi-toc', 'aria-label': 'Sommaire des leçons' }, h('ol', null, course.lessons.map((l, k) => {
+        const lv = lessonLevel(l, session, k + 1, p);
+        return h('li', null, h('a', { href: '#egtsi-l' + (k + 1), class: 'lv' + lv, onclick: (e) => { e.preventDefault(); const t = document.getElementById('egtsi-l' + (k + 1)); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); t.focus({ preventScroll: true }); } },
+          h('span', { class: 'egtsi-toc-n', 'aria-hidden': 'true' }, lv === 3 ? '✓' : k + 1), h('span', null, l.title)));
+      })))),
+    course.lessons.map((l, k) => {
+      const lv = lessonLevel(l, session, k + 1, p);
+      const done = l.indices.filter((ai) => p.acts[actKey(session, ai)] != null).length;
+      return h('section', { class: 'egtsi-lesson-block lv' + lv, id: 'egtsi-l' + (k + 1), tabindex: '-1', 'aria-labelledby': 'egtsi-l' + (k + 1) + '-t' },
+        h('header', { class: 'egtsi-lesson-head' },
+          h('span', { class: 'egtsi-lesson-thumb' }, picture(l.image) || visual(l.title)),
+          h('div', { class: 'egtsi-lesson-meta' },
+            h('p', { class: 'egtsi-kicker' }, '📘 Leçon ' + (k + 1) + ' · Cours'),
+            h('h2', { id: 'egtsi-l' + (k + 1) + '-t' }, l.title),
+            h('p', { class: 'egtsi-lesson-sub' }, `${l.entries.length} notions · ${l.indices.length} activités · ${MASTERY[lv].icon} ${MASTERY[lv].label}`),
+            bar(done, l.indices.length, 'Activités faites dans la leçon ' + (k + 1))),
+          h('a', { class: 'btn egtsi-read', href: lessonHref(session, k + 1) }, 'Lire le cours →')),
+        h('ul', { class: 'egtsi-notions', 'aria-label': 'Mots clés de la leçon' }, l.terms.map(([term]) => h('li', null, term))),
+        h('p', { class: 'egtsi-acts-label' }, '🎯 Activités de la leçon'),
+        h('div', { class: 'egtsi-acts' }, l.indices.map((ai, order) => activityTile(course, session, ai, order, p))));
+    }),
     !session ? practicalWork() : null,
-    h('div', { class: 'row', style: 'margin-top:1.2rem' },
-      button(href(course.lessons[0].indices[0], session), '▶ Commencer la séance', true),
+    h('div', { class: 'row', style: 'margin-top:1.4rem' },
       following ? button(sessionHref(following.session), 'Séance suivante →') : button(base, '← Retour au parcours')));
 }
 
@@ -115,30 +173,73 @@ function practicalWork() {
   ];
 }
 
-// Page d'une leçon : le cours illustré, puis ses activités en tuiles.
+// ---------- Page d'une leçon : 1) mots clés à retourner, 2) cours détaillé à cocher, 3) activités ----------
 function lessonPage(i, k) {
   const x = SESSIONS[i]; const course = courses[i]; const session = x.session; const l = course.lessons[k - 1];
+  const p = loadProgress(); const rk = readKey(session, k);
+  const read = new Set(p.read[rk] || []);
+  const total = l.entries.length;
+  const count = h('b', null, `${read.size} / ${total}`);
+  const meter = bar(read.size, total, 'Notions comprises');
+  const refresh = () => {
+    count.textContent = `${read.size} / ${total}`;
+    const pct = Math.round((read.size / total) * 100); meter.setAttribute('aria-valuenow', pct); meter.firstChild.style.width = pct + '%';
+    const q = loadProgress(); q.read[rk] = [...read]; saveProgress(q);
+    cheer.hidden = read.size !== total;
+  };
+  const cheer = h('p', { class: 'egtsi-cheer', role: 'status', hidden: read.size !== total }, '🎉 Toutes les notions sont comprises : passe aux activités !');
+
+  const flip = ([term, clue]) => {
+    const card = h('button', { type: 'button', class: 'egtsi-flip', 'aria-pressed': 'false', 'aria-label': `${term} : retourner la carte pour voir la définition`,
+      onclick: () => { const on = card.getAttribute('aria-pressed') !== 'true'; card.setAttribute('aria-pressed', String(on)); } },
+    h('span', { class: 'egtsi-flip-in' },
+      h('span', { class: 'egtsi-flip-face front' }, visual(term), h('b', null, term), h('small', null, 'Retourner ↻')),
+      h('span', { class: 'egtsi-flip-face back' }, h('b', null, term), h('span', null, clue))));
+    return card;
+  };
+
+  const fact = ([term, text, source], n) => {
+    const toggle = h('button', { type: 'button', class: 'egtsi-got', 'aria-pressed': String(read.has(n)),
+      onclick: () => { if (read.has(n)) read.delete(n); else read.add(n); const on = read.has(n); toggle.setAttribute('aria-pressed', String(on)); item.classList.toggle('got', on); toggle.lastChild.textContent = on ? 'Compris' : 'J’ai compris'; refresh(); } },
+    h('span', { 'aria-hidden': 'true' }, '✓'), h('span', null, read.has(n) ? 'Compris' : 'J’ai compris'));
+    const item = h('li', { class: 'egtsi-fact' + (read.has(n) ? ' got' : '') },
+      h('span', { class: 'egtsi-fact-visual' }, visual(term, source)),
+      h('div', { class: 'egtsi-fact-body' }, h('h4', null, term), h('p', null, text)),
+      toggle);
+    return item;
+  };
+
   return h('main', { id: 'main', class: 'egtsi-page egtsi-lesson-page' },
     crumbs(['📖', 'Séance ' + x.id, sessionHref(session)], ['📘', 'Leçon ' + k]),
-    h('h1', { tabindex: '-1' }, 'Leçon ' + k + ' — ' + l.title),
-    i === 0 && k === 1 ? arHint('تعرّف على مكوّنات الحاسوب، الدور ديال كل واحد وكيفاش تربط الأجهزة.') : null,
-    h('article', { class: 'card egtsi-section egtsi-lesson' },
-      h('figure', { class: 'egtsi-lesson-visual' },
-        picture(l.image),
-        h('dl', { class: 'egtsi-visual-terms' }, l.terms.map(([term, clue]) =>
-          h('div', null, visual(term), h('dt', null, term), h('dd', null, clue))))),
-      h('details', { open: true },
-        h('summary', null, 'Explications du cours'),
-        h('dl', { class: 'egtsi-facts' }, l.entries.map(([term, text, source]) =>
-          h('div', null, visual(term, source), h('dt', null, term), h('dd', null, text)))),
-        i === 0 && k === 4 ? h('div', { class: 'egtsi-ports' }, ports.map(([name], p) =>
-          h('figure', null, picture(portPictures[p]), h('figcaption', null, name)))) : null)),
-    h('h2', { class: 'section-h' }, 'Activités de la leçon'),
-    h('div', { class: 'grid g2' }, l.indices.map((ai, order) => activityTile(course, session, ai, order))),
-    h('div', { class: 'row', style: 'margin-top:1.2rem' },
-      button(href(l.indices[0], session), '▶ Commencer les activités', true),
-      k > 1 ? button(lessonHref(session, k - 1), '← Leçon précédente') : null,
-      k < course.lessons.length ? button(lessonHref(session, k + 1), 'Leçon suivante →') : button(sessionHref(session), '← Retour à la séance')));
+    h('header', { class: 'egtsi-lesson-hero card' },
+      h('div', { class: 'egtsi-lesson-hero-text' },
+        h('p', { class: 'egtsi-kicker' }, `📘 Cours · Leçon ${k} sur ${course.lessons.length} · Séance ${x.id}`),
+        h('h1', { tabindex: '-1' }, l.title),
+        h('p', { class: 'muted' }, `≈ ${Math.max(5, Math.round(total * 1.2))} min de lecture · ${total} notions · ${l.indices.length} activités`),
+        h('div', { class: 'egtsi-read-meter' }, h('span', null, 'Notions comprises : ', count), meter),
+        i === 0 && k === 1 ? arHint('تعرّف على مكوّنات الحاسوب، الدور ديال كل واحد وكيفاش تربط الأجهزة.') : null),
+      picture(l.image, '', 'egtsi-lesson-cover'),
+      h('nav', { class: 'egtsi-steps', 'aria-label': 'Leçons de la séance' }, course.lessons.map((ll, n) => {
+        const lv = lessonLevel(ll, session, n + 1, p);
+        return h('a', { href: lessonHref(session, n + 1), class: 'lv' + lv + (n + 1 === k ? ' cur' : ''), 'aria-current': n + 1 === k ? 'page' : null, title: ll.title, 'aria-label': `Leçon ${n + 1} : ${ll.title}` }, lv === 3 ? '✓' : String(n + 1));
+      }))),
+    h('section', { class: 'egtsi-course', 'aria-labelledby': 'egtsi-keys' },
+      h('h2', { id: 'egtsi-keys' }, h('span', { class: 'egtsi-step-n' }, '1'), 'Les mots clés'),
+      h('p', { class: 'muted' }, 'Clique sur une carte pour voir sa définition, puis essaie de la retrouver de mémoire.'),
+      h('div', { class: 'egtsi-flips' }, l.terms.map(flip))),
+    h('section', { class: 'egtsi-course', 'aria-labelledby': 'egtsi-detail' },
+      h('h2', { id: 'egtsi-detail' }, h('span', { class: 'egtsi-step-n' }, '2'), 'Le cours en détail'),
+      h('p', { class: 'muted' }, 'Lis chaque notion et coche « J’ai compris » quand tu sais l’expliquer avec tes mots.'),
+      h('ol', { class: 'egtsi-facts-list' }, l.entries.map(fact)),
+      i === 0 && k === 4 ? h('div', { class: 'egtsi-ports' }, ports.map(([name], n) =>
+        h('figure', null, picture(portPictures[n]), h('figcaption', null, name)))) : null,
+      cheer),
+    h('section', { class: 'egtsi-practice-zone', 'aria-labelledby': 'egtsi-acts' },
+      h('h2', { id: 'egtsi-acts' }, h('span', { class: 'egtsi-step-n' }, '3'), 'À toi de jouer : les activités'),
+      h('div', { class: 'egtsi-acts' }, l.indices.map((ai, order) => activityTile(course, session, ai, order, p)))),
+    h('nav', { class: 'egtsi-pager', 'aria-label': 'Leçon précédente ou suivante' },
+      k > 1 ? button(lessonHref(session, k - 1), '← Leçon ' + (k - 1)) : button(sessionHref(session), '← Séance ' + x.id),
+      k < course.lessons.length ? button(lessonHref(session, k + 1), 'Leçon ' + (k + 1) + ' →', true) : button(sessionHref(session), 'Terminer la séance ✓', true)));
 }
 
 function typeName(root, { terms, itemPicture }) {
@@ -212,6 +313,7 @@ function practice(index, session, course) {
       return;
     }
     engine.reveal?.(result);
+    if (result.total) recordResult(session, index, result.correct / result.total);
     stage.inert = true;
     check.disabled = true;
     const score = h('h2', { tabindex: '-1' }, result.correct + ' / ' + result.total + ' réponses correctes');
@@ -239,6 +341,7 @@ function practice(index, session, course) {
 
 // Accueil du parcours, même présentation que le M205 : héros + une colonne par séance, leçons dessous.
 function hub() {
+  const p = loadProgress();
   const nLessons = courses.reduce((n, c) => n + c.lessons.length, 0);
   const nActs = courses.reduce((n, c) => n + c.activities.length, 0);
   return h('main', { id: 'main', class: 'pro-page egtsi-hub' },
@@ -266,16 +369,17 @@ function hub() {
           h('header', null,
             h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, ICONS[i] || '📘'),
             h('div', null, h('h3', null, h('a', { href: sessionHref(x.session) }, 'Séance 0' + x.id + ' · ' + x.title)), h('small', { class: 'muted' }, course.lessons.length + ' leçons · ' + course.activities.length + ' activités')),
-            h('span', { class: 'pill', title: 'Termine toutes les leçons de la séance' }, '🔒 Certificat')),
-          h('ol', { class: 'pp-nodes' }, course.lessons.map((l, k) => h('li', null,
-            h('a', { class: 'pp-node lv0', href: lessonHref(x.session, k + 1), title: MASTERY[0].label },
-              h('span', { class: 'pp-n', 'aria-hidden': 'true' }, MASTERY[0].icon),
+            (() => { const cert = course.lessons.every((l, k) => lessonLevel(l, x.session, k + 1, p) === 3); return h('span', { class: 'pill' + (cert ? ' done' : ''), title: 'Réussis toutes les activités de la séance avec au moins 80 %' }, cert ? '🎓 Certificat' : '🔒 Certificat'); })()),
+          h('ol', { class: 'pp-nodes' }, course.lessons.map((l, k) => { const lv = lessonLevel(l, x.session, k + 1, p); return h('li', null,
+            h('a', { class: 'pp-node lv' + lv, href: lessonHref(x.session, k + 1), title: MASTERY[lv].label },
+              h('span', { class: 'pp-n', 'aria-hidden': 'true' }, MASTERY[lv].icon),
               h('span', { class: 'pp-t' }, h('b', null, 'L' + (k + 1)), ' ', l.title),
-              h('small', null, l.indices.length + ' act.'))))));
+              h('small', null, l.indices.length + ' act.'))); })));
       }))));
 }
 
-export function egtsiScreen(route) {
+export function egtsiScreen(route, profileId) {
+  PID = profileId || 'invite';
   if (route.length === 1) return hub();
   const first = route[1] === 'seance' && route[2] === '1';
   const session = route[1] === 'seance' && !first ? partOneSessions.find((entry) => entry.id === route[2]) : null;

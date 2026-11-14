@@ -101,3 +101,115 @@ header.top-slim .sound-toggle:hover,header.top-slim .switch-user:hover{backgroun
 .egtsi-tile .egtsi-tile-art img{width:100%;height:100%;object-fit:cover}
 .egtsi-tile .egtsi-tile-art svg{width:56px;height:56px}
 @media(max-width:620px){.pro-part>.egtsi-part-art,.egtsi-tile .egtsi-tile-art{width:88px;height:88px}}
+
+/* ---------- EGTSI106 : leçons (cours, bleu) et activités (cartes à jouer, orange) bien distinctes ---------- */
+.egtsi-page{--cours:#1d4ed8;--cours-bg:#eef3ff;--act:#c2410c;--act-bg:#fff4ec;--ok:#15703f;--ok-bg:#e6f4ec}
+.egtsi-kicker{margin:0 0 .25rem;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cours)}
+.egtsi-bar{display:block;height:8px;border-radius:99px;background:#e5e9f0;overflow:hidden}
+.egtsi-bar>i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--cours),#6b8cff);transition:width .3s ease-out}
+
+/* Séance : vue d'ensemble + sommaire */
+.egtsi-overview{display:grid;gap:.7rem;margin:1rem 0 1.4rem;padding:1rem 1.2rem}
+.egtsi-overview-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.egtsi-toc ol{list-style:none;margin:.2rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+.egtsi-toc a{display:inline-flex;align-items:center;gap:.45rem;min-height:40px;padding:.35rem .8rem .35rem .4rem;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);text-decoration:none;font-size:.9rem;font-weight:600;transition:border-color .15s,background .15s}
+.egtsi-toc a:hover{border-color:var(--cours);background:var(--cours-bg)}
+.egtsi-toc-n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--cours-bg);color:var(--cours);font-weight:800;font-size:.85rem}
+.egtsi-toc a.lv3 .egtsi-toc-n{background:var(--ok);color:#fff}
+.egtsi-toc a.lv1 .egtsi-toc-n,.egtsi-toc a.lv2 .egtsi-toc-n{background:#fde68a;color:#7c4a03}
+
+/* Bloc leçon (cours) */
+.egtsi-lesson-block{margin:0 0 1.6rem;padding:1.1rem 1.2rem 1.2rem;border:1px solid var(--line);border-left:6px solid var(--cours);border-radius:16px;background:#fff;scroll-margin-top:80px}
+.egtsi-lesson-block:focus{outline:none}
+.egtsi-lesson-block:focus-visible{outline:3px solid var(--cours);outline-offset:3px}
+.egtsi-lesson-block.lv3{border-left-color:var(--ok)}
+.egtsi-lesson-head{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center}
+.egtsi-lesson-thumb{display:grid;place-items:center;width:84px;height:84px;border-radius:14px;background:var(--cours-bg);overflow:hidden}
+.egtsi-lesson-thumb img{width:100%;height:100%;object-fit:cover}
+.egtsi-lesson-meta h2{margin:0 0 .2rem;font-size:1.3rem}
+.egtsi-lesson-sub{margin:0 0 .45rem;color:var(--muted);font-size:.9rem}
+.egtsi-read{background:var(--cours-bg);border-color:var(--cours);color:var(--cours);font-weight:700;white-space:nowrap}
+.egtsi-read:hover{background:var(--cours);color:#fff}
+.egtsi-notions{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 0;padding:0}
+.egtsi-notions li{padding:.2rem .65rem;border-radius:999px;background:var(--cours-bg);color:#1e3a8a;font-size:.82rem;font-weight:600}
+.egtsi-acts-label{margin:1.1rem 0 .55rem;font-size:.82rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--act)}
+
+/* Carte d'activité */
+.egtsi-acts{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.8rem}
+.egtsi-act{display:flex;flex-direction:column;gap:.45rem;padding:.9rem 1rem;border:1px solid #f3c9ad;border-top:4px solid var(--act);border-radius:14px;background:var(--act-bg);color:var(--ink);text-decoration:none;transition:transform .15s ease-out,box-shadow .15s ease-out;touch-action:manipulation}
+.egtsi-act:hover{transform:translateY(-2px);box-shadow:0 8px 20px -10px rgba(194,65,12,.45)}
+.egtsi-act:active{transform:scale(.98)}
+.egtsi-act:focus-visible{outline:3px solid var(--act);outline-offset:2px}
+.egtsi-act.done{border-color:#b7dfc6;border-top-color:var(--ok);background:var(--ok-bg)}
+.egtsi-act-top{display:flex;align-items:center;gap:.5rem}
+.egtsi-act-ico{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#fff;color:var(--act);flex:none}
+.egtsi-act.done .egtsi-act-ico{color:var(--ok)}
+.egtsi-act-ico svg{width:22px;height:22px}
+.egtsi-act-num{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--act)}
+.egtsi-act.done .egtsi-act-num{color:var(--ok)}
+.egtsi-act-kind{margin-left:auto;padding:.15rem .55rem;border-radius:999px;background:#fff;font-size:.75rem;font-weight:700;color:#7c2d12}
+.egtsi-act-title{font-size:1.05rem;font-weight:800;line-height:1.3}
+.egtsi-act-goal{font-size:.9rem;color:var(--muted);line-height:1.45}
+.egtsi-act-foot{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:auto;padding-top:.4rem;font-size:.82rem;font-weight:700}
+.egtsi-act-state{color:var(--muted)}
+.egtsi-act.done .egtsi-act-state{color:var(--ok)}
+.egtsi-act-go{padding:.3rem .7rem;border-radius:8px;background:var(--act);color:#fff}
+.egtsi-act.done .egtsi-act-go{background:var(--ok)}
+
+/* Page de leçon */
+.egtsi-lesson-hero{display:grid;grid-template-columns:1fr 200px;gap:1.2rem;align-items:center;margin:1rem 0 1.6rem;padding:1.3rem 1.4rem;border-left:6px solid var(--cours)}
+.egtsi-lesson-hero h1{margin:.1rem 0 .3rem;font-size:clamp(1.6rem,3vw,2.2rem)}
+.egtsi-lesson-cover{width:200px;height:200px;border-radius:16px;object-fit:cover;background:var(--cours-bg)}
+.egtsi-read-meter{display:grid;gap:.35rem;margin-top:.8rem;max-width:420px;font-size:.9rem}
+.egtsi-steps{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.4rem}
+.egtsi-steps a{display:grid;place-items:center;min-width:40px;height:40px;padding:0 .5rem;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-weight:800;text-decoration:none}
+.egtsi-steps a.cur{background:var(--cours);border-color:var(--cours);color:#fff}
+.egtsi-steps a.lv3:not(.cur){background:var(--ok-bg);border-color:#b7dfc6;color:var(--ok)}
+.egtsi-course,.egtsi-practice-zone{margin:0 0 2rem}
+.egtsi-course h2,.egtsi-practice-zone h2{display:flex;align-items:center;gap:.6rem;margin:0 0 .3rem;font-size:1.35rem}
+.egtsi-step-n{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--cours);color:#fff;font-size:1rem;flex:none}
+.egtsi-practice-zone .egtsi-step-n{background:var(--act)}
+.egtsi-practice-zone{padding:1.1rem 1.2rem;border-radius:16px;background:#fffaf5;border:1px dashed #f3c9ad}
+
+/* Cartes à retourner */
+.egtsi-flips{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.8rem;margin-top:.7rem}
+.egtsi-flip{position:relative;min-height:170px;padding:0;border:0;background:none;cursor:pointer;perspective:900px;font:inherit;color:inherit;text-align:center;touch-action:manipulation}
+.egtsi-flip:focus-visible{outline:3px solid var(--cours);outline-offset:3px;border-radius:14px}
+.egtsi-flip-in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .35s ease-out}
+.egtsi-flip[aria-pressed=true] .egtsi-flip-in{transform:rotateY(180deg)}
+.egtsi-flip-face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.45rem;padding:.8rem;border-radius:14px;border:1px solid var(--line);background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.egtsi-flip-face.front .egtsi-concept-visual,.egtsi-flip-face.front>img,.egtsi-flip-face.front>.egtsi-picture{width:72px;height:72px}
+.egtsi-flip-face.front img{width:72px;height:72px;object-fit:contain}
+.egtsi-flip-face.front small{color:var(--cours);font-weight:700}
+.egtsi-flip-face.back{transform:rotateY(180deg);background:var(--cours-bg);border-color:#c7d6ff;font-size:.92rem;line-height:1.45}
+.egtsi-flip-face.back b{color:var(--cours)}
+
+/* Notions à cocher */
+.egtsi-facts-list{list-style:none;display:grid;gap:.7rem;margin:.8rem 0 0;padding:0}
+.egtsi-fact{display:grid;grid-template-columns:72px 1fr auto;gap:1rem;align-items:center;padding:.85rem 1rem;border:1px solid var(--line);border-radius:14px;background:#fff;transition:border-color .2s,background .2s}
+.egtsi-fact.got{border-color:#b7dfc6;background:var(--ok-bg)}
+.egtsi-fact-visual{display:grid;place-items:center;width:72px;height:72px;border-radius:12px;background:#f7f8fb;overflow:hidden}
+.egtsi-fact-visual img,.egtsi-fact-visual .egtsi-picture{max-width:100%;max-height:100%;object-fit:contain}
+.egtsi-fact-body h4{margin:0 0 .2rem;font-size:1.02rem}
+.egtsi-fact-body p{margin:0;line-height:1.55;color:#334155}
+.egtsi-got{display:inline-flex;align-items:center;gap:.35rem;min-height:44px;padding:.4rem .85rem;border:1px solid var(--line-strong,#c5ccd6);border-radius:10px;background:#fff;color:var(--ink);font:inherit;font-weight:700;font-size:.88rem;cursor:pointer;white-space:nowrap;touch-action:manipulation}
+.egtsi-got [aria-hidden]{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;border:2px solid currentColor;font-size:.7rem;color:#94a3b8}
+.egtsi-got[aria-pressed=true]{background:var(--ok);border-color:var(--ok);color:#fff}
+.egtsi-got[aria-pressed=true] [aria-hidden]{color:#fff;background:rgba(255,255,255,.2)}
+.egtsi-cheer{margin:1rem 0 0;padding:.7rem 1rem;border-radius:12px;background:var(--ok-bg);color:var(--ok);font-weight:700}
+.egtsi-pager{display:flex;justify-content:space-between;gap:.7rem;flex-wrap:wrap;margin-top:1rem}
+
+@media (max-width:720px){
+  .egtsi-lesson-head{grid-template-columns:auto 1fr}
+  .egtsi-read{grid-column:1/-1;justify-content:center}
+  .egtsi-lesson-hero{grid-template-columns:1fr}
+  .egtsi-lesson-cover{display:none}
+  .egtsi-fact{grid-template-columns:56px 1fr}
+  .egtsi-fact-visual{width:56px;height:56px}
+  .egtsi-got{grid-column:1/-1;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){.egtsi-flip-in,.egtsi-act,.egtsi-bar>i{transition:none}}
+/* Image du registre affichée à la place d'un pictogramme : toujours contenue dans sa case */
+.egtsi-concept-visual.has-image{display:grid;place-items:center;width:100%;height:100%;padding:0;background:none}
+.egtsi-concept-visual.has-image>img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}
+.egtsi-flip-face.front .egtsi-concept-visual.has-image{width:72px;height:72px}
