@@ -9,6 +9,8 @@
 
 Ces clés mélangent des questions, des options et des éléments de présentation dans les missions de type QCM.
 
+Les 25 entrées composites M205 restent sans WebP. L’audit du build final compte zéro élément M205 sans illustration sur 80 activités. Il signale 30 éléments dans EGTSI106 dont les fichiers WebP sont présents, répartis sur quatre activités.
+
 - m205-s12-a4 · lbl-61fcf82b, lbl-6505d33b
 - m205-s13-a4 · lbl-ddc0cf22, lbl-909e618a
 - m205-s14-a4 · lbl-4633c9d8
