@@ -14,7 +14,8 @@ globalThis.document = new JSDOM('<!doctype html><body></body>').window.document;
 test('Category images reuse reviewed concepts and distinguish data input from the Enter key', () => {
   assert.match(categoryVisual('Entrée').getAttribute('src'), /lbl-251be805\.webp$/);
   assert.match(labelIllustration('Entrée').getAttribute('src'), /lbl-0891ea66\.webp$/);
-  assert.match(conceptVisual('Entrée', () => null).getAttribute('src'), /lbl-251be805\.webp$/);
+  const entree = conceptVisual('Entrée', () => null); // image encadrée comme les autres images EGTSI
+  assert.match((entree.querySelector('img') || entree).getAttribute('src'), /lbl-251be805\.webp$/);
   assert.match(categoryVisual('Modèle').getAttribute('src'), /lbl-64219efb\.webp$/);
   assert.match(categoryVisual('Information').getAttribute('src'), /m1-s1-a1-q01-/);
   assert.match(categoryVisual('Le LAN').getAttribute('src'), /m4-s2-a2-q01-/);

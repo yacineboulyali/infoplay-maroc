@@ -1,6 +1,6 @@
 # Images manquantes : titres de catégorie des activités « Classer »
 
-Inventaire du 2026-11-18, destiné à Codex pour poursuivre le travail. Le **§ 7** contient un prompt prêt à copier.
+Inventaire du 2026-11-18, destiné à l’agent Gemini de Google Antigravity pour poursuivre le travail. Le **§ 7** contient un prompt prêt à copier.
 
 ## 1. Constat
 
@@ -77,14 +77,14 @@ Rapprochements examinés **et rejetés** (à générer) :
 - « Entrée » → `lbl-0891ea66` : touche du clavier, pas l'entrée de données (voir § 5) ;
 - « Mise en forme », « Style », « Colonnes », « Valeurs », « Animation », « Service d'Internet » : seules les images de libellés plus longs et d'un autre sens existent.
 
-## 4. Images à générer avec imagegen (53)
+## 4. Images à générer avec l’outil d’images de Gemini (53)
 
 Une image par ligne, enregistrée exactement sous `public/images/label-illustrations/<clé>.webp`. La clé vaut `labelKey(libellé)` (`src/utils/label-key.js`) : ne jamais la modifier.
 Les catégories d'une même activité doivent rester **visuellement distinctes entre elles**. La colonne « Classée face à » donne les autres catégories de l'activité.
 
 ### Module 1 (4)
 
-| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt imagegen |
+| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt |
 |---|---|---|---|---|---|
 | `lbl-251be805` | Entrée | `m1-s2-a1` Construis le schéma<br>`m1-s3-a2` Classe les périphériques | Traitement · Sortie · Stockage | Clavier ; Souris ; Scanner | A hand typing on a keyboard and a mouse, with a bold arrow flowing INTO a computer tower: data entering the computer (input), not a single keyboard key. |
 | `lbl-7d11e88c` | Stockage | `m1-s2-a1` Construis le schéma<br>`m1-s3-a2` Classe les périphériques | Entrée · Traitement · Sortie | Disque dur / SSD ; Clé USB ; Clé USB | A hard drive, an SSD and a USB stick placed together on a shelf-like base, with a folder going into them: keeping data for later. |
@@ -93,7 +93,7 @@ Les catégories d'une même activité doivent rester **visuellement distinctes e
 
 ### Module 2 (6)
 
-| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt imagegen |
+| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt |
 |---|---|---|---|---|---|
 | `lbl-267b6d41` | Rôle du système d’exploitation | `m2-s1-a3` Classe les responsabilités | Rôle d’une application | Gérer la mémoire vive ; Lancer et arrêter les programmes ; Gérer les fichiers et dossiers | A friendly conductor figure inside a computer coordinating memory chips, folders and program windows with arrows: the system managing resources. |
 | `lbl-87a1ae56` | Rôle d’une application | `m2-s1-a3` Classe les responsabilités | Rôle du système d’exploitation | Rédiger une lettre ; Calculer une moyenne ; Naviguer sur un site web | A student at a desk using a computer to write a letter: a single document window open, focused on a user task. |
@@ -104,7 +104,7 @@ Les catégories d'une même activité doivent rester **visuellement distinctes e
 
 ### Module 3 (7)
 
-| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt imagegen |
+| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt |
 |---|---|---|---|---|---|
 | `lbl-39ebfb4b` | Vrai | `m3-s4-a1` Vrai ou faux ? | Faux | 7 > 3 ; 5 = 5 ; 10 <= 10 | A balance scale perfectly level with two identical blocks, and a large green circle badge: a statement that holds (no letters). |
 | `lbl-1298990d` | Faux | `m3-s4-a1` Vrai ou faux ? | Vrai | 2 + 2 = 5 ; 4 <> 4 ; 9 < 1 | A balance scale clearly tipped with unequal blocks, and a large red cross badge: a statement that does not hold (no letters). |
@@ -116,7 +116,7 @@ Les catégories d'une même activité doivent rester **visuellement distinctes e
 
 ### Module 4 (6)
 
-| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt imagegen |
+| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt |
 |---|---|---|---|---|---|
 | `lbl-036edb94` | Service d’Internet | `m4-s3-a2` Service ou infrastructure ? | Infrastructure / matériel | Le Web ; La messagerie électronique ; La visioconférence | A globe surrounded by service icons in bubbles: an envelope, a web page, a video call camera. |
 | `lbl-6740bf1c` | Infrastructure / matériel | `m4-s3-a2` Service ou infrastructure ? | Service d’Internet | Le câble de fibre optique ; Le routeur ; Un serveur (la machine) | Physical network hardware: a router, a server rack and a coil of fibre-optic cable connected together. |
@@ -127,7 +127,7 @@ Les catégories d'une même activité doivent rester **visuellement distinctes e
 
 ### M205 (30)
 
-| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt imagegen |
+| Clé / fichier | Titre | Activité | Classée face à | Exemples d'éléments classés dedans | Prompt |
 |---|---|---|---|---|---|
 | `lbl-af8a3942` | Saut de page | `m205-s2-a1` Quel saut choisir ? | Saut de section · Saut de colonne | Commencer un nouveau chapitre en haut de la page suivante, avec la même mise en page ; Placer un grand tableau seul sur la page suivante | Two document pages side by side; a chapter heading block jumps from the bottom of the first page to the top of the second, with a dashed break line. |
 | `lbl-96894400` | Saut de section | `m205-s2-a1` Quel saut choisir ? | Saut de page · Saut de colonne | Passer uniquement l’annexe en Paysage ; Mettre seulement le corps du texte sur deux colonnes ; Redémarrer la numérotation des pages à l’annexe | Two consecutive document pages with different layouts: the first portrait, the second landscape with two columns, joined by a dashed section mark. |
@@ -180,16 +180,36 @@ Ces 5 phrases affichent une case de planche partagée (`generated-item-art`). Ce
 | `lbl-5e7d6496` | `m205-s7-a2` | Pour un en-tête différent dans l'annexe, on désactive [Lier au précédent] |
 | `lbl-e0a7cb31` | `m205-s9-a2` | Pour colorer les ventes supérieures à 10 000 DH, on utilise Mise en forme conditionnelle › … |
 
-## 7. Prompt à copier dans Codex
+## 7. Prompt à copier dans Gemini (Google Antigravity)
 
-> Tu travailles dans le dépôt `infoplay-maroc`. Lis `docs/IMAGES_MANQUANTES_CODEX.md` en entier.
+À coller dans le panneau Agent d'Antigravity, l'espace de travail étant ouvert sur le dossier `infoplay-maroc`. Mode conseillé : **Planning** (l'agent montre son plan avant d'agir).
+
+> Tu es l'agent de ce workspace `infoplay-maroc` (plateforme éducative d'informatique hors ligne, interface en français, élèves marocains). Commence par lire en entier `docs/IMAGES_MANQUANTES_CODEX.md` et les §§ 2 et 3 de `docs/PROMPT_IMAGES_MANQUANTES.md` (style et règles pédagogiques).
 >
-> 1. **Intégration** : fais les étapes du § 2. Une image existante doit toujours passer avant le pictogramme. Ajoute les correspondances « proches » du § 3 dans `CATEGORY_IMAGES`.
-> 2. **Génération** : pour chaque ligne du § 4, module par module (M1, M2, M3, M4, puis M205), par lots d'environ 15 :
->    - génère l'image avec **imagegen** à partir du prompt de la ligne ;
->    - ajoute le préfixe de style : *"Flat hand-drawn school-textbook illustration, thick navy outlines, pastel blue and teal fills, light flat shading, plain cream background #fffaf0, centred single subject with generous margin, square, no text, no letters, no numbers, no logos."* ;
->    - respecte aussi les §§ 2 et 3 de `docs/PROMPT_IMAGES_MANQUANTES.md` (style, règles pédagogiques, aucune marque).
->    - Avant de générer une image, **vérifie qu'aucune image identique n'existe déjà** : cherche le libellé avec `labelKey()` dans `src/data/label-illustrations.js`, puis dans `src/data/student-illustrations.js` par le libellé de l'activité. Si une image existe, réutilise-la au lieu d'en générer une.
-> 3. **Conversion** : convertis chaque PNG en WebP 512 × 512 sur fond `#fffaf0`, qualité 0,88, avec Playwright et un canvas comme dans `scripts/sync-student-illustrations.mjs`. Garde les PNG sources dans `output/label-illustrations-src/`. Enregistre le WebP sous `public/images/label-illustrations/<clé>.webp`.
-> 4. **Après chaque lot** : `node scripts/sync-label-illustrations.mjs`, puis `npm run build`, puis `node scripts/audit-missing-images.cjs`. Ouvre une activité du lot dans le navigateur et contrôle l'affichage.
-> 5. **À la fin** : traite le § 5 (« Entrée »), puis, si le temps le permet, le § 6. Lance `npm test`. Commite par module avec un message en français.
+> **Le travail a peut-être déjà commencé.** Lance d'abord `git status` et `git log --oneline -5`. Vérifie si `categoryVisual` existe déjà dans `src/utils/item-visuals.js` et quelles clés du § 4 ont déjà leur fichier dans `public/images/label-illustrations/`. Ne refais rien de ce qui existe : reprends là où le travail s'est arrêté.
+>
+> **Étape 0. Plan.** Produis un artefact *Implementation Plan* (intégration du code du § 2, puis génération du § 4 par lots) et un artefact *Task List* avec une case par image du § 4. **Attends ma validation** avant de modifier le code.
+>
+> **Étape 1. Intégration du code (§ 2).**
+> - Crée `categoryVisual(label)` dans `src/utils/item-visuals.js`, avec l'ordre de recherche du § 2 : une image existante passe toujours avant le pictogramme.
+> - Remplis `CATEGORY_IMAGES` avec les correspondances « proches » du § 3.
+> - Branche la fonction dans `src/games/basic.js`, ajoute `.bucket-head` à `scripts/audit-missing-images.cjs`, puis lance `npm run build` et `npm test`.
+> - Avec ton agent navigateur, ouvre `dist/index.html?test=1`, crée un profil, va sur `#/m/4/s/2/a/1` et `#/m/205/s/11/a/1`, et fais une capture : les 18 images du § 3 doivent apparaître dans les titres de catégorie.
+>
+> **Étape 2. Génération des images (§ 4).** Avance module par module (M1, M2, M3, M4, puis M205), par lots d'environ 10 images.
+> - **Avant chaque image**, vérifie qu'aucune image identique n'existe déjà : la clé dans `src/data/label-illustrations.js`, puis le même libellé dans les données d'activité associées à `src/data/student-illustrations.js`. Si une image existe, réutilise-la et coche la case sans générer.
+> - Sinon, utilise ton **outil de génération d'images intégré** (Gemini Image / Nano Banana). Le prompt est la colonne « Prompt » de la ligne, précédé de ce préfixe de style, toujours identique :
+>   *"Flat hand-drawn school-textbook illustration, thick navy outlines, pastel blue and teal fills, light flat shading, plain cream background #fffaf0, centred single subject with generous margin, square 1:1, absolutely no text, no letters, no numbers, no words, no logos, no watermark."*
+> - Pour garder un style cohérent, joins 2 ou 3 images existantes de `public/images/label-illustrations/` comme référence, par exemple `lbl-3cb33f81.webp`, `lbl-1b8805fa.webp` et `lbl-9a0d3db7.webp`.
+> - Regarde chaque image générée. **Régénère-la** si elle contient du texte ou des chiffres lisibles, un logo ou une marque, un rendu photo ou 3D, ou si elle ressemble trop à une autre catégorie de la même activité.
+> - Copie le PNG retenu (il est créé dans le dossier d'artefacts d'Antigravity, hors du dépôt) vers `output/label-illustrations-src/<clé>.png`.
+>
+> **Étape 3. Conversion.** Écris une seule fois un script `scripts/png-to-label-webp.mjs` qui reprend la méthode Playwright + canvas de `scripts/sync-student-illustrations.mjs` : 512 × 512, fond `#fffaf0`, image centrée, `image/webp` en qualité 0,88. Il lit `output/label-illustrations-src/*.png` et écrit `public/images/label-illustrations/<clé>.webp`. Ne change jamais une clé : elle vaut `labelKey(libellé)` (`src/utils/label-key.js`).
+>
+> **Étape 4. Après chaque lot.** Lance `node scripts/sync-label-illustrations.mjs`, `npm run build`, puis `node scripts/audit-missing-images.cjs`. Avec l'agent navigateur, ouvre une activité du lot et capture l'écran. Mets à jour la *Task List*.
+>
+> **Étape 5. Fin.**
+> - Traite le § 5 (« Entrée » sous la clé `lbl-251be805` ; ne touche pas à `lbl-0891ea66`), puis le § 6 si le temps le permet.
+> - Lance `npm test`.
+> - Fais un commit par module, avec un message en français, sur la branche `label-illustrations-2`. Ne pousse pas sans mon accord.
+> - Termine par un artefact *Walkthrough* : images réutilisées, images générées, images régénérées et pourquoi, et le résultat final de l'audit.

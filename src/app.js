@@ -1149,5 +1149,5 @@ lanManager.subscribe((st) => {
   }
 });
 
-if (/[?&]test=1/.test(location.search)) window.__ip = { store, CATALOG, ACTIVITIES, engineOf, lanManager };
+if (/[?&]test=1/.test(location.search)) window.__ip = { store, CATALOG, ACTIVITIES, COLLEGE_ACTIVITIES, engineOf, lanManager };
 render();

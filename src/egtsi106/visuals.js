@@ -49,7 +49,8 @@ const shapes = [
 // des illustrations) remplace toujours le pictogramme ; le pictogramme n'est qu'un repli.
 export function conceptVisual(label, renderPicture, source) {
   const text = norm(label);
-  if (labelKey(label) === 'lbl-0891ea66') return categoryVisual(label);
+  // « Entrée » : image de la saisie de données (pas la touche du clavier), dans le même cadre que les autres images.
+  if (labelKey(label) === 'lbl-0891ea66') return h('span', { class: 'egtsi-concept-visual has-image', 'aria-hidden': 'true' }, categoryVisual(label));
   const image = source || exact.get(text) || aliasImage(text);
   if (image) return renderPicture(image);
   const own = labelIllustration(label);
