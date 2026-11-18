@@ -139,3 +139,7 @@
 .tc-part{border-top:4px solid var(--mc,var(--primary))}
 .pp-node .pp-topics{display:block;font-weight:600;font-size:.78rem;margin-top:.15rem}
 .office-art.tc-art{object-fit:cover;background:#faf8f2}
+/* Informatique Collège : séances du programme pas encore jouables */
+.pp-node.planned{opacity:.62;border-style:dashed;cursor:default;background:transparent}
+.pp-node.planned:hover{transform:none;box-shadow:none}
+.mode-college .mode-badge{background:#ecfdf5;color:#065f46}

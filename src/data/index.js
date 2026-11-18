@@ -4,6 +4,7 @@ import m3 from './module-3.js';
 import m4 from './module-4.js';
 import { INSTR, HINT } from './dsl.js';
 import { PRO, PRO_ACTIVITIES } from './pro/index.js';
+import { LEVELS, COLLEGE_MODULES, COLLEGE_ACTIVITIES, getLevel, collegeModule, levelActivities } from './college/index.js';
 
 const raw = [m1, m2, m3, m4];
 export const CATALOG = raw.map((m) => ({
@@ -22,10 +23,10 @@ export const CATALOG = raw.map((m) => ({
 export const SESSIONS = CATALOG.flatMap((m) => m.sessions);
 export const ACTIVITIES = SESSIONS.flatMap((s) => s.acts);
 // Le parcours M205 (OFPPT) partage les écrans et le stockage, mais pas le barème du Tronc Commun.
-const byId = new Map([...ACTIVITIES, ...PRO_ACTIVITIES].map((a) => [a.id, a]));
+const byId = new Map([...ACTIVITIES, ...PRO_ACTIVITIES, ...COLLEGE_ACTIVITIES].map((a) => [a.id, a]));
 export const getActivity = (id) => byId.get(id);
 export const isActivityId = (id) => byId.has(id);
-export const getModule = (n) => (Number(n) === PRO.id ? PRO : CATALOG.find((m) => m.id === Number(n)));
-export { PRO, PRO_ACTIVITIES };
+export const getModule = (n) => (Number(n) === PRO.id ? PRO : collegeModule(n) || CATALOG.find((m) => m.id === Number(n)));
+export { PRO, PRO_ACTIVITIES, LEVELS, COLLEGE_MODULES, COLLEGE_ACTIVITIES, getLevel, collegeModule, levelActivities };
 export const getSession = (mi, si) => getModule(mi)?.sessions[Number(si) - 1];
 export const TOTAL_POINTS = ACTIVITIES.length * 5;

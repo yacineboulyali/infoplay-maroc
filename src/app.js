@@ -18,7 +18,7 @@ import { gameHud } from './fx/popup.js';
 import { presentResult, makeChrono } from './fx/flow.js';
 import { installInteractions, revealIn } from './fx/interact.js';
 import { fsButton, suggestFullscreen, autoHideHeader } from './fx/fullscreen.js';
-import { PRO, PRO_ACTIVITIES } from './data/index.js';
+import { PRO, PRO_ACTIVITIES, LEVELS, getLevel, collegeModule, levelActivities, COLLEGE_ACTIVITIES } from './data/index.js';
 import { PRO_POINTS } from './data/pro/index.js';
 import { proHub, reviewScreen, defiScreen } from './pro/screens.js';
 import { proScope, MASTERY } from './pro/engine.js';
@@ -33,6 +33,9 @@ const STATUS = { todo: 'Pas commencée', doing: 'En cours', done: 'Terminée' };
 const arSub = (text) => arHint(text);
 // Parcours M205 : libellés et périmètre de jeu propres (le Tronc Commun garde les siens).
 const isPro = (mi) => Number(mi) === PRO.id;
+// Parcours Informatique Collège : chaque niveau (1AC, 2AC, 3AC) est un parcours à part.
+const colMod = (mi) => collegeModule(mi);
+const colScope = (L) => ({ activities: levelActivities(L), groups: L.modules.filter((m) => m.sessions.length) });
 // Un seul parcours à la fois : 'tc' (Tronc commun), 'pro' (M205) ou 'egtsi'. On en change depuis l'accueil.
 let currentTrack = null;
 function trackOf(hash) {
@@ -40,13 +43,16 @@ function trackOf(hash) {
   if (!q.length || q[0] === 'profils' || q[0] === 'accueil') return null;
   if (q[0] === 'pro' || (q[0] === 'm' && isPro(q[1]))) return 'pro';
   if (q[0] === 'egtsi106') return 'egtsi';
+  if (q[0] === 'college' && getLevel(q[1])) return 'col' + q[1];
+  if (q[0] === 'm' && colMod(q[1])) return 'col' + colMod(q[1]).level;
   if (q[0] === 'dash' || q[0] === 'progres' || q[0] === 'm') return 'tc';
   return currentTrack; // pages communes : on reste dans le parcours en cours
 }
-const homeStep = (mi) => (isPro(mi) ? ['🏠', 'Accueil', '#/profils'] : ['🏠', 'Tableau de bord', '#/dash']);
-const modLabel = (mi) => (isPro(mi) ? 'M205' : 'Module ' + mi);
+const homeStep = (mi) => (isPro(mi) ? ['🏠', 'Accueil', '#/profils'] : colMod(mi) ? ['🏫', colMod(mi).levelCode, '#/college/' + colMod(mi).level] : ['🏠', 'Tableau de bord', '#/dash']);
+const modLabel = (mi) => (isPro(mi) ? 'M205' : colMod(mi) ? `${colMod(mi).levelCode} · Module ${colMod(mi).rank}` : 'Module ' + mi);
 const modHref = (mi) => (isPro(mi) ? '#/pro' : '#/m/' + mi);
-const scopeOf = (mi, pid) => (isPro(mi) ? proScope(pid, recOf(pid)) : undefined);
+const scopeOf = (mi, pid) => (isPro(mi) ? proScope(pid, recOf(pid)) : colMod(mi) ? colScope(getLevel(colMod(mi).level)) : undefined);
+const trackHref = (t) => (t === 'pro' ? '#/pro' : t === 'egtsi' ? '#/egtsi106' : t && t.startsWith('col') ? '#/college/' + t.slice(3) : '#/dash');
 const arSess = (s) => s.ar || arSession(s.id);
 
 // ---------- Petits composants & utilitaires ----------
@@ -290,6 +296,12 @@ function homeScreen() {
             h('p', null, '4 modules, 30 séances, 120 activités.'),
             h('button', { type: 'button', class: 'btn primary mode-go welcome-cta', onclick: () => openPath('#/dash') }, 'Ouvrir le parcours →')
           ),
+          ...LEVELS.map((L) => h('section', { class: 'mode-card mode-pro mode-college', 'aria-labelledby': `mode-col${L.level}-h` },
+            h('span', { class: 'mode-badge' }, 'Informatique · Collège'),
+            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, L.icon),
+            h('h2', { id: `mode-col${L.level}-h` }, `${L.code} · ${L.title}`),
+            h('p', null, `${L.modules.length} modules : ${L.modules.map((m) => m.title).join(', ')}.`),
+            h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/college/' + L.level) }, 'Ouvrir le parcours →'))),
           h('section', { class: 'mode-card mode-pro', 'aria-labelledby': 'mode-pro-h' },
             h('span', { class: 'mode-badge' }, 'Nouveau · OFPPT'),
             h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '💼'),
@@ -439,7 +451,7 @@ function multiplayerScreen() {
       chatForm
     ),
     h('div', { class: 'row', style: 'margin-top:1.5rem' },
-      prof ? h('a', { class: 'btn primary', href: currentTrack === 'pro' ? '#/pro' : currentTrack === 'egtsi' ? '#/egtsi106' : '#/dash' }, '← Retour à mon parcours') : h('a', { class: 'btn primary', href: '#/profils' }, '← Choisir mon pseudo')
+      prof ? h('a', { class: 'btn primary', href: trackHref(currentTrack) }, '← Retour à mon parcours') : h('a', { class: 'btn primary', href: '#/profils' }, '← Choisir mon pseudo')
     )
   );
 }
@@ -502,13 +514,73 @@ function dashScreen() {
   return view;
 }
 
+// ---------- INFORMATIQUE COLLÈGE : tableau de bord d'un niveau ----------
+function levelScreen(n) {
+  const L = getLevel(n);
+  const p = store.active();
+  const rec = recOf(p.id);
+  const acts = levelActivities(L);
+  const t = moduleStats({ sessions: L.modules.flatMap((m) => m.sessions) }, rec);
+  const next = acts.find((a) => !rec(a.id)?.attempts.length);
+  const game = computeGame(rec, p.id, colScope(L));
+  const nSessions = L.modules.reduce((k, m) => k + Math.max(m.sessions.length, m.plan.length), 0);
+  lanManager.setActivity('college' + n, `Informatique Collège ${L.code}`);
+
+  const parts = L.modules.map((m) => {
+    const ms = moduleStats(m, rec);
+    const done = ms.n && ms.sessionsDone === m.plan.length && ms.best / ms.max >= 0.7;
+    return h('section', { class: 'card pro-part tc-part ' + m.color },
+      h('header', null,
+        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
+        h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.rank} · ${m.title}`), arSub(m.ar)),
+          h('small', { class: 'muted' }, `${m.unit} · ${m.comp} · ${m.hours} h · ${m.sessions.length ? `${ms.done}/${ms.n} activités · ${fmt(ms.best)}/${ms.max} pts` : 'en préparation'}`)),
+        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validé' : '🔒 À valider')),
+      h('ol', { class: 'pp-nodes' },
+        m.sessions.map((s) => {
+          const lv = tcMastery(s, rec); const ss = sessionStats(s, rec);
+          return h('li', null, h('a', { class: 'pp-node lv' + lv, href: `#/m/${m.id}/s/${s.index}`, title: `${MASTERY[lv].label} · ${STATUS[ss.status]} · ${fmt(ss.best)}/20` },
+            h('span', { class: 'pp-n', 'aria-hidden': 'true' }, MASTERY[lv].icon),
+            h('span', { class: 'pp-t' }, h('b', null, `S${s.index}`), ' ', s.title),
+            h('small', null, `${fmt(ss.best)}/20`)));
+        }),
+        m.plan.slice(m.sessions.length).map((title, i) => h('li', null, h('span', { class: 'pp-node lv0 planned', title: 'Séance en préparation' },
+          h('span', { class: 'pp-n', 'aria-hidden': 'true' }, '🔒'),
+          h('span', { class: 'pp-t' }, h('b', null, `S${m.sessions.length + i + 1}`), ' ', title),
+          h('small', null, 'À venir'))))));
+  });
+
+  const view = h('main', { id: 'main', class: 'pro-page tc-dash college-dash' },
+    crumbs(['🏠', 'Accueil', '#/profils'], ['🏫', `Informatique Collège · ${L.code}`]),
+    h('section', { class: 'pro-hero', 'data-reveal': '' },
+      h('div', { class: 'pro-hero-main' },
+        h('p', { class: 'eyebrow' }, `Collège · ${L.title} · ${L.modules.length} modules · programme officiel (1 h par semaine)`),
+        h('h1', { tabindex: '-1' }, `${L.icon} Informatique — ${L.code}`, arSub(L.ar)),
+        h('p', { class: 'pro-story' }, `Bonjour ${p.displayName} ! Les modules suivent l’ordre du programme. Chaque séance contient 4 activités interactives ; les séances marquées 🔒 sont en préparation.`),
+        gameHud(game),
+        h('div', { class: 'row' },
+          next ? h('a', { class: 'btn primary', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : ${modLabel(next.moduleId)} · S${next.sessionIndex} · ${next.title}`) : acts.length ? h('span', { class: 'pill done' }, '🏆 Séances disponibles terminées') : null,
+          h('a', { class: 'btn ghost', href: '#/progres' }, '📊 Mon progrès'))),
+      h('div', { class: 'pro-kpis' },
+        h('div', { class: 'kpi' }, h('b', null, fmt(t.best)), h('span', null, `pts / ${acts.length * 5}`)),
+        h('div', { class: 'kpi' }, h('b', null, `${t.done}/${t.n}`), h('span', null, 'activités')),
+        h('div', { class: 'kpi' }, h('b', null, `${L.modules.reduce((k, m) => k + m.sessions.length, 0)}/${nSessions}`), h('span', null, 'séances disponibles')),
+        h('div', { class: 'kpi' }, h('b', null, `${t.sessionsDone}`), h('span', null, 'séances terminées')))),
+    h('section', { class: 'pro-map', 'data-reveal': '' },
+      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
+      h('div', { class: 'pro-parts' }, parts))
+  );
+  revealIn(view);
+  return view;
+}
+
 function moduleScreen(mi) {
   const m = getModule(mi);
   if (!m) return notFound();
   const p = store.active();
   const rec = recOf(p.id);
 
-  lanManager.setActivity('m' + mi, `Module ${mi} : ${m.title}`);
+  lanManager.setActivity('m' + mi, `${modLabel(mi)} : ${m.title}`);
 
   // Même organisation que le parcours M205 : héros + « Carte des compétences » (parties → séances).
   const ms = moduleStats(m, rec);
@@ -526,7 +598,13 @@ function moduleScreen(mi) {
       h('small', null, `${fmt(ss.best)}/20`)));
   };
 
-  const parts = groups.map((g) => {
+  const col = colMod(mi);
+  // Ressources du programme pas encore jouables : affichées dans l'ordre officiel, verrouillées.
+  const planned = (m.plan || []).slice(m.sessions.length).map((t, i) => h('li', null, h('span', { class: 'pp-node lv0 planned', title: 'Séance en préparation' },
+    h('span', { class: 'pp-n', 'aria-hidden': 'true' }, '🔒'),
+    h('span', { class: 'pp-t' }, h('b', null, `S${m.sessions.length + i + 1}`), ' ', t, h('small', { class: 'muted pp-topics' }, 'À venir')),
+    h('small', null, '—'))));
+  const parts = groups.map((g, gi) => {
     const gs = moduleStats({ sessions: g.sessions }, rec);
     const done = gs.n && gs.sessionsDone === g.sessions.length && gs.best / gs.max >= 0.7;
     return h('section', { class: 'card pro-part tc-part ' + m.color },
@@ -534,24 +612,26 @@ function moduleScreen(mi) {
         h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
         h('div', null, h('h3', null, g.label), h('small', { class: 'muted' }, `${gs.done}/${gs.n} activités · ${fmt(gs.best)}/${gs.max} pts`)),
         h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validée' : '🔒 À valider')),
-      h('ol', { class: 'pp-nodes' }, g.sessions.map(node)));
+      h('ol', { class: 'pp-nodes' }, g.sessions.map(node), gi === groups.length - 1 ? planned : null));
   });
+  const backHref = col ? '#/college/' + col.level : '#/dash';
+  const nPlan = Math.max(m.sessions.length, (m.plan || []).length);
 
   return h('main', { id: 'main', class: 'pro-page tc-module' },
-    crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', 'Module ' + m.id]),
+    col ? crumbs(['🏠', 'Accueil', '#/profils'], ['🏫', col.levelCode, backHref], ['📚', 'Module ' + col.rank]) : crumbs(['🏠', 'Tableau de bord', '#/dash'], ['📚', 'Module ' + m.id]),
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
-        h('p', { class: 'eyebrow' }, `Tronc commun · Module ${m.id} · ${m.sessions.length} séances`),
-        h('h1', { tabindex: '-1' }, `${m.icon} ${m.title}`, arSub(arModule(m.id))),
+        h('p', { class: 'eyebrow' }, col ? `Informatique Collège · ${col.levelCode} · Module ${col.rank} · ${m.unit} · ${m.comp} · ${m.hours} h` : `Tronc commun · Module ${m.id} · ${m.sessions.length} séances`),
+        h('h1', { tabindex: '-1' }, `${m.icon} ${m.title}`, arSub(col ? m.ar : arModule(m.id))),
         m.languageNote ? h('p', { class: 'notice' }, m.languageNote) : null,
         h('div', { class: 'row' },
-          next ? h('a', { class: 'btn primary', href: `#/m/${m.id}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : S${next.sessionIndex} · ${next.title}`) : h('span', { class: 'pill done' }, '🏆 Module terminé'),
-          h('a', { class: 'btn ghost', href: '#/dash' }, '← Tableau de bord'))),
+          next ? h('a', { class: 'btn primary', href: `#/m/${m.id}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : S${next.sessionIndex} · ${next.title}`) : m.sessions.length ? h('span', { class: 'pill done' }, '🏆 Module terminé') : h('span', { class: 'pill' }, '🛠️ Séances en préparation'),
+          h('a', { class: 'btn ghost', href: backHref }, col ? `← ${col.levelCode}` : '← Tableau de bord'))),
       h('div', { class: 'pro-kpis' },
         h('div', { class: 'kpi' }, h('b', null, fmt(ms.best)), h('span', null, `pts / ${ms.max}`)),
         h('div', { class: 'kpi' }, h('b', null, `${ms.done}/${ms.n}`), h('span', null, 'activités')),
-        h('div', { class: 'kpi' }, h('b', null, `${ms.pct} %`), h('span', null, 'progression')),
-        h('div', { class: 'kpi' }, h('b', null, `${ms.sessionsDone}/${m.sessions.length}`), h('span', null, 'séances')))),
+        h('div', { class: 'kpi' }, h('b', null, `${ms.pct || 0} %`), h('span', null, 'progression')),
+        h('div', { class: 'kpi' }, h('b', null, `${ms.sessionsDone}/${nPlan}`), h('span', null, 'séances')))),
     h('section', { class: 'pro-map', 'data-reveal': '' },
       h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
       h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
@@ -562,7 +642,7 @@ function moduleScreen(mi) {
 // Image de tuile d'une activité du Tronc Commun (même format que les repères Office du M205) :
 // première illustration validée de l'activité, sinon l'icône de la mécanique.
 function activityArt(a) {
-  const key = Object.keys(STUDENT_ILLUSTRATIONS).find((k) => k.startsWith(a.id + '-q'));
+  const key = a.pics?.find(Boolean) || Object.keys(STUDENT_ILLUSTRATIONS).find((k) => k.startsWith((a.illus || a.id) + '-q'));
   if (!key) return mechanicIcon(a.type);
   return h('img', { class: 'office-art tc-art', src: STUDENT_ILLUSTRATIONS[key], alt: '', 'aria-hidden': 'true', width: 112, height: 112, loading: 'lazy', decoding: 'async', draggable: 'false',
     onerror: (e) => e.currentTarget.replaceWith(mechanicIcon(a.type)) });
@@ -592,7 +672,7 @@ function sessionScreen(mi, si) {
     h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`, arSub(arSess(s))),
     s.situation ? h('section', { class: 'mission-brief', 'data-reveal': '' },
       h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, s.situation.ico),
-      h('div', null, h('p', { class: 'eyebrow' }, 'Mission · situation professionnelle'), h('b', null, s.situation.who), h('p', null, s.situation.text))) : null,
+      h('div', null, h('p', { class: 'eyebrow' }, colMod(mi) ? 'Situation de départ' : 'Mission · situation professionnelle'), h('b', null, s.situation.who), h('p', null, s.situation.text))) : null,
     h('p', null, h('b', null, 'Notions : '), s.topics.join(', '), '.'),
     h('p', { class: 'muted' }, `4 activités interactives · environ ${s.acts.reduce((a, b) => a + b.estimatedMinutes, 0)} minutes · /20 points`),
     h('div', { class: 'grid g2' }, s.acts.map((a) => {
@@ -604,7 +684,7 @@ function sessionScreen(mi, si) {
           h('span', { class: 'pill' }, `${a.index}. ${KIND[a.type]}`),
           best != null ? h('span', { class: 'pill done' }, `${fmt(best)}/5 ★`) : h('span', { class: 'pill' }, `~${a.estimatedMinutes} min`)
         ),
-        h('h3', { style: 'margin-top:.5rem' }, a.title, arSub(arActivity(a.id))),
+        h('h3', { style: 'margin-top:.5rem' }, a.title, arSub(arActivity(a.illus || a.id))),
         h('p', { class: 'muted', style: 'margin:0' }, a.objective)
       );
     })),
@@ -664,7 +744,7 @@ function activityScreen(mi, si, ai) {
     submitted = false;
     checkBtn.disabled = false;
     view.classList.remove('graded');
-    eng = engineOf(act.mech)(stage, { ...act.data, illustrationActivityId: act.id });
+    eng = engineOf(act.mech)(stage, { ...act.data, illustrationActivityId: act.illus || act.id });
     chrono.start();
     if (window.__ip) window.__ip.eng = eng;
   }
@@ -714,7 +794,7 @@ function activityScreen(mi, si, ai) {
     h('header', { class: 'act-hero', 'data-reveal': '' },
       h('div', { class: 'act-hero-main' },
         h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
-        h('h1', { tabindex: '-1' }, act.title, arSub(arActivity(act.id))),
+        h('h1', { tabindex: '-1' }, act.title, arSub(arActivity(act.illus || act.id))),
         h('p', { class: 'act-obj' }, h('b', null, 'Objectif : '), act.objective)),
       h('div', { class: 'act-hero-side' }, dots, h('div', { class: 'act-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null, h('span', { class: 'chip-meta' }, `~${act.estimatedMinutes} min · /5`)), hud)),
     h('div', { class: 'instr activity-brief', 'data-reveal': '' },
@@ -795,10 +875,10 @@ function progressScreen() {
   return h('main', { id: 'main' },
     h('h1', { tabindex: '-1' }, 'Mon progrès'),
     h('p', { class: 'muted' }, 'Les points d’une séance sont sur 20 : « Premier » = premiers essais, « Meilleur » = meilleurs essais.'),
-    [...CATALOG, PRO].map((m) => {
+    [...CATALOG, PRO, ...LEVELS.flatMap((L) => L.modules.filter((x) => x.sessions.length))].map((m) => {
       const ms = moduleStats(m, rec);
       return h('section', { class: 'card', style: 'margin-bottom:1rem;overflow:auto' },
-        h('h2', null, `${m.icon} Module ${m.id} — ${m.title}`),
+        h('h2', null, `${m.icon} ${colMod(m.id) ? modLabel(m.id) : 'Module ' + m.id} — ${m.title}`),
         h('p', { class: 'muted' }, `${fmt(ms.best)} / ${ms.max} points · ${ms.done}/${ms.n} activités`),
         bar(ms.pct, `Module ${m.id}`),
         h('table', { class: 't' },
@@ -913,7 +993,7 @@ function dataScreen() {
       )
     ) : h('p', null, 'Aucun profil sur cet ordinateur.'),
     h('div', { class: 'row', style: 'margin-top:.6rem' },
-      h('button', { type: 'button', class: 'btn small', onclick: () => downloadText('infoplay-resultats.csv', store.csv([...ACTIVITIES, ...PRO_ACTIVITIES]), 'text/csv') }, '⬇ Exporter les résultats (CSV)'),
+      h('button', { type: 'button', class: 'btn small', onclick: () => downloadText('infoplay-resultats.csv', store.csv([...ACTIVITIES, ...PRO_ACTIVITIES, ...COLLEGE_ACTIVITIES]), 'text/csv') }, '⬇ Exporter les résultats (CSV)'),
       h('button', { type: 'button', class: 'btn small', onclick: () => exp(null, 'infoplay-classe.json') }, '⬇ Exporter tous les profils (JSON)')
     )
   );
@@ -1010,13 +1090,15 @@ function render() {
       view = prof ? progressScreen() : homeScreen();
     } else if (q[0] === 'egtsi106') {
       view = egtsiScreen(q, prof?.id);
+    } else if (q[0] === 'college' && getLevel(q[1])) {
+      view = prof ? levelScreen(+q[1]) : homeScreen();
     } else if (q[0] === 'pro') {
       const ctx = prof ? { prof, rec: recOf(prof.id) } : null;
       if (prof) lanManager.setActivity('pro', 'M205 Bureautique avancée');
       view = !prof ? homeScreen() : q[1] === 'revision' ? reviewScreen(ctx) : q[1] === 'defi' ? defiScreen(ctx) : proHub(ctx);
     } else if (q[0] === 'm' && isPro(q[1]) && !q[2]) {
       view = prof ? proHub({ prof, rec: recOf(prof.id) }) : homeScreen();
-    } else if (q[0] === 'm' && (/^[1-4]$/.test(q[1] || '') || isPro(q[1]))) {
+    } else if (q[0] === 'm' && (/^[1-4]$/.test(q[1] || '') || isPro(q[1]) || colMod(q[1]))) {
       if (!prof) view = homeScreen();
       else if (!q[2]) view = moduleScreen(+q[1]);
       else if (q[2] === 's' && /^\d+$/.test(q[3] || '')) {

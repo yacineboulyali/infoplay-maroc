@@ -21,6 +21,16 @@ Second parcours, indépendant du Tronc Commun (il ne change ni ses 120 activité
   - **rangs de carrière**, badges et certificats par partie.
 - Accès : bouton « M205 · Bureautique avancée » sur l'accueil, lien **💼 M205 OFPPT** dans le menu (`#/pro`). La progression est enregistrée dans le même profil et exportée dans le CSV enseignant.
 
+## Nouveau : Informatique Collège (1AC · 2AC · 3AC) 🏫
+
+Trois parcours indépendants, un par niveau, affichés à côté du Tronc commun sur l’accueil (`#/college/1`, `#/college/2`, `#/college/3`). Les modules et les séances suivent l’ordre du programme officiel tel que publié par l’ANPI :
+
+- **1AC (19 séances)** : Système informatique · Système d’exploitation · Utilitaires et fichiers · Traitement de textes · Recherches documentaires.
+- **2AC (23 séances)** : Environnement matériel · Système d’exploitation et réseau local · Échange d’informations · Tableurs · Programmation Logo.
+- **3AC (24 séances)** : Typologie des réseaux · Présentation assistée par ordinateur · Programmation Logo · Recherches documentaires sur le Web · Messagerie électronique.
+
+Chaque séance propose une situation de départ, 4 activités de mécaniques différentes et une trace « À retenir ». Les activités reprises du Tronc commun gardent leurs images et leur traduction arabe ; les nouvelles activités réutilisent uniquement des illustrations validées de même sens (choix manuel ou libellé identique). Données : `src/data/college/`, tests : `tests/college.test.mjs`.
+
 ## Aperçu
 
 | Tableau de bord | Activité interactive |

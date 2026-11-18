@@ -1,0 +1,83 @@
+// Parcours Informatique Collège : ordre officiel des modules, séances complètes, solution → 5/5.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { JSDOM } from 'jsdom';
+const dom = new JSDOM('<!doctype html><body></body>', { url: 'http://localhost/' });
+Object.assign(globalThis, { window: dom.window, document: dom.window.document, HTMLElement: dom.window.HTMLElement, Node: dom.window.Node });
+const { LEVELS, COLLEGE_ACTIVITIES, ACTIVITIES, PRO_ACTIVITIES, getModule, getActivity } = await import('../src/data/index.js');
+const { STUDENT_ILLUSTRATIONS } = await import('../src/data/student-illustrations.js');
+const { engineOf } = await import('../src/games/index.js');
+const { activityScore } = await import('../src/scoring/scoring.js');
+const { mulberry, setRng } = await import('../src/utils/dom.js');
+
+test('trois niveaux, modules dans l’ordre du programme (ANPI)', () => {
+  assert.deepEqual(LEVELS.map((L) => L.code), ['1AC', '2AC', '3AC']);
+  assert.deepEqual(LEVELS[0].modules.map((m) => m.title), ['Système informatique', 'Système d’exploitation', 'Utilitaires et fichiers', 'Traitement de textes', 'Recherches documentaires']);
+  assert.deepEqual(LEVELS[1].modules.map((m) => m.unit), ['U1', 'U1', 'U2', 'U3', 'U4']);
+  assert.deepEqual(LEVELS[2].modules.map((m) => m.unit), ['U1', 'U2', 'U3', 'U4', 'U5']);
+  assert.deepEqual(LEVELS.map((L) => L.modules.reduce((k, m) => k + m.hours, 0)), [30, 30, 30]);
+});
+test('identifiants uniques et distincts des autres parcours', () => {
+  const ids = [...ACTIVITIES, ...PRO_ACTIVITIES, ...COLLEGE_ACTIVITIES].map((a) => a.id);
+  assert.equal(new Set(ids).size, ids.length);
+  for (const L of LEVELS) for (const m of L.modules) assert.equal(getModule(m.id), m);
+  assert.equal(getActivity('m11-s1-a1').moduleId, 11);
+});
+test('chaque séance : titre du programme, 4 activités de mécaniques différentes', () => {
+  for (const L of LEVELS) for (const m of L.modules) {
+    assert.ok(m.sessions.length <= m.plan.length, m.title);
+    m.sessions.forEach((s, i) => {
+      assert.equal(s.title, m.plan[i], `${m.id} : ordre du programme`);
+      assert.equal(s.acts.length, 4, s.id);
+      assert.equal(new Set(s.acts.map((a) => a.mech)).size, 4, s.id);
+      assert.ok(s.ar && s.retenir && s.situation, s.id + ' : ar / retenir / situation');
+    });
+  }
+  assert.equal(LEVELS[0].modules[0].sessions.length + LEVELS[0].modules[1].sessions.length, 8);
+});
+test('les activités reprises pointent vers des images existantes', () => {
+  for (const a of COLLEGE_ACTIVITIES.filter((x) => x.illus)) {
+    assert.ok(Object.keys(STUDENT_ILLUSTRATIONS).some((k) => k.startsWith(a.illus + '-q')) || getActivity(a.illus), a.id + ' → ' + a.illus);
+    assert.equal(getActivity(a.illus).title, a.title, a.id + ' : même contenu que la source');
+  }
+});
+for (const a of COLLEGE_ACTIVITIES) {
+  test('moteur ' + a.id + ' : solution → 5/5', () => {
+    setRng(mulberry(a.id.length * 7919 + a.index));
+    const root = document.createElement('div'); document.body.append(root);
+    const eng = engineOf(a.mech)(root, { ...a.data, illustrationActivityId: a.illus || a.id });
+    const r0 = eng.check();
+    if (!r0.incomplete) assert.ok(activityScore(r0.correct, r0.total) < 5);
+    eng.solve();
+    const r = eng.check(); assert.ok(!r.incomplete, 'incomplet : ' + r.incomplete);
+    assert.equal(r.correct, r.total, JSON.stringify(r.items.filter((i) => !i.ok)));
+    root.remove();
+  });
+}
+test('images des activités nouvelles : clés existantes, une par élément', () => {
+  const size = (a) => ({ sort: a.data.items, match: a.data.pairs, quiz: a.data.qs, order: a.data.steps, fill: a.data.lines }[a.type] || []).length;
+  for (const a of COLLEGE_ACTIVITIES.filter((x) => x.pics)) {
+    assert.equal(a.pics.length, size(a), a.id + ' : nombre d’images');
+    a.pics.filter(Boolean).forEach((k) => assert.ok(STUDENT_ILLUSTRATIONS[k], a.id + ' : image inconnue ' + k));
+  }
+});
+const { SCENES, regionIds } = await import('../src/games/scenes.js');
+const { parseLevel, shortest } = await import('../src/games/robot.js');
+test('programme complet : chaque module a toutes ses séances', () => {
+  for (const L of LEVELS) for (const m of L.modules) assert.equal(m.sessions.length, m.plan.length, `${L.code} · ${m.title}`);
+  assert.deepEqual(LEVELS.map((L) => L.modules.reduce((k, m) => k + m.sessions.length, 0)), [19, 23, 24]);
+});
+test('contenu des activités nouvelles (mêmes règles que le Tronc Commun)', () => {
+  const uniq = (a) => new Set(a).size === a.length; const str = (s) => typeof s === 'string' && s.trim().length > 0;
+  for (const a of COLLEGE_ACTIVITIES) {
+    const d = a.data;
+    if (a.type === 'match') { assert.ok(d.pairs.length >= 5, a.id); assert.ok(uniq(d.pairs.map((p) => p[0])) && uniq(d.pairs.map((p) => p[1])), a.id); }
+    if (a.type === 'sort') { assert.ok(d.items.length >= 5, a.id); assert.ok(uniq(d.items.map((i) => i[0])), a.id); d.cats.forEach((c, ci) => assert.ok(d.items.some((i) => i[1] === ci), a.id + ' catégorie vide ' + c)); }
+    if (a.type === 'order') { assert.ok(d.steps.length >= 5, a.id); assert.ok(uniq(d.steps), a.id); }
+    if (a.type === 'quiz') d.qs.forEach((q) => { assert.ok(str(q[0]) && str(q[2]), a.id); assert.ok(q[1].length >= 3 && uniq(q[1]), a.id + ' : ' + q[0]); });
+    if (a.type === 'fill') { let n = 0; for (const l of d.lines) { const t = Array.isArray(l) ? l[0] : l; for (const mm of t.matchAll(/\[\[(.+?)\]\]/g)) { n++; assert.ok(uniq(mm[1].split('|')), a.id + ' : ' + mm[1]); } } assert.ok(n >= 5, a.id); }
+    if (a.type === 'hot') d.prompts.forEach((p) => assert.ok(regionIds(SCENES[d.scene]).includes(p[0]), a.id));
+    if (a.type === 'robot') d.levels.forEach((l, i) => { const p = shortest(parseLevel(l.grid)); assert.ok(p && p.length <= l.max, `${a.id} niveau ${i + 1}`); });
+    if (a.type === 'sim') assert.ok(d.tasks.length >= 5, a.id);
+  }
+});
