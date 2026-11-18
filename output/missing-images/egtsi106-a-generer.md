@@ -9,7 +9,7 @@ Généré le 2026-11-18 par `node scripts/audit-egtsi106-visuals.cjs`. 0 images 
 - Représenter l’objet ou l’action décrits par le libellé, compréhensibles par un élève de 15 ans.
 - Après génération : `node scripts/sync-label-illustrations.mjs` puis `npm run build`. Dès que l’image existe, elle remplace automatiquement l’icône (une seule représentation par notion).
 - La liste complète, avec les pages où chaque libellé apparaît, est dans `output/missing-images/egtsi106-worklist.jsonl`.
-- Hors liste : « Entrée » (`lbl-0891ea66`) garde son pictogramme dans EGTSI106, car l’image existante représente la touche du clavier du module 2. Ne pas régénérer cette clé.
+- « Entrée » utilise l’image dédiée à la saisie de données (`lbl-251be805`) ; la touche du clavier garde sa propre illustration (`lbl-0891ea66`).
 
 ## 1. Cours : mots clés, notions et vignettes de leçon (0)
 

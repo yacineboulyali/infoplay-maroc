@@ -19,7 +19,7 @@ test('80 activités : quatre entraînements visuels complets, corrigés et sans 
       const engine = (mode === 'sort' ? sortGame : quizGame)(root, data);
       const initial = engine.check();
       assert.equal(initial.correct, 0, `${act.id}/${mode}`);
-      assert.ok(root.querySelector('.office-art, .semantic-icon'));
+      assert.ok(root.querySelector('.office-art, .semantic-icon, img.label-illustration, img.item-visual-image'));
       engine.solve(); const result = engine.check();
       assert.ok(result.total > 0);
       assert.equal(result.correct, result.total, `${act.id}/${mode}`);

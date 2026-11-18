@@ -6,6 +6,8 @@ import { semanticIcon } from '../src/utils/semantic-icons.js';
 import { categoryVisual, labelIllustration } from '../src/utils/item-visuals.js';
 import { labelKey } from '../src/utils/label-key.js';
 import { conceptVisual } from '../src/egtsi106/visuals.js';
+import { ACTIVITIES, PRO_ACTIVITIES } from '../src/data/index.js';
+import { existsSync } from 'node:fs';
 
 globalThis.document = new JSDOM('<!doctype html><body></body>').window.document;
 
@@ -17,6 +19,16 @@ test('Category images reuse reviewed concepts and distinguish data input from th
   assert.match(categoryVisual('Information').getAttribute('src'), /m1-s1-a1-q01-/);
   assert.match(categoryVisual('Le LAN').getAttribute('src'), /m4-s2-a2-q01-/);
   assert.equal(categoryVisual('Catégorie sans illustration').dataset.labelKey, labelKey('Catégorie sans illustration'));
+});
+
+test('Every sorting category resolves to a packaged local illustration', () => {
+  for (const activity of [...ACTIVITIES, ...PRO_ACTIVITIES].filter(a => a.type === 'sort')) {
+    for (const label of activity.data.cats) {
+      const image = categoryVisual(label);
+      assert.equal(image.tagName, 'IMG', `${activity.id}: ${label}`);
+      assert.ok(existsSync(new URL('../public/' + image.getAttribute('src'), import.meta.url)), `${activity.id}: ${label}`);
+    }
+  }
 });
 test('Office imagery distinguishes specific topics and rejects accidental substring matches', () => {
   assert.equal(officeConcept('Transition entre diapositives', 'ppt'), 3);
