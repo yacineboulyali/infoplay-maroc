@@ -3,8 +3,21 @@ import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
 import { officeConcept, officeArt } from '../src/pro/visuals.js';
 import { semanticIcon } from '../src/utils/semantic-icons.js';
+import { categoryVisual, labelIllustration } from '../src/utils/item-visuals.js';
+import { labelKey } from '../src/utils/label-key.js';
+import { conceptVisual } from '../src/egtsi106/visuals.js';
 
 globalThis.document = new JSDOM('<!doctype html><body></body>').window.document;
+
+test('Category images reuse reviewed concepts and distinguish data input from the Enter key', () => {
+  assert.match(categoryVisual('Entrée').getAttribute('src'), /lbl-251be805\.webp$/);
+  assert.match(labelIllustration('Entrée').getAttribute('src'), /lbl-0891ea66\.webp$/);
+  assert.match(conceptVisual('Entrée', () => null).getAttribute('src'), /lbl-251be805\.webp$/);
+  assert.match(categoryVisual('Modèle').getAttribute('src'), /lbl-64219efb\.webp$/);
+  assert.match(categoryVisual('Information').getAttribute('src'), /m1-s1-a1-q01-/);
+  assert.match(categoryVisual('Le LAN').getAttribute('src'), /m4-s2-a2-q01-/);
+  assert.equal(categoryVisual('Catégorie sans illustration').dataset.labelKey, labelKey('Catégorie sans illustration'));
+});
 test('Office imagery distinguishes specific topics and rejects accidental substring matches', () => {
   assert.equal(officeConcept('Transition entre diapositives', 'ppt'), 3);
   assert.equal(officeConcept('Tableau croisé dynamique et cellules', 'excel'), 4);

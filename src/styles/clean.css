@@ -323,6 +323,10 @@ body.entry-open .fs-suggest{display:none}
 
 /* ---------- images de libellé (options, réponses, étapes) : calque distinct des images de question ---------- */
 .label-illustration{display:block;width:96px;height:96px;max-width:100%;flex:0 0 auto;object-fit:contain;border:1px solid var(--line);border-radius:10px;background:#fffaf0;pointer-events:none}
+.bucket-title-box>.label-illustration,.bucket-title-box>.item-visual-image{width:64px;height:64px;object-fit:contain;flex:0 0 auto}
+.bucket-head{flex-wrap:wrap;gap:.35rem}
+.bucket-title-box{flex:1 1 100%;min-width:0}
+.bucket-title-box>b{min-width:0;overflow-wrap:anywhere}
 .quiz-card .label-illustration,label.opt .label-illustration,.ord-row .label-illustration{width:72px;height:72px}
 .chip .label-illustration{width:112px;height:112px}
 .chip:has(.label-illustration) .visual-label{flex-direction:column}

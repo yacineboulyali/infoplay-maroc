@@ -30,8 +30,13 @@ const inspect = () => {
     if (!vis) push(text, 'texte seul', v, v.dataset.labelKey);
     else if (!raster(vis)) push(text, vis.dataset?.symbol === 'mot-repere' ? 'mot-repère' : 'icône', v, v.dataset.labelKey);
   });
+  stage.querySelectorAll('.bucket-head').forEach((head) => {
+    if (raster(head)) return;
+    const visual = head.querySelector('[data-label-key]');
+    push(head.querySelector('.bucket-title-box b')?.textContent, 'titre sans image', head, visual?.dataset.labelKey);
+  });
   stage.querySelectorAll('svg.item-visual-svg, svg.semantic-icon').forEach((s) => {
-    if (s.closest('.visual-label')) return;
+    if (s.closest('.visual-label,.bucket-head')) return;
     const c = s.closest('.fill-line,legend,li,label,button,p,figure,div'); if (!c || raster(c)) return;
     if (s.dataset.labelKey) push(c.textContent, s.dataset?.symbol === 'mot-repere' ? 'mot-repère' : 'icône', s, s.dataset.labelKey);
   });
@@ -66,8 +71,7 @@ const inspect = () => {
     if (!/\/activite\/\d+$/.test(route)) continue;
     const r = await page.evaluate(inspect); const title = await page.evaluate(() => document.querySelector('#main h1')?.textContent.replace(/\?\s*AR/g, '').trim() || '');
     const m = route.match(/seance\/(\d+)/); const session = m ? Number(m[1]) : 1; const index = Number(route.split('/').pop());
-    // « Entrée » (lbl-0891ea66) garde volontairement son pictogramme dans EGTSI106 (voir audit-egtsi106-visuals.cjs).
-    rows.push({ id: `egtsi106-s${session}-a${index}`, module: 106, session, index, title, mech: 'egtsi', route, rasters: r.rasters, missing: r.items.filter((m) => m.key !== 'lbl-0891ea66') });
+    rows.push({ id: `egtsi106-s${session}-a${index}`, module: 106, session, index, title, mech: 'egtsi', route, rasters: r.rasters, missing: r.items });
   }
   await browser.close();
   const withMissing = rows.filter((r) => r.missing.length);

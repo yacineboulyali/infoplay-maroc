@@ -77,10 +77,7 @@ const inspect = () => {
     if (!byLabel.has(id)) byLabel.set(id, { id, file: 'public/images/label-illustrations/' + id + '.webp', label: r.label, kind: r.kind, roles: new Set(), sessions: new Set(), pages: [] });
     const u = byLabel.get(id); u.roles.add(r.role); u.sessions.add(r.session); u.pages.push(`${r.pageKind} · ${r.page} (${r.route})`);
   }
-  // « Entrée » (lbl-0891ea66) a déjà une image : la touche du clavier du module 2. EGTSI106 l'écarte volontairement
-  // (sens « saisie de données ») ; régénérer cette clé écraserait l'image du module 2, donc elle est traitée à part.
-  const AMBIGUOUS = new Set(['lbl-0891ea66']);
-  const list = [...byLabel.values()].filter((u) => !AMBIGUOUS.has(u.id)).map((u) => ({ ...u, roles: [...u.roles], sessions: [...u.sessions].sort(), pages: [...new Set(u.pages)] }));
+  const list = [...byLabel.values()].map((u) => ({ ...u, roles: [...u.roles], sessions: [...u.sessions].sort(), pages: [...new Set(u.pages)] }));
   const priority = (u) => (u.roles.some((x) => /mot clé|notion|vignette/.test(x)) ? 0 : 1);
   list.sort((a, b) => priority(a) - priority(b) || a.sessions[0] - b.sessions[0] || a.label.localeCompare(b.label, 'fr'));
 
@@ -101,7 +98,7 @@ const inspect = () => {
     '- Représenter l’objet ou l’action décrits par le libellé, compréhensibles par un élève de 15 ans.',
     '- Après génération : `node scripts/sync-label-illustrations.mjs` puis `npm run build`. Dès que l’image existe, elle remplace automatiquement l’icône (une seule représentation par notion).',
     '- La liste complète, avec les pages où chaque libellé apparaît, est dans `output/missing-images/egtsi106-worklist.jsonl`.',
-    '- Hors liste : « Entrée » (`lbl-0891ea66`) garde son pictogramme dans EGTSI106, car l’image existante représente la touche du clavier du module 2. Ne pas régénérer cette clé.',
+    '- « Entrée » utilise l’image dédiée à la saisie de données (`lbl-251be805`) ; la touche du clavier garde sa propre illustration (`lbl-0891ea66`).',
     '',
     `## 1. Cours : mots clés, notions et vignettes de leçon (${cours.length})`,
     '',

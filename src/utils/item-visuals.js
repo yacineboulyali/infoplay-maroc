@@ -13,6 +13,27 @@ export function labelIllustration(label) {
 }
 
 const images = new Map();
+const CATEGORY_IMAGES = new Map([
+  ['Entrée', 'images/label-illustrations/lbl-251be805.webp'],
+  ['Modèle', 'images/label-illustrations/lbl-64219efb.webp'],
+  ['Lien', 'images/student-illustrations/m4-s5-a2-q03-1cf4537301.webp'],
+  ['Courbe (évolution)', 'images/label-illustrations/lbl-d5cd3a9d.webp'],
+  ['Trier', 'images/student-illustrations/m1-s1-a2-q07-e8a21789df.webp'],
+].map(([label, src]) => [norm(label), src]));
+
+export function categoryVisual(label) {
+  const normalized = norm(label);
+  const exact = normalized.replace(/^(?:(?:un|une|le|la|les|des)\s+|l')/, '');
+  const explicit = CATEGORY_IMAGES.get(normalized);
+  if (explicit) return h('img', { class: 'label-illustration', src: explicit, alt: '', 'aria-hidden': 'true', width: 512, height: 512, draggable: 'false' });
+  const own = labelKey(label) !== 'lbl-0891ea66' && labelIllustration(label);
+  if (own) return own;
+  const src = images.get(normalized) || images.get(exact);
+  if (src) return h('img', { class: 'item-visual-image', src, alt: '', 'aria-hidden': 'true', width: 512, height: 512, draggable: 'false' });
+  const visual = semanticIcon(label);
+  visual.dataset.labelKey = labelKey(label);
+  return visual;
+}
 // Reuse the reviewed image when the exact concept is found elsewhere.
 for (const activity of ACTIVITIES) {
   const { pairs, items, devices, parts } = activity.data;

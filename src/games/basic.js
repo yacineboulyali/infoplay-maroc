@@ -7,7 +7,7 @@ import { arQuestion } from '../i18n/ar-questions.js';
 import { officeArt } from '../pro/visuals.js';
 import { semanticIcon } from '../utils/semantic-icons.js';
 import { audio } from '../audio/audio.js';
-import { itemVisual, labelIllustration } from '../utils/item-visuals.js';
+import { itemVisual, labelIllustration, categoryVisual } from '../utils/item-visuals.js';
 import { labelKey } from '../utils/label-key.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 
@@ -325,7 +325,7 @@ export function sortGame(root, d) {
       class: 'bucket-head',
       onclick: () => put(ci),
     },
-    h('span', { class: 'bucket-title-box' }, d.categoryPicture?.(c) || semanticIcon(c), h('b', null, c), countBadge),
+    h('span', { class: 'bucket-title-box' }, d.categoryPicture?.(c) || categoryVisual(c), h('b', null, c), countBadge),
     h('small', { class: 'bucket-cta' }, '📥 Déposer ici')
     );
 

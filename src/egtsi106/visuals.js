@@ -1,5 +1,5 @@
 import { h, norm, svgFrom } from '../utils/dom.js';
-import { itemVisual, labelIllustration } from '../utils/item-visuals.js';
+import { itemVisual, labelIllustration, categoryVisual } from '../utils/item-visuals.js';
 import { labelKey } from '../utils/label-key.js';
 import { STUDENT_ILLUSTRATIONS } from '../data/student-illustrations.js';
 import { ports, portPictures } from '../data/egtsi106/lesson.js';
@@ -49,10 +49,10 @@ const shapes = [
 // des illustrations) remplace toujours le pictogramme ; le pictogramme n'est qu'un repli.
 export function conceptVisual(label, renderPicture, source) {
   const text = norm(label);
+  if (labelKey(label) === 'lbl-0891ea66') return categoryVisual(label);
   const image = source || exact.get(text) || aliasImage(text);
   if (image) return renderPicture(image);
-  // « Entrée » : l'image du registre montre la touche du clavier (module 2), pas la saisie de données.
-  const own = !AMBIGUOUS.has(labelKey(label)) && labelIllustration(label);
+  const own = labelIllustration(label);
   if (own) return h('span', { class: 'egtsi-concept-visual has-image', 'aria-hidden': 'true' }, own);
   const key = shapes.find(([pattern]) => pattern.test(text))?.[1];
   const illustration = key ? svgFrom('<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + drawings[key] + '</svg>')
@@ -61,7 +61,6 @@ export function conceptVisual(label, renderPicture, source) {
   return h('span', { class: 'egtsi-concept-visual', 'aria-hidden': 'true' }, illustration);
 }
 
-const AMBIGUOUS = new Set(['lbl-0891ea66']);
 
 // Images connues pour une notion sous un autre nom : « CPU » reprend l'image de « Processeur (CPU) ».
 const aliases = new Map();
