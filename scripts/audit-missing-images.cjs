@@ -22,7 +22,7 @@ const inspect = () => {
     if (c.matches('ol.prompts li')) return 'consigne à repérer';
     return c.tagName.toLowerCase() + (c.className && typeof c.className === 'string' ? '.' + c.className.split(' ')[0] : '');
   };
-  const raster = (el) => el && (el.matches('img,.item-art,.office-art,.student-illustration,canvas') || el.querySelector?.('img,.item-art,.office-art'));
+  const raster = (el) => el && (el.matches('img,.item-art,.office-art,.student-illustration,.egtsi-picture,canvas') || el.querySelector?.('img,.item-art,.office-art,.egtsi-picture'));
   const out = []; const seen = new Set();
   const push = (label, kind, el, key) => { label = clean(label).replace(/s*d*s*📥.*$/u, ''); if (el.closest('.rb-cmd,.slot,.rb-app')) return; if (!label) return; const k = kind + '|' + label; if (seen.has(k)) return; seen.add(k); out.push({ label, kind, role: role(el), key: key || null }); };
   stage.querySelectorAll('.visual-label').forEach((v) => {
@@ -66,7 +66,8 @@ const inspect = () => {
     if (!/\/activite\/\d+$/.test(route)) continue;
     const r = await page.evaluate(inspect); const title = await page.evaluate(() => document.querySelector('#main h1')?.textContent.replace(/\?\s*AR/g, '').trim() || '');
     const m = route.match(/seance\/(\d+)/); const session = m ? Number(m[1]) : 1; const index = Number(route.split('/').pop());
-    rows.push({ id: `egtsi106-s${session}-a${index}`, module: 106, session, index, title, mech: 'egtsi', route, rasters: r.rasters, missing: r.items });
+    // « Entrée » (lbl-0891ea66) garde volontairement son pictogramme dans EGTSI106 (voir audit-egtsi106-visuals.cjs).
+    rows.push({ id: `egtsi106-s${session}-a${index}`, module: 106, session, index, title, mech: 'egtsi', route, rasters: r.rasters, missing: r.items.filter((m) => m.key !== 'lbl-0891ea66') });
   }
   await browser.close();
   const withMissing = rows.filter((r) => r.missing.length);

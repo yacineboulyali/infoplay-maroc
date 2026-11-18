@@ -1,6 +1,6 @@
 # EGTSI106 · images à générer
 
-Généré le 2026-11-14 par `node scripts/audit-egtsi106-visuals.cjs`. 0 images à produire (0 pour le cours, 0 pour les activités).
+Généré le 2026-11-18 par `node scripts/audit-egtsi106-visuals.cjs`. 0 images à produire (0 pour le cours, 0 pour les activités).
 
 ## Consignes pour Codex
 
