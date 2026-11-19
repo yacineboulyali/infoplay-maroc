@@ -6,7 +6,9 @@ import { GROUPS, PARTS, partById } from './data/parts.js';
 import {
   QUESTIONS, levelsOf, letters, hintFor, correctFeedback, wrongFeedback, createExamStore, rankOf,
   BADGES, DAILY_GOAL, HEARTS, XP, blancSet, byId, conceptFor,
+  positionSet, analyzePosition, bandOf, levelOfScore, MASTERY_BANDS, POSITION_PLAN,
 } from './engine.js';
+import { conceptTitle } from './data/concept-titles.js';
 import { visual } from './visuals.js';
 
 const BASE = '#/examen';
@@ -100,7 +102,11 @@ function notifSheet(st) {
 
 // ---------- Accueil du module ----------
 function nextStep(st) {
-  for (const p of PARTS) {
+  const pos = st.lastPosition;
+  if (!pos) return { href: BASE + '/positionnement', label: 'Test de positionnement', part: null };
+  // Le parcours conseillé par le test passe en premier, puis l'ordre normal des parties.
+  const ordered = [...pos.path.map(partById).filter(Boolean), ...PARTS.filter((p) => !pos.path.includes(p.id))];
+  for (const p of ordered) {
     const pr = st.partProgress(p.id);
     if (!pr.lesson) return { href: `${BASE}/p/${p.id}/lecon`, label: `Leçon · ${p.short}`, part: p };
     if (!pr.done) return { href: `${BASE}/p/${p.id}/n/${pr.count}`, label: `${p.short} · niveau ${pr.count + 1}`, part: p };
@@ -129,14 +135,14 @@ function hub(st) {
       const pr = st.partProgress(p.id);
       return h('li', { style: `--i:${i}` }, h('a', { class: 'ex-part' + (pr.done ? ' done' : ''), href: `${BASE}/p/${p.id}`, style: `--c:${p.color}` },
         h('span', { class: 'ex-pico' }, ring(pr.ratio, 58, 6, p.icon)),
-        h('span', { class: 'ex-pmeta' }, h('b', null, p.title), h('small', null, `${pr.lesson ? '📖 ✓' : '📖'} · ${pr.count}/${pr.levels} niveaux · ⭐ ${pr.stars}/${pr.maxStars}`)),
+        h('span', { class: 'ex-pmeta' }, h('b', null, p.title), h('small', null, `${pr.lesson ? '📖 ✓' : '📖'} · ${pr.count}/${pr.levels} niveaux · ⭐ ${pr.stars}/${pr.maxStars}`), bandChip(st, p.id)),
         h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, g.lang === 'ar' ? '‹' : '›')));
     }))));
   // Mobile : une seule colonne. Ordinateur et grande tablette : tableau de bord à gauche, parcours à droite.
   return [topbar(st, { title: 'Examen professionnel' }), h('div', { class: 'ex-body ex-split' },
     h('aside', { class: 'ex-side' },
       h('p', { class: 'ex-intro' }, 'Prépare l’examen d’aptitude professionnelle d’informatique (secondaire qualifiant) : une leçon animée, puis des niveaux de QCM corrigés et expliqués.'),
-      hero, cta, quick),
+      positionCard(st), hero, cta, quick),
     h('div', { class: 'ex-main' }, ...groups)), bottomNav('hub')];
 }
 
@@ -158,7 +164,7 @@ function partPage(st, p) {
   return [topbar(st, { title: p.short, back: BASE }), h('div', { class: 'ex-body ex-split', style: `--c:${p.color}`, ...langAttrs(p.lang) },
     h('aside', { class: 'ex-side' },
       h('section', { class: 'ex-phead' }, h('span', { class: 'ex-phead-ico', 'aria-hidden': 'true' }, p.icon), h('div', null, h('h2', null, p.title), h('p', null, p.weight)),
-        h('div', { class: 'ex-phead-stats' }, h('span', null, `⭐ ${pr.stars}/${pr.maxStars}`), h('span', null, `🎯 ${pr.count}/${pr.levels}`))),
+        h('div', { class: 'ex-phead-stats' }, h('span', null, `⭐ ${pr.stars}/${pr.maxStars}`), h('span', null, `🎯 ${pr.count}/${pr.levels}`), bandChip(st, p.id, true))),
       lesson,
       !pr.lesson ? h('p', { class: 'ex-tip' }, p.lang === 'ar' ? '💡 ابدأ بالدرس: يمنحك نقاطا ويهيئك للأسئلة.' : '💡 Commence par la leçon : elle rapporte des XP et prépare aux questions.') : null),
     h('div', { class: 'ex-main' }, path)), bottomNav('hub')];
@@ -473,6 +479,145 @@ function profileScreen(st) {
     h('p', { class: 'ex-muted' }, 'Ta progression reste dans ce navigateur, liée à ton pseudo InfoPlay. Sources des questions : dossiers unifiés de préparation à l’examen d’aptitude professionnelle (informatique, secondaire qualifiant).')), bottomNav('profil')];
 }
 
+// ---------- Test de positionnement ----------
+const BAND_LABEL = { fr: { ok: 'Maîtrisé', mid: 'À consolider', low: 'Prioritaire' }, ar: { ok: 'متمكن', mid: 'يحتاج تثبيتا', low: 'أولوية' } };
+function bandChip(st, partId, big = false) {
+  const pos = st.lastPosition; const r = pos?.parts?.[partId];
+  if (!r) return null;
+  const lang = partById(partId)?.lang || 'fr';
+  return h('span', { class: `ex-band ex-band-${r.band}` + (big ? ' big' : ''), title: `Test de positionnement : ${r.ok}/${r.n}` }, BAND_LABEL[lang][r.band]);
+}
+function positionCard(st) {
+  const pos = st.lastPosition;
+  if (!pos) return h('a', { class: 'ex-poscard todo', href: BASE + '/positionnement' },
+    h('span', { class: 'ex-pos-ico', 'aria-hidden': 'true' }, '🧭'),
+    h('span', null, h('small', null, 'À faire en premier'), h('b', null, 'Test de positionnement'), h('small', null, '30 questions de type examen · environ 20 min · repère tes lacunes avant les leçons')),
+    h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, '›'));
+  const lv = levelOfScore(pos.ratio);
+  return h('a', { class: 'ex-poscard', href: BASE + '/positionnement/bilan' },
+    h('span', { class: 'ex-pos-ico', 'aria-hidden': 'true' }, lv.icon),
+    h('span', null, h('small', null, 'Mon positionnement'), h('b', null, `${pos.score}/20 · ${lv.fr}`), h('small', null, pos.priorities.length ? `${pos.priorities.length} partie(s) prioritaire(s) · voir le bilan` : 'Aucune partie prioritaire · voir le bilan')),
+    h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, '›'));
+}
+
+function positionScreen(st, showReport) {
+  const root = h('div', { class: 'ex-body ex-pos' });
+  const groupName = { D: 'Didactique', M: 'Programme du TC', A: 'Sciences de l’éducation' };
+
+  const intro = () => {
+    const prev = st.lastPosition;
+    root.replaceChildren(h('section', { class: 'ex-card ex-pos-intro' },
+      h('div', { class: 'ex-end-badge', 'aria-hidden': 'true' }, '🧭'),
+      h('h2', { tabindex: '-1' }, 'Test de positionnement'),
+      h('p', { class: 'ex-lead' }, 'Avant de commencer les leçons, mesure ton niveau sur l’ensemble de l’épreuve. Le bilan te montre tes lacunes, notion par notion, et réordonne ton parcours.'),
+      h('ul', { class: 'ex-plan' },
+        h('li', null, h('b', null, '12'), h('span', null, 'questions de didactique (3 par axe : planifier, gérer, évaluer, remédier)')),
+        h('li', null, h('b', null, '8'), h('span', null, 'questions sur les 4 modules du tronc commun')),
+        h('li', null, h('b', null, '10'), h('span', null, 'questions de sciences de l’éducation, en arabe')),
+      ),
+      h('ul', { class: 'ex-rules' },
+        h('li', null, 'Questions de type examen, tirées en priorité des QCM « niveau examen 2025 » du qualifiant.'),
+        h('li', null, 'Pas de correction pendant le test, pas d’indice, pas de cœurs.'),
+        h('li', null, 'Si tu ne sais pas, touche « Je ne sais pas » plutôt que de deviner : le diagnostic sera plus juste.')),
+      h('div', { class: 'ex-actions col' },
+        h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: run }, prev ? 'Refaire le test' : 'Commencer le test'),
+        prev ? h('a', { class: 'ex-btn', href: BASE + '/positionnement/bilan' }, `Voir mon dernier bilan (${prev.score}/20)`) : null)));
+  };
+
+  function run() {
+    const set = positionSet(); const ans = new Array(set.length).fill(undefined); let i = 0; const t0 = Date.now();
+    const show = () => {
+      const q = set[i]; const p = partById(q.part);
+      const go = (val) => { ans[i] = val; audio.play('click'); if (i < set.length - 1) { i++; show(); window.scrollTo(0, 0); } else finish(); };
+      const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => go(ans[i]) }, i < set.length - 1 ? (q.lang === 'ar' ? 'السؤال التالي' : 'Question suivante') : (q.lang === 'ar' ? 'عرض الحصيلة' : 'Voir mon bilan'));
+      const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), style: `--i:${k}`, onclick: () => {
+        ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
+      const dunno = h('button', { type: 'button', class: 'ex-hint-btn ex-dunno', onclick: () => go(null) }, q.lang === 'ar' ? '🤷 لا أعرف' : '🤷 Je ne sais pas');
+      root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
+        h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner le test' }, '✕'),
+          h('span', { class: 'ex-prog big', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(set.length), 'aria-valuenow': String(i) }, h('i', { style: `--w:${(i / set.length) * 100}%` })),
+          h('span', { class: 'ex-chip' }, `${i + 1}/${set.length}`)),
+        h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
+          h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${groupName[q.part[0]]} · ${p.short}`), h('small', null, q.set === 1 ? (q.lang === 'ar' ? 'نموذج امتحان' : 'type examen 2025') : '')),
+          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q), opts, dunno),
+        h('footer', { class: 'ex-foot' }, nextBtn)));
+      root.querySelector('.ex-q')?.focus({ preventScroll: true });
+    };
+    const finish = () => {
+      const answers = ans.map((a) => (a === undefined ? null : a));
+      const res = analyzePosition(set, answers);
+      res.minutes = Math.max(1, Math.round((Date.now() - t0) / 60000));
+      st.positionDone(res, res.missed);
+      audio.play(res.ratio >= 0.6 ? 'complete' : 'success');
+      if (res.ratio >= 0.6) celebrate();
+      report(res, set, answers);
+    };
+    show();
+  }
+
+  function report(res, set = null, answers = null) {
+    const lv = levelOfScore(res.ratio);
+    const bar = (ratio, band) => h('span', { class: 'ex-mbar ex-band-' + band }, h('i', { style: `--w:${Math.round(ratio * 100)}%` }));
+    const groupsEl = h('div', { class: 'ex-pos-groups' }, ['D', 'M', 'A'].map((g) => {
+      const v = res.groups[g]; if (!v) return null; const b = bandOf(v.ratio);
+      return h('div', { class: 'ex-pos-g' }, h('b', null, groupName[g]), bar(v.ratio, b.id), h('small', null, `${v.ok}/${v.n} · ${b.fr}`));
+    }));
+    const partsEl = h('ol', { class: 'ex-pos-parts' }, PARTS.map((p) => {
+      const r = res.parts[p.id]; if (!r) return null;
+      return h('li', { style: `--c:${p.color}` }, h('a', { href: `${BASE}/p/${p.id}`, ...langAttrs(p.lang) },
+        h('span', { class: 'ex-pos-pi', 'aria-hidden': 'true' }, p.icon),
+        h('span', { class: 'ex-pos-pt' }, h('b', null, p.title), bar(r.ok / r.n, r.band)),
+        h('span', { class: `ex-band ex-band-${r.band}` }, `${r.ok}/${r.n} · ${BAND_LABEL[p.lang][r.band]}`)));
+    }));
+    const gapsEl = res.gaps.length ? h('ul', { class: 'ex-gaps' }, res.gaps.map((g) => {
+      const p = partById(g.part);
+      return h('li', { ...langAttrs(g.lang), style: `--c:${p.color}` }, h('details', null,
+        h('summary', null, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('b', null, conceptTitle(g.id, g.lang)), g.unknown ? h('small', { class: 'ex-muted' }, g.lang === 'ar' ? ' · لا أعرف' : ' · « je ne sais pas »') : null),
+        h('p', null, g.why), h('p', { class: 'ex-src' }, '📚 ', g.src),
+        h('a', { class: 'ex-btn', href: `${BASE}/p/${g.part}/lecon` }, g.lang === 'ar' ? 'مراجعة الدرس' : 'Revoir la leçon')));
+    })) : h('p', { class: 'ex-muted' }, 'Aucune notion ratée : bravo !');
+    const pathEl = res.path.length ? h('ol', { class: 'ex-reco' }, res.path.map((id, k) => {
+      const p = partById(id); const r = res.parts[id];
+      return h('li', { style: `--c:${p.color};--i:${k}` }, h('span', { class: 'ex-reco-n' }, String(k + 1)),
+        h('span', { class: 'ex-reco-t', ...langAttrs(p.lang) }, h('b', null, p.title), h('small', null, BAND_LABEL[p.lang][r.band])),
+        h('a', { class: 'ex-btn ex-primary', href: `${BASE}/p/${id}/lecon` }, p.lang === 'ar' ? 'ابدأ' : 'Commencer'));
+    })) : h('p', { class: 'ex-muted' }, 'Toutes les parties sont maîtrisées : entraîne-toi avec les niveaux et l’examen blanc.');
+    const correction = set ? h('details', { class: 'ex-card ex-pos-corr' }, h('summary', null, h('b', null, `Correction des ${set.length} questions`)),
+      h('ol', { class: 'ex-correction' }, set.map((q, k) => {
+        const ok = answers[k] === q.answer;
+        return h('li', { class: ok ? 'ok' : 'ko', ...langAttrs(q.lang) }, h('details', null,
+          h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : answers[k] == null ? '? ' : '✗ '), q.q),
+          answers[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[answers[k]]}. ${q.options[answers[k]]}`) : null,
+          h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`),
+          h('p', null, conceptFor(q).why)));
+      }))) : null;
+    const first = res.path[0];
+    root.replaceChildren(
+      h('section', { class: 'ex-pos-hero' },
+        h('span', { class: 'ex-end-badge', 'aria-hidden': 'true' }, lv.icon),
+        h('div', null, h('small', null, 'Ton niveau'), h('h2', { tabindex: '-1' }, lv.fr),
+          h('p', { class: 'ex-pos-score' }, h('b', null, `${res.score}/20`), ` · ${res.ok}/${res.total} bonnes réponses` + (res.unknown ? ` · ${res.unknown} « je ne sais pas »` : '') + (res.minutes ? ` · ${res.minutes} min` : '')),
+          h('p', null, lv.text))),
+      h('div', { class: 'ex-pos-grid' },
+        h('section', { class: 'ex-card' }, h('h3', { class: 'ex-h2' }, 'Par composante'), groupsEl, h('h3', { class: 'ex-h2' }, 'Par partie'), partsEl,
+          h('p', { class: 'ex-legend' }, MASTERY_BANDS.map((b) => h('span', { class: 'ex-band ex-band-' + b.id }, `${b.fr} ${b.id === 'ok' ? '≥ 75 %' : b.id === 'mid' ? '40–74 %' : '< 40 %'}`)))),
+        h('div', { class: 'ex-pos-col' },
+          h('section', { class: 'ex-card' }, h('h3', { class: 'ex-h2' }, '🗺️ Ton parcours recommandé'), h('p', { class: 'ex-muted' }, 'Commence par les parties prioritaires ; à égalité, la didactique passe d’abord (80 % de l’épreuve).'), pathEl),
+          h('section', { class: 'ex-card' }, h('h3', { class: 'ex-h2' }, `🔍 Tes lacunes · ${res.gaps.length} notion(s)`), h('p', { class: 'ex-muted' }, 'Touche une notion pour lire l’essentiel et sa référence.'), gapsEl))),
+      correction,
+      h('div', { class: 'ex-actions col ex-pos-actions' },
+        first ? h('a', { class: 'ex-btn ex-primary', href: `${BASE}/p/${first}/lecon` }, `Commencer le parcours : ${partById(first).short}`) : h('a', { class: 'ex-btn ex-primary', href: BASE + '/blanc' }, 'Passer l’examen blanc'),
+        res.missed.length ? h('a', { class: 'ex-btn', href: BASE + '/revision' }, `Revoir les ${res.missed.length} questions ratées`) : null,
+        h('button', { type: 'button', class: 'ex-btn', onclick: intro }, 'Refaire le test'),
+        h('a', { class: 'ex-btn ex-ghost', href: BASE }, 'Retour au parcours')));
+    root.querySelector('h2')?.focus();
+  }
+
+  if (showReport && st.lastPosition) report(st.lastPosition); else intro();
+  return [topbar(st, { title: 'Positionnement', back: BASE }), root, bottomNav('hub')];
+}
+
 // ---------- Accès par mot de passe ----------
 // Simple verrou d'accès côté navigateur (pas une protection de sécurité : le code est lisible dans le source).
 const ACCESS_CODE = '8888';
@@ -521,6 +666,7 @@ export function examenScreen(q, pid) {
   else if (p) view = partPage(st, p);
   else if (sub[0] === 'revision') view = quizPlayer(st, { mode: 'review' });
   else if (sub[0] === 'blanc') view = blancScreen(st);
+  else if (sub[0] === 'positionnement') view = positionScreen(st, sub[1] === 'bilan');
   else if (sub[0] === 'profil') view = profileScreen(st);
   else view = hub(st);
   return h('main', { id: 'main', class: 'ex-app' }, view);

@@ -125,6 +125,7 @@ export const RANKS = [
 export const rankOf = (xp) => { let r = RANKS[0], next = null; for (let i = 0; i < RANKS.length; i++) { if (xp >= RANKS[i].xp) { r = RANKS[i]; next = RANKS[i + 1] || null; } } return { ...r, next }; };
 
 export const BADGES = [
+  { id: 'positioned', icon: '🧭', t: 'Je sais où j’en suis', d: 'Passer le test de positionnement.' },
   { id: 'first-lesson', icon: '📖', t: 'Première leçon', d: 'Terminer une leçon.' },
   { id: 'first-level', icon: '🚩', t: 'Premier niveau', d: 'Terminer un niveau.' },
   { id: 'perfect', icon: '💎', t: 'Sans faute', d: 'Terminer un niveau sans erreur ni indice.' },
@@ -146,7 +147,7 @@ const today = (d = new Date()) => d.toISOString().slice(0, 10);
 const dayDiff = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
 export function freshState() {
   return { v: 1, xp: 0, lessons: {}, levels: {}, seen: {}, review: [], answered: 0, reviewWins: 0,
-    bestCombo: 0, badges: {}, day: today(), dayXp: 0, streak: 0, lastDay: null, notifs: [], unread: 0, blanc: [], sysNotif: false };
+    bestCombo: 0, badges: {}, day: today(), dayXp: 0, streak: 0, lastDay: null, notifs: [], unread: 0, blanc: [], sysNotif: false, position: [] };
 }
 
 export function createExamStore(storage, pid = 'invite') {
@@ -248,6 +249,18 @@ export function createExamStore(storage, pid = 'invite') {
       save();
       return stars;
     },
+    /** Enregistre un test de positionnement ; les questions ratées rejoignent la révision. */
+    positionDone(result, missedIds = []) {
+      const first = !s.position?.length;
+      s.position = [result, ...(s.position || [])].slice(0, 5);
+      for (const id of missedIds) if (!s.review.includes(id)) s.review.push(id);
+      gain(first ? 30 : 10);
+      award('positioned');
+      const prio = result.priorities.length;
+      notify('position', 'Bilan de positionnement prêt', prio ? `${prio} partie(s) prioritaire(s) : ton parcours est réordonné.` : 'Aucune lacune majeure : passe aux niveaux et à l’examen blanc.', '🧭');
+      save();
+    },
+    get lastPosition() { return s.position?.[0] || null; },
     blancDone(score) {
       s.blanc.unshift({ score, at: new Date().toISOString() }); s.blanc = s.blanc.slice(0, 10);
       gain(Math.round(score * 3));
@@ -276,4 +289,72 @@ export function blancSet(rng = Math.random) {
   const shuffle = (a) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
   const from = (g, n) => shuffle(QUESTIONS.filter((x) => x.part[0] === g)).slice(0, n);
   return shuffle([...from('D', 12), ...from('M', 4), ...from('A', 4)]);
+}
+
+// ---------- Test de positionnement ----------
+// 30 questions de type examen, pondérées comme l'épreuve : 3 par axe de didactique, 2 par module du TC,
+// 2 pour les axes principaux de sciences de l'éducation (A1, A2, A7) et 1 pour les axes complémentaires.
+export const POSITION_PLAN = { D1: 3, D2: 3, D3: 3, D4: 3, M1: 2, M2: 2, M3: 2, M4: 2, A1: 2, A2: 2, A3: 1, A4: 1, A5: 1, A6: 1, A7: 2 };
+export const MASTERY_BANDS = [
+  { min: 0.75, id: 'ok', fr: 'Maîtrisé', icon: '✅' },
+  { min: 0.4, id: 'mid', fr: 'À consolider', icon: '🟠' },
+  { min: 0, id: 'low', fr: 'Prioritaire', icon: '🔴' },
+];
+export const bandOf = (ratio) => MASTERY_BANDS.find((b) => ratio >= b.min);
+export const LEVELS_POS = [
+  { min: 0.8, fr: 'Prêt pour l’examen', icon: '🏆', text: 'Tu maîtrises l’essentiel. Entraîne-toi surtout avec les niveaux avancés et l’examen blanc.' },
+  { min: 0.6, fr: 'Avancé', icon: '🎓', text: 'Bonne base. Consolide les parties orange, puis passe à l’examen blanc.' },
+  { min: 0.4, fr: 'Intermédiaire', icon: '📗', text: 'Des acquis réels mais des lacunes à combler. Suis le parcours recommandé, en commençant par les parties prioritaires.' },
+  { min: 0, fr: 'Débutant', icon: '🌱', text: 'Reprends les leçons dans l’ordre recommandé : elles posent les notions que l’examen interroge.' },
+];
+export const levelOfScore = (ratio) => LEVELS_POS.find((l) => ratio >= l.min);
+
+/** Tire les questions du test : série « niveau examen 2025 » d'abord, une notion différente par question. */
+export function positionSet(rng = Math.random) {
+  const shuffle = (a) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+  const out = [];
+  for (const [part, n] of Object.entries(POSITION_PLAN)) {
+    const pool = questionsOf(part);
+    const ordered = [...shuffle(pool.filter((q) => q.set === 1)), ...shuffle(pool.filter((q) => q.set === 0))];
+    const picked = []; const seen = new Set();
+    for (const q of ordered) { const c = conceptFor(q).id; if (seen.has(c)) continue; seen.add(c); picked.push(q); if (picked.length === n) break; }
+    for (const q of ordered) { if (picked.length === n) break; if (!picked.includes(q)) picked.push(q); }
+    out.push(...picked);
+  }
+  return out;
+}
+
+/**
+ * Analyse les réponses (index choisi, ou null pour « je ne sais pas »).
+ * Retourne le score global, le détail par groupe et par partie, les notions à revoir et le parcours conseillé.
+ */
+export function analyzePosition(set, answers) {
+  const parts = {}; const groups = {}; const missed = []; const concepts = new Map();
+  set.forEach((q, i) => {
+    const ok = answers[i] === q.answer;
+    (parts[q.part] ||= { ok: 0, n: 0 }); parts[q.part].n++; if (ok) parts[q.part].ok++;
+    const g = q.part[0]; (groups[g] ||= { ok: 0, n: 0 }); groups[g].n++; if (ok) groups[g].ok++;
+    if (!ok) {
+      missed.push(q.id);
+      const c = conceptFor(q);
+      const k = q.lang + ':' + c.id;
+      if (!concepts.has(k)) concepts.set(k, { id: c.id, lang: q.lang, part: q.part, why: c.why, src: c.src, unknown: answers[i] == null });
+    }
+  });
+  const ok = set.filter((q, i) => answers[i] === q.answer).length;
+  const unknown = answers.filter((a) => a == null).length;
+  const ratio = set.length ? ok / set.length : 0;
+  const partList = Object.entries(parts).map(([id, v]) => ({ id, ...v, ratio: v.n ? v.ok / v.n : 0, band: bandOf(v.n ? v.ok / v.n : 0).id }));
+  const order = { low: 0, mid: 1, ok: 2 };
+  // Parcours conseillé : parties prioritaires, puis à consolider ; la didactique (80 % de l'épreuve) passe d'abord à égalité.
+  const weight = (id) => (id[0] === 'D' ? 0 : id[0] === 'M' ? 1 : 2);
+  const path = partList.filter((p) => p.band !== 'ok').sort((a, b) => order[a.band] - order[b.band] || a.ratio - b.ratio || weight(a.id) - weight(b.id)).map((p) => p.id);
+  return {
+    at: new Date().toISOString(), ok, total: set.length, unknown, score: Math.round(ratio * 200) / 10, ratio,
+    level: levelOfScore(ratio).fr,
+    groups: Object.fromEntries(Object.entries(groups).map(([g, v]) => [g, { ...v, ratio: v.ok / v.n }])),
+    parts: Object.fromEntries(partList.map((p) => [p.id, { ok: p.ok, n: p.n, band: p.band }])),
+    priorities: partList.filter((p) => p.band === 'low').map((p) => p.id),
+    path, gaps: [...concepts.values()], missed,
+  };
 }
