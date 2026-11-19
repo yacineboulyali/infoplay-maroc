@@ -20,8 +20,8 @@ const URL = 'file://' + path.resolve(__dirname, '../../dist/index.html') + '?tes
     await page.waitForSelector('#stage');
     await page.evaluate(() => window.__ip.eng.solve());
     await page.click('text=✔ Vérifier');
-    await page.waitForSelector('.result .score');
-    const sc = await page.textContent('.result .score'); results.push([a.id, a.mech, sc.trim()]);
+    await page.waitForSelector('.rb-score b');
+    const sc = await page.textContent('.rb-score b'); results.push([a.id, a.mech, sc.trim()]);
     if (['m1-s3-a3', 'm2-s2-a1', 'm2-s9-a3', 'm3-s1-a4', 'm4-s1-a3', 'm2-s3-a4', 'm2-s11-a4'].includes(a.id)) await page.screenshot({ path: `shots/${a.id}.png`, fullPage: true });
   }
   const bad = results.filter((r) => !r[2].startsWith('5')); console.log('activités à 5/5 :', results.length - bad.length, '/', results.length); if (bad.length) console.log('PROBLÈMES', bad);
@@ -36,7 +36,7 @@ const URL = 'file://' + path.resolve(__dirname, '../../dist/index.html') + '?tes
   await page.evaluate(() => { location.hash = '#/m/2/s/2/a/3'; }); await page.waitForSelector('#stage');
   await page.click('[aria-label=Réduire]'); await page.click('button.btn.primary:has-text("Valider")'); await page.click('.tbtn'); await page.click('button.btn.primary:has-text("Valider")');
   await page.click('[aria-label=Agrandir]'); await page.click('button.btn.primary:has-text("Valider")'); await page.click('[aria-label=Restaurer]'); await page.click('button.btn.primary:has-text("Valider")'); await page.click('[aria-label=Fermer]'); await page.click('button.btn.primary:has-text("Valider")');
-  await page.click('text=✔ Vérifier'); await page.waitForSelector('.result .score'); const w = await page.textContent('.result .score'); console.log('fenêtre (clics réels) :', w.trim()); assert.ok(w.startsWith('5'));
+  await page.click('text=✔ Vérifier'); await page.waitForSelector('.rb-score b'); const w = await page.textContent('.rb-score b'); console.log('fenêtre (clics réels) :', w.trim()); assert.ok(w.startsWith('5'));
   // interactions manuelles : tableur
   await page.evaluate(() => { location.hash = '#/m/2/s/10/a/4'; }); await page.waitForSelector('#stage');
   const cell = async (ref, v) => { await page.click(`[aria-label="Cellule ${ref}"]`); await page.keyboard.type(v); await page.keyboard.press('Enter'); };

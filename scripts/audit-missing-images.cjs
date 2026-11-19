@@ -44,22 +44,23 @@ const inspect = () => {
 };
 
 (async () => {
-  const { ACTIVITIES, PRO_ACTIVITIES } = await import('../src/data/index.js');
+  const { ACTIVITIES, PRO_ACTIVITIES, COLLEGE_ACTIVITIES, collegeModule } = await import('../src/data/index.js');
   const { STUDENT_ILLUSTRATIONS } = await import('../src/data/student-illustrations.js');
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1366, height: 900 }, offline: true });
   await page.goto(pathToFileURL(path.resolve('dist/index.html')).href + '?test=1');
   await page.evaluate(() => window.__ip.store.createProfile('Audit'));
   const rows = [];
-  for (const a of [...ACTIVITIES, ...PRO_ACTIVITIES]) {
+  for (const a of [...ACTIVITIES, ...PRO_ACTIVITIES, ...COLLEGE_ACTIVITIES]) {
+    const col = collegeModule(a.moduleId);
     await page.evaluate((r) => { document.querySelector('#main')?.setAttribute('data-inspected', 'old'); location.hash = r; }, `#/m/${a.moduleId}/s/${a.sessionIndex}/a/${a.index}`);
     await page.waitForFunction(() => document.querySelector('#main') && !document.querySelector('#main').hasAttribute('data-inspected'));
     await page.waitForTimeout(150);
     const r = await page.evaluate(inspect);
     // Étapes affichées une à une (simulations, programmes, robot) : une image par étape est attendue.
     const steps = a.data.tasks || a.data.levels || null; const missingSteps = [];
-    if (steps && a.moduleId <= 4) steps.forEach((t, i) => { if (!STUDENT_ILLUSTRATIONS[`${a.id}-q${String(i + 1).padStart(2, '0')}`]) missingSteps.push({ label: `Étape ${i + 1} : ${Array.isArray(t) ? t[0] : t.goal || t.title || t.q || ''}`.slice(0, 160), kind: 'étape sans image', role: 'étape de simulation' }); });
-    rows.push({ id: a.id, module: a.moduleId, session: a.sessionIndex, index: a.index, title: a.title, mech: a.mech, route: `#/m/${a.moduleId}/s/${a.sessionIndex}/a/${a.index}`, rasters: r.rasters, missing: [...r.items, ...missingSteps] });
+    if (steps && (a.moduleId <= 4 || col)) steps.forEach((t, i) => { if (!STUDENT_ILLUSTRATIONS[`${a.illus || a.id}-q${String(i + 1).padStart(2, '0')}`]) missingSteps.push({ label: `Étape ${i + 1} : ${Array.isArray(t) ? t[0] : t.goal || t.title || t.q || ''}`.slice(0, 160), kind: 'étape sans image', role: 'étape de simulation' }); });
+    rows.push({ id: a.id, module: a.moduleId, parcours: col ? `${col.levelCode} · Module ${col.rank} · ${col.title}` : a.moduleId === 205 ? 'M205' : 'Module ' + a.moduleId, sessionTitle: a.sessionId, session: a.sessionIndex, index: a.index, title: a.title, mech: a.mech, route: `#/m/${a.moduleId}/s/${a.sessionIndex}/a/${a.index}`, rasters: r.rasters, missing: [...r.items, ...missingSteps] });
   }
   // Parcours EGTSI106 : ses pages ne sont pas dans ACTIVITIES, on les découvre en suivant les liens.
   const seen = new Set(); const queue = ['#/egtsi106'];
@@ -77,7 +78,7 @@ const inspect = () => {
   const withMissing = rows.filter((r) => r.missing.length);
   const total = withMissing.reduce((n, r) => n + r.missing.length, 0);
   const unique = new Map();
-  for (const r of withMissing) for (const m of r.missing) { const k = m.key || m.label.toLowerCase(); if (!unique.has(k)) unique.set(k, { id: m.key, label: m.label, kind: m.kind, role: m.role, file: m.key ? 'public/images/label-illustrations/' + m.key + '.webp' : null, activities: [] }); const u = unique.get(k); u.activities.push(r.id); u.context = u.context || ((r.module === 106 ? 'EGTSI106' : 'Module ' + r.module) + ' · ' + r.title); }
+  for (const r of withMissing) for (const m of r.missing) { const k = m.key || m.label.toLowerCase(); if (!unique.has(k)) unique.set(k, { id: m.key, label: m.label, kind: m.kind, role: m.role, file: m.key ? 'public/images/label-illustrations/' + m.key + '.webp' : null, activities: [] }); const u = unique.get(k); u.activities.push(r.id); u.context = u.context || ((r.module === 106 ? 'EGTSI106' : r.parcours || 'Module ' + r.module) + ' · ' + r.title); }
   const byKind = {}; for (const r of withMissing) for (const m of r.missing) byKind[m.kind] = (byKind[m.kind] || 0) + 1;
   const byModule = {}; for (const r of rows) { const b = (byModule[r.module] = byModule[r.module] || { activites: 0, incompletes: 0, elements: 0 }); b.activites++; if (r.missing.length) { b.incompletes++; b.elements += r.missing.length; } }
   fs.mkdirSync('output/missing-images', { recursive: true });

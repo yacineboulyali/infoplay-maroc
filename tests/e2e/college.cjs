@@ -16,10 +16,15 @@ const axeSrc = fs.readFileSync(path.resolve(__dirname, '../../node_modules/axe-c
   for (const a of acts) {
     await page.evaluate((a) => { location.hash = `#/m/${a.m}/s/${a.s}/a/${a.i}`; }, a);
     await page.waitForFunction((id) => document.querySelector(`.activity-${id}`), a.id);
-    await page.evaluate(() => window.__ip.eng.solve());
-    await page.click('text=✔ Vérifier');
-    await page.waitForSelector('.result .score');
-    results.push([a.id, a.mech, (await page.textContent('.result .score')).trim()]);
+    try {
+      await page.evaluate(() => window.__ip.eng.solve());
+      await page.click('text=✔ Vérifier');
+      await page.waitForSelector('.rb-score b', { timeout: 8000 });
+      results.push([a.id, a.mech, (await page.textContent('.rb-score b')).trim()]);
+    } catch (e) {
+      const toast = await page.evaluate(() => document.querySelector('.toast,.modal,dialog[open]')?.textContent || '');
+      results.push([a.id, a.mech, 'ERREUR ' + e.message.split(String.fromCharCode(10))[0] + (toast ? ' · ' + toast : '')]);
+    }
   }
   const bad = results.filter((r) => !r[2].startsWith('5'));
   console.log('activités Collège à 5/5 :', results.length - bad.length, '/', results.length); if (bad.length) console.log('PROBLÈMES', bad);

@@ -81,3 +81,13 @@ test('contenu des activités nouvelles (mêmes règles que le Tronc Commun)', ()
     if (a.type === 'sim') assert.ok(d.tasks.length >= 5, a.id);
   }
 });
+test('stockage : un essai Collège est enregistré, rechargé et exporté', async () => {
+  const { createStore, memoryAdapter } = await import('../src/storage/store.js');
+  const { isActivityId } = await import('../src/data/index.js');
+  const ad = memoryAdapter(); const st = createStore(ad, isActivityId); const p = st.createProfile('Salma');
+  for (const id of ['m11-s1-a1', 'm24-s10-a4', 'm35-s6-a4']) st.recordAttempt(p.id, id, 5, 1);
+  const again = createStore(ad, isActivityId);
+  for (const id of ['m11-s1-a1', 'm24-s10-a4', 'm35-s6-a4']) assert.equal(again.record(p.id, id)?.attempts.length, 1, id + ' perdu au rechargement');
+  assert.throws(() => st.recordAttempt(p.id, 'm16-s1-a1', 5, 1));
+  assert.match(st.csv(COLLEGE_ACTIVITIES), /m35-s6-a4/);
+});
