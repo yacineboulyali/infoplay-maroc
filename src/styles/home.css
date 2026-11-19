@@ -1,6 +1,8 @@
-/* ---------- Page d'accueil « Bienvenue dans mon univers » (fond Three.js flou) ---------- */
+/* ---------- Page d'accueil « Bienvenue dans mon univers » (fond Three.js flou) ----------
+   Mobile first : les règles de base visent le téléphone ; les paliers min-width 481 px (grand téléphone,
+   tablette) et 861 px (ordinateur) ajoutent la mise en page large. */
 .lp{--lp-ink:#1c2340;--lp-blue:#2b3fc4;--lp-gold:#f2b418;--lp-cream:#f7f2e8;padding:0!important;max-width:none!important;display:block!important;background:var(--lp-cream);font-family:Nunito,"Segoe UI",system-ui,sans-serif;color:var(--lp-ink);overflow-x:clip}
-.lp-hero{position:relative;isolation:isolate;min-height:calc(100svh - 58px);display:flex;align-items:center;padding:clamp(2rem,6vw,5rem) 16px clamp(4rem,8vw,6rem)}
+.lp-hero{position:relative;isolation:isolate;display:flex;align-items:center;padding:2rem 16px clamp(4rem,8vw,6rem)}
 .lp-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:var(--lp-cream)}
 .lp-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease}
 .lp-canvas.lp-gl-on{opacity:1}
@@ -14,9 +16,9 @@
 /* Points discrets comme sur la maquette, fondus vers le bas. */
 .lp-hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(28,35,64,.10) 1px,transparent 1.4px);background-size:26px 26px;-webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent)}
 
-.lp-hero-in{width:100%;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:clamp(2rem,6vw,5rem);align-items:center}
+.lp-hero-in{width:100%;max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:2.5rem;align-items:center}
 .lp-eyebrow{margin:0 0 .9rem;font-size:.82rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--lp-blue);animation:lp-up .7s .05s both}
-.lp-title{margin:0 0 1.2rem;font-size:clamp(2.8rem,7.4vw,6rem);line-height:.98;font-weight:800;letter-spacing:-.035em;color:var(--lp-ink);animation:lp-up .8s .12s both}
+.lp-title{margin:0 0 1.2rem;font-size:clamp(2.4rem,13vw,3.2rem);line-height:.98;font-weight:800;letter-spacing:-.035em;color:var(--lp-ink);animation:lp-up .8s .12s both}
 .lp-title:focus{outline:none}
 .lp-title:focus-visible{outline:3px solid var(--lp-gold);outline-offset:6px;border-radius:6px}
 .lp-title span{display:inline}
@@ -25,6 +27,7 @@
 @keyframes lp-line{from{transform:scaleX(0)}}
 .lp-lead{max-width:34ch;margin:0 0 2rem;font-size:clamp(1.1rem,1.6vw,1.35rem);line-height:1.55;color:#4a5275;animation:lp-up .8s .22s both}
 .lp-actions{display:flex;flex-wrap:wrap;gap:.75rem;animation:lp-up .8s .3s both}
+.lp-actions .btn{flex:1 1 100%;justify-content:center}
 .lp .lp-cta{display:inline-flex;align-items:center;gap:.4rem;padding:.95rem 1.4rem;border-radius:12px;font-weight:800;font-size:1.02rem;text-decoration:none;color:#fff;background:var(--lp-blue);border:2px solid var(--lp-ink);box-shadow:0 5px 0 var(--lp-ink);transition:transform .15s,box-shadow .15s,background .2s}
 .lp .lp-cta:hover{background:#2334a8;transform:translateY(-2px);box-shadow:0 7px 0 var(--lp-ink)}
 .lp .lp-cta:active{transform:translateY(3px);box-shadow:0 2px 0 var(--lp-ink)}
@@ -37,19 +40,19 @@
 @keyframes lp-up{from{opacity:0;transform:translateY(18px)}}
 
 /* Portrait : cadre marine, ombre décalée dorée, légende en verre dépoli. */
-.lp-portrait{--rx:0deg;--ry:0deg;position:relative;margin:0;justify-self:center;width:min(100%,390px);perspective:900px;animation:lp-pop .9s .2s cubic-bezier(.2,.8,.2,1) both}
+.lp-portrait{--rx:0deg;--ry:0deg;position:relative;order:-1;margin:0;justify-self:center;width:min(78%,300px);perspective:900px;animation:lp-pop .9s .2s cubic-bezier(.2,.8,.2,1) both}
 .lp-portrait-card{position:relative;border-radius:28px;border:3px solid var(--lp-ink);overflow:hidden;background:#cfd6e4;box-shadow:14px 14px 0 var(--lp-gold),0 30px 60px -20px rgba(28,35,64,.45);transform:rotateX(var(--rx)) rotateY(var(--ry));transition:transform .25s ease-out}
 .lp-portrait img{display:block;width:100%;height:auto;aspect-ratio:400/460;object-fit:cover}
 .lp-glass{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3)}
 .lp-portrait figcaption.lp-glass{position:absolute;left:14px;right:14px;bottom:14px;padding:.75rem 1rem;border-radius:999px;text-align:center;font-size:.95rem;line-height:1.35;color:#fff;background:rgba(28,35,64,.72);border-color:rgba(255,255,255,.18)}
 .lp-portrait figcaption b{font-weight:800}
-.lp-chip{position:absolute;padding:.5rem .85rem;border-radius:999px;font-weight:800;font-size:.85rem;color:var(--lp-ink);background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 25px -10px rgba(28,35,64,.35);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:lp-bob 5s ease-in-out infinite;white-space:nowrap}
-.lp-chip-a{top:12%;left:-12%}
-.lp-chip-b{top:46%;right:-10%;animation-delay:-2.5s}
+.lp-chip{position:absolute;border-radius:999px;font-weight:800;color:var(--lp-ink);background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 25px -10px rgba(28,35,64,.35);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:lp-bob 5s ease-in-out infinite;white-space:nowrap;font-size:.75rem;padding:.4rem .7rem}
+.lp-chip-a{top:12%;left:-8%}
+.lp-chip-b{top:46%;right:-8%;animation-delay:-2.5s}
 @keyframes lp-pop{from{opacity:0;transform:scale(.92) translateY(20px)}}
 @keyframes lp-bob{50%{transform:translateY(-8px)}}
 
-.lp-scroll{position:absolute;left:50%;bottom:1.4rem;width:26px;height:42px;margin-left:-13px;border:2px solid rgba(28,35,64,.4);border-radius:14px}
+.lp-scroll{display:none;position:absolute;left:50%;bottom:1.4rem;width:26px;height:42px;margin-left:-13px;border:2px solid rgba(28,35,64,.4);border-radius:14px}
 .lp-scroll span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--lp-ink);animation:lp-wheel 1.8s ease-in-out infinite}
 @keyframes lp-wheel{0%{opacity:0;transform:translateY(-3px)}40%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
 
@@ -65,17 +68,19 @@
 .lp-notice a{color:var(--lp-blue);font-weight:700}
 .lp .welcome-footer{max-width:1160px;margin:0 auto;padding:1.5rem 16px 2rem}
 
-@media (max-width:860px){
-  .lp-hero{min-height:auto;padding-top:2rem}
-  .lp-hero-in{grid-template-columns:1fr;gap:2.5rem}
-  .lp-portrait{order:-1;width:min(78%,300px)}
-  .lp-chip-a{left:-8%}.lp-chip-b{right:-8%}
-  .lp-scroll{display:none}
+/* Grand téléphone et tablette */
+@media (min-width:481px){
+  .lp-title{font-size:clamp(2.8rem,7.4vw,6rem)}
+  .lp-actions .btn{flex:0 1 auto}
+  .lp-chip{font-size:.85rem;padding:.5rem .85rem}
 }
-@media (max-width:480px){
-  .lp-title{font-size:clamp(2.4rem,13vw,3.2rem)}
-  .lp-actions .btn{flex:1 1 100%;justify-content:center}
-  .lp-chip{font-size:.75rem;padding:.4rem .7rem}
+/* Ordinateur : texte et portrait côte à côte, héros plein écran */
+@media (min-width:861px){
+  .lp-hero{min-height:calc(100svh - 58px);padding-top:clamp(2rem,6vw,5rem)}
+  .lp-hero-in{grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:clamp(2rem,6vw,5rem)}
+  .lp-portrait{order:0;width:min(100%,390px)}
+  .lp-chip-a{left:-12%}.lp-chip-b{right:-10%}
+  .lp-scroll{display:block}
 }
 @media (prefers-reduced-motion:reduce){
   .lp *,.lp *::before,.lp *::after{animation:none!important;transition:none!important}

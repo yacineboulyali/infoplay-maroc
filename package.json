@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "publish:root": "node scripts/publish-root.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:e2e": "node tests/e2e/smoke.cjs",
     "test:axe": "node tests/e2e/axe.cjs",

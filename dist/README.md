@@ -2,7 +2,7 @@
 
 **Plateforme éducative bilingue et interactive pour apprendre l'informatique au collège en jouant.**
 
-[Ouvrir la démonstration](https://yacineboulyali.github.io/infoplay-maroc/) · 4 modules · 30 séances · 120 activités · 600 points · fonctionnement hors ligne
+[Ouvrir la démonstration](https://yacineboulyali.github.io/) · 4 modules · 30 séances · 120 activités · 600 points · fonctionnement hors ligne
 
 ![Accueil d'InfoPlay Maroc](docs/screenshots/01-accueil.png)
 

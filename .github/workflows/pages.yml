@@ -23,9 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # InfoPlay est publié à la racine https://yacineboulyali.github.io/ (npm run publish:root) :
+      # /infoplay-maroc/ ne sert plus qu'une redirection qui conserve la page et l'écran demandés.
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: redirect
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
