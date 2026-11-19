@@ -10,12 +10,8 @@
   --c:var(--ex-pri);
   font-family:Nunito,"Segoe UI",Tahoma,system-ui,sans-serif;
   color:var(--ex-ink);
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){.ex-app,.ex-layer{
-  --ex-bg:#120f2b; --ex-card:#1d1940; --ex-ink:#f1efff; --ex-mut:#b2acd9; --ex-line:#2f2a5c;
-  --ex-pri:#8b72ff; --ex-pri-d:#6a4bff; --ex-ok:#34d27a; --ex-ok-d:#1f9c55; --ex-ok-bg:#12321f;
-  --ex-ko:#ff5c7f; --ex-ko-d:#d43a5d; --ex-ko-bg:#3a1422; --ex-sh:0 2px 0 rgba(0,0,0,.25),0 10px 28px rgba(0,0,0,.35);
-}}
 body.high-contrast .ex-app,body.high-contrast .ex-layer{--ex-mut:#2a2750;--ex-line:#8a84c2}
 
 /* L'en-tête général et le bouton flottant d'InfoPlay laissent la place à l'appli. */
