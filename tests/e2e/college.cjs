@@ -35,7 +35,7 @@ const axeSrc = fs.readFileSync(path.resolve(__dirname, '../../node_modules/axe-c
     await page.evaluate((r) => { location.hash = r; }, r); await page.waitForTimeout(250);
     const h1 = await page.evaluate(() => document.querySelector('h1')?.textContent || '');
     assert.ok(h1 && !/introuvable|erreur/i.test(h1), r + ' : ' + h1);
-    const res = await page.evaluate(async (src) => { if (!window.axe) (0, eval)(src); return (await window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa'] })).violations.map((v) => ({ id: v.id, impact: v.impact, n: v.nodes.length, ex: v.nodes[0].html.slice(0, 110) })); }, axeSrc);
+    const res = await page.evaluate(async (src) => { if (!window.axe) (0, eval)(src); return (await window.axe.run(document, { runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa'], preload: false })).violations.map((v) => ({ id: v.id, impact: v.impact, n: v.nodes.length, ex: v.nodes[0].html.slice(0, 110) })); }, axeSrc);
     violations += res.length; console.log(r.padEnd(20), res.length ? JSON.stringify(res) : 'OK');
   }
   // Téléphone : pas de défilement horizontal sur le tableau de bord d'un niveau.

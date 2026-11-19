@@ -28,21 +28,23 @@ const URL = 'file://' + path.resolve(__dirname, '../../dist/index.html') + '?tes
   assert.equal(bad.length, 0);
   // persistance après rechargement
   await page.reload(); await page.evaluate(() => { location.hash = '#/dash'; }); await page.waitForSelector('text=Bonjour Sara');
-  const pts = await page.textContent('.stat b'); console.log('points après rechargement :', pts); assert.equal(pts.trim(), '600');
+  const pts = await page.evaluate(() => { const st = window.__ip.store; const p = st.active(); return window.__ip.ACTIVITIES.reduce((t, a) => t + (st.best(p.id, a.id) || 0), 0); }); // le tableau de bord n'affiche plus de total brut
+  console.log('points après rechargement :', pts); assert.equal(pts, 600);
   // export / import
   await page.goto(URL.replace('index.html', 'index.html') + '#/donnees'); await page.waitForSelector('text=Sauvegarde');
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('text=⬇ Exporter mon profil')]); const f = await dl.path(); const json = require('fs').readFileSync(f, 'utf8'); assert.ok(JSON.parse(json).profiles.length === 1);
-  // interactions manuelles : fenêtre simulée
+  // interactions manuelles : fenêtre simulée (chaque étape réussie se valide toute seule)
+  const advance = async (act) => { const before = await page.textContent('.step-h'); await act(); await page.waitForFunction((b) => document.querySelector('.step-h')?.textContent !== b, before, { timeout: 6000 }); };
   await page.evaluate(() => { location.hash = '#/m/2/s/2/a/3'; }); await page.waitForSelector('#stage');
-  await page.click('[aria-label=Réduire]'); await page.click('button.btn.primary:has-text("Valider")'); await page.click('.tbtn'); await page.click('button.btn.primary:has-text("Valider")');
-  await page.click('[aria-label=Agrandir]'); await page.click('button.btn.primary:has-text("Valider")'); await page.click('[aria-label=Restaurer]'); await page.click('button.btn.primary:has-text("Valider")'); await page.click('[aria-label=Fermer]'); await page.click('button.btn.primary:has-text("Valider")');
+  await advance(() => page.click('[aria-label=Réduire]')); await advance(() => page.click('.tbtn'));
+  await advance(() => page.click('[aria-label=Agrandir]')); await advance(() => page.click('[aria-label=Restaurer]')); await advance(() => page.click('[aria-label=Fermer]'));
   await page.click('text=✔ Vérifier'); await page.waitForSelector('.rb-score b'); const w = await page.textContent('.rb-score b'); console.log('fenêtre (clics réels) :', w.trim()); assert.ok(w.startsWith('5'));
-  // interactions manuelles : tableur
+  // interactions manuelles : tableur (deux formules justes, puis une valeur tapée à la main : étape passée = ratée)
   await page.evaluate(() => { location.hash = '#/m/2/s/10/a/4'; }); await page.waitForSelector('#stage');
   const cell = async (ref, v) => { await page.click(`[aria-label="Cellule ${ref}"]`); await page.keyboard.type(v); await page.keyboard.press('Enter'); };
-  await cell('D2', '=MOYENNE(B2;C2)'); await page.click('button.btn.primary:has-text("Valider")'); await cell('D3', '=MOYENNE(B3:C3)'); await page.click('button.btn.primary:has-text("Valider")');
-  await cell('D4', '14'); await page.click('button.btn.primary:has-text("Valider")');
-  const logs = await page.$$eval('.steplog li', (l) => l.map((x) => x.className)); console.log('tableur (saisie réelle) :', logs.join(',')); assert.deepEqual(logs, ['ko', 'ok', 'ko'].map((x) => x).slice(0, 3).map((x, i) => (i === 0 ? 'ok' : i === 1 ? 'ok' : 'ko')));
+  await advance(() => cell('D2', '=MOYENNE(B2;C2)')); await advance(() => cell('D3', '=MOYENNE(B3:C3)'));
+  await cell('D4', '14'); await advance(() => page.click('.step-skip'));
+  const logs = await page.$$eval('.steplog li', (l) => l.map((x) => x.className)); console.log('tableur (saisie réelle) :', logs.join(',')); assert.deepEqual(logs, ['ok', 'ok', 'ko']);
   // clavier : association
   await page.evaluate(() => { location.hash = '#/m/1/s/2/a/2'; }); await page.waitForSelector('#stage'); await page.keyboard.press('Tab');
   console.log('erreurs console :', errors.length, errors.slice(0, 3)); console.log('requêtes externes :', external.length);

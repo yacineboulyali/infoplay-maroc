@@ -26,12 +26,19 @@ Ordre des modules et des séances conforme au programme publié par l'ANPI. Chaq
 | Images référencées présentes sur le disque | OK |
 | Tronc commun, M205, EGTSI106 : images manquantes | 0 |
 | Typographie (espaces, guillemets, ponctuation) | OK |
+| E2E Collège dans Chromium hors ligne : chaque activité résolue puis « Vérifier » | **264 / 264 à 5/5**, 0 erreur console, 0 requête externe |
+| axe-core (WCAG 2.1 AA) sur 13 écrans Collège | 0 violation |
+| Téléphone 375 px : défilement horizontal | 0 |
+| E2E Tronc commun (`tests/e2e/smoke.cjs`) | 120 / 120 à 5/5, persistance, simulations manuelles OK |
 
 ## 3. Anomalies trouvées et corrigées
 
 1. **Critique — progression Collège non enregistrée.** `src/storage/store.js` n'acceptait que les identifiants `m1–m4` et `m205` : chaque essai Collège levait « Activité inconnue », rien n'était sauvegardé, exporté ni affiché dans la progression. Expression régulière élargie à `m11–m15, m21–m25, m31–m35` ; test de non-régression (enregistrement, rechargement, export CSV, refus d'un id inexistant).
 2. **Tests e2e obsolètes.** `tests/e2e/smoke.cjs` et `tests/e2e/college.cjs` lisaient le score dans `.result .score`, qui n'existe plus : sélecteur remplacé par `.rb-score b`.
-3. **Audit des images** : `scripts/audit-missing-images.cjs` couvre désormais le parcours Collège.
+3. **Fenêtre de résultat fantôme.** Le résultat s'ouvre avec un délai après « Vérifier » ; si l'élève changeait de page entre-temps (bouton Retour, menu), la fenêtre s'ouvrait sur la page suivante et bloquait les clics. Elle n'est plus ouverte si l'élève est parti, et se ferme à tout changement de page (`src/fx/flow.js`, `src/fx/popup.js`).
+4. **Contraste insuffisant** du fil d'Ariane (étape courante, 4,2 : 1 au lieu de 4,5 : 1), visible sur toutes les activités : texte assombri (`src/styles/clean.css`).
+5. **Smoke test Tronc commun obsolète** (compteur `.stat` et boutons « Valider » disparus avec la validation automatique des étapes) : réécrit sur le comportement actuel.
+6. **Audit des images** : `scripts/audit-missing-images.cjs` couvre désormais le parcours Collège.
 
 ## 4. Points restant à traiter (non corrigés)
 

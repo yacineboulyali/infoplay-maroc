@@ -36,7 +36,7 @@ export function presentResult(o) {
       onClose: () => { bar.classList.add('show'); },
     });
   };
-  setTimeout(() => { open(); o.onPeak && o.onPeak(ratio); }, openAt);
+  setTimeout(() => { if (!bar.isConnected) return; open(); o.onPeak && o.onPeak(ratio); }, openAt); // élève déjà parti : pas de fenêtre sur la page suivante
   // Les badges ne sont plus annoncés : ils ont été retirés de l'interface.
 
   const stars = '★'.repeat(Math.round(o.score)) + '☆'.repeat(5 - Math.round(o.score));

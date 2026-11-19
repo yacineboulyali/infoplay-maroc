@@ -115,13 +115,15 @@ export function resultPopup(opts) {
     }
   });
   let open = false;
+  const onLeave = () => close(true);
   function openIt() {
     if (open) return; open = true; document.body.append(bg); document.body.classList.add('rp-open');
+    window.addEventListener('hashchange', onLeave); // bouton Retour, lien du menu : la fenêtre ne doit pas rester sur la page suivante
     requestAnimationFrame(() => bg.classList.add('show'));
     setTimeout(() => (next || retry).focus({ preventScroll: true }), 30);
   }
   function close(leaving = false) {
-    if (!open) return; open = false; bg.classList.remove('show'); document.body.classList.remove('rp-open');
+    if (!open) return; open = false; window.removeEventListener('hashchange', onLeave); bg.classList.remove('show'); document.body.classList.remove('rp-open');
     setTimeout(() => bg.remove(), reduced() ? 0 : 220);
     if (!leaving) { opts.onClose && opts.onClose(); prev && prev.focus && document.contains(prev) && prev.focus({ preventScroll: true }); }
   }
