@@ -641,3 +641,12 @@ body.reduced-motion .ex-app *,body.reduced-motion .ex-layer *{animation-duration
   .ex-pos-actions>*{flex:1 1 220px}
   .ex-pos-hero{padding:26px 30px}
 }
+
+/* Pendant un test (diagnostic, examen blanc), le bouton « Question suivante » passe devant la barre du bas,
+   et la barre du bas est masquée sur mobile et tablette pour ne rien recouvrir. */
+.ex-foot{z-index:30}
+@media (max-width:1023px){
+  .ex-app:has(.ex-player) .ex-nav{display:none}
+}
+/* La suggestion « plein écran » d'InfoPlay ne doit pas recouvrir les boutons d'un test en cours. */
+body.ex-mode:has(.ex-player) .fs-suggest{display:none!important}

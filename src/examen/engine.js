@@ -125,7 +125,7 @@ export const RANKS = [
 export const rankOf = (xp) => { let r = RANKS[0], next = null; for (let i = 0; i < RANKS.length; i++) { if (xp >= RANKS[i].xp) { r = RANKS[i]; next = RANKS[i + 1] || null; } } return { ...r, next }; };
 
 export const BADGES = [
-  { id: 'positioned', icon: '🧭', t: 'Je sais où j’en suis', d: 'Passer le test de positionnement.' },
+  { id: 'positioned', icon: '🧭', t: 'Je sais où j’en suis', d: 'Passer l’évaluation diagnostique des compétences.' },
   { id: 'first-lesson', icon: '📖', t: 'Première leçon', d: 'Terminer une leçon.' },
   { id: 'first-level', icon: '🚩', t: 'Premier niveau', d: 'Terminer un niveau.' },
   { id: 'perfect', icon: '💎', t: 'Sans faute', d: 'Terminer un niveau sans erreur ni indice.' },
@@ -249,7 +249,7 @@ export function createExamStore(storage, pid = 'invite') {
       save();
       return stars;
     },
-    /** Enregistre un test de positionnement ; les questions ratées rejoignent la révision. */
+    /** Enregistre une évaluation diagnostique des compétences ; les questions ratées rejoignent la révision. */
     positionDone(result, missedIds = []) {
       const first = !s.position?.length;
       s.position = [result, ...(s.position || [])].slice(0, 5);
@@ -257,7 +257,7 @@ export function createExamStore(storage, pid = 'invite') {
       gain(first ? 30 : 10);
       award('positioned');
       const prio = result.priorities.length;
-      notify('position', 'Bilan de positionnement prêt', prio ? `${prio} partie(s) prioritaire(s) : ton parcours est réordonné.` : 'Aucune lacune majeure : passe aux niveaux et à l’examen blanc.', '🧭');
+      notify('position', 'Bilan diagnostique prêt', prio ? `${prio} partie(s) prioritaire(s) : ton parcours est réordonné.` : 'Aucune lacune majeure : passe aux niveaux et à l’examen blanc.', '🧭');
       save();
     },
     get lastPosition() { return s.position?.[0] || null; },
@@ -291,7 +291,7 @@ export function blancSet(rng = Math.random) {
   return shuffle([...from('D', 12), ...from('M', 4), ...from('A', 4)]);
 }
 
-// ---------- Test de positionnement ----------
+// ---------- Évaluation diagnostique des compétences (test de positionnement) ----------
 // 30 questions de type examen, pondérées comme l'épreuve : 3 par axe de didactique, 2 par module du TC,
 // 2 pour les axes principaux de sciences de l'éducation (A1, A2, A7) et 1 pour les axes complémentaires.
 export const POSITION_PLAN = { D1: 3, D2: 3, D3: 3, D4: 3, M1: 2, M2: 2, M3: 2, M4: 2, A1: 2, A2: 2, A3: 1, A4: 1, A5: 1, A6: 1, A7: 2 };

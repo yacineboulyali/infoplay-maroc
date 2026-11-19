@@ -103,7 +103,7 @@ function notifSheet(st) {
 // ---------- Accueil du module ----------
 function nextStep(st) {
   const pos = st.lastPosition;
-  if (!pos) return { href: BASE + '/positionnement', label: 'Test de positionnement', part: null };
+  if (!pos) return { href: BASE + '/diagnostic', label: 'Diagnostic des compétences', part: null };
   // Le parcours conseillé par le test passe en premier, puis l'ordre normal des parties.
   const ordered = [...pos.path.map(partById).filter(Boolean), ...PARTS.filter((p) => !pos.path.includes(p.id))];
   for (const p of ordered) {
@@ -479,24 +479,24 @@ function profileScreen(st) {
     h('p', { class: 'ex-muted' }, 'Ta progression reste dans ce navigateur, liée à ton pseudo InfoPlay. Sources des questions : dossiers unifiés de préparation à l’examen d’aptitude professionnelle (informatique, secondaire qualifiant).')), bottomNav('profil')];
 }
 
-// ---------- Test de positionnement ----------
+// ---------- Évaluation diagnostique des compétences (test de positionnement) ----------
 const BAND_LABEL = { fr: { ok: 'Maîtrisé', mid: 'À consolider', low: 'Prioritaire' }, ar: { ok: 'متمكن', mid: 'يحتاج تثبيتا', low: 'أولوية' } };
 function bandChip(st, partId, big = false) {
   const pos = st.lastPosition; const r = pos?.parts?.[partId];
   if (!r) return null;
   const lang = partById(partId)?.lang || 'fr';
-  return h('span', { class: `ex-band ex-band-${r.band}` + (big ? ' big' : ''), title: `Test de positionnement : ${r.ok}/${r.n}` }, BAND_LABEL[lang][r.band]);
+  return h('span', { class: `ex-band ex-band-${r.band}` + (big ? ' big' : ''), title: `Diagnostic des compétences : ${r.ok}/${r.n}` }, BAND_LABEL[lang][r.band]);
 }
 function positionCard(st) {
   const pos = st.lastPosition;
-  if (!pos) return h('a', { class: 'ex-poscard todo', href: BASE + '/positionnement' },
+  if (!pos) return h('a', { class: 'ex-poscard todo', href: BASE + '/diagnostic' },
     h('span', { class: 'ex-pos-ico', 'aria-hidden': 'true' }, '🧭'),
-    h('span', null, h('small', null, 'À faire en premier'), h('b', null, 'Test de positionnement'), h('small', null, '30 questions de type examen · environ 20 min · repère tes lacunes avant les leçons')),
+    h('span', null, h('small', null, 'À faire en premier'), h('b', null, 'Évaluation diagnostique des compétences'), h('small', null, '30 questions de type examen · environ 20 min · repère tes lacunes avant les leçons')),
     h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, '›'));
   const lv = levelOfScore(pos.ratio);
-  return h('a', { class: 'ex-poscard', href: BASE + '/positionnement/bilan' },
+  return h('a', { class: 'ex-poscard', href: BASE + '/diagnostic/bilan' },
     h('span', { class: 'ex-pos-ico', 'aria-hidden': 'true' }, lv.icon),
-    h('span', null, h('small', null, 'Mon positionnement'), h('b', null, `${pos.score}/20 · ${lv.fr}`), h('small', null, pos.priorities.length ? `${pos.priorities.length} partie(s) prioritaire(s) · voir le bilan` : 'Aucune partie prioritaire · voir le bilan')),
+    h('span', null, h('small', null, 'Mon diagnostic des compétences'), h('b', null, `${pos.score}/20 · ${lv.fr}`), h('small', null, pos.priorities.length ? `${pos.priorities.length} partie(s) prioritaire(s) · voir le bilan` : 'Aucune partie prioritaire · voir le bilan')),
     h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, '›'));
 }
 
@@ -508,7 +508,7 @@ function positionScreen(st, showReport) {
     const prev = st.lastPosition;
     root.replaceChildren(h('section', { class: 'ex-card ex-pos-intro' },
       h('div', { class: 'ex-end-badge', 'aria-hidden': 'true' }, '🧭'),
-      h('h2', { tabindex: '-1' }, 'Test de positionnement'),
+      h('h2', { tabindex: '-1' }, 'Évaluation diagnostique des compétences'),
       h('p', { class: 'ex-lead' }, 'Avant de commencer les leçons, mesure ton niveau sur l’ensemble de l’épreuve. Le bilan te montre tes lacunes, notion par notion, et réordonne ton parcours.'),
       h('ul', { class: 'ex-plan' },
         h('li', null, h('b', null, '12'), h('span', null, 'questions de didactique (3 par axe : planifier, gérer, évaluer, remédier)')),
@@ -517,11 +517,11 @@ function positionScreen(st, showReport) {
       ),
       h('ul', { class: 'ex-rules' },
         h('li', null, 'Questions de type examen, tirées en priorité des QCM « niveau examen 2025 » du qualifiant.'),
-        h('li', null, 'Pas de correction pendant le test, pas d’indice, pas de cœurs.'),
+        h('li', null, 'Choisis une réponse puis touche « Question suivante ». Pas de correction pendant l’évaluation, pas d’indice, pas de cœurs.'),
         h('li', null, 'Si tu ne sais pas, touche « Je ne sais pas » plutôt que de deviner : le diagnostic sera plus juste.')),
       h('div', { class: 'ex-actions col' },
-        h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: run }, prev ? 'Refaire le test' : 'Commencer le test'),
-        prev ? h('a', { class: 'ex-btn', href: BASE + '/positionnement/bilan' }, `Voir mon dernier bilan (${prev.score}/20)`) : null)));
+        h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: run }, prev ? 'Refaire l’évaluation' : 'Commencer l’évaluation'),
+        prev ? h('a', { class: 'ex-btn', href: BASE + '/diagnostic/bilan' }, `Voir mon dernier bilan (${prev.score}/20)`) : null)));
   };
 
   function run() {
@@ -535,7 +535,7 @@ function positionScreen(st, showReport) {
       } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
       const dunno = h('button', { type: 'button', class: 'ex-hint-btn ex-dunno', onclick: () => go(null) }, q.lang === 'ar' ? '🤷 لا أعرف' : '🤷 Je ne sais pas');
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
-        h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner le test' }, '✕'),
+        h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner l’évaluation' }, '✕'),
           h('span', { class: 'ex-prog big', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(set.length), 'aria-valuenow': String(i) }, h('i', { style: `--w:${(i / set.length) * 100}%` })),
           h('span', { class: 'ex-chip' }, `${i + 1}/${set.length}`)),
         h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
@@ -609,13 +609,13 @@ function positionScreen(st, showReport) {
       h('div', { class: 'ex-actions col ex-pos-actions' },
         first ? h('a', { class: 'ex-btn ex-primary', href: `${BASE}/p/${first}/lecon` }, `Commencer le parcours : ${partById(first).short}`) : h('a', { class: 'ex-btn ex-primary', href: BASE + '/blanc' }, 'Passer l’examen blanc'),
         res.missed.length ? h('a', { class: 'ex-btn', href: BASE + '/revision' }, `Revoir les ${res.missed.length} questions ratées`) : null,
-        h('button', { type: 'button', class: 'ex-btn', onclick: intro }, 'Refaire le test'),
+        h('button', { type: 'button', class: 'ex-btn', onclick: intro }, 'Refaire l’évaluation'),
         h('a', { class: 'ex-btn ex-ghost', href: BASE }, 'Retour au parcours')));
     root.querySelector('h2')?.focus();
   }
 
   if (showReport && st.lastPosition) report(st.lastPosition); else intro();
-  return [topbar(st, { title: 'Positionnement', back: BASE }), root, bottomNav('hub')];
+  return [topbar(st, { title: 'Diagnostic des compétences', back: BASE }), root, bottomNav('hub')];
 }
 
 // ---------- Accès par mot de passe ----------
@@ -666,7 +666,7 @@ export function examenScreen(q, pid) {
   else if (p) view = partPage(st, p);
   else if (sub[0] === 'revision') view = quizPlayer(st, { mode: 'review' });
   else if (sub[0] === 'blanc') view = blancScreen(st);
-  else if (sub[0] === 'positionnement') view = positionScreen(st, sub[1] === 'bilan');
+  else if (sub[0] === 'diagnostic' || sub[0] === 'positionnement') view = positionScreen(st, sub[1] === 'bilan');
   else if (sub[0] === 'profil') view = profileScreen(st);
   else view = hub(st);
   return h('main', { id: 'main', class: 'ex-app' }, view);

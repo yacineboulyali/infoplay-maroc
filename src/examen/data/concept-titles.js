@@ -1,4 +1,4 @@
-// Intitulés lisibles des notions, affichés dans le bilan du test de positionnement.
+// Intitulés lisibles des notions, affichés dans le bilan de l’évaluation diagnostique des compétences.
 export const CONCEPT_TITLES = {
   // Didactique et programme du TC (fr)
   topaze: 'Effet Topaze', jourdain: 'Effet Jourdain', glissement: 'Glissement métacognitif', contrat: 'Contrat didactique',
