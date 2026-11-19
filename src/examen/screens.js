@@ -74,10 +74,22 @@ function topbar(st, { title = 'Examen pro', back = null } = {}) {
       h('span', { class: 'ex-chip ex-xp', title: 'Points d’expérience' }, '⚡', h('b', null, String(s.xp))),
       bell));
 }
+// Icônes plates monochromes (trait = couleur du texte), dessinées dans le code.
+const NAV_ICONS = {
+  hub: '<path d="M3 6.5 9 3.5l6 3 6-3v14l-6 3-6-3-6 3z"/><path d="M9 3.5v14M15 6.5v14"/>',
+  rev: '<path d="M20 12a8 8 0 1 1-2.4-5.7L20 8.5"/><path d="M20 3.5v5h-5"/>',
+  blanc: '<path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 16.5h4.5"/>',
+  profil: '<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/>',
+};
+function navIcon(id) {
+  const span = h('span', { class: 'ex-nav-ico', 'aria-hidden': 'true' });
+  span.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${NAV_ICONS[id]}</svg>`;
+  return span;
+}
 function bottomNav(active) {
-  const it = (id, icon, label, href) => h('a', { class: 'ex-nav-i' + (active === id ? ' on' : ''), href, 'aria-current': active === id ? 'page' : null }, h('span', { 'aria-hidden': 'true' }, icon), h('small', null, label));
+  const it = (id, label, href) => h('a', { class: 'ex-nav-i' + (active === id ? ' on' : ''), href, 'aria-current': active === id ? 'page' : null }, navIcon(id), h('small', null, label));
   return h('nav', { class: 'ex-nav', 'aria-label': 'Navigation du module' },
-    it('hub', '🏠', 'Parcours', BASE), it('rev', '♻️', 'Révision', BASE + '/revision'), it('blanc', '📜', 'Examen blanc', BASE + '/blanc'), it('profil', '🏅', 'Profil', BASE + '/profil'));
+    it('hub', 'Parcours', BASE), it('rev', 'Révision', BASE + '/revision'), it('blanc', 'Examen blanc', BASE + '/blanc'), it('profil', 'Profil', BASE + '/profil'));
 }
 function ring(ratio, size = 64, stroke = 7, label = '') {
   const r = (size - stroke) / 2; const c = 2 * Math.PI * r;

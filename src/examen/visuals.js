@@ -6,13 +6,28 @@ const NS = 'http://www.w3.org/2000/svg';
 const s = (tag, attrs = {}, ...kids) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); kids.forEach((c) => c && e.append(c)); return e; };
 
 /** Construit le schéma `v`. `color` = couleur de la partie ; `lang` = 'fr' | 'ar'. */
+// Fenêtre d'explication : s'ouvre au centre quand on touche un élément, se ferme par le bouton, Échap ou un clic à côté.
+function popup(label, detail, { color, lang, back }) {
+  const close = () => { bg.classList.remove('open'); setTimeout(() => bg.remove(), 220); document.removeEventListener('keydown', onKey); back?.focus({ preventScroll: true }); };
+  const onKey = (e) => { if (e.key === 'Escape') close(); };
+  const box = h('div', { class: 'ex-pop', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'ex-pop-t', dir: lang === 'ar' ? 'rtl' : 'ltr', lang, style: `--c:${color}` },
+    h('button', { type: 'button', class: 'ex-pop-x', 'aria-label': lang === 'ar' ? 'إغلاق' : 'Fermer', onclick: close }, '✕'),
+    h('h3', { id: 'ex-pop-t' }, label),
+    h('p', null, detail),
+    h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: close }, lang === 'ar' ? 'إغلاق' : 'Fermer'));
+  const bg = h('div', { class: 'ex-pop-bg ex-layer', onclick: (e) => { if (e.target === bg) close(); } }, box);
+  document.body.append(bg);
+  document.addEventListener('keydown', onKey);
+  requestAnimationFrame(() => bg.classList.add('open'));
+  setTimeout(() => box.querySelector('.ex-primary').focus({ preventScroll: true }), 40);
+}
+
 export function visual(v, { color = '#6d4aff', lang = 'fr' } = {}) {
-  const cap = h('p', { class: 'ex-cap', 'aria-live': 'polite' }, lang === 'ar' ? 'المس عنصرا لترى تفاصيله.' : 'Touche un élément pour voir son détail.');
+  const cap = h('p', { class: 'ex-cap' }, lang === 'ar' ? '👆 المس عنصرا لقراءة شرحه.' : '👆 Touche un élément pour lire son explication.');
   const show = (label, detail, el) => {
-    cap.replaceChildren(h('b', null, label), ' — ', detail);
-    cap.classList.remove('pop'); void cap.offsetWidth; cap.classList.add('pop');
     wrap.querySelectorAll('.is-on').forEach((x) => x.classList.remove('is-on'));
     el?.classList.add('is-on');
+    popup(label, detail, { color, lang, back: el });
   };
   const item = (cls, i, label, detail, ...kids) => {
     const el = h('button', { type: 'button', class: 'ex-vi ' + cls, style: `--i:${i}`, 'aria-label': `${label} : ${detail}` }, ...kids);
@@ -88,7 +103,6 @@ const BUILDERS = {
       const el = item('ex-tile', i, l, d, h('span', { class: 'ex-tile-in' },
         h('span', { class: 'ex-tile-f' }, h('span', { class: 'ex-ico', 'aria-hidden': 'true' }, ico), h('b', null, l)),
         h('span', { class: 'ex-tile-b' }, d)));
-      el.addEventListener('click', () => el.classList.toggle('flip'));
       return el;
     }));
   },

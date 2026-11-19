@@ -658,3 +658,61 @@ body.ex-mode:has(.ex-player) .fs-suggest{display:none!important}
 .ex-lock-msg:empty{display:none}
 .ex-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:699px){.mode-examen-min{width:50%;min-width:0;padding:12px 16px}}
+
+/* ==========================================================================
+   Popup d'explication des schémas
+   ========================================================================== */
+.ex-pop-bg{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:16px;background:rgba(28,35,64,0);transition:background .2s}
+.ex-pop-bg.open{background:rgba(28,35,64,.45)}
+.ex-pop{position:relative;width:min(100%,420px);max-height:80vh;overflow:auto;display:grid;gap:12px;padding:22px 18px 18px;border-radius:18px;background:var(--ex-card);color:var(--ex-ink);border-top:5px solid var(--c);box-shadow:0 20px 50px rgba(28,35,64,.3);font-family:Nunito,"Segoe UI",Tahoma,system-ui,sans-serif;transform:scale(.92);opacity:0;transition:transform .22s cubic-bezier(.2,.9,.3,1.2),opacity .2s}
+.ex-pop-bg.open .ex-pop{transform:none;opacity:1}
+.ex-pop h3{margin:0;padding-inline-end:36px;font-size:1.15rem;font-weight:800;color:var(--c)}
+.ex-pop p{margin:0;font-size:1rem;line-height:1.55}
+.ex-pop-x{position:absolute;top:10px;inset-inline-end:10px;width:34px;height:34px;border-radius:50%;border:0;background:var(--ex-bg);color:var(--ex-mut);font:inherit;font-weight:800;cursor:pointer}
+.ex-cap{background:transparent;padding:2px 4px;min-height:0;font-size:.82rem;text-align:center}
+
+/* ==========================================================================
+   Marges réduites (−60 %) et barre de progression plus fine
+   ========================================================================== */
+.ex-body{padding:6px max(6px,env(safe-area-inset-right,0px)) 10px max(6px,env(safe-area-inset-left,0px));gap:6px}
+.ex-side,.ex-main,.ex-group,.ex-pos-grid,.ex-pos-col{gap:6px}
+.ex-card{padding:7px;gap:6px}
+.ex-player{padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:max(6px,env(safe-area-inset-right,0px))}
+.ex-ptop{padding:calc(5px + env(safe-area-inset-top,0px)) 0 5px;gap:6px}
+.ex-top{padding:calc(4px + env(safe-area-inset-top,0px)) max(6px,env(safe-area-inset-right,0px)) 4px max(6px,env(safe-area-inset-left,0px))}
+.ex-vis{padding:18px 5px 5px;gap:5px}
+.ex-hero,.ex-phead,.ex-pos-hero{padding:7px}
+.ex-cta,.ex-poscard,.ex-lesson-tile{padding:6px 7px}
+.ex-part{padding:4px 5px}
+.ex-parts,.ex-path,.ex-quick,.ex-opts,.ex-choices{gap:4px}
+.ex-fact{padding:5px}
+.ex-foot{padding:5px max(6px,env(safe-area-inset-right,0px)) calc(5px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))}
+.ex-prog.big{height:6px}
+.ex-prog.big i::after{display:none}
+.ex-prog{height:4px}
+
+/* ==========================================================================
+   Icônes plates de la barre du bas (plus petites, une seule couleur)
+   ========================================================================== */
+.ex-nav{padding-top:4px;padding-bottom:calc(4px + env(safe-area-inset-bottom,0px))}
+.ex-nav-i{padding:4px 2px;gap:1px}
+.ex-nav-ico{display:block;width:20px;height:20px;transition:transform .2s}
+.ex-nav-ico svg{display:block;width:100%;height:100%}
+.ex-nav-i.on .ex-nav-ico{transform:translateY(-1px) scale(1.08)}
+.ex-nav-i small{font-size:.66rem}
+.ex-app{padding-bottom:calc(52px + env(safe-area-inset-bottom,0px))}
+
+@media (min-width:1024px){
+  .ex-body{padding:10px 13px 16px}
+  .ex-split{gap:11px}
+  .ex-split>.ex-main{gap:10px}
+  .ex-player{padding:0 13px 70px}
+  .ex-lcard,.ex-qcard{padding:11px 13px}
+  .ex-nav{padding:calc(70px + env(safe-area-inset-top,0px)) 8px 16px}
+  .ex-nav::before{content:"";width:40px;height:40px;background:var(--ex-pri) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Ccircle cx='12' cy='12' r='3.5'/%3E%3C/svg%3E") center/22px no-repeat}
+  .ex-nav-ico{width:22px;height:22px}
+  .ex-nav-i{padding:8px 4px}
+}
+/* Bouton « rejouer » discret, dans le coin bas du schéma (ne recouvre plus le premier élément). */
+.ex-replay{top:auto;bottom:3px;inset-inline-end:4px;width:24px;height:24px;font-size:.8rem}
+.ex-vis{padding-bottom:6px}
