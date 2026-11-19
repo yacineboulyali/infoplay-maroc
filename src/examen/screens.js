@@ -76,16 +76,36 @@ function topbar(st, { title = 'Examen pro', back = null } = {}) {
   return h('header', { class: 'ex-top' },
     back ? h('a', { class: 'ex-back', href: back, 'aria-label': 'Retour' }, '←') : h('a', { class: 'ex-back ex-home', href: '#/profils', 'aria-label': 'Accueil InfoPlay' }, '🏠'),
     h('h1', { tabindex: '-1' }, title),
+    topMenu(),
     h('div', { class: 'ex-chips' },
       h('span', { class: 'ex-chip ex-fire' + (s.lastDay === new Date().toISOString().slice(0, 10) ? ' lit' : ''), title: 'Série de jours' }, '🔥', h('b', null, String(s.streak))),
       h('span', { class: 'ex-chip ex-xp', title: 'Points d’expérience' }, '⚡', h('b', null, String(s.xp))),
-      bell));
+      bell),
+    h('a', { class: 'ex-avatar' + (activeTab() === 'profil' ? ' on' : ''), href: BASE + '/profil', title: `Profil · ${rankOf(s.xp).fr}`, 'aria-label': 'Mon profil' }, h('span', { 'aria-hidden': 'true' }, rankOf(s.xp).icon)));
+}
+// Onglet actif, déduit de l'adresse.
+function activeTab() {
+  const hs = location.hash;
+  if (hs.includes('/revision')) return 'rev';
+  if (hs.includes('/blanc')) return 'blanc';
+  if (hs.includes('/profil')) return 'profil';
+  if (hs.includes('/diagnostic') || hs.includes('/positionnement')) return 'diag';
+  return 'hub';
+}
+// Menu horizontal de l'en-tête (ordinateur) : remplace la barre latérale.
+function topMenu() {
+  const on = activeTab();
+  const it = (id, icon, label, href) => h('a', { class: 'ex-tnav-i' + (on === id ? ' on' : ''), href, 'aria-current': on === id ? 'page' : null }, navIcon(icon), h('span', null, label));
+  return h('nav', { class: 'ex-tnav', 'aria-label': 'Menu du module' },
+    it('hub', 'hub', 'Parcours', BASE), it('diag', 'diag', 'Diagnostic', BASE + '/diagnostic'),
+    it('rev', 'rev', 'Révision', BASE + '/revision'), it('blanc', 'blanc', 'Examen blanc', BASE + '/blanc'));
 }
 // Icônes plates monochromes (trait = couleur du texte), dessinées dans le code.
 const NAV_ICONS = {
   hub: '<path d="M3 6.5 9 3.5l6 3 6-3v14l-6 3-6-3-6 3z"/><path d="M9 3.5v14M15 6.5v14"/>',
   rev: '<path d="M20 12a8 8 0 1 1-2.4-5.7L20 8.5"/><path d="M20 3.5v5h-5"/>',
   blanc: '<path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M8.5 13h7M8.5 16.5h4.5"/>',
+  diag: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
   profil: '<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/>',
 };
 function navIcon(id) {
@@ -158,11 +178,14 @@ function hub(st) {
         h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, g.lang === 'ar' ? '‹' : '›')));
     }))));
   // Mobile : une seule colonne. Ordinateur et grande tablette : tableau de bord à gauche, parcours à droite.
-  return [topbar(st, { title: 'Examen professionnel' }), h('div', { class: 'ex-body ex-split' },
-    h('aside', { class: 'ex-side' },
-      h('p', { class: 'ex-intro' }, 'Prépare l’examen d’aptitude professionnelle d’informatique (secondaire qualifiant) : une leçon animée, puis des niveaux de QCM corrigés et expliqués.'),
-      positionCard(st), hero, cta, quick),
-    h('div', { class: 'ex-main' }, ...groups)), bottomNav('hub')];
+  // Mobile : une colonne. Ordinateur : bandeau « candidat » + diagnostic en haut, leçons en grille dessous.
+  return [topbar(st, { title: 'Examen professionnel' }), h('div', { class: 'ex-body ex-dash' },
+    h('div', { class: 'ex-hubtop' },
+      h('section', { class: 'ex-cand', 'aria-label': 'Candidat' },
+        h('p', { class: 'ex-intro' }, 'Prépare l’examen d’aptitude professionnelle d’informatique (secondaire qualifiant) : une leçon animée, puis des niveaux de QCM corrigés et expliqués.'),
+        hero, h('div', { class: 'ex-cand-row' }, cta, quick)),
+      h('section', { class: 'ex-diag', 'aria-label': 'Diagnostic' }, positionCard(st))),
+    h('div', { class: 'ex-lessons' }, ...groups)), bottomNav('hub')];
 }
 
 // ---------- Page d'une partie ----------
