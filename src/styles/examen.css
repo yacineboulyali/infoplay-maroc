@@ -3,19 +3,20 @@
    Tout est préfixé .ex-… et les jetons sont portés par .ex-app / .ex-layer.
    ========================================================================== */
 .ex-app,.ex-layer{
-  --ex-bg:#f4f2ff; --ex-card:#fff; --ex-ink:#1d1b3a; --ex-mut:#5e5a86; --ex-line:#e4e0fa;
-  --ex-pri:#6a4bff; --ex-pri-d:#4a2fd6; --ex-ok:#16a34a; --ex-ok-d:#0f7a36; --ex-ok-bg:#e7f8ee;
-  --ex-ko:#e11d48; --ex-ko-d:#b0123a; --ex-ko-bg:#ffe9ee; --ex-gold:#f59e0b; --ex-fire:#ff6a00;
-  --ex-r:18px; --ex-sh:0 2px 0 rgba(29,27,58,.06),0 10px 28px rgba(74,47,214,.10);
+  /* Jetons alignés sur la charte d’InfoPlay (main.css) : ils suivent aussi le contraste renforcé. */
+  --ex-bg:var(--bg,#f7f2e8); --ex-card:var(--card,#fff); --ex-ink:var(--ink,#1c2340); --ex-mut:var(--muted,#575f80); --ex-line:var(--line,#e0d8c5);
+  --ex-pri:var(--primary,#2b3fc4); --ex-pri-d:var(--primary-d,#1f2f9b); --ex-ok:var(--ok,#15703f); --ex-ok-d:#0d4d2b; --ex-ok-bg:var(--ok-bg,#e2f4e9);
+  --ex-ko:var(--ko,#a8231b); --ex-ko-d:#7a1812; --ex-ko-bg:var(--ko-bg,#fdeae8); --ex-gold:var(--gold,#f2b418); --ex-gold-d:#9a6b00; --ex-fire:var(--accent,#c8431a);
+  --ex-r:var(--r,14px); --ex-sh:var(--sh,0 1px 2px rgba(28,35,64,.08),0 6px 18px rgba(28,35,64,.07));
   --c:var(--ex-pri);
   font-family:Nunito,"Segoe UI",Tahoma,system-ui,sans-serif;
   color:var(--ex-ink);
   color-scheme:light;
 }
-body.high-contrast .ex-app,body.high-contrast .ex-layer{--ex-mut:#2a2750;--ex-line:#8a84c2}
+
 
 /* L'en-tête général et le bouton flottant d'InfoPlay laissent la place à l'appli. */
-body.ex-mode{background:var(--ex-bg,#f4f2ff)}
+body.ex-mode{background:var(--bg,#f7f2e8)}
 body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-app{min-height:100vh;min-height:100dvh;background:var(--ex-bg);padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));position:relative}
 .ex-app *{box-sizing:border-box}
@@ -34,13 +35,13 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-chip{display:inline-flex;align-items:center;gap:4px;padding:6px 9px;border-radius:999px;background:var(--ex-card);box-shadow:var(--ex-sh);font-weight:800;font-size:.85rem;border:0;color:inherit;font-family:inherit;position:relative}
 .ex-fire:not(.lit){filter:grayscale(1);opacity:.7}
 .ex-fire.lit b{color:var(--ex-fire)}
-.ex-xp b{color:var(--ex-gold)}
+.ex-xp b{color:var(--ex-gold-d)}
 .ex-bell{cursor:pointer}
 .ex-bell-n{position:absolute;top:-4px;inset-inline-end:-4px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--ex-ko);color:#fff;font-size:.7rem;display:grid;place-items:center;animation:ex-pop .4s}
 .ex-bell-n[hidden]{display:none}
 
 /* ---------- Navigation du bas ---------- */
-.ex-nav{position:fixed;inset:auto 0 0 0;z-index:25;display:grid;grid-template-columns:repeat(4,1fr);background:var(--ex-card);border-top:1px solid var(--ex-line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));box-shadow:0 -8px 24px rgba(29,27,58,.08)}
+.ex-nav{position:fixed;inset:auto 0 0 0;z-index:25;display:grid;grid-template-columns:repeat(4,1fr);background:var(--ex-card);border-top:1px solid var(--ex-line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));box-shadow:0 -8px 24px rgba(28,35,64,.08)}
 .ex-nav-i{display:grid;justify-items:center;gap:2px;padding:6px 2px;border-radius:12px;text-decoration:none;color:var(--ex-mut);font-weight:700}
 .ex-nav-i span{font-size:1.3rem;transition:transform .2s}
 .ex-nav-i small{font-size:.7rem}
@@ -48,7 +49,7 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-nav-i.on span{transform:translateY(-2px) scale(1.12)}
 
 /* ---------- Héros, objectif, CTA ---------- */
-.ex-hero{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:16px;border-radius:var(--ex-r);background:linear-gradient(135deg,var(--ex-pri),#a34bff 60%,#ff6fb5);color:#fff;box-shadow:var(--ex-sh);position:relative;overflow:hidden}
+.ex-hero{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:16px;border-radius:var(--ex-r);background:linear-gradient(135deg,var(--ex-pri),var(--ex-pri-d));color:#fff;box-shadow:var(--ex-sh);position:relative;overflow:hidden}
 .ex-hero::after{content:"";position:absolute;inset:-40% -20% auto auto;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12);animation:ex-float 6s ease-in-out infinite}
 .ex-rank{display:flex;gap:12px;align-items:center;min-width:0;flex:1}
 .ex-rank>div{display:grid;gap:3px;min-width:0;flex:1}
@@ -71,10 +72,10 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-cta small{display:block;opacity:.9;font-size:.78rem}
 .ex-cta b{font-size:1.05rem}
 .ex-quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.ex-q{display:grid;justify-items:center;gap:2px;padding:12px 6px;border-radius:16px;background:var(--ex-card);box-shadow:var(--ex-sh);text-decoration:none;text-align:center}
-.ex-q span{font-size:1.4rem}
-.ex-q b{font-size:1.05rem}
-.ex-q small{color:var(--ex-mut);font-size:.72rem}
+.ex-qk{display:grid;justify-items:center;gap:2px;padding:12px 6px;border-radius:16px;background:var(--ex-card);box-shadow:var(--ex-sh);text-decoration:none;text-align:center}
+.ex-qk span{font-size:1.4rem}
+.ex-qk b{font-size:1.05rem}
+.ex-qk small{color:var(--ex-mut);font-size:.72rem}
 
 /* ---------- Groupes et parties ---------- */
 .ex-group{display:grid;gap:10px}
@@ -114,11 +115,11 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-lnode{display:flex;align-items:center;gap:10px;width:62%;padding:8px 12px 8px 8px;border-radius:999px;background:var(--ex-card);box-shadow:var(--ex-sh);text-decoration:none}
 .ex-node-c{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.1rem;flex:none;background:var(--c);color:#fff;box-shadow:0 4px 0 color-mix(in srgb,var(--c) 60%,#000)}
 .ex-lnode.open .ex-node-c{animation:ex-pulse 2s infinite}
-.ex-lnode.done .ex-node-c{background:var(--ex-gold);box-shadow:0 4px 0 #b77405}
+.ex-lnode.done .ex-node-c{background:var(--ex-gold);box-shadow:0 4px 0 var(--ex-gold-d)}
 .ex-lnode.locked{opacity:.55}
 .ex-lnode.locked .ex-node-c{background:var(--ex-line);color:var(--ex-mut);box-shadow:none}
 .ex-node-t{display:grid}
-.ex-node-t small{color:var(--ex-gold);font-weight:800;letter-spacing:.06em}
+.ex-node-t small{color:var(--ex-gold-d);font-weight:800;letter-spacing:.06em}
 .ex-lnode.open .ex-node-t small,.ex-lnode.locked .ex-node-t small{color:var(--ex-mut);letter-spacing:0;font-weight:700}
 
 /* ---------- Lecteurs (leçon, QCM) ---------- */
@@ -127,10 +128,10 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-ptop{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 0 12px;background:var(--ex-bg)}
 .ex-x{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;text-decoration:none;font-weight:800;color:var(--ex-mut);flex:none}
 .ex-prog.big{flex:1;height:14px;background:var(--ex-line)}
-.ex-prog.big i{background:linear-gradient(90deg,var(--ex-ok),#6ee7a2);position:relative;transition:width .5s cubic-bezier(.2,.8,.2,1);animation:none}
+.ex-prog.big i{background:linear-gradient(90deg,var(--ex-ok),color-mix(in srgb,var(--ex-ok) 60%,#fff));position:relative;transition:width .5s cubic-bezier(.2,.8,.2,1);animation:none}
 .ex-prog.big i::after{content:"";position:absolute;inset:3px 6px auto 6px;height:3px;border-radius:2px;background:rgba(255,255,255,.5)}
 .ex-ptop-r{display:flex;gap:6px;align-items:center}
-.ex-hearts{display:inline-flex;align-items:center;gap:3px;font-weight:800;color:var(--ex-ko)}
+.ex-hearts{display:inline-flex;align-items:center;gap:3px;font-weight:800;color:var(--ex-ko);padding:4px 10px;border-radius:999px;background:var(--ex-ko-bg)}
 .ex-hearts.hit{animation:ex-shake .5s}
 .ex-combo{font-weight:800;font-size:.85rem;color:var(--ex-fire);opacity:0;transform:scale(.6);transition:.25s}
 .ex-combo.on{opacity:1;transform:scale(1)}
@@ -169,7 +170,7 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-hint-btn.in-sheet{margin-top:2px}
 .ex-foot{position:fixed;inset:auto 0 0 0;z-index:15;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(to top,var(--ex-bg) 70%,transparent);display:flex;justify-content:center}
 .ex-foot .ex-btn{width:100%;max-width:528px}
-.ex-float{position:absolute;inset-inline-end:14px;top:-6px;font-weight:800;color:var(--ex-gold);pointer-events:none;animation:ex-up 1.2s ease-out forwards;text-shadow:0 2px 0 rgba(0,0,0,.08)}
+.ex-float{position:absolute;inset-inline-end:14px;top:-6px;font-weight:800;color:var(--ex-gold-d);pointer-events:none;animation:ex-up 1.2s ease-out forwards;text-shadow:0 2px 0 rgba(0,0,0,.08)}
 
 /* ---------- Boutons ---------- */
 .ex-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:50px;padding:12px 18px;border-radius:16px;border:2px solid var(--ex-line);background:var(--ex-card);color:inherit;font:inherit;font-weight:800;font-size:1rem;text-decoration:none;cursor:pointer;box-shadow:0 4px 0 var(--ex-line);transition:transform .1s,box-shadow .1s;text-align:center}
@@ -186,8 +187,8 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-app :focus-visible,.ex-layer :focus-visible{outline:3px solid var(--ex-gold);outline-offset:2px}
 
 /* ---------- Feuille du bas (feedback, indice, notifications) ---------- */
-.ex-sheet-bg{position:fixed;inset:0;z-index:1000;background:rgba(18,15,43,0);display:flex;align-items:flex-end;justify-content:center;transition:background .3s}
-.ex-sheet-bg.open{background:rgba(18,15,43,.42)}
+.ex-sheet-bg{position:fixed;inset:0;z-index:1000;background:rgba(28,35,64,0);display:flex;align-items:flex-end;justify-content:center;transition:background .3s}
+.ex-sheet-bg.open{background:rgba(28,35,64,.45)}
 .ex-sheet{width:100%;max-width:600px;max-height:82vh;overflow:auto;background:var(--ex-card);color:var(--ex-ink);border-radius:24px 24px 0 0;padding:10px max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));transform:translateY(105%);transition:transform .34s cubic-bezier(.2,.9,.25,1.1);box-shadow:0 -12px 40px rgba(0,0,0,.25);display:grid;gap:12px;font-family:Nunito,"Segoe UI",Tahoma,system-ui,sans-serif}
 .ex-sheet-bg.open .ex-sheet{transform:none}
 .ex-sheet>div{display:grid;gap:12px}
@@ -203,7 +204,7 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-fb-head h2{flex:1}
 .ex-fb-ico{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.3rem;color:#fff;background:var(--ex-ok);animation:ex-pop .45s cubic-bezier(.3,1.6,.5,1)}
 .ex-sheet-ko .ex-fb-ico{background:var(--ex-ko)}
-.ex-xptag{font-weight:800;color:var(--ex-gold);background:var(--ex-card);padding:4px 10px;border-radius:999px;animation:ex-pop .5s .15s both}
+.ex-xptag{font-weight:800;color:var(--ex-gold-d);background:var(--ex-card);padding:4px 10px;border-radius:999px;animation:ex-pop .5s .15s both}
 .ex-fb-body{display:grid;gap:8px}
 .ex-fb-body p,.ex-sheet-lead{font-size:.97rem;line-height:1.5}
 .ex-reveal{font-weight:800;padding:8px 10px;border-radius:10px;background:var(--ex-ok-bg);color:var(--ex-ok-d)}
@@ -219,7 +220,7 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 
 /* ---------- Toasts (notifications en direct) ---------- */
 .ex-toasts{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:1100;display:grid;gap:8px;width:min(92vw,420px);pointer-events:none}
-.ex-toast{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--ex-card);color:var(--ex-ink);box-shadow:0 12px 30px rgba(29,27,58,.25);border-inline-start:5px solid var(--ex-pri);animation:ex-drop .45s cubic-bezier(.2,.9,.3,1.2);font-family:Nunito,"Segoe UI",Tahoma,system-ui,sans-serif}
+.ex-toast{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--ex-card);color:var(--ex-ink);box-shadow:0 12px 30px rgba(28,35,64,.25);border-inline-start:5px solid var(--ex-pri);animation:ex-drop .45s cubic-bezier(.2,.9,.3,1.2);font-family:Nunito,"Segoe UI",Tahoma,system-ui,sans-serif}
 .ex-toast.out{animation:ex-lift .45s forwards}
 .ex-toast div{display:grid}
 .ex-toast small{color:var(--ex-mut);font-size:.8rem}
@@ -235,7 +236,7 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 .ex-end .ex-actions,.ex-empty .ex-btn{width:100%}
 .ex-stars{display:flex;gap:6px;font-size:2.6rem}
 .ex-stars span{color:var(--ex-line);animation:ex-pop .5s both;animation-delay:calc(.4s + var(--i) * .2s)}
-.ex-stars span.on{color:var(--ex-gold);text-shadow:0 3px 0 #b77405}
+.ex-stars span.on{color:var(--ex-gold);text-shadow:0 3px 0 var(--ex-gold-d)}
 .ex-end-stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .ex-end-stats span{display:grid;min-width:92px;padding:10px;border-radius:16px;background:var(--ex-card);box-shadow:var(--ex-sh)}
 .ex-end-stats b{font-size:1.3rem;color:var(--ex-pri)}
@@ -422,7 +423,7 @@ body.ex-mode .top,body.ex-mode .floating-home{display:none!important}
 @keyframes ex-spin{to{transform:rotate(360deg)}}
 @keyframes ex-blink{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
 @keyframes ex-flash{0%{background:var(--ex-gold);color:#fff}100%{background:color-mix(in srgb,var(--c) 12%,transparent)}}
-@keyframes ex-pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c,#6a4bff) 45%,transparent)}50%{box-shadow:0 0 0 10px transparent}}
+@keyframes ex-pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c,#2b3fc4) 45%,transparent)}50%{box-shadow:0 0 0 10px transparent}}
 @keyframes ex-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @keyframes ex-float{0%,100%{transform:translate(0,0)}50%{transform:translate(-14px,12px)}}
 @keyframes ex-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
@@ -462,3 +463,105 @@ body.reduced-motion .ex-app *,body.reduced-motion .ex-layer *{animation-duration
 .ex-sheet .ex-actions{position:sticky;bottom:calc(-18px - env(safe-area-inset-bottom,0px));padding:10px 0 4px;background:var(--ex-card)}
 .ex-sheet-ok .ex-actions{background:var(--ex-ok-bg)}
 .ex-sheet-ko .ex-actions{background:var(--ex-ko-bg)}
+
+/* ==========================================================================
+   Tablette et ordinateur : une mise en page propre, différente du mobile.
+   ========================================================================== */
+.ex-side,.ex-main{display:grid;gap:16px;min-width:0;align-content:start}
+
+/* Tablette (≥ 700 px) : parties sur deux colonnes, réponses en grille. */
+@media (min-width:700px){
+  .ex-body{max-width:820px}
+  .ex-parts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ex-quick{gap:14px}
+  .ex-opts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ex-opts .ex-opt{height:100%}
+  .ex-player{max-width:820px}
+  .ex-statgrid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* Ordinateur et grande tablette (≥ 1024 px) : barre latérale, tableau de bord à gauche,
+   lecteurs larges sur deux colonnes, feedback en panneau latéral. */
+@media (min-width:1024px){
+  .ex-app{padding-bottom:0;padding-left:104px}
+  [dir="rtl"] .ex-app{padding-left:0;padding-right:104px}
+  .ex-top{padding-left:24px;padding-right:24px}
+  .ex-top h1{font-size:1.25rem}
+
+  /* La barre du bas devient un rail vertical à gauche. */
+  .ex-nav{inset:0 auto 0 0;width:104px;grid-template-columns:1fr;grid-auto-rows:min-content;align-content:start;gap:6px;padding:calc(84px + env(safe-area-inset-top,0px)) 10px 20px;border-top:0;border-right:1px solid var(--ex-line);box-shadow:none}
+  .ex-nav::before{content:"🎯";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;background:var(--ex-pri);box-shadow:0 4px 0 var(--ex-pri-d)}
+  .ex-nav-i{padding:12px 4px;gap:4px}
+  .ex-nav-i span{font-size:1.5rem}
+  .ex-nav-i small{font-size:.74rem;text-align:center}
+
+  .ex-body{max-width:1240px;padding:24px 32px 40px}
+  .ex-split{grid-template-columns:minmax(320px,380px) minmax(0,1fr);gap:28px;align-items:start}
+  .ex-split>.ex-side{position:sticky;top:84px}
+  .ex-split>.ex-main{gap:26px}
+  .ex-parts{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .ex-part{padding:14px 16px;transition:transform .15s,box-shadow .15s}
+  .ex-part:hover{transform:translateY(-3px);box-shadow:0 7px 0 color-mix(in srgb,var(--c) 35%,var(--ex-line))}
+  .ex-qk:hover{transform:translateY(-2px)}
+  .ex-cta:hover{filter:brightness(1.05)}
+
+  /* Page d'une partie : le chemin des niveaux s'étale sur une grille. */
+  .ex-split .ex-path{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .ex-split .ex-path::before{display:none}
+  .ex-split .ex-path li,.ex-split .ex-path li.r{justify-content:stretch}
+  .ex-split .ex-lnode{width:100%;border-radius:20px;padding:12px}
+  .ex-lnode:not(.locked):hover{transform:translateY(-2px)}
+
+  /* Lecteurs : plus larges ; la leçon met le schéma à côté du texte. */
+  .ex-player{max-width:1120px;padding:0 32px 110px}
+  .ex-app:has(.ex-player){padding-bottom:0}
+  .ex-ptop{padding-top:20px}
+  .ex-lcard{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:16px 28px;padding:28px;align-items:start}
+  .ex-lcard>*{grid-column:1}
+  .ex-lcard>.ex-vis{grid-column:2;grid-row:1 / span 6;position:sticky;top:90px}
+  .ex-lcard h2{font-size:1.6rem}
+  .ex-lead{font-size:1.08rem}
+  .ex-qcard{padding:30px 32px}
+  .ex-q{font-size:1.4rem}
+  .ex-opts{gap:14px}
+  .ex-opt{padding:16px 18px;font-size:1.02rem}
+  .ex-opt:hover:not(.off):not(.ok):not(.ko){border-color:color-mix(in srgb,var(--ex-pri) 50%,var(--ex-line))}
+  .ex-foot{left:104px;background:linear-gradient(to top,var(--ex-bg) 75%,transparent)}
+  [dir="rtl"] .ex-foot{left:0;right:104px}
+  .ex-app:has(.ex-player) .ex-foot{left:104px}
+  .ex-foot .ex-btn{max-width:360px;margin-inline-start:auto}
+  .ex-foot{justify-content:flex-end;padding-right:max(48px,calc((100vw - 104px - 1120px) / 2 + 32px))}
+
+  /* Feedback : panneau latéral à droite au lieu d'une feuille du bas. */
+  .ex-sheet-bg{justify-content:flex-end;align-items:stretch}
+  .ex-sheet{width:440px;max-width:440px;max-height:none;height:100%;border-radius:24px 0 0 24px;transform:translateX(105%);padding:28px 26px;align-content:start;border-top:0}
+  .ex-sheet-bg.open .ex-sheet{transform:none}
+  .ex-grab{display:none}
+  .ex-sheet-ok{border-left:6px solid var(--ex-ok)}
+  .ex-sheet-ko{border-left:6px solid var(--ex-ko)}
+  .ex-sheet .ex-actions{position:static;margin-top:auto}
+  .ex-sheet>div{min-height:100%;align-content:start}
+
+  .ex-toasts{left:auto;right:24px;transform:none;top:84px}
+  .ex-end,.ex-empty{max-width:640px;margin:40px auto}
+  .ex-blanc-intro{max-width:720px;margin:0 auto}
+  .ex-correction{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ex-badges{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+}
+@media (min-width:1400px){
+  .ex-parts{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* ---------- Écran de mot de passe ---------- */
+.ex-locked{padding-bottom:0!important;padding-left:0!important;padding-right:0!important;display:grid;place-items:center}
+.ex-lock-wrap{width:100%;max-width:440px;min-height:100vh;min-height:100dvh;align-content:center}
+.ex-lock{justify-items:center;text-align:center;gap:12px;padding:28px 22px}
+.ex-lock h2{text-align:center;font-size:1.5rem}
+.ex-lock p{color:var(--ex-mut)}
+.ex-lock label{justify-self:start;font-weight:800}
+.ex-lock input{width:100%;min-height:54px;padding:10px 14px;border-radius:16px;border:2px solid var(--ex-line);background:var(--ex-card);color:var(--ex-ink);font:inherit;font-size:1.5rem;letter-spacing:.4em;text-align:center}
+.ex-lock input:focus{outline:none;border-color:var(--ex-pri);box-shadow:0 0 0 4px color-mix(in srgb,var(--ex-pri) 18%,transparent)}
+.ex-lock .ex-btn{width:100%}
+.ex-lock-msg{font-size:.9rem}
+.ex-lock-msg.ko{color:var(--ex-ko);font-weight:800}
+.ex-lock.shake{animation:ex-shake .45s}

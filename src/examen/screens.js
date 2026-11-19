@@ -120,9 +120,9 @@ function hub(st) {
     h('div', { class: 'ex-goal' }, ring(s.dayXp / DAILY_GOAL, 72, 8, `${Math.min(s.dayXp, DAILY_GOAL)}/${DAILY_GOAL}`), h('small', null, 'Objectif du jour')));
   const cta = h('a', { class: 'ex-cta', href: nx.href }, h('span', { 'aria-hidden': 'true' }, '▶'), h('span', null, h('small', null, 'Continuer'), h('b', null, nx.label)));
   const quick = h('div', { class: 'ex-quick' },
-    h('a', { class: 'ex-q', href: BASE + '/revision' }, h('span', { 'aria-hidden': 'true' }, '♻️'), h('b', null, String(s.review.length)), h('small', null, 'à revoir')),
-    h('a', { class: 'ex-q', href: BASE + '/blanc' }, h('span', { 'aria-hidden': 'true' }, '📜'), h('b', null, s.blanc[0] ? `${s.blanc[0].score}/20` : '—'), h('small', null, 'examen blanc')),
-    h('a', { class: 'ex-q', href: BASE + '/profil' }, h('span', { 'aria-hidden': 'true' }, '🏅'), h('b', null, `${Object.keys(s.badges).length}/${BADGES.length}`), h('small', null, 'badges')));
+    h('a', { class: 'ex-qk', href: BASE + '/revision' }, h('span', { 'aria-hidden': 'true' }, '♻️'), h('b', null, String(s.review.length)), h('small', null, 'à revoir')),
+    h('a', { class: 'ex-qk', href: BASE + '/blanc' }, h('span', { 'aria-hidden': 'true' }, '📜'), h('b', null, s.blanc[0] ? `${s.blanc[0].score}/20` : '—'), h('small', null, 'examen blanc')),
+    h('a', { class: 'ex-qk', href: BASE + '/profil' }, h('span', { 'aria-hidden': 'true' }, '🏅'), h('b', null, `${Object.keys(s.badges).length}/${BADGES.length}`), h('small', null, 'badges')));
   const groups = GROUPS.map((g) => h('section', { class: 'ex-group', ...langAttrs(g.lang) },
     h('header', null, h('span', { class: 'ex-gico', 'aria-hidden': 'true' }, g.icon), h('div', null, h('h2', null, g.title), h('p', null, g.sub))),
     h('ol', { class: 'ex-parts' }, PARTS.filter((p) => p.group === g.id).map((p, i) => {
@@ -132,9 +132,12 @@ function hub(st) {
         h('span', { class: 'ex-pmeta' }, h('b', null, p.title), h('small', null, `${pr.lesson ? '📖 ✓' : '📖'} · ${pr.count}/${pr.levels} niveaux · ⭐ ${pr.stars}/${pr.maxStars}`)),
         h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, g.lang === 'ar' ? '‹' : '›')));
     }))));
-  return [topbar(st, { title: 'Examen professionnel' }), h('div', { class: 'ex-body' },
-    h('p', { class: 'ex-intro' }, 'Prépare l’examen d’aptitude professionnelle d’informatique (secondaire qualifiant) : une leçon animée, puis des niveaux de QCM corrigés et expliqués.'),
-    hero, cta, quick, ...groups), bottomNav('hub')];
+  // Mobile : une seule colonne. Ordinateur et grande tablette : tableau de bord à gauche, parcours à droite.
+  return [topbar(st, { title: 'Examen professionnel' }), h('div', { class: 'ex-body ex-split' },
+    h('aside', { class: 'ex-side' },
+      h('p', { class: 'ex-intro' }, 'Prépare l’examen d’aptitude professionnelle d’informatique (secondaire qualifiant) : une leçon animée, puis des niveaux de QCM corrigés et expliqués.'),
+      hero, cta, quick),
+    h('div', { class: 'ex-main' }, ...groups)), bottomNav('hub')];
 }
 
 // ---------- Page d'une partie ----------
@@ -152,12 +155,13 @@ function partPage(st, p) {
       ? h('a', { class: 'ex-lnode' + (done ? ' done' : ' open'), href: `${BASE}/p/${p.id}/n/${k}` }, ...inner)
       : h('span', { class: 'ex-lnode locked', 'aria-disabled': 'true', title: 'Termine le niveau précédent' }, ...inner));
   }));
-  return [topbar(st, { title: p.short, back: BASE }), h('div', { class: 'ex-body', style: `--c:${p.color}`, ...langAttrs(p.lang) },
-    h('section', { class: 'ex-phead' }, h('span', { class: 'ex-phead-ico', 'aria-hidden': 'true' }, p.icon), h('div', null, h('h2', null, p.title), h('p', null, p.weight)),
-      h('div', { class: 'ex-phead-stats' }, h('span', null, `⭐ ${pr.stars}/${pr.maxStars}`), h('span', null, `🎯 ${pr.count}/${pr.levels}`))),
-    lesson,
-    !pr.lesson ? h('p', { class: 'ex-tip' }, p.lang === 'ar' ? '💡 ابدأ بالدرس: يمنحك نقاطا ويهيئك للأسئلة.' : '💡 Commence par la leçon : elle rapporte des XP et prépare aux questions.') : null,
-    path), bottomNav('hub')];
+  return [topbar(st, { title: p.short, back: BASE }), h('div', { class: 'ex-body ex-split', style: `--c:${p.color}`, ...langAttrs(p.lang) },
+    h('aside', { class: 'ex-side' },
+      h('section', { class: 'ex-phead' }, h('span', { class: 'ex-phead-ico', 'aria-hidden': 'true' }, p.icon), h('div', null, h('h2', null, p.title), h('p', null, p.weight)),
+        h('div', { class: 'ex-phead-stats' }, h('span', null, `⭐ ${pr.stars}/${pr.maxStars}`), h('span', null, `🎯 ${pr.count}/${pr.levels}`))),
+      lesson,
+      !pr.lesson ? h('p', { class: 'ex-tip' }, p.lang === 'ar' ? '💡 ابدأ بالدرس: يمنحك نقاطا ويهيئك للأسئلة.' : '💡 Commence par la leçon : elle rapporte des XP et prépare aux questions.') : null),
+    h('div', { class: 'ex-main' }, path)), bottomNav('hub')];
 }
 
 // ---------- Lecteur de leçon ----------
@@ -469,8 +473,44 @@ function profileScreen(st) {
     h('p', { class: 'ex-muted' }, 'Ta progression reste dans ce navigateur, liée à ton pseudo InfoPlay. Sources des questions : dossiers unifiés de préparation à l’examen d’aptitude professionnelle (informatique, secondaire qualifiant).')), bottomNav('profil')];
 }
 
+// ---------- Accès par mot de passe ----------
+// Simple verrou d'accès côté navigateur (pas une protection de sécurité : le code est lisible dans le source).
+const ACCESS_CODE = '8888';
+const ACCESS_KEY = 'infoplay.examen.access';
+export const hasAccess = () => { try { return sessionStorage.getItem(ACCESS_KEY) === 'ok'; } catch { return false; } };
+function lockScreen(onOpen) {
+  const input = h('input', { id: 'ex-code', type: 'password', inputmode: 'numeric', autocomplete: 'off', maxlength: '12', required: true, 'aria-describedby': 'ex-code-msg', placeholder: '••••' });
+  const msg = h('p', { id: 'ex-code-msg', class: 'ex-lock-msg', 'aria-live': 'polite' }, 'Saisis le mot de passe communiqué par le formateur.');
+  const card = h('form', { class: 'ex-card ex-lock', onsubmit: (e) => {
+    e.preventDefault();
+    if (input.value.trim() === ACCESS_CODE) {
+      try { sessionStorage.setItem(ACCESS_KEY, 'ok'); } catch {}
+      audio.play('complete'); onOpen();
+    } else {
+      audio.play('wrong'); vibrate([60, 40, 60]);
+      msg.textContent = 'Mot de passe incorrect. Réessaie.'; msg.classList.add('ko');
+      card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+      input.select();
+    }
+  } },
+    h('div', { class: 'ex-end-badge', 'aria-hidden': 'true' }, '🔒'),
+    h('h2', { tabindex: '-1' }, 'Accès réservé'),
+    h('p', null, 'Le module de préparation à l’examen professionnel est réservé aux enseignants.'),
+    h('label', { for: 'ex-code' }, 'Mot de passe'),
+    input, msg,
+    h('button', { type: 'submit', class: 'ex-btn ex-primary' }, 'Entrer'),
+    h('a', { class: 'ex-btn', href: '#/profils' }, 'Retour à l’accueil'));
+  setTimeout(() => input.focus(), 60);
+  return h('div', { class: 'ex-body ex-lock-wrap' }, card);
+}
+
 // ---------- Point d'entrée ----------
 export function examenScreen(q, pid) {
+  if (!hasAccess()) {
+    const main = h('main', { id: 'main', class: 'ex-app ex-locked' });
+    main.append(lockScreen(() => main.replaceWith(examenScreen(q, pid))));
+    return main;
+  }
   const st = storeFor(pid || 'invite');
   if (!greeted) { greeted = true; st.greet(); }
   const sub = q.slice(1);

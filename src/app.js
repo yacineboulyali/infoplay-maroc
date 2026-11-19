@@ -329,19 +329,6 @@ function homeScreen() {
             ),
             )),
           h('hr', { class: 'track-sep' }),
-          h('section', { class: 'track-group track-examen', 'aria-labelledby': 'grp-examen-h' },
-            h('header', { class: 'track-head' },
-              h('span', { class: 'track-ico', 'aria-hidden': 'true' }, '🎓'),
-              h('div', null, h('h3', { id: 'grp-examen-h' }, 'Enseignants · Examen professionnel'), h('p', null, 'Examen d’aptitude professionnelle, informatique, secondaire qualifiant.'))),
-            h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Préparation à l’examen professionnel' },
-            h('section', { class: 'mode-card mode-pro mode-examen', 'aria-labelledby': 'mode-examen-h' },
-              h('span', { class: 'mode-badge' }, 'Nouveau · mobile'),
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🎯'),
-              h('h3', { id: 'mode-examen-h' }, 'Préparer l’examen professionnel'),
-              h('p', null, '15 parties, leçons animées et 663 QCM corrigés : didactique, programme du TC, sciences de l’éducation.'),
-              h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/examen') }, 'Ouvrir le parcours →')
-            ))),
-          h('hr', { class: 'track-sep' }),
           h('section', { class: 'track-group track-ofppt', 'aria-labelledby': 'grp-ofppt-h' },
             h('header', { class: 'track-head' },
               ofpptLogo(),
@@ -361,7 +348,20 @@ function homeScreen() {
               h('p', null, '3 séances : numérique, appareils et réseaux, Windows.'),
               h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir le parcours →')
             )
-            ))
+            )),
+          h('hr', { class: 'track-sep' }),
+          h('section', { class: 'track-group track-examen', 'aria-labelledby': 'grp-examen-h' },
+            h('header', { class: 'track-head' },
+              h('span', { class: 'track-ico', 'aria-hidden': 'true' }, '🎓'),
+              h('div', null, h('h3', { id: 'grp-examen-h' }, 'Enseignants · Examen professionnel'), h('p', null, 'Examen d’aptitude professionnelle, informatique, secondaire qualifiant. Accès par mot de passe.'))),
+            h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Préparation à l’examen professionnel' },
+            h('section', { class: 'mode-card mode-pro mode-examen', 'aria-labelledby': 'mode-examen-h' },
+              h('span', { class: 'mode-badge' }, '🔒 Accès protégé'),
+              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🎯'),
+              h('h3', { id: 'mode-examen-h' }, 'Préparer l’examen professionnel'),
+              h('p', null, '15 parties, leçons animées et 663 QCM corrigés : didactique, programme du TC, sciences de l’éducation.'),
+              h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/examen') }, '🔒 Entrer avec le mot de passe')
+            )))
         )
       ),
       h('aside', { class: 'lp-notice lp-glass' },

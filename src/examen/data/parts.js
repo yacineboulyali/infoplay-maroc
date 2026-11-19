@@ -1,6 +1,7 @@
 // Parties du module « Examen professionnel » et leurs leçons courtes.
 // Une leçon = une suite de cartes : texte bref, schéma animé (v), repère scientifique (fact) et mini-défi (check).
 // Types de schéma : flow, cycle, pyramid, triangle, rings, versus, grid, stages, bars, tree, branch, trace, line, star.
+// Couleurs : celles des modules d’InfoPlay (m1 #2b3fc4, m2 #0a7467, m3 #c8431a, m4 #6d3aa8), du bleu OFPPT et de m5.
 // Chaque élément d'un schéma est [libellé, détail] ; le détail s'affiche quand on touche l'élément.
 
 export const GROUPS = [
@@ -11,7 +12,7 @@ export const GROUPS = [
 
 export const PARTS = [
   // =====================================================================
-  { id: 'D1', group: 'D', lang: 'fr', icon: '🗺️', color: '#5b5bd6', title: 'Planification des apprentissages', short: 'Planifier', weight: '25 % de la didactique',
+  { id: 'D1', group: 'D', lang: 'fr', icon: '🗺️', color: '#2b3fc4', title: 'Planification des apprentissages', short: 'Planifier', weight: '25 % de la didactique',
     lesson: [
       { t: 'La chaîne de planification', p: 'Planifier, c’est descendre du programme vers l’activité, en gardant la cohérence à chaque maillon. Touche chaque étape pour voir son rôle.',
         v: { type: 'flow', steps: [['Programme', 'Texte officiel : compétences, contenus, volumes horaires.'], ['Compétence', 'Mobiliser des ressources dans une famille de situations.'], ['Objectifs', 'Comportements observables visés en fin de séance.'], ['Prérequis', 'Ce que l’élève doit déjà maîtriser ; on le vérifie par un diagnostic.'], ['Situation-problème', 'Une tâche qui crée le besoin d’apprendre.'], ['Activités', 'Ce que l’élève fait réellement pour apprendre.'], ['Évaluation', 'Vérifier l’atteinte de l’objectif, avec des critères.'], ['Remédiation', 'Traiter la difficulté diagnostiquée, puis revérifier.']] },
@@ -40,7 +41,7 @@ export const PARTS = [
         check: { q: 'Ajouter un troisième récipient pour aider les élèves bloqués, c’est agir sur :', o: ['Une variable didactique', 'Une variable de contexte', 'Le contrat pédagogique'], a: 0, why: 'Le nombre de récipients change les stratégies possibles : c’est une variable didactique.' } },
     ] },
   // =====================================================================
-  { id: 'D2', group: 'D', lang: 'fr', icon: '🧭', color: '#0e9f8e', title: 'Gestion des apprentissages', short: 'Gérer', weight: '25 % de la didactique',
+  { id: 'D2', group: 'D', lang: 'fr', icon: '🧭', color: '#0a7467', title: 'Gestion des apprentissages', short: 'Gérer', weight: '25 % de la didactique',
     lesson: [
       { t: 'L’étayage : une aide qui s’efface', p: 'L’aide est forte au début puis diminue à mesure que l’élève devient autonome. Une aide permanente crée la dépendance.',
         v: { type: 'bars', unit: '%', items: [['Démonstration', 90, 'L’enseignant montre et commente.'], ['Pratique guidée', 60, 'Questions intermédiaires, indices.'], ['Pratique assistée', 30, 'Aide sur demande.'], ['Autonomie', 5, 'L’élève vérifie et corrige seul.']] },
@@ -64,7 +65,7 @@ export const PARTS = [
         check: { q: '70 % de la classe commet la même erreur. L’intervention la plus efficiente :', o: ['Une régulation collective ciblée', 'Une aide individuelle à chacun', 'Passer à la suite'], a: 0, why: 'Une erreur largement partagée appelle une régulation collective.' } },
     ] },
   // =====================================================================
-  { id: 'D3', group: 'D', lang: 'fr', icon: '📏', color: '#d97706', title: 'Évaluation des apprentissages', short: 'Évaluer', weight: '25 % de la didactique',
+  { id: 'D3', group: 'D', lang: 'fr', icon: '📏', color: '#c8431a', title: 'Évaluation des apprentissages', short: 'Évaluer', weight: '25 % de la didactique',
     lesson: [
       { t: 'Évaluer, en trois temps', p: 'Évaluer n’est pas noter : c’est recueillir des informations, les juger par rapport à des critères, puis décider.',
         v: { type: 'flow', steps: [['Recueillir', 'Productions, observations, réponses.'], ['Juger', 'Comparer à des critères et indicateurs.'], ['Décider', 'Poursuivre, réguler, remédier, certifier.']] },
@@ -88,7 +89,7 @@ export const PARTS = [
         check: { q: 'Quel feedback est le plus utile ?', o: ['« Bien »', '« Vérifie ce qui se passe quand la moyenne vaut exactement 10 »', '« 12/20 »'], a: 1, why: 'Il est spécifique et oriente l’action suivante.' } },
     ] },
   // =====================================================================
-  { id: 'D4', group: 'D', lang: 'fr', icon: '🩺', color: '#dc2650', title: 'Remédiation des apprentissages', short: 'Remédier', weight: '25 % de la didactique',
+  { id: 'D4', group: 'D', lang: 'fr', icon: '🩺', color: '#6d3aa8', title: 'Remédiation des apprentissages', short: 'Remédier', weight: '25 % de la didactique',
     lesson: [
       { t: 'La boucle de remédiation', p: 'On remédie à une difficulté identifiée, pas à une note faible. Et la boucle se referme toujours par une réévaluation.',
         v: { type: 'cycle', steps: [['Évaluer', 'Recueillir des traces.'], ['Identifier', 'Repérer l’erreur précise.'], ['Diagnostiquer', 'Trouver sa cause.'], ['Remédier', 'Agir avec une autre entrée que le cours initial.'], ['Réévaluer', 'Vérifier sur une situation nouvelle.']] },
@@ -108,7 +109,7 @@ export const PARTS = [
         check: { q: 'La remédiation la plus pertinente pour =B2+C2+D2/3 :', o: ['Recopier la règle 10 fois', 'Faire tester et comparer avec des parenthèses', 'Refaire le même cours'], a: 1, why: 'L’élève constate lui-même l’effet des parenthèses.' } },
     ] },
   // =====================================================================
-  { id: 'M1', group: 'M', lang: 'fr', icon: '🖥️', color: '#2563eb', title: 'M1 · Généralités sur les systèmes informatiques', short: 'M1 · 8 h', weight: '8 h · premier module de l’année',
+  { id: 'M1', group: 'M', lang: 'fr', icon: '🖥️', color: '#2b3fc4', title: 'M1 · Généralités sur les systèmes informatiques', short: 'M1 · 8 h', weight: '8 h · premier module de l’année',
     lesson: [
       { t: 'Le schéma qui structure tout', p: 'Données d’entrée → traitement → résultats. Les élèves décrivent une situation réelle avec ces trois cases avant de nommer les notions.',
         v: { type: 'flow', steps: [['Données d’entrée', 'Prix lus par le code-barres.'], ['Traitement', 'Calcul automatique du total par le processeur.'], ['Résultats', 'Le ticket de caisse imprimé.']] },
@@ -128,7 +129,7 @@ export const PARTS = [
         check: { q: 'Le volume horaire du module 1 est de :', o: ['8 h', '14 h', '22 h'], a: 0, why: 'M1 = 8 h.' } },
     ] },
   // =====================================================================
-  { id: 'M2', group: 'M', lang: 'fr', icon: '📝', color: '#7c3aed', title: 'M2 · Les logiciels', short: 'M2 · 22 h', weight: '22 h · SE, traitement de texte, tableur',
+  { id: 'M2', group: 'M', lang: 'fr', icon: '📝', color: '#0a7467', title: 'M2 · Les logiciels', short: 'M2 · 22 h', weight: '22 h · SE, traitement de texte, tableur',
     lesson: [
       { t: 'Trois parties, 22 heures', p: 'Le traitement de texte occupe la plus grande part. Chaque partie se travaille par une production qui a du sens.',
         v: { type: 'bars', unit: 'h', items: [['Système d’exploitation', 6, 'Fichiers, dossiers, arborescence.'], ['Traitement de texte', 10, 'Saisie, mise en forme, production selon un cahier des charges.'], ['Tableur', 6, 'Formules, recopie, références, graphiques.']] },
@@ -148,7 +149,7 @@ export const PARTS = [
         check: { q: 'Une formule recopiée donne des résultats faux car elle visait une cellule fixe. Il manque :', o: ['Une parenthèse', 'Une référence absolue ($)', 'Un graphique'], a: 1, why: 'La cellule fixe doit être bloquée par $.' } },
     ] },
   // =====================================================================
-  { id: 'M3', group: 'M', lang: 'fr', icon: '🧮', color: '#0891b2', title: 'M3 · Algorithmique et programmation', short: 'M3 · 16 h', weight: '16 h · séquentiel et sélectif',
+  { id: 'M3', group: 'M', lang: 'fr', icon: '🧮', color: '#c8431a', title: 'M3 · Algorithmique et programmation', short: 'M3 · 16 h', weight: '16 h · séquentiel et sélectif',
     lesson: [
       { t: 'Le module en trois parties', p: 'Selon le document officiel, le TC couvre l’algorithme, les variables, les types, les instructions de base, le séquentiel et le sélectif. Pas de boucles.',
         v: { type: 'bars', unit: 'h', items: [['Notion d’algorithme', 4, 'Séances 1 et 2 : données, traitement, résultats.'], ['Structures de contrôle', 6, 'Séances 3 à 5 : séquentielle et sélective.'], ['Langages de programmation', 6, 'Séances 6 à 8 : transcrire, exécuter, corriger.']] },
@@ -172,7 +173,7 @@ export const PARTS = [
         check: { q: 'Découper un problème complexe en sous-problèmes relève de :', o: ['L’abstraction', 'La décomposition', 'La reconnaissance de motifs'], a: 1, why: 'C’est la décomposition.' } },
     ] },
   // =====================================================================
-  { id: 'M4', group: 'M', lang: 'fr', icon: '🌐', color: '#16a34a', title: 'M4 · Réseaux et Internet', short: 'M4 · 14 h', weight: '14 h · réseau 4 h, Internet 10 h',
+  { id: 'M4', group: 'M', lang: 'fr', icon: '🌐', color: '#6d3aa8', title: 'M4 · Réseaux et Internet', short: 'M4 · 14 h', weight: '14 h · réseau 4 h, Internet 10 h',
     lesson: [
       { t: 'Classer selon l’étendue', p: 'Le critère n’est pas le nombre de machines mais l’étendue géographique. 200 postes dans un bâtiment restent un LAN.',
         v: { type: 'rings', rings: [['PAN', 'Personnel : téléphone + montre.'], ['LAN', 'Local : la salle, l’établissement.'], ['MAN', 'Une ville.'], ['WAN', 'Un pays, le monde (Internet).']] },
@@ -192,7 +193,7 @@ export const PARTS = [
         check: { q: 'Envoyer un exposé avec pièce jointe à l’enseignant relève :', o: ['Du chat', 'De la messagerie électronique', 'Du moteur de recherche'], a: 1, why: 'Échange asynchrone avec pièce jointe : messagerie.' } },
     ] },
   // =====================================================================
-  { id: 'A1', group: 'A', lang: 'ar', icon: '🧠', color: '#9333ea', title: 'نظريات التعلم وعلم النفس التربوي', short: 'علم النفس', weight: '40 % من المكون الأول',
+  { id: 'A1', group: 'A', lang: 'ar', icon: '🧠', color: '#6d3aa8', title: 'نظريات التعلم وعلم النفس التربوي', short: 'علم النفس', weight: '40 % من المكون الأول',
     lesson: [
       { t: 'خمس نظريات للتعلم', p: 'الامتحان المهني يقيس قدرتك على ربط مؤشرات الوضعية بالنظرية. المس كل نظرية لترى مؤشراتها.',
         v: { type: 'grid', items: [['🔔', 'السلوكية', 'مثير ← استجابة ← تعزيز. تكرار وتصحيح فوري (بافلوف، سكينر).'], ['🧱', 'البنائية', 'المتعلم يبني معرفته عبر الصراع المعرفي (بياجي).'], ['🤝', 'السوسيوبنائية', 'تفاعل ووساطة ومنطقة النمو القريبة (فيغوتسكي).'], ['🧠', 'المعرفية', 'معالجة المعلومات: انتباه، ذاكرة، تنظيم.'], ['👀', 'التعلم الاجتماعي', 'ملاحظة نموذج ومحاكاته (باندورا).']] },
@@ -216,7 +217,7 @@ export const PARTS = [
         check: { q: 'أزمة المراهقة المركزية عند إريكسون:', o: ['الثقة مقابل الشك', 'الهوية مقابل تشتت الهوية', 'المبادرة مقابل الذنب'], a: 1, why: 'المراهقة مرحلة بناء الهوية.' } },
     ] },
   // =====================================================================
-  { id: 'A2', group: 'A', lang: 'ar', icon: '👥', color: '#c2410c', title: 'سوسيولوجيا وسيكوسوسيولوجيا التربية', short: 'السوسيولوجيا', weight: '40 % من المكون الأول',
+  { id: 'A2', group: 'A', lang: 'ar', icon: '👥', color: '#c8431a', title: 'سوسيولوجيا وسيكوسوسيولوجيا التربية', short: 'السوسيولوجيا', weight: '40 % من المكون الأول',
     lesson: [
       { t: 'أربع قراءات للمدرسة', p: 'كل عالم اجتماع يفسر وظيفة المدرسة والفوارق المدرسية بطريقته.',
         v: { type: 'grid', items: [['📘', 'دوركايم', 'التربية تنشئة اجتماعية منهجية للجيل الناشئ.'], ['⚙️', 'بارسونز', 'المدرسة توزع الأفراد على الأدوار حسب الاستحقاق.'], ['🎓', 'بورديو وباسرون', 'المدرسة تعيد إنتاج الفوارق؛ الرأسمال الثقافي؛ العنف الرمزي.'], ['🧮', 'بودون', 'قرارات الأسر حسب الكلفة والفائدة.']] },
@@ -236,7 +237,7 @@ export const PARTS = [
         check: { q: 'إعطاء كل تلميذ حسب حاجته لبلوغ نفس الهدف هو:', o: ['المساواة', 'الإنصاف', 'الانتقاء'], a: 1, why: 'هذا تعريف الإنصاف.' } },
     ] },
   // =====================================================================
-  { id: 'A3', group: 'A', lang: 'ar', icon: '⚖️', color: '#0f766e', title: 'الحقوق والواجبات والأخلاقيات المهنية', short: 'الأخلاقيات', weight: 'محور تكميلي',
+  { id: 'A3', group: 'A', lang: 'ar', icon: '⚖️', color: '#0a7467', title: 'الحقوق والواجبات والأخلاقيات المهنية', short: 'الأخلاقيات', weight: 'محور تكميلي',
     lesson: [
       { t: 'هرم المرجعيات', p: 'من المرجع الأعلى إلى التنظيم اليومي. المس كل مستوى.',
         v: { type: 'pyramid', levels: [['المذكرات والأنظمة', 'تنظم العمل اليومي بالمؤسسة.'], ['المرسوم 2.24.140', 'النظام الأساسي لموظفي قطاع التربية الوطنية (2024).'], ['خارطة الطريق 2022–2026', 'برنامج: التلميذ، الأستاذ، المؤسسة.'], ['الرؤية 2015–2030', 'مرجع توجيهي استراتيجي.'], ['القانون الإطار 51.17', 'المرجع التشريعي للإصلاح (2019).'], ['الدستور 2011', 'الحق في التعليم والمساواة وتكافؤ الفرص.']] },
@@ -252,7 +253,7 @@ export const PARTS = [
         check: { q: 'أول تدخل عند خطر كهربائي في القاعة:', o: ['إخبار الأسرة', 'إيقاف النشاط وتأمين المكان', 'تسجيل ملاحظة'], a: 1, why: 'السلامة تسبق كل شيء.' } },
     ] },
   // =====================================================================
-  { id: 'A4', group: 'A', lang: 'ar', icon: '🏫', color: '#4d7c0f', title: 'الحياة المدرسية ومجالس المؤسسة ومشروعها', short: 'الحياة المدرسية', weight: 'محور تكميلي',
+  { id: 'A4', group: 'A', lang: 'ar', icon: '🏫', color: '#005ca9', title: 'الحياة المدرسية ومجالس المؤسسة ومشروعها', short: 'الحياة المدرسية', weight: 'محور تكميلي',
     lesson: [
       { t: 'مجالس المؤسسة', p: 'لكل مجلس اختصاصه حسب النظام الأساسي الخاص بمؤسسات التربية والتعليم العمومي.',
         v: { type: 'grid', items: [['🏛️', 'مجلس التدبير', 'يصادق على برنامج العمل ويتتبع الأولويات.'], ['📚', 'المجلس التربوي', 'الشؤون التربوية والأنشطة الداعمة.'], ['🧪', 'المجالس التعليمية', 'تنسيق طرائق تدريس المادة وتقويمها.'], ['👨‍🎓', 'مجالس الأقسام', 'تتبع نتائج المتعلمين وسلوكهم ومسارهم.']] },
@@ -268,7 +269,7 @@ export const PARTS = [
         check: { q: '«عدد الورشات المنظمة» هو مؤشر:', o: ['أثر', 'إنجاز', 'جودة'], a: 1, why: 'يقيس ما نُفذ، لا ما تغير.' } },
     ] },
   // =====================================================================
-  { id: 'A5', group: 'A', lang: 'ar', icon: '🧭', color: '#be185d', title: 'التوجيه والمشروع الشخصي للمتعلم', short: 'التوجيه', weight: 'محور تكميلي',
+  { id: 'A5', group: 'A', lang: 'ar', icon: '🧭', color: '#2b3fc4', title: 'التوجيه والمشروع الشخصي للمتعلم', short: 'التوجيه', weight: 'محور تكميلي',
     lesson: [
       { t: 'بناء المشروع الشخصي', p: 'التوجيه عملية مستمرة طوال المسار، والمشروع يُراجع كلما تغيرت اهتمامات المتعلم.',
         v: { type: 'cycle', steps: [['معرفة الذات', 'الميول والقدرات والقيم.'], ['استكشاف المسارات', 'معلومات رسمية ومحدثة.'], ['القرار المستنير', 'الجمع بين معرفة الذات والمعلومات.'], ['التخطيط', 'خطوات وأهداف متدرجة.'], ['المراجعة', 'تعديل المشروع عند تغير الاهتمامات.']] },
@@ -280,7 +281,7 @@ export const PARTS = [
         check: { q: 'من الأخطاء الواجب تجنبها في التوجيه:', o: ['ربط المهن بجنس المتعلم', 'استعمال ملف الإنجاز', 'الاعتماد على المصادر الرسمية'], a: 0, why: 'التوجيه المنصف لا يربط المهن بالجنس.' } },
     ] },
   // =====================================================================
-  { id: 'A6', group: 'A', lang: 'ar', icon: '♿', color: '#0369a1', title: 'التربية الدامجة والإنصاف والتكييف', short: 'الدمج', weight: 'محور تكميلي',
+  { id: 'A6', group: 'A', lang: 'ar', icon: '♿', color: '#0e7490', title: 'التربية الدامجة والإنصاف والتكييف', short: 'الدمج', weight: 'محور تكميلي',
     lesson: [
       { t: 'الدمج الحقيقي', p: 'الحضور في القاعة لا يكفي. الدمج يعني إزالة العوائق التي تمنع المشاركة.',
         v: { type: 'versus', a: ['إدماج شكلي', ['حضور دون مشاركة', 'الحواجز باقية', 'نفس التعليمات للجميع']], b: ['تربية دامجة', ['إزالة العوائق', 'مشاركة الجميع', 'تكييف دون المساس بالهدف']] },
@@ -296,7 +297,7 @@ export const PARTS = [
         check: { q: 'معيار نجاح التكييف:', o: ['إعفاء المتعلم من المهمة', 'تحسن إنجاز المتعلم واستقلاليته', 'خفض المعايير'], a: 1, why: 'التكييف ينجح إذا تحسن الإنجاز والاستقلالية.' } },
     ] },
   // =====================================================================
-  { id: 'A7', group: 'A', lang: 'ar', icon: '📊', color: '#a16207', title: 'التقويم والدعم والمعالجة', short: 'التقويم', weight: '20 % من المكون الأول',
+  { id: 'A7', group: 'A', lang: 'ar', icon: '📊', color: '#1f2f9b', title: 'التقويم والدعم والمعالجة', short: 'التقويم', weight: '20 % من المكون الأول',
     lesson: [
       { t: 'القياس والتقويم', p: 'القياس يعطي قيمة، والتقويم يضيف حكما بالمعايير واتخاذ قرار.',
         v: { type: 'versus', a: ['القياس', ['يعطي قيمة أو نقطة', 'وصفي', '«حصل على 12/20»']], b: ['التقويم', ['حكم بالمعايير', 'اتخاذ قرار', '«لم يتحقق المعيار 2: نقترح دعما»']] },
