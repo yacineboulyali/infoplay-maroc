@@ -1,0 +1,279 @@
+// Moteur du module « Examen professionnel » : banque de questions, feedbacks, progression ludique.
+// Aucune dépendance au DOM : testable sous Node.
+import { QCM } from './data/qcm.js';
+import { PARTS, partById } from './data/parts.js';
+import { CONCEPTS_FR, DEFAULT_FR } from './data/concepts-fr.js';
+import { CONCEPTS_AR, DEFAULT_AR } from './data/concepts-ar.js';
+import { DISTRACTORS_FR, DISTRACTORS_AR } from './data/distractors.js';
+
+export const LEVEL_SIZE = 8;          // questions par niveau
+export const HEARTS = 5;              // vies par niveau
+export const DAILY_GOAL = 60;         // XP visés par jour
+export const XP = { first: 10, second: 5, lessonCard: 5, lessonDone: 20, hint: 3, comboStep: 2, comboMax: 10 };
+
+// ---------- Questions ----------
+const LETTERS_FR = ['A', 'B', 'C', 'D', 'E'];
+const LETTERS_AR = ['أ', 'ب', 'ج', 'د', 'هـ'];
+export const QUESTIONS = QCM.map(([part, set, num, q, options, answer, just], i) => ({
+  id: `${part}-${set}-${num}-${i}`, part, set, num, q, options, answer, just, lang: part[0] === 'A' ? 'ar' : 'fr',
+}));
+export const letters = (lang) => (lang === 'ar' ? LETTERS_AR : LETTERS_FR);
+export const questionsOf = (partId) => QUESTIONS.filter((x) => x.part === partId);
+export const levelsOf = (partId) => {
+  const qs = questionsOf(partId); const out = [];
+  for (let i = 0; i < qs.length; i += LEVEL_SIZE) out.push(qs.slice(i, i + LEVEL_SIZE));
+  // Un dernier niveau trop court est fusionné avec le précédent.
+  if (out.length > 1 && out[out.length - 1].length < 4) out[out.length - 2].push(...out.pop());
+  return out;
+};
+export const byId = (id) => QUESTIONS.find((x) => x.id === id);
+
+// ---------- Normalisation ----------
+export const normFr = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[’']/g, "'");
+export const normAr = (s) => String(s || '').replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').toLowerCase();
+const norm = (lang, s) => (lang === 'ar' ? normAr(s) : normFr(s));
+
+// ---------- Notion, indice, feedbacks ----------
+const conceptCache = new Map();
+export function conceptFor(q) {
+  if (conceptCache.has(q.id)) return conceptCache.get(q.id);
+  const list = q.lang === 'ar' ? CONCEPTS_AR : CONCEPTS_FR;
+  const text = norm(q.lang, q.q + ' ' + q.options[q.answer]);
+  let c = list.find((k) => k.re.test(text));
+  if (!c) { const def = (q.lang === 'ar' ? DEFAULT_AR : DEFAULT_FR)[q.part]; c = list.find((k) => k.id === def) || list[list.length - 1]; }
+  conceptCache.set(q.id, c);
+  return c;
+}
+export function distractorOf(q, index) {
+  const list = q.lang === 'ar' ? DISTRACTORS_AR : DISTRACTORS_FR;
+  const t = norm(q.lang, q.options[index]).trim();
+  return list.find((d) => d.re.test(t)) || null;
+}
+const isNone = (q, i) => (q.lang === 'ar' ? /^لا شيء مما سبق/.test(q.options[i]) : /^aucune de ces/i.test(q.options[i]));
+
+const T = {
+  fr: {
+    praise: ['Excellent !', 'Bien joué !', 'Parfait !', 'Exact !', 'Bravo !', 'Juste !'],
+    praiseLate: ['C’est ça, au deuxième essai !', 'Bien rattrapé !'],
+    wrong: ['Pas tout à fait…', 'Presque…', 'Ce n’est pas ça.'],
+    reveal: 'La bonne réponse',
+    retry: 'Relis l’énoncé et compare les options restantes. Tu peux demander un indice.',
+    off: 'Cette option ne répond pas au cœur de la question : repère d’abord la notion en jeu dans l’énoncé.',
+    none: 'Aucune proposition ne convient : la bonne réponse n’est pas parmi les options A à D.',
+    elim: (l, o, lab) => `Élimine d’abord ${l} « ${o} » : ${lab}.`,
+  },
+  ar: {
+    praise: ['ممتاز!', 'أحسنت!', 'جواب صحيح!', 'رائع!', 'بالضبط!'],
+    praiseLate: ['صحيح في المحاولة الثانية!', 'استدراك موفق!'],
+    wrong: ['ليس تماما…', 'قريب…', 'ليس هذا هو الجواب.'],
+    reveal: 'الجواب الصحيح',
+    retry: 'أعد قراءة السؤال وقارن الاقتراحات المتبقية. يمكنك طلب تلميح.',
+    off: 'هذا الاقتراح لا يجيب عن جوهر السؤال: حدد أولا المفهوم المقصود في نص السؤال.',
+    none: 'لا يوجد اقتراح صحيح بين أ و د، لذلك الجواب «لا شيء مما سبق».',
+    elim: (l, o, lab) => `استبعد أولا ${l}) «${o}»: ${lab}.`,
+  },
+};
+const pick = (arr, seed = 0) => arr[Math.abs(seed) % arr.length];
+const cut = (s, n = 70) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
+
+/** Indice : principe à mobiliser (notion) + une élimination argumentée quand c'est possible. */
+export function hintFor(q) {
+  const c = conceptFor(q); const t = T[q.lang];
+  let elim = null;
+  for (let i = 0; i < q.options.length; i++) {
+    if (i === q.answer || isNone(q, i)) continue;
+    const d = distractorOf(q, i);
+    if (d && d.id !== 'aucune') { elim = t.elim(letters(q.lang)[i], cut(q.options[i], 60), d.label); break; }
+  }
+  return { text: c.hint, elim, src: c.src };
+}
+
+/** Feedback d'une bonne réponse. */
+export function correctFeedback(q, attempt = 1) {
+  const c = conceptFor(q); const t = T[q.lang]; const seed = q.num + attempt;
+  const body = [];
+  if (isNone(q, q.answer)) body.push(t.none);
+  if (q.just) body.push(q.just);
+  body.push(c.why);
+  return { ok: true, title: attempt > 1 ? pick(t.praiseLate, seed) : pick(t.praise, seed), body, src: c.src };
+}
+
+/** Feedback d'une mauvaise réponse : sans révéler au premier essai, avec la réponse ensuite. */
+export function wrongFeedback(q, chosen, attempt = 1) {
+  const c = conceptFor(q); const t = T[q.lang]; const d = distractorOf(q, chosen);
+  const body = [];
+  if (d) body.push(d.msg);
+  else if (attempt < 2) body.push(t.off);
+  if (attempt < 2) {
+    body.push(t.retry);
+    return { ok: false, reveal: false, title: pick(t.wrong, q.num), body, src: d?.src || null };
+  }
+  const L = letters(q.lang)[q.answer];
+  body.unshift(`${t.reveal} : ${L}. ${q.options[q.answer]}`);
+  if (isNone(q, q.answer)) body.push(t.none);
+  if (q.just) body.push(q.just);
+  body.push(c.why);
+  return { ok: false, reveal: true, title: pick(t.wrong, q.num), body, src: c.src };
+}
+
+// ---------- Rangs et badges ----------
+export const RANKS = [
+  { xp: 0, fr: 'Candidat', icon: '🌱' }, { xp: 150, fr: 'Stagiaire', icon: '📗' }, { xp: 400, fr: 'Enseignant débutant', icon: '🧑‍🏫' },
+  { xp: 900, fr: 'Enseignant confirmé', icon: '🎓' }, { xp: 1800, fr: 'Formateur', icon: '🏅' }, { xp: 3200, fr: 'Expert didacticien', icon: '🏆' },
+  { xp: 5000, fr: 'Inspecteur pédagogique', icon: '👑' },
+];
+export const rankOf = (xp) => { let r = RANKS[0], next = null; for (let i = 0; i < RANKS.length; i++) { if (xp >= RANKS[i].xp) { r = RANKS[i]; next = RANKS[i + 1] || null; } } return { ...r, next }; };
+
+export const BADGES = [
+  { id: 'first-lesson', icon: '📖', t: 'Première leçon', d: 'Terminer une leçon.' },
+  { id: 'first-level', icon: '🚩', t: 'Premier niveau', d: 'Terminer un niveau.' },
+  { id: 'perfect', icon: '💎', t: 'Sans faute', d: 'Terminer un niveau sans erreur ni indice.' },
+  { id: 'combo10', icon: '⚡', t: 'Combo ×10', d: 'Enchaîner 10 bonnes réponses.' },
+  { id: 'streak3', icon: '🔥', t: 'Trois jours de suite', d: 'Réviser trois jours consécutifs.' },
+  { id: 'streak7', icon: '🌋', t: 'Une semaine de feu', d: 'Réviser sept jours consécutifs.' },
+  { id: 'q100', icon: '💯', t: 'Cent questions', d: 'Répondre à 100 questions.' },
+  { id: 'q400', icon: '🧠', t: 'Quatre cents questions', d: 'Répondre à 400 questions.' },
+  { id: 'goal', icon: '🎯', t: 'Objectif du jour', d: `Gagner ${DAILY_GOAL} XP dans la journée.` },
+  { id: 'review', icon: '♻️', t: 'Erreurs corrigées', d: 'Réussir 10 questions en révision.' },
+  { id: 'group-D', icon: '🎯', t: 'Didacticien', d: 'Terminer toutes les parties de didactique.' },
+  { id: 'group-M', icon: '💻', t: 'Maître du programme', d: 'Terminer les quatre modules du TC.' },
+  { id: 'group-A', icon: '🧠', t: 'عالم التربية', d: 'إنهاء كل محاور علوم التربية.' },
+  { id: 'blanc70', icon: '📜', t: 'Prêt pour le jour J', d: 'Obtenir au moins 14/20 à l’examen blanc.' },
+];
+
+// ---------- État du joueur ----------
+const today = (d = new Date()) => d.toISOString().slice(0, 10);
+const dayDiff = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+export function freshState() {
+  return { v: 1, xp: 0, lessons: {}, levels: {}, seen: {}, review: [], answered: 0, reviewWins: 0,
+    bestCombo: 0, badges: {}, day: today(), dayXp: 0, streak: 0, lastDay: null, notifs: [], unread: 0, blanc: [], sysNotif: false };
+}
+
+export function createExamStore(storage, pid = 'invite') {
+  const KEY = 'infoplay.examen.v1.' + pid;
+  let s;
+  try { s = { ...freshState(), ...JSON.parse(storage?.getItem(KEY) || 'null') }; } catch { s = freshState(); }
+  const listeners = new Set();
+  const save = () => { try { storage?.setItem(KEY, JSON.stringify(s)); } catch {} };
+  const notify = (kind, title, text, icon = '🔔') => {
+    const n = { id: Date.now() + Math.random(), kind, title, text, icon, at: new Date().toISOString() };
+    s.notifs.unshift(n); s.notifs = s.notifs.slice(0, 40); s.unread++;
+    listeners.forEach((f) => f(n));
+    return n;
+  };
+  const award = (id) => {
+    if (s.badges[id]) return;
+    const b = BADGES.find((x) => x.id === id); if (!b) return;
+    s.badges[id] = new Date().toISOString();
+    notify('badge', 'Nouveau badge : ' + b.t, b.d, b.icon);
+  };
+  // Passage à un nouveau jour : série de jours et objectif quotidien.
+  const rollDay = () => {
+    const d = today();
+    if (s.day !== d) { s.day = d; s.dayXp = 0; }
+  };
+  const touchStreak = () => {
+    const d = today();
+    if (s.lastDay === d) return;
+    s.streak = s.lastDay && dayDiff(s.lastDay, d) === 1 ? s.streak + 1 : 1;
+    s.lastDay = d;
+    if (s.streak > 1) notify('streak', `Série de ${s.streak} jours 🔥`, 'Continue chaque jour pour garder ta flamme allumée.', '🔥');
+    if (s.streak >= 3) award('streak3');
+    if (s.streak >= 7) award('streak7');
+  };
+  const gain = (n) => {
+    if (n <= 0) return;
+    rollDay(); touchStreak();
+    const before = rankOf(s.xp).fr;
+    const hadGoal = s.dayXp >= DAILY_GOAL;
+    s.xp += n; s.dayXp += n;
+    if (!hadGoal && s.dayXp >= DAILY_GOAL) { notify('goal', 'Objectif du jour atteint 🎯', `${DAILY_GOAL} XP gagnés aujourd’hui. Bravo !`, '🎯'); award('goal'); }
+    const r = rankOf(s.xp);
+    if (r.fr !== before) notify('rank', `Nouveau rang : ${r.fr}`, `Tu as atteint ${r.xp} XP.`, r.icon);
+  };
+  const groupDone = (g) => PARTS.filter((p) => p.group === g).every((p) => partProgress(p.id).done);
+  function partProgress(id) {
+    const lv = levelsOf(id); const done = lv.filter((_, k) => s.levels[id + ':' + k]).length;
+    const stars = lv.reduce((a, _, k) => a + (s.levels[id + ':' + k]?.stars || 0), 0);
+    return { levels: lv.length, count: done, stars, maxStars: lv.length * 3, lesson: !!s.lessons[id], ratio: lv.length ? done / lv.length : 0, done: done === lv.length && lv.length > 0 };
+  }
+  const api = {
+    get state() { return s; },
+    subscribe(f) { listeners.add(f); return () => listeners.delete(f); },
+    save,
+    notify(kind, title, text, icon) { const n = notify(kind, title, text, icon); save(); return n; },
+    markRead() { s.unread = 0; save(); },
+    setSysNotif(v) { s.sysNotif = !!v; save(); },
+    partProgress,
+    isLevelOpen(id, k) { return k === 0 ? true : !!s.levels[id + ':' + (k - 1)]; },
+    lessonCard(id) { gain(XP.lessonCard); save(); },
+    lessonDone(id) {
+      const first = !s.lessons[id];
+      s.lessons[id] = new Date().toISOString();
+      if (first) { gain(XP.lessonDone); award('first-lesson'); notify('unlock', 'Niveau 1 débloqué', `${partById(id)?.title || id} : les questions t’attendent.`, '🔓'); }
+      save();
+    },
+    /** Enregistre une réponse. Retourne les XP gagnés. */
+    answer(q, { ok, attempt, combo, hinted, review }) {
+      rollDay();
+      s.answered++;
+      let xp = 0;
+      if (ok) {
+        xp = attempt === 1 ? XP.first : XP.second;
+        xp += Math.min(XP.comboMax, Math.max(0, combo - 1) * XP.comboStep);
+        if (hinted) xp = Math.max(1, xp - XP.hint);
+        if (review) { s.reviewWins++; s.review = s.review.filter((x) => x !== q.id); if (s.reviewWins >= 10) award('review'); }
+      } else if (attempt === 1 && !s.review.includes(q.id)) {
+        s.review.push(q.id);
+      }
+      s.seen[q.id] = (s.seen[q.id] || 0) + 1;
+      if (combo > s.bestCombo) s.bestCombo = combo;
+      if (combo >= 10) award('combo10');
+      if (s.answered >= 100) award('q100');
+      if (s.answered >= 400) award('q400');
+      gain(xp); save();
+      return xp;
+    },
+    levelDone(id, k, { firstTry, total, hints, mistakes }) {
+      const ratio = total ? firstTry / total : 0;
+      const stars = ratio >= 0.9 ? 3 : ratio >= 0.7 ? 2 : 1;
+      const prev = s.levels[id + ':' + k];
+      s.levels[id + ':' + k] = { stars: Math.max(stars, prev?.stars || 0), at: new Date().toISOString() };
+      award('first-level');
+      if (!mistakes && !hints) award('perfect');
+      const lv = levelsOf(id);
+      if (!prev && k + 1 < lv.length) notify('unlock', `Niveau ${k + 2} débloqué`, partById(id)?.title || id, '🔓');
+      const g = id[0];
+      if (groupDone(g)) award('group-' + g);
+      save();
+      return stars;
+    },
+    blancDone(score) {
+      s.blanc.unshift({ score, at: new Date().toISOString() }); s.blanc = s.blanc.slice(0, 10);
+      gain(Math.round(score * 3));
+      if (score >= 14) award('blanc70');
+      save();
+    },
+    reset() { s = freshState(); save(); },
+    // Rappel à l'ouverture : objectif non atteint ou erreurs à revoir.
+    greet() {
+      rollDay();
+      const d = today();
+      if (s.lastDay && s.lastDay !== d && dayDiff(s.lastDay, d) > 1 && s.streak > 1) {
+        notify('streak', 'Ta série s’est arrêtée', 'Réponds à quelques questions aujourd’hui pour relancer ta flamme.', '🧯');
+        s.streak = 0;
+      }
+      if (s.review.length >= 5 && s._greetReview !== d) { s._greetReview = d; notify('review', `${s.review.length} questions à revoir`, 'La révision espacée fixe durablement ce que tu as raté.', '♻️'); }
+      save();
+    },
+  };
+  return api;
+}
+
+// ---------- Examen blanc ----------
+// 20 questions, réparties comme l'épreuve : la didactique pèse le plus lourd.
+export function blancSet(rng = Math.random) {
+  const shuffle = (a) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+  const from = (g, n) => shuffle(QUESTIONS.filter((x) => x.part[0] === g)).slice(0, n);
+  return shuffle([...from('D', 12), ...from('M', 4), ...from('A', 4)]);
+}

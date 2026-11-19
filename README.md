@@ -6,6 +6,18 @@
 
 ![Accueil d'InfoPlay Maroc](docs/screenshots/01-accueil.png)
 
+## Nouveau : préparer l’examen professionnel (enseignants) 🎯
+
+Module à part, pensé **mobile first**, pour l’examen d’aptitude professionnelle d’informatique (secondaire qualifiant) : `#/examen`, carte « Enseignants · Examen professionnel » sur l’accueil.
+
+- **15 parties** : didactique (planification, gestion, évaluation, remédiation), les 4 modules du tronc commun, et 7 axes de sciences de l’éducation (en arabe, affichage RTL).
+- **Leçon express animée** par partie : schémas qu’on touche (triangle pédagogique, pyramide de Bloom, chaînes, cycles, zone proximale, topologie en étoile, jeu de tests…), repère scientifique sourcé et mini-défi.
+- **663 QCM** issus des dossiers unifiés, en niveaux de 8 questions : bonne réponse = celle marquée dans les PDF.
+- **Feedback** dans une feuille qui monte du bas : bouton *Continuer* et bouton *Réessayer* ; le premier essai faux ne révèle pas la réponse. Bouton **Indice** : principe à mobiliser + élimination argumentée. Explications et indices s’appuient sur des références (Brousseau, Chevallard, Houssaye, Bloom/Anderson-Krathwohl, Vygotski, Wood-Bruner-Ross, Astolfi, Hattie & Timperley, Biggs, Bourdieu, Piaget, Erikson, Bandura…).
+- **Gamification** : XP, cœurs, combos, étoiles, rangs, série de jours, objectif quotidien, badges, révision des erreurs, examen blanc chronométré (12 didactique / 4 TC / 4 sciences de l’éducation).
+- **Notifications** : toasts en direct, centre de notifications 🔔, notifications système en option.
+- Code : `src/examen/`, styles : `src/styles/examen.css`, tests : `tests/examen.test.mjs`, contrôle des notions : `node scripts/examen-check.mjs D1`.
+
 ## Nouveau : parcours OFPPT M205 — Bureautique avancée 💼
 
 Second parcours, indépendant du Tronc Commun (il ne change ni ses 120 activités ni ses 600 points) : **20 séances × 2 h, 80 activités, 400 points**, tirées du cours « M205 Cours complets 20 séances 40 h » (formateur : Yacine Boulyali).

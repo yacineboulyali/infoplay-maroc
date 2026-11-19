@@ -1,4 +1,5 @@
 import { egtsiScreen } from './egtsi106/screen.js';
+import { examenScreen } from './examen/screens.js';
 import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
 import { mechanicIcon } from './utils/semantic-icons.js';
@@ -43,6 +44,7 @@ function trackOf(hash) {
   if (!q.length || q[0] === 'profils' || q[0] === 'accueil') return null;
   if (q[0] === 'pro' || (q[0] === 'm' && isPro(q[1]))) return 'pro';
   if (q[0] === 'egtsi106') return 'egtsi';
+  if (q[0] === 'examen') return 'examen';
   if (q[0] === 'college' && getLevel(q[1])) return 'col' + q[1];
   if (q[0] === 'm' && colMod(q[1])) return 'col' + colMod(q[1]).level;
   if (q[0] === 'dash' || q[0] === 'progres' || q[0] === 'm') return 'tc';
@@ -52,7 +54,7 @@ const homeStep = (mi) => (isPro(mi) ? ['🏠', 'Accueil', '#/profils'] : colMod(
 const modLabel = (mi) => (isPro(mi) ? 'M205' : colMod(mi) ? `${colMod(mi).levelCode} · Module ${colMod(mi).rank}` : 'Module ' + mi);
 const modHref = (mi) => (isPro(mi) ? '#/pro' : '#/m/' + mi);
 const scopeOf = (mi, pid) => (isPro(mi) ? proScope(pid, recOf(pid)) : colMod(mi) ? colScope(getLevel(colMod(mi).level)) : undefined);
-const trackHref = (t) => (t === 'pro' ? '#/pro' : t === 'egtsi' ? '#/egtsi106' : t && t.startsWith('col') ? '#/college/' + t.slice(3) : '#/dash');
+const trackHref = (t) => (t === 'pro' ? '#/pro' : t === 'examen' ? '#/examen' : t === 'egtsi' ? '#/egtsi106' : t && t.startsWith('col') ? '#/college/' + t.slice(3) : '#/dash');
 const arSess = (s) => s.ar || arSession(s.id);
 
 // ---------- Petits composants & utilitaires ----------
@@ -326,6 +328,19 @@ function homeScreen() {
               h('a', { class: 'btn primary mode-go', href: 'immersive.html' }, 'Ouvrir le parcours →')
             ),
             )),
+          h('hr', { class: 'track-sep' }),
+          h('section', { class: 'track-group track-examen', 'aria-labelledby': 'grp-examen-h' },
+            h('header', { class: 'track-head' },
+              h('span', { class: 'track-ico', 'aria-hidden': 'true' }, '🎓'),
+              h('div', null, h('h3', { id: 'grp-examen-h' }, 'Enseignants · Examen professionnel'), h('p', null, 'Examen d’aptitude professionnelle, informatique, secondaire qualifiant.'))),
+            h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Préparation à l’examen professionnel' },
+            h('section', { class: 'mode-card mode-pro mode-examen', 'aria-labelledby': 'mode-examen-h' },
+              h('span', { class: 'mode-badge' }, 'Nouveau · mobile'),
+              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🎯'),
+              h('h3', { id: 'mode-examen-h' }, 'Préparer l’examen professionnel'),
+              h('p', null, '15 parties, leçons animées et 663 QCM corrigés : didactique, programme du TC, sciences de l’éducation.'),
+              h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/examen') }, 'Ouvrir le parcours →')
+            ))),
           h('hr', { class: 'track-sep' }),
           h('section', { class: 'track-group track-ofppt', 'aria-labelledby': 'grp-ofppt-h' },
             h('header', { class: 'track-head' },
@@ -1112,6 +1127,9 @@ function render() {
       view = prof ? dashScreen() : homeScreen();
     } else if (q[0] === 'progres') {
       view = prof ? progressScreen() : homeScreen();
+    } else if (q[0] === 'examen') {
+      if (prof) lanManager.setActivity('examen', 'Examen professionnel');
+      view = examenScreen(q, prof?.id);
     } else if (q[0] === 'egtsi106') {
       view = egtsiScreen(q, prof?.id);
     } else if (q[0] === 'college' && getLevel(q[1])) {
@@ -1133,6 +1151,8 @@ function render() {
     }
 
     view = view || notFound();
+    // Le module « Examen professionnel » a sa propre barre et sa navigation du bas.
+    document.body.classList.toggle('ex-mode', q[0] === 'examen');
     revealIn(view);
     app.replaceChildren(header(prof), view, floatingHome(prof));
   } catch (e) {
