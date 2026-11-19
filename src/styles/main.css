@@ -333,7 +333,7 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .mode-choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1.4rem}
 .mode-card{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:.45rem;padding:1.2rem 1.1rem 1.25rem;border-radius:20px;border:2px solid var(--ink);box-shadow:0 6px 0 var(--ink);transition:transform .2s,box-shadow .2s}
 .mode-card:hover,.mode-card:focus-within{transform:translateY(-4px);box-shadow:0 10px 0 var(--ink)}
-.mode-card h2{margin:0;font-size:1.3rem}.mode-card p{margin:0;font-size:.95rem}
+.mode-card h2,.mode-card h3{margin:0;font-size:1.3rem}.mode-card p{margin:0;font-size:.95rem}
 .mode-card .welcome-cta-group{flex-direction:column;align-items:stretch;gap:.5rem;margin-top:auto}
 .mode-card .welcome-cta-group .btn,.mode-card .mode-go{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
 .mode-card .mode-go{margin-top:auto}
@@ -344,7 +344,7 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .mode-immersive::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,#fff 1px,transparent 1.5px);background-size:26px 26px;opacity:.25;pointer-events:none;animation:mode-stars 18s linear infinite}
 .mode-immersive::after{content:"";position:absolute;left:-30%;right:-30%;bottom:-40%;height:70%;background-image:linear-gradient(rgba(125,255,224,.45) 1px,transparent 1px),linear-gradient(90deg,rgba(125,255,224,.45) 1px,transparent 1px);background-size:28px 28px;transform:perspective(260px) rotateX(62deg);transform-origin:top;pointer-events:none;opacity:.5;animation:mode-grid 3s linear infinite}
 .mode-immersive>*{position:relative;z-index:1}
-.mode-immersive h2{color:#ffd86b}
+.mode-immersive h2,.mode-immersive h3{color:#ffd86b}
 .mode-immersive .mode-ico{animation:mode-bob 2.6s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}
 .mode-badge{position:absolute!important;top:.8rem;right:.8rem;padding:.15rem .6rem;border-radius:999px;background:#f2b418;color:var(--ink);font-weight:800;font-size:.75rem}
 .mode-immersive .btn.accent{border-color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.45)}

@@ -260,6 +260,11 @@ function homeScreen() {
   });
   portrait.addEventListener('pointerleave', () => { portrait.style.setProperty('--rx', '0deg'); portrait.style.setProperty('--ry', '0deg'); });
 
+  // Logo officiel s'il a été déposé dans public/images (détecté au build), sinon sigle texte.
+  const OFPPT_LOGO = typeof __OFPPT_LOGO__ === 'string' ? __OFPPT_LOGO__ : '';
+  const ofpptLogo = () => (OFPPT_LOGO
+    ? h('img', { class: 'ofppt-logo', src: OFPPT_LOGO, alt: 'Logo de l’OFPPT', width: '56', height: '56' })
+    : h('span', { class: 'ofppt-word', role: 'img', 'aria-label': 'OFPPT' }, 'OFPPT'));
   return h('main', { id: 'main', class: 'welcome-page lp' },
     h('section', { class: 'lp-hero' },
       h('div', { class: 'lp-bg', 'aria-hidden': 'true' }, h('i', { class: 'lp-blob b1' }), h('i', { class: 'lp-blob b2' }), h('i', { class: 'lp-blob b3' }), canvas),
@@ -288,41 +293,60 @@ function homeScreen() {
         h('p', { class: 'muted' }, 'Chaque parcours garde tes scores, tes étoiles et ta progression.')
       ),
       h('div', { class: 'welcome-copy' },
-        // Choix de mode de jeu
-        h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Choisis ta façon de jouer' },
-          h('section', { class: 'mode-card mode-classic', 'aria-labelledby': 'mode-classic-h' },
-            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '📚'),
-            h('h2', { id: 'mode-classic-h' }, 'Tronc commun'),
-            h('p', null, '4 modules, 30 séances, 120 activités.'),
-            h('button', { type: 'button', class: 'btn primary mode-go welcome-cta', onclick: () => openPath('#/dash') }, 'Ouvrir le parcours →')
-          ),
-          ...LEVELS.map((L) => h('section', { class: 'mode-card mode-pro mode-college', 'aria-labelledby': `mode-col${L.level}-h` },
-            h('span', { class: 'mode-badge' }, 'Informatique · Collège'),
-            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, L.icon),
-            h('h2', { id: `mode-col${L.level}-h` }, `${L.code} · ${L.title}`),
-            h('p', null, `${L.modules.length} modules : ${L.modules.map((m) => m.title).join(', ')}.`),
-            h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/college/' + L.level) }, 'Ouvrir le parcours →'))),
-          h('section', { class: 'mode-card mode-pro', 'aria-labelledby': 'mode-pro-h' },
-            h('span', { class: 'mode-badge' }, 'Nouveau · OFPPT'),
-            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '💼'),
-            h('h2', { id: 'mode-pro-h' }, 'M205 · Bureautique avancée'),
-            h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint, Outlook.'),
-            h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/pro') }, 'Ouvrir le parcours →')
-          ),
-          h('section', { class: 'mode-card mode-pro', 'aria-labelledby': 'mode-egtsi-h' },
-            h('span', { class: 'mode-badge' }, 'OFPPT · Partie 1'),
-            h('h2', { id: 'mode-egtsi-h' }, 'EGTSI106 · Culture et techniques du numérique'),
-            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🖥️'),
-            h('p', null, '3 séances : numérique, appareils et réseaux, Windows.'),
-            h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir le parcours →')
-          ),
-          h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
-            h('span', { class: 'mode-badge' }, 'Nouveau · 3D'),
-            h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🏝️'),
-            h('h2', { id: 'mode-3d-h' }, 'InfoPlay Immersif 3D'),
-            h('p', null, 'Les mêmes séances dans un monde en 3D.'),
-            h('a', { class: 'btn primary mode-go', href: 'immersive.html' }, 'Ouvrir le parcours →')
-          )
+        // Parcours regroupés par public : collège, lycée (tronc commun), formation professionnelle (OFPPT).
+        h('div', { class: 'track-groups' },
+          h('section', { class: 'track-group track-college', 'aria-labelledby': 'grp-college-h' },
+            h('header', { class: 'track-head' },
+              h('span', { class: 'track-ico', 'aria-hidden': 'true' }, '🏫'),
+              h('div', null, h('h3', { id: 'grp-college-h' }, 'Collège · Informatique'), h('p', null, 'Secondaire collégial : 1re, 2e et 3e année (programme ANPI).'))),
+            h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Parcours du collège' },
+            ...LEVELS.map((L) => h('section', { class: 'mode-card mode-pro mode-college', 'aria-labelledby': `mode-col${L.level}-h` },
+              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, L.icon),
+              h('h3', { id: `mode-col${L.level}-h` }, `${L.code} · ${L.title}`),
+              h('p', null, `${L.modules.length} modules : ${L.modules.map((m) => m.title).join(', ')}.`),
+              h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/college/' + L.level) }, 'Ouvrir le parcours →'))),
+            )),
+          h('hr', { class: 'track-sep' }),
+          h('section', { class: 'track-group track-lycee', 'aria-labelledby': 'grp-lycee-h' },
+            h('header', { class: 'track-head' },
+              h('span', { class: 'track-ico', 'aria-hidden': 'true' }, '🎓'),
+              h('div', null, h('h3', { id: 'grp-lycee-h' }, 'Lycée · Tronc commun'), h('p', null, 'Secondaire qualifiant : informatique du tronc commun, en classe ou en 3D.'))),
+            h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Parcours du tronc commun' },
+            h('section', { class: 'mode-card mode-classic', 'aria-labelledby': 'mode-classic-h' },
+              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '📚'),
+              h('h3', { id: 'mode-classic-h' }, 'Tronc commun'),
+              h('p', null, '4 modules, 30 séances, 120 activités.'),
+              h('button', { type: 'button', class: 'btn primary mode-go welcome-cta', onclick: () => openPath('#/dash') }, 'Ouvrir le parcours →')
+            ),
+            h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
+              h('span', { class: 'mode-badge' }, 'Nouveau · 3D'),
+              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🏝️'),
+              h('h3', { id: 'mode-3d-h' }, 'InfoPlay Immersif 3D'),
+              h('p', null, 'Les mêmes séances dans un monde en 3D.'),
+              h('a', { class: 'btn primary mode-go', href: 'immersive.html' }, 'Ouvrir le parcours →')
+            ),
+            )),
+          h('hr', { class: 'track-sep' }),
+          h('section', { class: 'track-group track-ofppt', 'aria-labelledby': 'grp-ofppt-h' },
+            h('header', { class: 'track-head' },
+              ofpptLogo(),
+              h('div', null, h('h3', { id: 'grp-ofppt-h' }, 'OFPPT · Formation professionnelle'), h('p', null, 'Modules des filières de l’Office de la formation professionnelle.'))),
+            h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Parcours OFPPT' },
+            h('section', { class: 'mode-card mode-pro mode-ofppt', 'aria-labelledby': 'mode-pro-h' },
+              h('span', { class: 'mode-badge' }, 'Nouveau'),
+              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '💼'),
+              h('h3', { id: 'mode-pro-h' }, 'M205 · Bureautique avancée'),
+              h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint, Outlook.'),
+              h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/pro') }, 'Ouvrir le parcours →')
+            ),
+            h('section', { class: 'mode-card mode-pro mode-ofppt', 'aria-labelledby': 'mode-egtsi-h' },
+              h('span', { class: 'mode-badge' }, 'Partie 1'),
+              h('h3', { id: 'mode-egtsi-h' }, 'EGTSI106 · Culture et techniques du numérique'),
+              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🖥️'),
+              h('p', null, '3 séances : numérique, appareils et réseaux, Windows.'),
+              h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir le parcours →')
+            )
+            ))
         )
       ),
       h('aside', { class: 'lp-notice lp-glass' },

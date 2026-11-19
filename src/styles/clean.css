@@ -220,7 +220,7 @@ input[type=text],input[type=number],select,textarea{border:1px solid var(--line-
 .mode-card{border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
 .mode-card:hover,.mode-card:focus-within{transform:none;box-shadow:var(--sh-lg);border-color:var(--line-strong)}
 .mode-immersive{background:#fff;color:var(--ink)}
-.mode-immersive h2{color:var(--ink)}
+.mode-immersive h2,.mode-immersive h3{color:var(--ink)}
 .mode-immersive p{color:var(--muted)}
 .mode-immersive .mode-ico{filter:none}
 .mode-immersive .btn.accent{border-color:var(--accent);box-shadow:none}

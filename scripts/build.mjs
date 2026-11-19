@@ -1,11 +1,13 @@
 // Construit dist/ : index.html + app.js (IIFE) + app.css + polices. Aucun appel réseau à l'exécution.
 import { build, transform } from 'esbuild';
-import { cpSync, mkdirSync, rmSync, copyFileSync, readFileSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, rmSync, copyFileSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..'); const dist = join(root, 'dist');
 rmSync(dist, { recursive: true, force: true }); mkdirSync(dist, { recursive: true });
-await build({ entryPoints: [join(root, 'src/app.js')], bundle: true, minify: true, format: 'iife', target: 'chrome100', outfile: join(dist, 'app.js'), legalComments: 'none' });
+// Logo officiel de l'OFPPT : utilisé seulement s'il a été déposé dans public/images (sinon sigle texte, aucune requête vers un fichier absent).
+const ofpptLogo = ['svg', 'png', 'webp'].map((x) => `images/ofppt-logo.${x}`).find((f) => existsSync(join(root, 'public', f))) || '';
+await build({ entryPoints: [join(root, 'src/app.js')], bundle: true, minify: true, format: 'iife', target: 'chrome100', outfile: join(dist, 'app.js'), legalComments: 'none', define: { __OFPPT_LOGO__: JSON.stringify(ofpptLogo) } });
 // Feuille principale + thème v2 (le thème surcharge main.css, il doit donc venir après).
 const css = ['main.css', 'theme.css', 'pro.css', 'clean.css', 'home.css'].map((f) => readFileSync(join(root, 'src/styles', f), 'utf8')).join('\n');
 writeFileSync(join(dist, 'app.css'), (await transform(css, { loader: 'css', minify: true })).code);
