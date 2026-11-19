@@ -350,18 +350,9 @@ function homeScreen() {
             )
             )),
           h('hr', { class: 'track-sep' }),
-          h('section', { class: 'track-group track-examen', 'aria-labelledby': 'grp-examen-h' },
-            h('header', { class: 'track-head' },
-              h('span', { class: 'track-ico', 'aria-hidden': 'true' }, '🎓'),
-              h('div', null, h('h3', { id: 'grp-examen-h' }, 'Enseignants · Examen professionnel'), h('p', null, 'Examen d’aptitude professionnelle, informatique, secondaire qualifiant. Accès par mot de passe.'))),
-            h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Préparation à l’examen professionnel' },
-            h('section', { class: 'mode-card mode-pro mode-examen', 'aria-labelledby': 'mode-examen-h' },
-              h('span', { class: 'mode-badge' }, '🔒 Accès protégé'),
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🎯'),
-              h('h3', { id: 'mode-examen-h' }, 'Préparer l’examen professionnel'),
-              h('p', null, '15 parties, leçons animées et 663 QCM corrigés : didactique, programme du TC, sciences de l’éducation.'),
-              h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/examen') }, '🔒 Entrer avec le mot de passe')
-            )))
+          // Accès discret : un seul bouton « Examen », sans description ; le mot de passe est demandé ensuite.
+          h('section', { class: 'track-group track-examen', 'aria-label': 'Examen' },
+            h('button', { type: 'button', class: 'mode-examen-min', onclick: () => openPath('#/examen') }, 'Examen'))
         )
       ),
       h('aside', { class: 'lp-notice lp-glass' },
@@ -1128,7 +1119,7 @@ function render() {
     } else if (q[0] === 'progres') {
       view = prof ? progressScreen() : homeScreen();
     } else if (q[0] === 'examen') {
-      if (prof) lanManager.setActivity('examen', 'Examen professionnel');
+      if (prof) lanManager.setActivity('examen', 'Examen');
       view = examenScreen(q, prof?.id);
     } else if (q[0] === 'egtsi106') {
       view = egtsiScreen(q, prof?.id);

@@ -625,7 +625,8 @@ const ACCESS_KEY = 'infoplay.examen.access';
 export const hasAccess = () => { try { return sessionStorage.getItem(ACCESS_KEY) === 'ok'; } catch { return false; } };
 function lockScreen(onOpen) {
   const input = h('input', { id: 'ex-code', type: 'password', inputmode: 'numeric', autocomplete: 'off', maxlength: '12', required: true, 'aria-describedby': 'ex-code-msg', placeholder: '••••' });
-  const msg = h('p', { id: 'ex-code-msg', class: 'ex-lock-msg', 'aria-live': 'polite' }, 'Saisis le mot de passe communiqué par le formateur.');
+  // Écran volontairement neutre : rien n'indique le contenu protégé.
+  const msg = h('p', { id: 'ex-code-msg', class: 'ex-lock-msg', 'aria-live': 'polite' });
   const card = h('form', { class: 'ex-card ex-lock', onsubmit: (e) => {
     e.preventDefault();
     if (input.value.trim() === ACCESS_CODE) {
@@ -639,9 +640,8 @@ function lockScreen(onOpen) {
     }
   } },
     h('div', { class: 'ex-end-badge', 'aria-hidden': 'true' }, '🔒'),
-    h('h2', { tabindex: '-1' }, 'Accès réservé'),
-    h('p', null, 'Le module de préparation à l’examen professionnel est réservé aux enseignants.'),
-    h('label', { for: 'ex-code' }, 'Mot de passe'),
+    h('h2', { tabindex: '-1' }, 'Mot de passe'),
+    h('label', { for: 'ex-code', class: 'ex-sr' }, 'Mot de passe'),
     input, msg,
     h('button', { type: 'submit', class: 'ex-btn ex-primary' }, 'Entrer'),
     h('a', { class: 'ex-btn', href: '#/profils' }, 'Retour à l’accueil'));

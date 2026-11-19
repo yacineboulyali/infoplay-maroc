@@ -650,3 +650,11 @@ body.reduced-motion .ex-app *,body.reduced-motion .ex-layer *{animation-duration
 }
 /* La suggestion « plein écran » d'InfoPlay ne doit pas recouvrir les boutons d'un test en cours. */
 body.ex-mode:has(.ex-player) .fs-suggest{display:none!important}
+
+/* ---------- Accès discret depuis l'accueil : un seul bouton « Examen » ---------- */
+.track-examen{display:flex;justify-content:center}
+.mode-examen-min{min-width:200px;min-height:54px;padding:12px 32px;border-radius:16px;border:2px solid rgba(28,35,64,.14);background:rgba(255,255,255,.85);color:var(--ink,#1c2340);font:inherit;font-size:1.1rem;font-weight:800;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}
+.mode-examen-min:hover,.mode-examen-min:focus-visible{transform:translateY(-3px);border-color:var(--ink,#1c2340);box-shadow:0 6px 0 var(--ink,#1c2340)}
+.ex-lock-msg:empty{display:none}
+.ex-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:699px){.mode-examen-min{width:50%;min-width:0;padding:12px 16px}}
