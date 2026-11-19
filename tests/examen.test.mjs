@@ -106,3 +106,19 @@ test('positionnement : bilan, bandes de maîtrise, parcours et lacunes', async (
   assert.equal(st.state.review.length, r.missed.length);
   assert.ok(st.state.badges.positioned);
 });
+
+test('exemples : chaque notion et chaque carte de leçon a son exemple concret', async () => {
+  const { CONCEPTS_FR } = await import('../src/examen/data/concepts-fr.js');
+  const { CONCEPTS_AR } = await import('../src/examen/data/concepts-ar.js');
+  const { EXAMPLES_FR } = await import('../src/examen/data/examples-fr.js');
+  const { EXAMPLES_AR } = await import('../src/examen/data/examples-ar.js');
+  const { LESSON_EXAMPLES } = await import('../src/examen/data/lesson-examples.js');
+  const { exampleFor } = await import('../src/examen/engine.js');
+  for (const c of CONCEPTS_FR) assert.ok(EXAMPLES_FR[c.id]?.length > 30, 'exemple FR : ' + c.id);
+  for (const c of CONCEPTS_AR) assert.ok(EXAMPLES_AR[c.id]?.length > 30, 'exemple AR : ' + c.id);
+  for (const p of PARTS) assert.equal(LESSON_EXAMPLES[p.id]?.length, p.lesson.length, 'exemples de leçon : ' + p.id);
+  for (const q of QUESTIONS) assert.ok(exampleFor(q), q.id);
+  const q = QUESTIONS[0];
+  assert.ok(correctFeedback(q).ex && wrongFeedback(q, (q.answer + 1) % 5, 2).ex);
+  assert.equal(wrongFeedback(q, (q.answer + 1) % 5, 1).ex, undefined, 'pas d’exemple au 1er essai faux (il pourrait orienter la réponse)');
+});

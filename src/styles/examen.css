@@ -716,3 +716,9 @@ body.ex-mode:has(.ex-player) .fs-suggest{display:none!important}
 /* Bouton « rejouer » discret, dans le coin bas du schéma (ne recouvre plus le premier élément). */
 .ex-replay{top:auto;bottom:3px;inset-inline-end:4px;width:24px;height:24px;font-size:.8rem}
 .ex-vis{padding-bottom:6px}
+
+/* ---------- Encadré « Exemple » ---------- */
+.ex-example{display:grid;gap:3px;padding:6px 8px;border-radius:10px;background:color-mix(in srgb,var(--ex-ok) 8%,var(--ex-card));border-inline-start:4px solid var(--ex-ok)}
+.ex-example b{font-size:.78rem;font-weight:800;color:var(--ex-ok);letter-spacing:.02em}
+.ex-example p{margin:0;font-size:.92rem;line-height:1.5}
+.ex-sheet .ex-example{background:var(--ex-card)}

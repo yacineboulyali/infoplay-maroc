@@ -6,9 +6,16 @@ import { GROUPS, PARTS, partById } from './data/parts.js';
 import {
   QUESTIONS, levelsOf, letters, hintFor, correctFeedback, wrongFeedback, createExamStore, rankOf,
   BADGES, DAILY_GOAL, HEARTS, XP, blancSet, byId, conceptFor,
-  positionSet, analyzePosition, bandOf, levelOfScore, MASTERY_BANDS, POSITION_PLAN,
+  positionSet, analyzePosition, bandOf, levelOfScore, MASTERY_BANDS, POSITION_PLAN, exampleFor,
 } from './engine.js';
 import { conceptTitle } from './data/concept-titles.js';
+import { LESSON_EXAMPLES } from './data/lesson-examples.js';
+
+// Encadré « Exemple » : un cas concret qui accompagne chaque explication.
+function exampleBox(text, lang, label) {
+  if (!text) return null;
+  return h('div', { class: 'ex-example' }, h('b', null, label || (lang === 'ar' ? '🧪 مثال' : '🧪 Exemple')), h('p', null, text));
+}
 import { visual } from './visuals.js';
 
 const BASE = '#/examen';
@@ -208,6 +215,7 @@ function lessonPlayer(st, p) {
         h('h2', { tabindex: '-1' }, card.t),
         h('p', { class: 'ex-lead' }, card.p),
         visual(card.v, { color: p.color, lang: p.lang }),
+        exampleBox(LESSON_EXAMPLES[p.id]?.[i], p.lang, p.lang === 'ar' ? '🧪 مثال من القسم' : '🧪 Exemple en classe'),
         h('aside', { class: 'ex-fact' }, h('span', { 'aria-hidden': 'true' }, '📚'), h('div', null, h('p', null, card.fact.t), h('small', null, card.fact.src))),
         h('section', { class: 'ex-check' }, h('h3', null, p.lang === 'ar' ? '⚡ تحدٍّ سريع' : '⚡ Mini-défi'), h('p', null, card.check.q), choices, why)),
       h('footer', { class: 'ex-foot' }, nextBtn));
@@ -296,6 +304,7 @@ function quizPlayer(st, { mode, part, k }) {
       const { close, sheet } = openSheet(h('div', null,
         h('div', { class: 'ex-fb-head' }, h('span', { class: 'ex-fb-ico', 'aria-hidden': 'true' }, fb.ok ? '✓' : '✗'), h('h2', null, fb.title), xpTag),
         h('div', { class: 'ex-fb-body' }, fb.body.map((t, i) => h('p', { class: i === 0 && fb.reveal ? 'ex-reveal' : '' }, t))),
+        exampleBox(fb.ex, q.lang),
         fb.src ? h('p', { class: 'ex-src' }, '📚 ', fb.src) : null,
         hintLink,
         h('div', { class: 'ex-actions' }, ...btns)), { tone, lang: q.lang, label: fb.title });
@@ -448,6 +457,7 @@ function blancScreen(st) {
               h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`),
               q.just ? h('p', null, q.just) : null,
               h('p', null, conceptFor(q).why),
+              exampleBox(exampleFor(q), q.lang),
               h('p', { class: 'ex-src' }, '📚 ', conceptFor(q).src)));
         })),
         h('div', { class: 'ex-actions col' }, h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: run }, 'Nouvel examen blanc'), h('a', { class: 'ex-btn', href: BASE }, 'Retour au parcours')));
@@ -586,7 +596,7 @@ function positionScreen(st, showReport) {
       const p = partById(g.part);
       return h('li', { ...langAttrs(g.lang), style: `--c:${p.color}` }, h('details', null,
         h('summary', null, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('b', null, conceptTitle(g.id, g.lang)), g.unknown ? h('small', { class: 'ex-muted' }, g.lang === 'ar' ? ' · لا أعرف' : ' · « je ne sais pas »') : null),
-        h('p', null, g.why), h('p', { class: 'ex-src' }, '📚 ', g.src),
+        h('p', null, g.why), exampleBox(g.ex, g.lang), h('p', { class: 'ex-src' }, '📚 ', g.src),
         h('a', { class: 'ex-btn', href: `${BASE}/p/${g.part}/lecon` }, g.lang === 'ar' ? 'مراجعة الدرس' : 'Revoir la leçon')));
     })) : h('p', { class: 'ex-muted' }, 'Aucune notion ratée : bravo !');
     const pathEl = res.path.length ? h('ol', { class: 'ex-reco' }, res.path.map((id, k) => {
@@ -602,7 +612,7 @@ function positionScreen(st, showReport) {
           h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : answers[k] == null ? '? ' : '✗ '), q.q),
           answers[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[answers[k]]}. ${q.options[answers[k]]}`) : null,
           h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`),
-          h('p', null, conceptFor(q).why)));
+          h('p', null, conceptFor(q).why), exampleBox(exampleFor(q), q.lang)));
       }))) : null;
     const first = res.path[0];
     root.replaceChildren(

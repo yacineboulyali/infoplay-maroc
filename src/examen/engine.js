@@ -5,6 +5,8 @@ import { PARTS, partById } from './data/parts.js';
 import { CONCEPTS_FR, DEFAULT_FR } from './data/concepts-fr.js';
 import { CONCEPTS_AR, DEFAULT_AR } from './data/concepts-ar.js';
 import { DISTRACTORS_FR, DISTRACTORS_AR } from './data/distractors.js';
+import { EXAMPLES_FR } from './data/examples-fr.js';
+import { EXAMPLES_AR } from './data/examples-ar.js';
 
 export const LEVEL_SIZE = 8;          // questions par niveau
 export const HEARTS = 5;              // vies par niveau
@@ -35,6 +37,10 @@ const norm = (lang, s) => (lang === 'ar' ? normAr(s) : normFr(s));
 
 // ---------- Notion, indice, feedbacks ----------
 const conceptCache = new Map();
+/** Exemple concret de la notion d'une question (dans la langue de la question). */
+export const exampleFor = (q) => (q.lang === 'ar' ? EXAMPLES_AR : EXAMPLES_FR)[conceptFor(q).id] || '';
+export const exampleOf = (id, lang) => (lang === 'ar' ? EXAMPLES_AR : EXAMPLES_FR)[id] || '';
+
 export function conceptFor(q) {
   if (conceptCache.has(q.id)) return conceptCache.get(q.id);
   const list = q.lang === 'ar' ? CONCEPTS_AR : CONCEPTS_FR;
@@ -95,7 +101,7 @@ export function correctFeedback(q, attempt = 1) {
   if (isNone(q, q.answer)) body.push(t.none);
   if (q.just) body.push(q.just);
   body.push(c.why);
-  return { ok: true, title: attempt > 1 ? pick(t.praiseLate, seed) : pick(t.praise, seed), body, src: c.src };
+  return { ok: true, title: attempt > 1 ? pick(t.praiseLate, seed) : pick(t.praise, seed), body, ex: exampleFor(q), src: c.src };
 }
 
 /** Feedback d'une mauvaise réponse : sans révéler au premier essai, avec la réponse ensuite. */
@@ -113,7 +119,7 @@ export function wrongFeedback(q, chosen, attempt = 1) {
   if (isNone(q, q.answer)) body.push(t.none);
   if (q.just) body.push(q.just);
   body.push(c.why);
-  return { ok: false, reveal: true, title: pick(t.wrong, q.num), body, src: c.src };
+  return { ok: false, reveal: true, title: pick(t.wrong, q.num), body, ex: exampleFor(q), src: c.src };
 }
 
 // ---------- Rangs et badges ----------
@@ -338,7 +344,7 @@ export function analyzePosition(set, answers) {
       missed.push(q.id);
       const c = conceptFor(q);
       const k = q.lang + ':' + c.id;
-      if (!concepts.has(k)) concepts.set(k, { id: c.id, lang: q.lang, part: q.part, why: c.why, src: c.src, unknown: answers[i] == null });
+      if (!concepts.has(k)) concepts.set(k, { id: c.id, lang: q.lang, part: q.part, why: c.why, ex: exampleOf(c.id, q.lang), src: c.src, unknown: answers[i] == null });
     }
   });
   const ok = set.filter((q, i) => answers[i] === q.answer).length;
