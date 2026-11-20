@@ -85,9 +85,11 @@ test('examen : XP, combo, révision, niveaux et badges', () => {
   assert.deepEqual(st.state.review, [QUESTIONS[1].id]);
   st.answer(QUESTIONS[1], { ok: true, attempt: 1, combo: 1, review: true });
   assert.deepEqual(st.state.review, []);
-  assert.equal(st.isLevelOpen('D1', 1), false);
+  assert.equal(st.isLevelOpen('D1', 1), true); // tous les niveaux sont accessibles
+  assert.equal(st.isLevelNext('D1', 1), false);
   assert.equal(st.levelDone('D1', 0, { firstTry: 8, total: 8, hints: 0, mistakes: 0 }), 3);
-  assert.equal(st.isLevelOpen('D1', 1), true);
+  assert.equal(st.isLevelNext('D1', 1), true);
+  assert.equal(st.isLevelNext('D1', 0), false);
   assert.ok(st.state.badges['first-level'] && st.state.badges.perfect);
   assert.ok(st.state.notifs.length > 0);
   assert.equal(HEARTS, 5);

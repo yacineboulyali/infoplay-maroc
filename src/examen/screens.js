@@ -200,14 +200,16 @@ function partPage(st, p) {
     h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, p.lang === 'ar' ? '‹' : '›'));
   const a0 = annalesStart(p.id); const ar = p.lang === 'ar';
   const path = h('ol', { class: 'ex-path' }, lv.flatMap((qs, k) => {
-    const done = st.state.levels[p.id + ':' + k]; const open = st.isLevelOpen(p.id, k);
+    const done = st.state.levels[p.id + ':' + k]; const next = st.isLevelNext(p.id, k);
     const ann = a0 >= 0 && k >= a0;
     const stars = done ? '★'.repeat(done.stars) + '☆'.repeat(3 - done.stars) : '';
     const name = ann ? `${ar ? 'حوليات' : 'Annales'} ${k - a0 + 1}` : `${ar ? 'المستوى' : 'Niveau'} ${k + 1}`;
-    const inner = [h('span', { class: 'ex-node-c', 'aria-hidden': 'true' }, done ? '✓' : open ? (ann ? '📝' : String(k + 1)) : '🔒'), h('span', { class: 'ex-node-t' }, h('b', null, name), h('small', null, done ? stars : `${qs.length} questions`))];
-    const node = h('li', { style: `--i:${k}`, class: (k % 2 ? 'r' : 'l') + (ann ? ' ann' : '') }, open
-      ? h('a', { class: 'ex-lnode' + (done ? ' done' : ' open'), href: `${BASE}/p/${p.id}/n/${k}` }, ...inner)
-      : h('span', { class: 'ex-lnode locked', 'aria-disabled': 'true', title: 'Termine le niveau précédent' }, ...inner));
+    const inner = [h('span', { class: 'ex-node-c', 'aria-hidden': 'true' }, done ? '✓' : ann ? '📝' : String(k + 1)), h('span', { class: 'ex-node-t' }, h('b', null, name), h('small', null, done ? stars : `${qs.length} questions`))];
+    // Tous les niveaux s'ouvrent ; ceux qui ne sont ni faits ni conseillés restent pâles.
+    const state = done ? 'done' : next ? 'open' : 'pending';
+    const tip = done ? null : next ? (ar ? 'المستوى الموصى به' : 'Niveau conseillé') : (ar ? 'لم يحن دوره بعد، لكنه متاح' : 'Pas encore à ton programme, mais accessible');
+    const node = h('li', { style: `--i:${k}`, class: (k % 2 ? 'r' : 'l') + (ann ? ' ann' : '') },
+      h('a', { class: 'ex-lnode ' + state, href: `${BASE}/p/${p.id}/n/${k}`, title: tip }, ...inner));
     if (k !== a0) return [node];
     const sep = h('li', { class: 'ex-path-sep' }, h('b', null, ar ? '📝 حوليات الامتحان المهني 2021-2025' : '📝 Annales officielles 2021-2025'),
       h('small', null, ar ? 'أسئلة مستخرجة من مواضيع الامتحان: اختيار من متعدد، صحيح أو خطأ، ملء الفراغ. مفتوحة مباشرة.' : 'Questions tirées des sujets du concours : QCM, vrai/faux et phrases à compléter. Accessibles tout de suite.'));
@@ -262,7 +264,7 @@ function lessonPlayer(st, p) {
     root.replaceChildren(h('section', { class: 'ex-end' },
       h('div', { class: 'ex-end-badge', 'aria-hidden': 'true' }, '📖'),
       h('h2', { tabindex: '-1' }, p.lang === 'ar' ? 'انتهى الدرس!' : 'Leçon terminée !'),
-      h('p', null, p.lang === 'ar' ? 'المستوى 1 مفتوح الآن.' : 'Le niveau 1 est débloqué.'),
+      h('p', null, p.lang === 'ar' ? 'المستوى 1 في انتظارك.' : 'Le niveau 1 t’attend.'),
       h('div', { class: 'ex-end-stats' }, h('span', null, h('b', null, `+${XP.lessonDone}`), h('small', null, 'XP'))),
       h('div', { class: 'ex-actions col' },
         h('a', { class: 'ex-btn ex-primary', href: `${BASE}/p/${p.id}/n/0` }, p.lang === 'ar' ? 'ابدأ المستوى 1' : 'Commencer le niveau 1'),

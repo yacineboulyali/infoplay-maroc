@@ -78,7 +78,7 @@ export const UI = {
   'Prêt pour le jour J': 'جاهز ليوم الامتحان', 'Obtenir au moins 14/20 à l’examen blanc.': 'الحصول على 14/20 على الأقل في الامتحان التجريبي.',
   // Notifications
   'Continue chaque jour pour garder ta flamme allumée.': 'واصل كل يوم لتبقى شعلتك مشتعلة.', 'Objectif du jour atteint 🎯': 'تحقق هدف اليوم',
-  'Niveau 1 débloqué': 'المستوى 1 مفتوح', 'Bilan diagnostique prêt': 'الحصيلة التشخيصية جاهزة',
+  'Niveau 1 débloqué': 'المستوى 1 مفتوح', 'Niveau 1 conseillé': 'المستوى 1 موصى به', 'Le niveau 1 t’attend.': 'المستوى 1 في انتظارك.', 'Niveau conseillé': 'المستوى الموصى به', 'Pas encore à ton programme, mais accessible': 'لم يحن دوره بعد، لكنه متاح', 'Bilan diagnostique prêt': 'الحصيلة التشخيصية جاهزة',
   // Anciens intitulés encore présents dans les notifications enregistrées
   'Bilan de positionnement prêt': 'الحصيلة التشخيصية جاهزة', 'Passer le test de positionnement.': 'اجتياز التقويم التشخيصي.', 'Test de positionnement': 'التقويم التشخيصي',
   'Aucune lacune majeure : passe aux niveaux et à l’examen blanc.': 'لا توجد ثغرة كبيرة: انتقل إلى المستويات والامتحان التجريبي.',
@@ -119,6 +119,7 @@ export const UI_PATTERNS = [
   [/^Niveau (\d+) terminé !$/, (m) => `انتهى المستوى ${m[1]}!`],
   [/^Niveau (\d+) →$/, (m) => `المستوى ${m[1]} ←`],
   [/^Niveau (\d+) débloqué$/, (m) => `المستوى ${m[1]} مفتوح`],
+  [/^Niveau (\d+) conseillé$/, (m) => `المستوى ${m[1]} موصى به`],
   [/^(\d+) questions?$/, (m) => `${m[1]} سؤالا`],
   [/^(\d+) cœurs$/, (m) => `${m[1]} قلوب`],
   [/^(\d+) étoiles? sur 3$/, (m) => `${m[1]} نجوم من 3`],

@@ -925,3 +925,8 @@ body.ex-tr-on :is(.ex-phead,.ex-hero,.ex-pos-hero,.ex-cta,.ex-primary) .ex-tr{co
 .ex-top .ex-chips{flex-shrink:0}
 /* Petit téléphone : le titre tronqué (« E… ») cède la place à l'interrupteur de thème ; il reste lu par les lecteurs d'écran. */
 @media (max-width:479px){.ex-top h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.ex-top .ex-chips{margin-inline-start:auto}}
+/* Niveau accessible mais pas encore à faire ni réussi : pâle, il reprend ses couleurs au survol. */
+.ex-lnode.pending{opacity:.5;filter:saturate(.35)}
+.ex-lnode.pending .ex-node-c{background:var(--ex-line);color:var(--ex-mut);box-shadow:none;animation:none}
+.ex-lnode.pending .ex-node-t small{color:var(--ex-mut)}
+.ex-lnode.pending:hover,.ex-lnode.pending:focus-visible{opacity:.85;filter:none}

@@ -293,12 +293,14 @@ export function createExamStore(storage, pid = 'invite') {
     setSysNotif(v) { s.sysNotif = !!v; save(); },
     partProgress,
     // Les annales forment une piste à part : leur premier niveau est ouvert d'emblée.
-    isLevelOpen(id, k) { return k === 0 || k === annalesStart(id) ? true : !!s.levels[id + ':' + (k - 1)]; },
+    // Tous les niveaux sont accessibles ; « conseillé » marque seulement le prochain niveau du parcours.
+    isLevelOpen(id, k) { return k >= 0 && k < levelsOf(id).length; },
+    isLevelNext(id, k) { return !s.levels[id + ':' + k] && (k === 0 || k === annalesStart(id) || !!s.levels[id + ':' + (k - 1)]); },
     lessonCard(id) { gain(XP.lessonCard); save(); },
     lessonDone(id) {
       const first = !s.lessons[id];
       s.lessons[id] = new Date().toISOString();
-      if (first) { gain(XP.lessonDone); award('first-lesson'); notify('unlock', 'Niveau 1 débloqué', `${partById(id)?.title || id} : les questions t’attendent.`, '🔓'); }
+      if (first) { gain(XP.lessonDone); award('first-lesson'); notify('unlock', 'Niveau 1 conseillé', `${partById(id)?.title || id} : les questions t’attendent.`, '➡️'); }
       save();
     },
     /** Enregistre une réponse. Retourne les XP gagnés. */
@@ -330,7 +332,7 @@ export function createExamStore(storage, pid = 'invite') {
       award('first-level');
       if (!mistakes && !hints) award('perfect');
       const lv = levelsOf(id);
-      if (!prev && k + 1 < lv.length) notify('unlock', `Niveau ${k + 2} débloqué`, partById(id)?.title || id, '🔓');
+      if (!prev && k + 1 < lv.length) notify('unlock', `Niveau ${k + 2} conseillé`, partById(id)?.title || id, '➡️');
       const g = id[0];
       if (groupDone(g)) award('group-' + g);
       save();
