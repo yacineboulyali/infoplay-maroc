@@ -11,8 +11,9 @@ const { DISTRACTORS_FR } = await import(base+'data/distractors.js');
 const { EXAMPLES_FR } = await import(base+'data/examples-fr.js');
 const { LESSON_EXAMPLES } = await import(base+'data/lesson-examples.js');
 const { CONCEPT_TITLES } = await import(base+'data/concept-titles.js');
+const { ANNALES } = await import(base+'data/annales.js');
 const out = process.argv[2];
-const groups = { lessons: new Map(), feedback: new Map(), qcm: new Map() };
+const groups = { lessons: new Map(), feedback: new Map(), qcm: new Map(), annales: new Map() };
 const add = (g, s) => { if (typeof s !== 'string') return; s = s.trim(); if (!s || !/[a-zA-Zéèà]{2}/.test(s)) return; groups[g].set(trKey(s), s); };
 const walk = (g, o, skip = []) => { if (typeof o === 'string') return add(g, o); if (Array.isArray(o)) return o.forEach((x) => walk(g, x, skip)); if (o && typeof o === 'object') for (const k in o) if (!skip.includes(k)) walk(g, o[k], skip); };
 const fr = PARTS.filter((p) => p.lang === 'fr');
@@ -23,6 +24,9 @@ for (const d of DISTRACTORS_FR) { add('feedback', d.msg); add('feedback', d.labe
 Object.values(EXAMPLES_FR).forEach((x) => add('feedback', x));
 Object.entries(CONCEPT_TITLES).forEach(([k, v]) => { if (!k.endsWith('-ar')) add('feedback', typeof v === 'string' ? v : v.fr); });
 for (const r of QCM.filter((r) => fr.some((p) => p.id === r[0]))) { add('qcm', r[3]); r[4].forEach((o) => add('qcm', o)); add('qcm', r[6]); }
+// Annales officielles 2021-2025 (parties françaises) : énoncé, propositions, justification, libellés vrai/faux.
+for (const a of ANNALES.filter((a) => fr.some((p) => p.id === a.p))) { add('annales', a.q); (a.o || []).forEach((o) => add('annales', o)); add('annales', a.j); }
+add('annales', 'Vrai'); add('annales', 'Faux');
 for (const [g, m] of Object.entries(groups)) {
   const rows = [...m].map(([k, s]) => `${k}\t${s}`);
   let chunk = [], size = 0, n = 0;

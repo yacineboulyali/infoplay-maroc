@@ -156,8 +156,9 @@ test('traduction arabe : chaque texte français du module a sa traduction', asyn
   const { trAr } = await import('../src/examen/i18n.js');
   const { CONCEPTS_FR } = await import('../src/examen/data/concepts-fr.js');
   const { EXAMPLES_FR } = await import('../src/examen/data/examples-fr.js');
-  // Les annales (série 2) ne sont pas encore traduites : leur bouton de traduction reste simplement vide.
-  const fr = QUESTIONS.filter((q) => q.lang === 'fr' && !isAnnales(q));
+  const fr = QUESTIONS.filter((q) => q.lang === 'fr');
+  // Même règle que scripts/tr-ar-extract.mjs : un texte sans lettres (« 1001 », « $B$1 ») n'a pas à être traduit.
+  const hasWords = (s) => /[a-zA-Zéèà]{2}/.test(s);
   assert.ok(fr.length > 400);
   for (const q of fr) {
     assert.ok(trAr(q.q), 'énoncé : ' + q.id);

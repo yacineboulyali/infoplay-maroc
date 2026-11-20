@@ -10,6 +10,7 @@ export function trKey(s) {
 import LESSONS from './data/tr/ar-lessons.js';
 import FEEDBACK from './data/tr/ar-feedback.js';
 import QCM_AR from './data/tr/ar-qcm.js';
-const DICT = { ...QCM_AR, ...FEEDBACK, ...LESSONS };
+import ANNALES_AR from './data/tr/ar-annales.js';
+const DICT = { ...ANNALES_AR, ...QCM_AR, ...FEEDBACK, ...LESSONS };
 /** Traduction arabe d'un texte français du module ('' si absente). */
 export const trAr = (s) => (s ? DICT[trKey(s)] || '' : '');

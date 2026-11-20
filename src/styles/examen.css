@@ -867,3 +867,9 @@ body.ex-tr-on .ex-tr-block{display:grid;gap:4px;padding:8px 10px}
   /* Notifications (toasts) : à gauche aussi. */
   .ex-toasts{left:24px;right:auto;transform:none}
 }
+
+/* Traduction des textes d'interface : plus discrète, sous le libellé, y compris dans les boutons et chips. */
+body.ex-tr-on .ex-tr-ui{flex-basis:100%;width:100%;margin-top:2px;padding:1px 6px;font-size:.8em;font-weight:700;background:color-mix(in srgb,var(--ex-pri) 6%,transparent)}
+body.ex-tr-on :has(> .ex-tr-ui){flex-wrap:wrap}
+body.ex-tr-on .ex-btn .ex-tr-ui,body.ex-tr-on .ex-cta .ex-tr-ui,body.ex-tr-on .ex-pos-hero .ex-tr-ui,body.ex-tr-on .ex-hero .ex-tr-ui{background:rgba(255,255,255,.22);color:inherit}
+body.ex-tr-on .ex-primary .ex-tr-ui,body.ex-tr-on .ex-cta .ex-tr-ui{color:#fff}
