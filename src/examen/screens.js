@@ -237,7 +237,7 @@ function lessonPlayer(st, p) {
       why.hidden = false; why.className = 'ex-why ' + (ok ? 'ok' : 'ko');
       if (ok) { sfx('correct'); vibrate(25); st.lessonCard(p.id); floatXp(btn, XP.lessonCard); } else { sfx('wrong'); vibrate([50, 30, 50]); }
       nextBtn.disabled = false; nextBtn.focus();
-    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[k]), h('span', null, o, trLine(o, p.lang)))));
+    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[k]), h('span', null, o))));
     const why = h('p', { class: 'ex-why', hidden: true }, card.check.why, trLine(card.check.why, p.lang));
     nextBtn.addEventListener('click', () => { if (i < p.lesson.length - 1) { i++; render(); window.scrollTo(0, 0); } else done(); });
     root.replaceChildren(
@@ -319,7 +319,7 @@ function quizPlayer(st, { mode, part, k }) {
     const checkBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: true }, T.check);
     const gap = q.type === 'fill' ? h('span', { class: 'ex-gap', 'aria-live': 'polite' }, '   ') : null;
     const opts = h('div', { class: 'ex-opts' + (q.type === 'vf' ? ' ex-vf' : q.type === 'fill' ? ' ex-fill' : ''), role: 'radiogroup', 'aria-label': 'Réponses' }, q.options.map((o, i) => {
-      const b = h('button', { type: 'button', class: 'ex-opt', role: 'radio', 'aria-checked': 'false', style: `--i:${i}` }, h('span', { class: 'ex-letter' }, optMark(q, i)), h('span', null, o, trLine(o, q.lang)));
+      const b = h('button', { type: 'button', class: 'ex-opt', role: 'radio', 'aria-checked': 'false', style: `--i:${i}` }, h('span', { class: 'ex-letter' }, optMark(q, i)), h('span', null, o));
       b.addEventListener('click', () => {
         if (off.has(i)) return; selected = i;
         [...opts.children].forEach((c, j) => { c.classList.toggle('sel', j === i); c.setAttribute('aria-checked', String(j === i)); });
@@ -482,7 +482,7 @@ function blancScreen(st) {
       const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => { if (i < set.length - 1) { i++; show(); window.scrollTo(0, 0); } else { clearInterval(tick); finish(); } } }, i < set.length - 1 ? 'Question suivante' : 'Rendre ma copie');
       const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), onclick: (e) => {
         ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
-      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o, trLine(o, q.lang)))));
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
         h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner' }, '✕'),
           h('span', { class: 'ex-prog big' }, h('i', { style: `--w:${(i / set.length) * 100}%` })), clock),
@@ -616,7 +616,7 @@ function positionScreen(st, showReport) {
       const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => go(ans[i]) }, i < set.length - 1 ? (q.lang === 'ar' ? 'السؤال التالي' : 'Question suivante') : (q.lang === 'ar' ? 'عرض الحصيلة' : 'Voir mon bilan'));
       const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), style: `--i:${k}`, onclick: () => {
         ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
-      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o, trLine(o, q.lang)))));
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
       const dunno = h('button', { type: 'button', class: 'ex-hint-btn ex-dunno', onclick: () => go(null) }, q.lang === 'ar' ? '🤷 لا أعرف' : '🤷 Je ne sais pas');
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
         h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner l’évaluation' }, '✕'),
