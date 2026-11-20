@@ -774,3 +774,96 @@ body.ex-mode:has(.ex-player) .fs-suggest{display:none!important}
   .ex-dash .ex-parts{grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
   .ex-dash .ex-part{height:100%;padding:12px 14px}
 }
+
+/* ==========================================================================
+   Traduction arabe : petit bouton « 文A AR » et lignes arabes sous le français
+   ========================================================================== */
+.ex-trbtn{display:inline-flex;align-items:center;gap:2px;flex:none;height:22px;padding:0 6px 0 4px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--ex-pri) 35%,var(--ex-line));background:var(--ex-card);color:var(--ex-pri);font:inherit;font-size:.62rem;font-weight:900;letter-spacing:.03em;line-height:1;cursor:pointer;vertical-align:middle;transition:background .15s,color .15s,transform .1s}
+.ex-trbtn:active{transform:scale(.94)}
+.ex-trbtn-ico{display:block;width:13px;height:13px}
+.ex-trbtn-ico svg{display:block;width:100%;height:100%}
+.ex-trbtn[aria-pressed="true"]{background:var(--ex-pri);border-color:var(--ex-pri);color:#fff}
+.ex-tr{display:none}
+body.ex-tr-on .ex-tr{display:block;margin-top:4px;padding:3px 8px;border-radius:8px;direction:rtl;text-align:right;font-family:"Noto Naskh Arabic","Segoe UI","Tahoma",system-ui,sans-serif;font-size:.92em;font-weight:600;line-height:1.6;color:color-mix(in srgb,var(--ex-pri) 80%,var(--ex-ink));background:color-mix(in srgb,var(--ex-pri) 7%,transparent);letter-spacing:0;text-transform:none;animation:ex-in .25s both}
+body.ex-tr-on .ex-tr-block{display:grid;gap:4px;padding:8px 10px}
+.ex-tr-block p{margin:0}
+.ex-opt .ex-tr,.ex-choice .ex-tr{font-size:.88em;padding:2px 6px}
+.ex-opt.sel .ex-tr{background:rgba(255,255,255,.6)}
+.ex-qmeta{display:flex;align-items:center;gap:8px}
+.ex-qmeta>small{margin-inline-start:auto}
+.ex-eyebrow-row,.ex-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ex-sheet-head h2{margin:0}
+.ex-fb-head .ex-trbtn{margin-inline-start:auto}
+.ex-tr-row{display:flex;justify-content:flex-end;margin:4px 0}
+.ex-pop-tr{display:flex;justify-content:flex-end}
+.ex-group>header .ex-trbtn{margin-inline-start:auto;align-self:start}
+.ex-phead-stats .ex-trbtn{background:rgba(255,255,255,.92)}
+.ex-pmeta .ex-tr{font-size:.8em;font-weight:700}
+.ex-pop .ex-tr{font-size:.95em}
+
+/* ---------- Annales officielles 2021-2025 : piste de niveaux, vrai/faux, phrases à trous ---------- */
+.ex-path li.ex-path-sep{grid-column:1/-1;display:grid;gap:2px;justify-content:stretch;text-align:center;padding:12px 14px;margin-top:8px;border-radius:14px;background:var(--ex-card);border:2px dashed color-mix(in srgb,var(--c) 45%,transparent);z-index:1}
+.ex-path li.ex-path-sep b{font-size:1rem;color:var(--ex-ink)}
+.ex-path li.ex-path-sep small{color:var(--ex-mut);font-weight:600;line-height:1.35}
+.ex-path li.ann .ex-lnode{border:2px solid color-mix(in srgb,var(--c) 35%,transparent)}
+.ex-exam-chip{padding:3px 9px;border-radius:999px;background:#fff4d6;color:#7a4b00;border:1px solid #f0d48a;font-weight:800;font-size:.75rem;white-space:nowrap}
+.ex-qmeta .ex-exam-chip+small{margin-inline-start:auto}
+.ex-qtype{margin:6px 0 -4px;font-size:.85rem;font-weight:800;color:var(--c)}
+.ex-gap{display:inline-block;min-width:5.5em;margin:0 .2em;padding:0 .35em;border-bottom:3px solid var(--c);border-radius:6px 6px 0 0;background:color-mix(in srgb,var(--c) 8%,transparent);text-align:center;transition:background .2s}
+.ex-gap.on{background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+.ex-opts.ex-vf{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ex-opts.ex-vf .ex-opt{justify-content:center;font-size:1.05rem;font-weight:800;min-height:64px}
+.ex-opts.ex-fill{display:flex;flex-wrap:wrap;gap:10px}
+.ex-opts.ex-fill .ex-opt{flex:1 1 auto;width:auto}
+
+/* ==========================================================================
+   Ordinateur (≥ 1024 px) : interface propre au Web, distincte du mobile.
+   Plein écran centré avec 10 % de marge de chaque côté, boutons plus grands,
+   barre d'action fixée en bas de page, feedback qui glisse depuis la gauche.
+   ========================================================================== */
+@media (min-width:1024px){
+  /* Mise en page : 80 % de la largeur, centrée. */
+  .ex-top{padding-left:10vw;padding-right:10vw;min-height:68px}
+  .ex-body,.ex-body.ex-dash,.ex-pos{max-width:none;width:auto;margin:0;padding:22px 10vw 40px}
+  .ex-player{max-width:none;width:auto;margin:0;padding:0 10vw 120px}
+  .ex-end,.ex-empty,.ex-blanc-intro,.ex-pos-intro{max-width:none;margin:28px 0}
+  .ex-ptop{padding:18px 0 14px;gap:16px}
+  .ex-prog.big{height:10px}
+
+  /* Boutons courts agrandis. */
+  .ex-btn{min-height:58px;padding:14px 28px;font-size:1.08rem;border-radius:18px}
+  .ex-opt{min-height:72px;padding:18px 20px;font-size:1.08rem;border-radius:18px}
+  .ex-opt .ex-letter{width:38px;height:38px;font-size:1rem}
+  .ex-choice{min-height:60px;padding:14px 18px;font-size:1.02rem}
+  .ex-hint-btn{min-height:48px;padding:10px 22px;font-size:1rem}
+  .ex-chip{padding:8px 14px;font-size:.95rem}
+  .ex-back,.ex-x{width:46px;height:46px;font-size:1.2rem}
+  .ex-trbtn{height:30px;padding:0 10px 0 7px;font-size:.74rem;gap:4px}
+  .ex-trbtn-ico{width:16px;height:16px}
+  .ex-tnav-i{padding:11px 20px;font-size:1rem}
+  .ex-tnav-i .ex-nav-ico{width:20px;height:20px}
+  .ex-avatar{width:50px;height:50px;font-size:1.5rem}
+  .ex-cta{min-height:76px;padding:16px 22px}
+  .ex-qk{min-height:84px;padding:12px 8px}
+  .ex-part{min-height:96px}
+  .ex-lnode{min-height:76px}
+  .ex-poscard{padding:20px}
+  .ex-lesson-tile{min-height:72px;padding:14px 18px}
+  .ex-q{font-size:1.45rem;line-height:1.35}
+  .ex-opts{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+
+  /* Barre d'action « Continuer / Vérifier » en bas de page, sur toute la largeur. */
+  .ex-foot,[dir="rtl"] .ex-foot,.ex-app:has(.ex-player) .ex-foot{left:0;right:0;bottom:0;display:flex;justify-content:flex-end;align-items:center;gap:16px;padding:16px 10vw calc(16px + env(safe-area-inset-bottom,0px));background:var(--ex-card);border-top:2px solid var(--ex-line);box-shadow:0 -6px 20px rgba(28,35,64,.06)}
+  .ex-foot .ex-btn{width:auto;min-width:260px;max-width:none;margin:0}
+
+  /* Feedback : panneau qui glisse depuis la gauche. */
+  .ex-sheet-bg,[dir="rtl"] .ex-sheet-bg{justify-content:flex-start;align-items:stretch}
+  .ex-sheet{width:min(500px,38vw);max-width:none;height:100%;max-height:none;border-radius:0 26px 26px 0;transform:translateX(-105%);padding:30px 28px;border-top:0;box-shadow:12px 0 40px rgba(0,0,0,.22)}
+  .ex-sheet-bg.open .ex-sheet{transform:none}
+  .ex-sheet-ok{border-left:0;border-right:6px solid var(--ex-ok)}
+  .ex-sheet-ko{border-left:0;border-right:6px solid var(--ex-ko)}
+  .ex-sheet .ex-actions .ex-btn{min-height:56px}
+
+  /* Notifications (toasts) : à gauche aussi. */
+  .ex-toasts{left:24px;right:auto;transform:none}
+}

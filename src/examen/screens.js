@@ -4,17 +4,19 @@ import { h, celebrate } from '../utils/dom.js';
 import { audio } from '../audio/audio.js';
 import { GROUPS, PARTS, partById } from './data/parts.js';
 import {
-  QUESTIONS, levelsOf, letters, hintFor, correctFeedback, wrongFeedback, createExamStore, rankOf,
+  QUESTIONS, levelsOf, annalesStart, letters, hintFor, correctFeedback, wrongFeedback, createExamStore, rankOf,
   BADGES, DAILY_GOAL, HEARTS, XP, blancSet, byId, conceptFor,
   positionSet, analyzePosition, bandOf, levelOfScore, MASTERY_BANDS, POSITION_PLAN, exampleFor,
 } from './engine.js';
 import { conceptTitle } from './data/concept-titles.js';
 import { LESSON_EXAMPLES } from './data/lesson-examples.js';
+import { trBtn, trLine, trBlock } from './tr-ui.js';
+import { sfx, sfxOn, setSfx } from './sfx.js';
 
 // Encadré « Exemple » : un cas concret qui accompagne chaque explication.
-function exampleBox(text, lang, label) {
+function exampleBox(text, lang, label, ar) {
   if (!text) return null;
-  return h('div', { class: 'ex-example' }, h('b', null, label || (lang === 'ar' ? '🧪 مثال' : '🧪 Exemple')), h('p', null, text));
+  return h('div', { class: 'ex-example' }, h('b', null, label || (lang === 'ar' ? '🧪 مثال' : '🧪 Exemple')), h('p', null, text), trLine(text, lang, ar));
 }
 import { visual } from './visuals.js';
 
@@ -169,12 +171,12 @@ function hub(st) {
     h('a', { class: 'ex-qk', href: BASE + '/blanc' }, h('span', { 'aria-hidden': 'true' }, '📜'), h('b', null, s.blanc[0] ? `${s.blanc[0].score}/20` : '—'), h('small', null, 'examen blanc')),
     h('a', { class: 'ex-qk', href: BASE + '/profil' }, h('span', { 'aria-hidden': 'true' }, '🏅'), h('b', null, `${Object.keys(s.badges).length}/${BADGES.length}`), h('small', null, 'badges')));
   const groups = GROUPS.map((g) => h('section', { class: 'ex-group', ...langAttrs(g.lang) },
-    h('header', null, h('span', { class: 'ex-gico', 'aria-hidden': 'true' }, g.icon), h('div', null, h('h2', null, g.title), h('p', null, g.sub))),
+    h('header', null, h('span', { class: 'ex-gico', 'aria-hidden': 'true' }, g.icon), h('div', null, h('h2', null, g.title, trLine(g.title, g.lang)), h('p', null, g.sub, trLine(g.sub, g.lang))), trBtn(g.lang)),
     h('ol', { class: 'ex-parts' }, PARTS.filter((p) => p.group === g.id).map((p, i) => {
       const pr = st.partProgress(p.id);
       return h('li', { style: `--i:${i}` }, h('a', { class: 'ex-part' + (pr.done ? ' done' : ''), href: `${BASE}/p/${p.id}`, style: `--c:${p.color}` },
         h('span', { class: 'ex-pico' }, ring(pr.ratio, 58, 6, p.icon)),
-        h('span', { class: 'ex-pmeta' }, h('b', null, p.title), h('small', null, `${pr.lesson ? '📖 ✓' : '📖'} · ${pr.count}/${pr.levels} niveaux · ⭐ ${pr.stars}/${pr.maxStars}`), bandChip(st, p.id)),
+        h('span', { class: 'ex-pmeta' }, h('b', null, p.title, trLine(p.title, p.lang)), h('small', null, `${pr.lesson ? '📖 ✓' : '📖'} · ${pr.count}/${pr.levels} niveaux · ⭐ ${pr.stars}/${pr.maxStars}`), bandChip(st, p.id)),
         h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, g.lang === 'ar' ? '‹' : '›')));
     }))));
   // Mobile : une seule colonne. Ordinateur et grande tablette : tableau de bord à gauche, parcours à droite.
@@ -195,18 +197,25 @@ function partPage(st, p) {
     h('span', { class: 'ex-lt-ico', 'aria-hidden': 'true' }, pr.lesson ? '✅' : '📖'),
     h('span', null, h('b', null, p.lang === 'ar' ? 'الدرس المختصر' : 'Leçon express'), h('small', null, `${p.lesson.length} ${p.lang === 'ar' ? 'بطاقات متحركة · +' : 'cartes animées · +'}${XP.lessonDone + p.lesson.length * XP.lessonCard} XP`)),
     h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, p.lang === 'ar' ? '‹' : '›'));
-  const path = h('ol', { class: 'ex-path' }, lv.map((qs, k) => {
+  const a0 = annalesStart(p.id); const ar = p.lang === 'ar';
+  const path = h('ol', { class: 'ex-path' }, lv.flatMap((qs, k) => {
     const done = st.state.levels[p.id + ':' + k]; const open = st.isLevelOpen(p.id, k);
+    const ann = a0 >= 0 && k >= a0;
     const stars = done ? '★'.repeat(done.stars) + '☆'.repeat(3 - done.stars) : '';
-    const inner = [h('span', { class: 'ex-node-c', 'aria-hidden': 'true' }, done ? '✓' : open ? String(k + 1) : '🔒'), h('span', { class: 'ex-node-t' }, h('b', null, `${p.lang === 'ar' ? 'المستوى' : 'Niveau'} ${k + 1}`), h('small', null, done ? stars : `${qs.length} questions`))];
-    return h('li', { style: `--i:${k}`, class: k % 2 ? 'r' : 'l' }, open
+    const name = ann ? `${ar ? 'حوليات' : 'Annales'} ${k - a0 + 1}` : `${ar ? 'المستوى' : 'Niveau'} ${k + 1}`;
+    const inner = [h('span', { class: 'ex-node-c', 'aria-hidden': 'true' }, done ? '✓' : open ? (ann ? '📝' : String(k + 1)) : '🔒'), h('span', { class: 'ex-node-t' }, h('b', null, name), h('small', null, done ? stars : `${qs.length} questions`))];
+    const node = h('li', { style: `--i:${k}`, class: (k % 2 ? 'r' : 'l') + (ann ? ' ann' : '') }, open
       ? h('a', { class: 'ex-lnode' + (done ? ' done' : ' open'), href: `${BASE}/p/${p.id}/n/${k}` }, ...inner)
       : h('span', { class: 'ex-lnode locked', 'aria-disabled': 'true', title: 'Termine le niveau précédent' }, ...inner));
+    if (k !== a0) return [node];
+    const sep = h('li', { class: 'ex-path-sep' }, h('b', null, ar ? '📝 حوليات الامتحان المهني 2021-2025' : '📝 Annales officielles 2021-2025'),
+      h('small', null, ar ? 'أسئلة مستخرجة من مواضيع الامتحان: اختيار من متعدد، صحيح أو خطأ، ملء الفراغ. مفتوحة مباشرة.' : 'Questions tirées des sujets du concours : QCM, vrai/faux et phrases à compléter. Accessibles tout de suite.'));
+    return [sep, node];
   }));
   return [topbar(st, { title: p.short, back: BASE }), h('div', { class: 'ex-body ex-split', style: `--c:${p.color}`, ...langAttrs(p.lang) },
     h('aside', { class: 'ex-side' },
-      h('section', { class: 'ex-phead' }, h('span', { class: 'ex-phead-ico', 'aria-hidden': 'true' }, p.icon), h('div', null, h('h2', null, p.title), h('p', null, p.weight)),
-        h('div', { class: 'ex-phead-stats' }, h('span', null, `⭐ ${pr.stars}/${pr.maxStars}`), h('span', null, `🎯 ${pr.count}/${pr.levels}`), bandChip(st, p.id, true))),
+      h('section', { class: 'ex-phead' }, h('span', { class: 'ex-phead-ico', 'aria-hidden': 'true' }, p.icon), h('div', null, h('h2', null, p.title, trLine(p.title, p.lang)), h('p', null, p.weight, trLine(p.weight, p.lang))),
+        h('div', { class: 'ex-phead-stats' }, trBtn(p.lang), h('span', null, `⭐ ${pr.stars}/${pr.maxStars}`), h('span', null, `🎯 ${pr.count}/${pr.levels}`), bandChip(st, p.id, true))),
       lesson,
       !pr.lesson ? h('p', { class: 'ex-tip' }, p.lang === 'ar' ? '💡 ابدأ بالدرس: يمنحك نقاطا ويهيئك للأسئلة.' : '💡 Commence par la leçon : elle rapporte des XP et prépare aux questions.') : null),
     h('div', { class: 'ex-main' }, path)), bottomNav('hub')];
@@ -226,21 +235,21 @@ function lessonPlayer(st, p) {
       choices.children[card.check.a].classList.add('ok');
       [...choices.children].forEach((c) => c.setAttribute('aria-disabled', 'true'));
       why.hidden = false; why.className = 'ex-why ' + (ok ? 'ok' : 'ko');
-      if (ok) { audio.play('correct', { i }); vibrate(25); st.lessonCard(p.id); floatXp(btn, XP.lessonCard); } else { audio.play('wrong'); vibrate([50, 30, 50]); }
+      if (ok) { sfx('correct'); vibrate(25); st.lessonCard(p.id); floatXp(btn, XP.lessonCard); } else { sfx('wrong'); vibrate([50, 30, 50]); }
       nextBtn.disabled = false; nextBtn.focus();
-    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[k]), h('span', null, o))));
-    const why = h('p', { class: 'ex-why', hidden: true }, card.check.why);
+    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[k]), h('span', null, o, trLine(o, p.lang)))));
+    const why = h('p', { class: 'ex-why', hidden: true }, card.check.why, trLine(card.check.why, p.lang));
     nextBtn.addEventListener('click', () => { if (i < p.lesson.length - 1) { i++; render(); window.scrollTo(0, 0); } else done(); });
     root.replaceChildren(
       playerTop(`${BASE}/p/${p.id}`, (i + 1) / p.lesson.length, null),
       h('article', { class: 'ex-card ex-lcard', key: i },
-        h('small', { class: 'ex-eyebrow' }, `${p.icon} ${p.short} · ${i + 1}/${p.lesson.length}`),
-        h('h2', { tabindex: '-1' }, card.t),
-        h('p', { class: 'ex-lead' }, card.p),
+        h('div', { class: 'ex-eyebrow-row' }, h('small', { class: 'ex-eyebrow' }, `${p.icon} ${p.short} · ${i + 1}/${p.lesson.length}`), trBtn(p.lang)),
+        h('h2', { tabindex: '-1' }, card.t, trLine(card.t, p.lang)),
+        h('p', { class: 'ex-lead' }, card.p, trLine(card.p, p.lang)),
         visual(card.v, { color: p.color, lang: p.lang }),
         exampleBox(LESSON_EXAMPLES[p.id]?.[i], p.lang, p.lang === 'ar' ? '🧪 مثال من القسم' : '🧪 Exemple en classe'),
-        h('aside', { class: 'ex-fact' }, h('span', { 'aria-hidden': 'true' }, '📚'), h('div', null, h('p', null, card.fact.t), h('small', null, card.fact.src))),
-        h('section', { class: 'ex-check' }, h('h3', null, p.lang === 'ar' ? '⚡ تحدٍّ سريع' : '⚡ Mini-défi'), h('p', null, card.check.q), choices, why)),
+        h('aside', { class: 'ex-fact' }, h('span', { 'aria-hidden': 'true' }, '📚'), h('div', null, h('p', null, card.fact.t, trLine(card.fact.t, p.lang)), h('small', null, card.fact.src))),
+        h('section', { class: 'ex-check' }, h('h3', null, p.lang === 'ar' ? '⚡ تحدٍّ سريع' : '⚡ Mini-défi'), h('p', null, card.check.q, trLine(card.check.q, p.lang)), choices, why)),
       h('footer', { class: 'ex-foot' }, nextBtn));
     root.querySelector('h2')?.focus({ preventScroll: true });
   };
@@ -264,6 +273,24 @@ function playerTop(closeHref, ratio, extra) {
     h('a', { class: 'ex-x', href: closeHref, 'aria-label': 'Quitter' }, '✕'),
     h('span', { class: 'ex-prog big', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(Math.round(ratio * 100)) }, h('i', { style: `--w:${ratio * 100}%` })),
     extra);
+}
+
+// ---------- Types de questions des annales : QCM, vrai/faux, phrase à trous ----------
+const GAP = '____';
+/** Repère d'option : lettre pour un QCM ou une phrase à trous, ✓ / ✗ pour un vrai/faux. */
+const optMark = (q, i) => (q.type === 'vf' ? (i === 0 ? '✓' : '✗') : letters(q.lang)[i]);
+/** Énoncé ; pour une phrase à trous, le trou devient une case remplie par le mot choisi. */
+function questionText(q, gap) {
+  if (!gap || !q.q.includes(GAP)) return [q.q];
+  const [a, b] = q.q.split(GAP);
+  return [a, gap, b];
+}
+const examChip = (q) => (q.exam ? h('span', { class: 'ex-exam-chip', title: q.lang === 'ar' ? 'مستخرج من موضوع الامتحان' : 'Tiré du sujet officiel' }, `📝 ${q.exam}`) : null);
+function typeHint(q) {
+  if (q.type !== 'vf' && q.type !== 'fill') return null;
+  const ar = q.lang === 'ar';
+  const t = q.type === 'vf' ? (ar ? 'صحيح أم خطأ؟' : 'Vrai ou faux ?') : (ar ? 'املأ الفراغ بالكلمة المناسبة' : 'Complète la phrase avec le mot qui convient');
+  return h('p', { class: 'ex-qtype' }, q.type === 'vf' ? '⚖️ ' : '✍️ ', t);
 }
 
 // ---------- Lecteur de QCM (niveaux et révision) ----------
@@ -290,11 +317,13 @@ function quizPlayer(st, { mode, part, k }) {
     const heart = mode === 'level' ? h('span', { class: 'ex-hearts', 'aria-label': `${R.hearts} cœurs` }, '❤️', h('b', null, String(R.hearts))) : h('span', { class: 'ex-chip' }, '♻️');
     const combo = h('span', { class: 'ex-combo' + (R.combo >= 2 ? ' on' : ''), 'aria-live': 'polite' }, `🔥 ×${R.combo}`);
     const checkBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: true }, T.check);
-    const opts = h('div', { class: 'ex-opts', role: 'radiogroup', 'aria-label': 'Réponses' }, q.options.map((o, i) => {
-      const b = h('button', { type: 'button', class: 'ex-opt', role: 'radio', 'aria-checked': 'false', style: `--i:${i}` }, h('span', { class: 'ex-letter' }, letters(q.lang)[i]), h('span', null, o));
+    const gap = q.type === 'fill' ? h('span', { class: 'ex-gap', 'aria-live': 'polite' }, '   ') : null;
+    const opts = h('div', { class: 'ex-opts' + (q.type === 'vf' ? ' ex-vf' : q.type === 'fill' ? ' ex-fill' : ''), role: 'radiogroup', 'aria-label': 'Réponses' }, q.options.map((o, i) => {
+      const b = h('button', { type: 'button', class: 'ex-opt', role: 'radio', 'aria-checked': 'false', style: `--i:${i}` }, h('span', { class: 'ex-letter' }, optMark(q, i)), h('span', null, o, trLine(o, q.lang)));
       b.addEventListener('click', () => {
-        if (off.has(i)) return; selected = i; audio.play('click');
+        if (off.has(i)) return; selected = i;
         [...opts.children].forEach((c, j) => { c.classList.toggle('sel', j === i); c.setAttribute('aria-checked', String(j === i)); });
+        if (gap) { gap.textContent = o; gap.classList.add('on'); }
         checkBtn.disabled = false;
       });
       return b;
@@ -305,9 +334,10 @@ function quizPlayer(st, { mode, part, k }) {
       if (!hinted) { hinted = true; R.hints++; }
       hintBtn.classList.add('used');
       const { close } = openSheet(h('div', null,
-        h('h2', null, '💡 ', T.hint),
+        h('div', { class: 'ex-sheet-head' }, h('h2', null, '💡 ', T.hint), trBtn(q.lang)),
         h('p', { class: 'ex-sheet-lead' }, hi.text),
         hi.elim ? h('p', { class: 'ex-elim' }, h('b', null, T.elim + ' : '), hi.elim) : null,
+        trBlock([hi.textAr, hi.elimAr ? 'استبعاد : ' + hi.elimAr : ''], q.lang),
         h('p', { class: 'ex-src' }, '📚 ', hi.src),
         h('p', { class: 'ex-cost' }, T.cost),
         h('div', { class: 'ex-actions' }, h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: () => close() }, T.got))), { tone: 'info', lang: q.lang, label: T.hint });
@@ -325,9 +355,10 @@ function quizPlayer(st, { mode, part, k }) {
       }
       const hintLink = !fb.ok && !fb.reveal ? h('button', { type: 'button', class: 'ex-hint-btn in-sheet', 'data-act': 'hint' }, '💡 ', T.hint) : null;
       const { close, sheet } = openSheet(h('div', null,
-        h('div', { class: 'ex-fb-head' }, h('span', { class: 'ex-fb-ico', 'aria-hidden': 'true' }, fb.ok ? '✓' : '✗'), h('h2', null, fb.title), xpTag),
+        h('div', { class: 'ex-fb-head' }, h('span', { class: 'ex-fb-ico', 'aria-hidden': 'true' }, fb.ok ? '✓' : '✗'), h('h2', null, fb.title), xpTag, trBtn(q.lang)),
         h('div', { class: 'ex-fb-body' }, fb.body.map((t, i) => h('p', { class: i === 0 && fb.reveal ? 'ex-reveal' : '' }, t))),
-        exampleBox(fb.ex, q.lang),
+        trBlock(fb.bodyAr, q.lang, fb.titleAr),
+        exampleBox(fb.ex, q.lang, null, fb.exAr),
         fb.src ? h('p', { class: 'ex-src' }, '📚 ', fb.src) : null,
         hintLink,
         h('div', { class: 'ex-actions' }, ...btns)), { tone, lang: q.lang, label: fb.title });
@@ -346,7 +377,7 @@ function quizPlayer(st, { mode, part, k }) {
         R.combo++; R.maxCombo = Math.max(R.maxCombo, R.combo); if (attempt === 1) R.firstTry++;
         const xp = st.answer(q, { ok: true, attempt, combo: R.combo, hinted, review: mode === 'review' }); R.xp += xp;
         opts.children[selected].classList.add('ok');
-        audio.play('correct', { i: Math.min(R.combo, 9) }); vibrate(30); floatXp(opts.children[selected], xp);
+        sfx('correct'); vibrate(30); floatXp(opts.children[selected], xp);
         combo.textContent = `🔥 ×${R.combo}`; combo.classList.toggle('on', R.combo >= 2);
         if (R.combo > 0 && R.combo % 5 === 0) st.notify('combo', `Combo ×${R.combo} !`, 'Tes réponses s’enchaînent : continue sur ta lancée.', '⚡');
         feedbackSheet({ ...correctFeedback(q, attempt), xp }, () => next());
@@ -356,7 +387,7 @@ function quizPlayer(st, { mode, part, k }) {
       if (attempt === 1) st.answer(q, { ok: false, attempt: 1, combo: 0, hinted, review: mode === 'review' });
       if (mode === 'level') { R.hearts--; heart.querySelector('b').textContent = String(R.hearts); heart.classList.remove('hit'); void heart.offsetWidth; heart.classList.add('hit'); }
       opts.children[selected].classList.add('ko');
-      audio.play('wrong'); vibrate([60, 40, 60]);
+      sfx('wrong'); vibrate([60, 40, 60]);
       const outOfHearts = mode === 'level' && R.hearts <= 0;
       const fb = wrongFeedback(q, selected, outOfHearts ? 2 : attempt);
       const revealAll = () => { opts.children[q.answer].classList.add('ok', 'reveal'); };
@@ -376,8 +407,9 @@ function quizPlayer(st, { mode, part, k }) {
     root.replaceChildren(
       playerTop(closeHref, R.idx / list.length, h('span', { class: 'ex-ptop-r' }, combo, heart)),
       h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
-        h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('small', null, `${R.idx + 1}/${list.length}`)),
-        h('h2', { class: 'ex-q', tabindex: '-1' }, q.q),
+        h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), examChip(q), h('small', null, `${R.idx + 1}/${list.length}`), trBtn(q.lang)),
+        typeHint(q),
+        h('h2', { class: 'ex-q', tabindex: '-1' }, ...questionText(q, gap), trLine(q.q, q.lang)),
         opts,
         hintBtn),
       h('footer', { class: 'ex-foot' }, checkBtn));
@@ -449,14 +481,14 @@ function blancScreen(st) {
       const q = set[i]; const p = partById(q.part);
       const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => { if (i < set.length - 1) { i++; show(); window.scrollTo(0, 0); } else { clearInterval(tick); finish(); } } }, i < set.length - 1 ? 'Question suivante' : 'Rendre ma copie');
       const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), onclick: (e) => {
-        ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false; audio.play('click');
-      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
+        ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o, trLine(o, q.lang)))));
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
         h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner' }, '✕'),
           h('span', { class: 'ex-prog big' }, h('i', { style: `--w:${(i / set.length) * 100}%` })), clock),
         h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
-          h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('small', null, `${i + 1}/${set.length}`)),
-          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q), opts),
+          h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('small', null, `${i + 1}/${set.length}`), trBtn(q.lang)),
+          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, trLine(q.q, q.lang)), opts),
         h('footer', { class: 'ex-foot' }, nextBtn)));
     };
     const finish = () => {
@@ -471,15 +503,16 @@ function blancScreen(st) {
           h('h2', { tabindex: '-1' }, `${score}/20`),
           h('p', null, score >= 14 ? 'Excellent niveau : tu es prêt pour le jour J.' : score >= 10 ? 'La moyenne est là. Revois les questions ratées ci-dessous.' : 'Continue l’entraînement : les questions ratées sont ajoutées à ta révision.'),
           h('div', { class: 'ex-end-stats' }, h('span', null, h('b', null, `${good}/${set.length}`), h('small', null, 'bonnes réponses')), h('span', null, h('b', null, `+${Math.round(score * 3)}`), h('small', null, 'XP')))),
+        h('div', { class: 'ex-tr-row' }, trBtn('fr')),
         h('ol', { class: 'ex-correction' }, set.map((q, k) => {
           const ok = ans[k] === q.answer;
           if (!ok && !st.state.review.includes(q.id)) st.state.review.push(q.id);
           return h('li', { class: ok ? 'ok' : 'ko', ...langAttrs(q.lang) },
-            h('details', null, h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : '✗ '), q.q),
+            h('details', null, h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : '✗ '), q.q, trLine(q.q, q.lang)),
               ans[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[ans[k]]}. ${q.options[ans[k]]}`) : null,
-              h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`),
-              q.just ? h('p', null, q.just) : null,
-              h('p', null, conceptFor(q).why),
+              h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`, trLine(q.options[q.answer], q.lang)),
+              q.just ? h('p', null, q.just, trLine(q.just, q.lang)) : null,
+              h('p', null, conceptFor(q).why, trLine(conceptFor(q).why, q.lang)),
               exampleBox(exampleFor(q), q.lang),
               h('p', { class: 'ex-src' }, '📚 ', conceptFor(q).src)));
         })),
@@ -520,8 +553,14 @@ function profileScreen(st) {
       h('div', null, h('b', null, `×${s.bestCombo}`), h('small', null, 'meilleur combo'))),
     h('h2', { class: 'ex-h2' }, `Badges · ${Object.keys(s.badges).length}/${BADGES.length}`), badges,
     h('h2', { class: 'ex-h2' }, 'Réglages'),
-    h('div', { class: 'ex-actions col' }, notifBtn, resetBtn),
+    h('div', { class: 'ex-actions col' }, soundBtn(), notifBtn, resetBtn),
     h('p', { class: 'ex-muted' }, 'Ta progression reste dans ce navigateur, liée à ton pseudo InfoPlay. Sources des questions : dossiers unifiés de préparation à l’examen d’aptitude professionnelle (informatique, secondaire qualifiant).')), bottomNav('profil')];
+}
+
+function soundBtn() {
+  const label = () => (sfxOn() ? '🔊 Effets sonores activés' : '🔇 Activer les effets sonores');
+  const b = h('button', { type: 'button', class: 'ex-btn' + (sfxOn() ? ' ex-on' : ''), onclick: () => { setSfx(!sfxOn()); b.textContent = label(); b.classList.toggle('ex-on', sfxOn()); sfx('correct'); } }, label());
+  return b;
 }
 
 // ---------- Évaluation diagnostique des compétences (test de positionnement) ----------
@@ -573,19 +612,19 @@ function positionScreen(st, showReport) {
     const set = positionSet(); const ans = new Array(set.length).fill(undefined); let i = 0; const t0 = Date.now();
     const show = () => {
       const q = set[i]; const p = partById(q.part);
-      const go = (val) => { ans[i] = val; audio.play('click'); if (i < set.length - 1) { i++; show(); window.scrollTo(0, 0); } else finish(); };
+      const go = (val) => { ans[i] = val; if (i < set.length - 1) { i++; show(); window.scrollTo(0, 0); } else finish(); };
       const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => go(ans[i]) }, i < set.length - 1 ? (q.lang === 'ar' ? 'السؤال التالي' : 'Question suivante') : (q.lang === 'ar' ? 'عرض الحصيلة' : 'Voir mon bilan'));
       const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), style: `--i:${k}`, onclick: () => {
         ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
-      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o, trLine(o, q.lang)))));
       const dunno = h('button', { type: 'button', class: 'ex-hint-btn ex-dunno', onclick: () => go(null) }, q.lang === 'ar' ? '🤷 لا أعرف' : '🤷 Je ne sais pas');
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
         h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner l’évaluation' }, '✕'),
           h('span', { class: 'ex-prog big', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(set.length), 'aria-valuenow': String(i) }, h('i', { style: `--w:${(i / set.length) * 100}%` })),
           h('span', { class: 'ex-chip' }, `${i + 1}/${set.length}`)),
         h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
-          h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${groupName[q.part[0]]} · ${p.short}`), h('small', null, q.set === 1 ? (q.lang === 'ar' ? 'نموذج امتحان' : 'type examen 2025') : '')),
-          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q), opts, dunno),
+          h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${groupName[q.part[0]]} · ${p.short}`), h('small', null, q.set === 1 ? (q.lang === 'ar' ? 'نموذج امتحان' : 'type examen 2025') : ''), trBtn(q.lang)),
+          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, trLine(q.q, q.lang)), opts, dunno),
         h('footer', { class: 'ex-foot' }, nextBtn)));
       root.querySelector('.ex-q')?.focus({ preventScroll: true });
     };
@@ -618,8 +657,8 @@ function positionScreen(st, showReport) {
     const gapsEl = res.gaps.length ? h('ul', { class: 'ex-gaps' }, res.gaps.map((g) => {
       const p = partById(g.part);
       return h('li', { ...langAttrs(g.lang), style: `--c:${p.color}` }, h('details', null,
-        h('summary', null, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('b', null, conceptTitle(g.id, g.lang)), g.unknown ? h('small', { class: 'ex-muted' }, g.lang === 'ar' ? ' · لا أعرف' : ' · « je ne sais pas »') : null),
-        h('p', null, g.why), exampleBox(g.ex, g.lang), h('p', { class: 'ex-src' }, '📚 ', g.src),
+        h('summary', null, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('b', null, conceptTitle(g.id, g.lang), trLine(conceptTitle(g.id, g.lang), g.lang)), g.unknown ? h('small', { class: 'ex-muted' }, g.lang === 'ar' ? ' · لا أعرف' : ' · « je ne sais pas »') : null),
+        h('p', null, g.why, trLine(g.why, g.lang)), exampleBox(g.ex, g.lang), h('p', { class: 'ex-src' }, '📚 ', g.src),
         h('a', { class: 'ex-btn', href: `${BASE}/p/${g.part}/lecon` }, g.lang === 'ar' ? 'مراجعة الدرس' : 'Revoir la leçon')));
     })) : h('p', { class: 'ex-muted' }, 'Aucune notion ratée : bravo !');
     const pathEl = res.path.length ? h('ol', { class: 'ex-reco' }, res.path.map((id, k) => {
@@ -628,14 +667,14 @@ function positionScreen(st, showReport) {
         h('span', { class: 'ex-reco-t', ...langAttrs(p.lang) }, h('b', null, p.title), h('small', null, BAND_LABEL[p.lang][r.band])),
         h('a', { class: 'ex-btn ex-primary', href: `${BASE}/p/${id}/lecon` }, p.lang === 'ar' ? 'ابدأ' : 'Commencer'));
     })) : h('p', { class: 'ex-muted' }, 'Toutes les parties sont maîtrisées : entraîne-toi avec les niveaux et l’examen blanc.');
-    const correction = set ? h('details', { class: 'ex-card ex-pos-corr' }, h('summary', null, h('b', null, `Correction des ${set.length} questions`)),
+    const correction = set ? h('details', { class: 'ex-card ex-pos-corr' }, h('summary', null, h('b', null, `Correction des ${set.length} questions`)), h('div', { class: 'ex-tr-row' }, trBtn('fr')),
       h('ol', { class: 'ex-correction' }, set.map((q, k) => {
         const ok = answers[k] === q.answer;
         return h('li', { class: ok ? 'ok' : 'ko', ...langAttrs(q.lang) }, h('details', null,
-          h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : answers[k] == null ? '? ' : '✗ '), q.q),
+          h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : answers[k] == null ? '? ' : '✗ '), q.q, trLine(q.q, q.lang)),
           answers[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[answers[k]]}. ${q.options[answers[k]]}`) : null,
-          h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`),
-          h('p', null, conceptFor(q).why), exampleBox(exampleFor(q), q.lang)));
+          h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`, trLine(q.options[q.answer], q.lang)),
+          h('p', null, conceptFor(q).why, trLine(conceptFor(q).why, q.lang)), exampleBox(exampleFor(q), q.lang)));
       }))) : null;
     const first = res.path[0];
     root.replaceChildren(
@@ -649,7 +688,7 @@ function positionScreen(st, showReport) {
           h('p', { class: 'ex-legend' }, MASTERY_BANDS.map((b) => h('span', { class: 'ex-band ex-band-' + b.id }, `${b.fr} ${b.id === 'ok' ? '≥ 75 %' : b.id === 'mid' ? '40–74 %' : '< 40 %'}`)))),
         h('div', { class: 'ex-pos-col' },
           h('section', { class: 'ex-card' }, h('h3', { class: 'ex-h2' }, '🗺️ Ton parcours recommandé'), h('p', { class: 'ex-muted' }, 'Commence par les parties prioritaires ; à égalité, la didactique passe d’abord (80 % de l’épreuve).'), pathEl),
-          h('section', { class: 'ex-card' }, h('h3', { class: 'ex-h2' }, `🔍 Tes lacunes · ${res.gaps.length} notion(s)`), h('p', { class: 'ex-muted' }, 'Touche une notion pour lire l’essentiel et sa référence.'), gapsEl))),
+          h('section', { class: 'ex-card' }, h('h3', { class: 'ex-h2' }, `🔍 Tes lacunes · ${res.gaps.length} notion(s)`), h('p', { class: 'ex-muted' }, 'Touche une notion pour lire l’essentiel et sa référence.'), h('div', { class: 'ex-tr-row' }, trBtn('fr')), gapsEl))),
       correction,
       h('div', { class: 'ex-actions col ex-pos-actions' },
         first ? h('a', { class: 'ex-btn ex-primary', href: `${BASE}/p/${first}/lecon` }, `Commencer le parcours : ${partById(first).short}`) : h('a', { class: 'ex-btn ex-primary', href: BASE + '/blanc' }, 'Passer l’examen blanc'),
@@ -678,7 +717,7 @@ function lockScreen(onOpen) {
       try { sessionStorage.setItem(ACCESS_KEY, 'ok'); } catch {}
       audio.play('complete'); onOpen();
     } else {
-      audio.play('wrong'); vibrate([60, 40, 60]);
+      sfx('wrong'); vibrate([60, 40, 60]);
       msg.textContent = 'Mot de passe incorrect. Réessaie.'; msg.classList.add('ko');
       card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
       input.select();
@@ -694,10 +733,14 @@ function lockScreen(onOpen) {
   return h('div', { class: 'ex-body ex-lock-wrap' }, card);
 }
 
+// Clic sonore sur tout bouton ou lien du module ; les feuilles et fenêtres ajoutées au <body> ont le leur.
+function moduleClick(e) { if (e.target.closest('button:not([disabled]),a,summary') && !e.target.closest('.ex-trbtn')) sfx('click'); }
+if (typeof document !== 'undefined') document.addEventListener('click', (e) => { if (e.target.closest('.ex-layer') && e.target.closest('button:not(.ex-trbtn)')) sfx('click'); });
+
 // ---------- Point d'entrée ----------
 export function examenScreen(q, pid) {
   if (!hasAccess()) {
-    const main = h('main', { id: 'main', class: 'ex-app ex-locked' });
+    const main = h('main', { id: 'main', class: 'ex-app ex-locked', 'data-own-sound': '', onclick: moduleClick });
     main.append(lockScreen(() => main.replaceWith(examenScreen(q, pid))));
     return main;
   }
@@ -714,5 +757,5 @@ export function examenScreen(q, pid) {
   else if (sub[0] === 'diagnostic' || sub[0] === 'positionnement') view = positionScreen(st, sub[1] === 'bilan');
   else if (sub[0] === 'profil') view = profileScreen(st);
   else view = hub(st);
-  return h('main', { id: 'main', class: 'ex-app' }, view);
+  return h('main', { id: 'main', class: 'ex-app', 'data-own-sound': '', onclick: moduleClick }, view);
 }

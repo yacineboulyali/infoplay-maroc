@@ -1,6 +1,8 @@
 // Schémas animés et interactifs des leçons : chaque élément se touche pour afficher son détail.
 // HTML + CSS pour le texte (bidirectionnel, responsive), SVG pour les tracés.
 import { h } from '../utils/dom.js';
+import { trBtn, trLine } from './tr-ui.js';
+import { sfx } from './sfx.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 const s = (tag, attrs = {}, ...kids) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); kids.forEach((c) => c && e.append(c)); return e; };
@@ -12,11 +14,12 @@ function popup(label, detail, { color, lang, back }) {
   const onKey = (e) => { if (e.key === 'Escape') close(); };
   const box = h('div', { class: 'ex-pop', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'ex-pop-t', dir: lang === 'ar' ? 'rtl' : 'ltr', lang, style: `--c:${color}` },
     h('button', { type: 'button', class: 'ex-pop-x', 'aria-label': lang === 'ar' ? 'إغلاق' : 'Fermer', onclick: close }, '✕'),
-    h('h3', { id: 'ex-pop-t' }, label),
-    h('p', null, detail),
+    h('h3', { id: 'ex-pop-t' }, label, trLine(label, lang)),
+    h('p', null, detail, trLine(detail, lang)),
+    lang === 'ar' ? null : h('div', { class: 'ex-pop-tr' }, trBtn(lang)),
     h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: close }, lang === 'ar' ? 'إغلاق' : 'Fermer'));
   const bg = h('div', { class: 'ex-pop-bg ex-layer', onclick: (e) => { if (e.target === bg) close(); } }, box);
-  document.body.append(bg);
+  document.body.append(bg); sfx('flip');
   document.addEventListener('keydown', onKey);
   requestAnimationFrame(() => bg.classList.add('open'));
   setTimeout(() => box.querySelector('.ex-primary').focus({ preventScroll: true }), 40);

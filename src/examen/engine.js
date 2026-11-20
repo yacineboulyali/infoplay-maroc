@@ -1,12 +1,14 @@
 // Moteur du module « Examen professionnel » : banque de questions, feedbacks, progression ludique.
 // Aucune dépendance au DOM : testable sous Node.
 import { QCM } from './data/qcm.js';
+import { ANNALES } from './data/annales.js';
 import { PARTS, partById } from './data/parts.js';
 import { CONCEPTS_FR, DEFAULT_FR } from './data/concepts-fr.js';
 import { CONCEPTS_AR, DEFAULT_AR } from './data/concepts-ar.js';
 import { DISTRACTORS_FR, DISTRACTORS_AR } from './data/distractors.js';
 import { EXAMPLES_FR } from './data/examples-fr.js';
 import { EXAMPLES_AR } from './data/examples-ar.js';
+import { trAr } from './i18n.js';
 
 export const LEVEL_SIZE = 8;          // questions par niveau
 export const HEARTS = 5;              // vies par niveau
@@ -16,18 +18,39 @@ export const XP = { first: 10, second: 5, lessonCard: 5, lessonDone: 20, hint: 3
 // ---------- Questions ----------
 const LETTERS_FR = ['A', 'B', 'C', 'D', 'E'];
 const LETTERS_AR = ['أ', 'ب', 'ج', 'د', 'هـ'];
-export const QUESTIONS = QCM.map(([part, set, num, q, options, answer, just], i) => ({
-  id: `${part}-${set}-${num}-${i}`, part, set, num, q, options, answer, just, lang: part[0] === 'A' ? 'ar' : 'fr',
-}));
+// Série 2 = annales officielles 2021-2025 (QCM, vrai/faux, phrases à trous), voir data/annales.js.
+export const ANNALES_SET = 2;
+const VF = { fr: ['Vrai', 'Faux'], ar: ['صحيح', 'خطأ'] };
+const annalesNum = {};
+const ANNALES_Q = ANNALES.map(({ p, t, ex, q, o, a, j }, i) => {
+  const lang = p[0] === 'A' ? 'ar' : 'fr'; const num = (annalesNum[p] = (annalesNum[p] || 0) + 1);
+  return { id: `${p}-${ANNALES_SET}-${num}-a${i}`, part: p, set: ANNALES_SET, num, type: t, exam: ex, q,
+    options: t === 'vf' ? VF[lang] : o, answer: t === 'vf' ? (a ? 0 : 1) : a, just: j || '', lang };
+});
+export const QUESTIONS = [...QCM.map(([part, set, num, q, options, answer, just], i) => ({
+  id: `${part}-${set}-${num}-${i}`, part, set, num, type: 'qcm', q, options, answer, just, lang: part[0] === 'A' ? 'ar' : 'fr',
+})), ...ANNALES_Q];
+export const isAnnales = (q) => q.set === ANNALES_SET;
 export const letters = (lang) => (lang === 'ar' ? LETTERS_AR : LETTERS_FR);
 export const questionsOf = (partId) => QUESTIONS.filter((x) => x.part === partId);
-export const levelsOf = (partId) => {
-  const qs = questionsOf(partId); const out = [];
+const chunk = (qs) => {
+  const out = [];
   for (let i = 0; i < qs.length; i += LEVEL_SIZE) out.push(qs.slice(i, i + LEVEL_SIZE));
   // Un dernier niveau trop court est fusionné avec le précédent.
   if (out.length > 1 && out[out.length - 1].length < 4) out[out.length - 2].push(...out.pop());
   return out;
 };
+const levelCache = new Map();
+/** Niveaux d'une partie : banque d'entraînement d'abord, puis niveaux « Annales » (jamais mélangés). */
+export const levelsOf = (partId) => {
+  if (!levelCache.has(partId)) {
+    const qs = questionsOf(partId);
+    levelCache.set(partId, [...chunk(qs.filter((q) => !isAnnales(q))), ...chunk(qs.filter(isAnnales))]);
+  }
+  return levelCache.get(partId);
+};
+/** Indice du premier niveau « Annales » d'une partie (-1 s'il n'y en a pas). */
+export const annalesStart = (partId) => levelsOf(partId).findIndex((lv) => lv.length && isAnnales(lv[0]));
 export const byId = (id) => QUESTIONS.find((x) => x.id === id);
 
 // ---------- Normalisation ----------
@@ -85,13 +108,17 @@ const cut = (s, n = 70) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
 /** Indice : principe à mobiliser (notion) + une élimination argumentée quand c'est possible. */
 export function hintFor(q) {
   const c = conceptFor(q); const t = T[q.lang];
-  let elim = null;
+  let elim = null; let elimAr = '';
   for (let i = 0; i < q.options.length; i++) {
     if (i === q.answer || isNone(q, i)) continue;
     const d = distractorOf(q, i);
-    if (d && d.id !== 'aucune') { elim = t.elim(letters(q.lang)[i], cut(q.options[i], 60), d.label); break; }
+    if (d && d.id !== 'aucune') {
+      elim = t.elim(letters(q.lang)[i], cut(q.options[i], 60), d.label);
+      if (q.lang === 'fr') elimAr = T.ar.elim(letters('fr')[i], cut(trAr(q.options[i]) || q.options[i], 60), trAr(d.label) || d.label);
+      break;
+    }
   }
-  return { text: c.hint, elim, src: c.src };
+  return { text: c.hint, elim, src: c.src, textAr: q.lang === 'fr' ? trAr(c.hint) : '', elimAr };
 }
 
 /** Feedback d'une bonne réponse. */
@@ -101,7 +128,13 @@ export function correctFeedback(q, attempt = 1) {
   if (isNone(q, q.answer)) body.push(t.none);
   if (q.just) body.push(q.just);
   body.push(c.why);
-  return { ok: true, title: attempt > 1 ? pick(t.praiseLate, seed) : pick(t.praise, seed), body, ex: exampleFor(q), src: c.src };
+  const fb = { ok: true, title: attempt > 1 ? pick(t.praiseLate, seed) : pick(t.praise, seed), body, ex: exampleFor(q), src: c.src };
+  if (q.lang === 'fr') {
+    fb.titleAr = attempt > 1 ? pick(T.ar.praiseLate, seed) : pick(T.ar.praise, seed);
+    fb.bodyAr = [isNone(q, q.answer) ? T.ar.none : null, q.just ? trAr(q.just) : null, trAr(c.why)].filter(Boolean);
+    fb.exAr = trAr(fb.ex);
+  }
+  return fb;
 }
 
 /** Feedback d'une mauvaise réponse : sans révéler au premier essai, avec la réponse ensuite. */
@@ -112,14 +145,24 @@ export function wrongFeedback(q, chosen, attempt = 1) {
   else if (attempt < 2) body.push(t.off);
   if (attempt < 2) {
     body.push(t.retry);
-    return { ok: false, reveal: false, title: pick(t.wrong, q.num), body, src: d?.src || null };
+    const fb = { ok: false, reveal: false, title: pick(t.wrong, q.num), body, src: d?.src || null };
+    if (q.lang === 'fr') { fb.titleAr = pick(T.ar.wrong, q.num); fb.bodyAr = [d ? trAr(d.msg) : T.ar.off, T.ar.retry].filter(Boolean); }
+    return fb;
   }
-  const L = letters(q.lang)[q.answer];
-  body.unshift(`${t.reveal} : ${L}. ${q.options[q.answer]}`);
+  // Vrai/faux : la lettre n'a pas de sens, on donne directement « Vrai » ou « Faux ».
+  const L = q.type === 'vf' ? '' : letters(q.lang)[q.answer] + '. ';
+  body.unshift(`${t.reveal} : ${L}${q.options[q.answer]}`);
   if (isNone(q, q.answer)) body.push(t.none);
   if (q.just) body.push(q.just);
   body.push(c.why);
-  return { ok: false, reveal: true, title: pick(t.wrong, q.num), body, ex: exampleFor(q), src: c.src };
+  const fb = { ok: false, reveal: true, title: pick(t.wrong, q.num), body, ex: exampleFor(q), src: c.src };
+  if (q.lang === 'fr') {
+    fb.titleAr = pick(T.ar.wrong, q.num);
+    fb.bodyAr = [`${T.ar.reveal} : ${L}${trAr(q.options[q.answer]) || q.options[q.answer]}`, d ? trAr(d.msg) : null,
+      isNone(q, q.answer) ? T.ar.none : null, q.just ? trAr(q.just) : null, trAr(c.why)].filter(Boolean);
+    fb.exAr = trAr(fb.ex);
+  }
+  return fb;
 }
 
 // ---------- Rangs et badges ----------
@@ -212,7 +255,8 @@ export function createExamStore(storage, pid = 'invite') {
     markRead() { s.unread = 0; save(); },
     setSysNotif(v) { s.sysNotif = !!v; save(); },
     partProgress,
-    isLevelOpen(id, k) { return k === 0 ? true : !!s.levels[id + ':' + (k - 1)]; },
+    // Les annales forment une piste à part : leur premier niveau est ouvert d'emblée.
+    isLevelOpen(id, k) { return k === 0 || k === annalesStart(id) ? true : !!s.levels[id + ':' + (k - 1)]; },
     lessonCard(id) { gain(XP.lessonCard); save(); },
     lessonDone(id) {
       const first = !s.lessons[id];
@@ -293,7 +337,8 @@ export function createExamStore(storage, pid = 'invite') {
 // 20 questions, réparties comme l'épreuve : la didactique pèse le plus lourd.
 export function blancSet(rng = Math.random) {
   const shuffle = (a) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
-  const from = (g, n) => shuffle(QUESTIONS.filter((x) => x.part[0] === g)).slice(0, n);
+  // Format de l'épreuve : QCM à cinq propositions uniquement (pas de vrai/faux ni de phrases à trous).
+  const from = (g, n) => shuffle(QUESTIONS.filter((x) => x.part[0] === g && x.type === 'qcm')).slice(0, n);
   return shuffle([...from('D', 12), ...from('M', 4), ...from('A', 4)]);
 }
 
