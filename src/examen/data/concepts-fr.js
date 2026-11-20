@@ -272,8 +272,16 @@ export const CONCEPTS_FR = [
     hint: 'Une information en ligne n’est pas vraie parce qu’elle est en ligne. Quels repères permettent de la juger ?',
     why: 'L’éducation aux médias développe l’esprit critique : vérifier l’auteur, la date, les sources, comparer plusieurs sites. Vie privée, données personnelles et cyberharcèlement relèvent de la dimension sociétale de l’informatique.',
     src: 'Wineburg, S. & McGrew, S. (2019). Lateral reading. Teachers College Record, 121(11) ; MEN (2005). Orientations, dimension sociétale.' },
+  // ---------- Numérique en classe (rattachées explicitement par notions-fr.js → CONCEPT_OF) ----------
+  { id: 'numerique', re: /(?!)/,
+    hint: 'Pars de l’objectif et du public : quel outil sert le mieux l’activité des élèves, et à quelle condition ?',
+    why: 'Un outil numérique se choisit d’après l’objectif et le public : un EDI simple pour des débutants, un dossier partagé pour distribuer et collecter les travaux, une simulation interactive pour faire voir une structure, une plateforme (LMS) ou des vidéos pour la classe inversée.',
+    src: 'Mishra, P. & Koehler, M. J. (2006). Technological pedagogical content knowledge. Teachers College Record, 108(6), 1017-1054.' },
+  { id: 'debranche', re: /(?!)/,
+    hint: 'Demande-toi si l’activité exige vraiment une machine, et qui organise et encadre les échanges.',
+    why: 'L’informatique débranchée fait manipuler un concept sans ordinateur (cartes, objets, élèves qui jouent les bits). Un réseau social prolonge la classe à condition d’être un espace fermé, administré par l’enseignant, avec une charte d’usage et une modération active.',
+    src: 'Bell, T., Witten, I. H. & Fellows, M. (2015). CS Unplugged. University of Canterbury.' },
 ];
-
 // Notion par défaut quand aucune règle ne correspond (une par partie).
 export const DEFAULT_FR = {
   D1: 'planification', D2: 'active', D3: 'fonctions', D4: 'remediation',

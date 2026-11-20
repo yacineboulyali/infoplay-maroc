@@ -64,4 +64,6 @@ export const EXAMPLES_FR = {
   reseaux: 'Les 13 postes de la salle partageant une imprimante : LAN. Le réseau des agences d’une banque dans tout le Maroc : WAN. Un téléphone relié à une montre en Bluetooth : PAN.',
   internet: 'Envoyer son exposé en pièce jointe à l’enseignant : messagerie (asynchrone). Discuter en direct pendant la séance : chat (synchrone). Lire une page de Wikipédia : Web.',
   esprit: 'Deux sites donnent des dates différentes pour un événement : l’élève compare l’auteur, la date de publication et les sources citées avant de retenir l’information.',
+  numerique: 'Pour des débutants, l’enseignant installe Dev-C++ (interface simple), dépose l’énoncé dans le dossier partagé et projette une simulation qui montre quelle branche du SI…SINON s’exécute selon la note saisie.',
+  debranche: 'Six élèves portent des cartes 1, 2, 4, 8, 16, 32 et se lèvent pour former 13 en binaire, sans ordinateur. Le soir, la classe échange dans un groupe privé modéré par l’enseignant, avec une charte affichée.',
 };

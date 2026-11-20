@@ -5,6 +5,7 @@
 // Chaque élément d'un schéma est [libellé, détail] ; le détail s'affiche quand on touche l'élément.
 
 import { LESSON_D1 } from './lesson-d1.js';
+import { LESSON_D2 } from './lesson-d2.js';
 
 export const GROUPS = [
   { id: 'D', title: 'Didactique de l’informatique', sub: 'Planifier, gérer, évaluer, remédier · 80 % de l’épreuve', lang: 'fr', icon: '🎯' },
@@ -18,28 +19,7 @@ export const PARTS = [
     lesson: LESSON_D1 },
   // =====================================================================
   { id: 'D2', group: 'D', lang: 'fr', icon: '🧭', color: '#0a7467', title: 'Gestion des apprentissages', short: 'Gérer', weight: '25 % de la didactique',
-    lesson: [
-      { t: 'L’étayage : une aide qui s’efface', p: 'L’aide est forte au début puis diminue à mesure que l’élève devient autonome. Une aide permanente crée la dépendance.',
-        v: { type: 'bars', unit: '%', items: [['Démonstration', 90, 'L’enseignant montre et commente.'], ['Pratique guidée', 60, 'Questions intermédiaires, indices.'], ['Pratique assistée', 30, 'Aide sur demande.'], ['Autonomie', 5, 'L’élève vérifie et corrige seul.']] },
-        fact: { t: 'Six fonctions de la tutelle : enrôler, réduire la difficulté, maintenir l’orientation, signaler l’essentiel, contrôler la frustration, montrer.', src: 'Wood, Bruner & Ross (1976)' },
-        check: { q: 'Un élève est bloqué sur une formule. L’aide qui préserve son autonomie :', o: ['Corriger la formule à sa place', 'Poser une question intermédiaire', 'Lui donner la correction'], a: 1, why: 'Une question intermédiaire ou un indice garde le problème entre ses mains.' } },
-      { t: 'La zone proximale de développement', p: 'Entre ce que l’élève réussit seul et ce qu’il ne peut pas encore faire, il y a ce qu’il réussit avec de l’aide : c’est là qu’on enseigne.',
-        v: { type: 'rings', rings: [['Seul', 'Ce que l’élève réussit sans aide.'], ['Avec aide (ZPD)', 'Ce qu’il réussit avec l’enseignant ou un pair : zone d’apprentissage.'], ['Hors de portée', 'Trop difficile pour l’instant, même aidé.']] },
-        fact: { t: 'Dans un groupe hétérogène, le pair plus avancé peut jouer le rôle de médiateur.', src: 'Vygotski (1934/1997), Pensée et langage' },
-        check: { q: 'La zone où l’élève réussit avec l’aide d’un pair s’appelle :', o: ['La zone de confort', 'La zone proximale de développement', 'Le milieu adidactique'], a: 1, why: 'C’est la ZPD de Vygotski.' } },
-      { t: 'Le contrat didactique et ses effets', p: 'Les attentes implicites entre enseignant et élèves peuvent dériver. Brousseau a nommé ces effets pervers.',
-        v: { type: 'grid', items: [['🎭', 'Effet Topaze', 'L’enseignant souffle la réponse à force d’indices.'], ['📜', 'Effet Jourdain', 'Il voit un savoir savant dans une réponse banale.'], ['🧰', 'Glissement métacognitif', 'L’outil (les menus) remplace le savoir visé.'], ['🔗', 'Usage abusif de l’analogie', 'L’élève copie une solution analogue sans comprendre.']] },
-        fact: { t: 'La dévolution n’est pas un effet pervers : c’est le transfert voulu du problème à l’élève.', src: 'Brousseau (1998)' },
-        check: { q: 'L’enseignant dicte chaque instruction jusqu’à la solution : c’est l’effet…', o: ['Jourdain', 'Topaze', 'Pygmalion'], a: 1, why: 'Effet Topaze : la réponse est soufflée, l’élève n’apprend rien.' } },
-      { t: 'Un groupe vraiment coopératif', p: 'Mettre des élèves ensemble ne suffit pas. Il faut un objectif commun ET une responsabilité individuelle.',
-        v: { type: 'grid', items: [['🤝', 'Interdépendance positive', 'Chacun a besoin des autres pour réussir.'], ['🙋', 'Responsabilité individuelle', 'Chacun rend compte de sa part.'], ['🔄', 'Rôles tournants', 'Driver écrit, navigator relit ; on inverse.'], ['🗣️', 'Mise en commun', 'Les groupes comparent leurs solutions.']] },
-        fact: { t: 'En pair programming, le driver tient le clavier, le navigator vérifie et conseille.', src: 'Johnson & Johnson (1999) ; Williams & Kessler (2002)' },
-        check: { q: 'Dans un binôme, un seul élève manipule l’ordinateur. On…', o: ['Laisse faire', 'Distribue puis fait tourner les rôles', 'Sépare le binôme'], a: 1, why: 'Des rôles définis et tournants rendent chacun actif.' } },
-      { t: 'Réguler de façon proportionnée', p: 'On adapte l’intervention à l’étendue de la difficulté, après l’avoir observée et diagnostiquée.',
-        v: { type: 'cycle', steps: [['Observer', 'Qui se trompe ? Combien d’élèves ?'], ['Diagnostiquer', 'Quelle est la cause de l’erreur ?'], ['Intervenir', '70 % → régulation collective ; 2 élèves → aide ciblée.'], ['Vérifier l’effet', 'Nouvelle tâche pour contrôler l’acquisition.']] },
-        fact: { t: 'Après une question, laisser 3 à 5 secondes de réflexion augmente la qualité et le nombre des réponses.', src: 'Rowe (1986), Wait time' },
-        check: { q: '70 % de la classe commet la même erreur. L’intervention la plus efficiente :', o: ['Une régulation collective ciblée', 'Une aide individuelle à chacun', 'Passer à la suite'], a: 0, why: 'Une erreur largement partagée appelle une régulation collective.' } },
-    ] },
+    lesson: LESSON_D2 },
   // =====================================================================
   { id: 'D3', group: 'D', lang: 'fr', icon: '📏', color: '#c8431a', title: 'Évaluation des apprentissages', short: 'Évaluer', weight: '25 % de la didactique',
     lesson: [
