@@ -80,6 +80,22 @@ export function distractorOf(q, index) {
 }
 const isNone = (q, i) => (q.lang === 'ar' ? /^لا شيء مما سبق/.test(q.options[i]) : /^aucune de ces/i.test(q.options[i]));
 
+// ---------- Ordre aléatoire à chaque tentative ----------
+/** Copie mélangée d'une liste (Fisher-Yates). */
+export function shuffleArr(a, rng = Math.random) {
+  const b = a.slice();
+  for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; }
+  return b;
+}
+/** Copie de la question avec ses propositions dans un ordre aléatoire, bonne réponse recalculée.
+ *  « Aucune de ces réponses » reste en dernier et l'ordre Vrai / Faux ne change pas. */
+export function shuffled(q, rng = Math.random) {
+  if (q.type === 'vf') return q;
+  const idx = q.options.map((_, i) => i);
+  const order = [...shuffleArr(idx.filter((i) => !isNone(q, i)), rng), ...idx.filter((i) => isNone(q, i))];
+  return { ...q, options: order.map((i) => q.options[i]), answer: order.indexOf(q.answer), order };
+}
+
 const T = {
   fr: {
     praise: ['Excellent !', 'Bien joué !', 'Parfait !', 'Exact !', 'Bravo !', 'Juste !'],

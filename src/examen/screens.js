@@ -6,7 +6,7 @@ import { GROUPS, PARTS, partById } from './data/parts.js';
 import {
   QUESTIONS, levelsOf, annalesStart, letters, hintFor, correctFeedback, wrongFeedback, createExamStore, rankOf,
   BADGES, DAILY_GOAL, HEARTS, XP, blancSet, byId, conceptFor,
-  positionSet, analyzePosition, bandOf, levelOfScore, MASTERY_BANDS, POSITION_PLAN, exampleFor,
+  positionSet, analyzePosition, shuffleArr, shuffled, bandOf, levelOfScore, MASTERY_BANDS, POSITION_PLAN, exampleFor,
 } from './engine.js';
 import { conceptTitle } from './data/concept-titles.js';
 import { LESSON_EXAMPLES } from './data/lesson-examples.js';
@@ -228,16 +228,18 @@ function lessonPlayer(st, p) {
   const render = () => {
     const card = p.lesson[i]; let answered = false;
     const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: true }, i < p.lesson.length - 1 ? T.next : (p.lang === 'ar' ? 'إنهاء الدرس' : 'Terminer la leçon'));
-    const choices = h('div', { class: 'ex-choices' }, card.check.o.map((o, k) => h('button', { type: 'button', class: 'ex-choice', onclick: (e) => {
+    // Choix du mini-défi dans un ordre aléatoire à chaque passage.
+    const ord = shuffleArr(card.check.o.map((_, k) => k)); const ansPos = ord.indexOf(card.check.a);
+    const choices = h('div', { class: 'ex-choices' }, ord.map((k, pos) => [k, card.check.o[k], pos]).map(([k, o, pos]) => h('button', { type: 'button', class: 'ex-choice', onclick: (e) => {
       if (answered) return; answered = true;
       const ok = k === card.check.a; const btn = e.currentTarget;
       btn.classList.add(ok ? 'ok' : 'ko');
-      choices.children[card.check.a].classList.add('ok');
+      choices.children[ansPos].classList.add('ok');
       [...choices.children].forEach((c) => c.setAttribute('aria-disabled', 'true'));
       why.hidden = false; why.className = 'ex-why ' + (ok ? 'ok' : 'ko');
       if (ok) { sfx('correct'); vibrate(25); st.lessonCard(p.id); floatXp(btn, XP.lessonCard); } else { sfx('wrong'); vibrate([50, 30, 50]); }
       nextBtn.disabled = false; nextBtn.focus();
-    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[k]), h('span', null, o))));
+    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[pos]), h('span', null, o))));
     const why = h('p', { class: 'ex-why', hidden: true }, card.check.why, trLine(card.check.why, p.lang));
     nextBtn.addEventListener('click', () => { if (i < p.lesson.length - 1) { i++; render(); window.scrollTo(0, 0); } else done(); });
     root.replaceChildren(
@@ -307,6 +309,8 @@ function quizPlayer(st, { mode, part, k }) {
       h('p', null, 'Les questions ratées au premier essai arrivent ici. Les revoir plus tard (révision espacée) les fixe durablement en mémoire.'),
       h('a', { class: 'ex-btn ex-primary', href: BASE }, 'Retour au parcours'))), bottomNav('rev')];
   }
+  // Questions et propositions dans un ordre aléatoire à chaque tentative.
+  list = shuffleArr(list).map((q) => shuffled(q));
   const R = { idx: 0, hearts: HEARTS, combo: 0, maxCombo: 0, firstTry: 0, hints: 0, mistakes: 0, xp: 0 };
   const root = h('div', { class: 'ex-player' + (mode === 'review' ? ' review' : '') });
 
@@ -469,7 +473,7 @@ function blancScreen(st) {
       h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: run }, 'Lancer l’examen'),
       s.blanc.length ? h('div', { class: 'ex-history' }, h('h3', null, 'Tes derniers résultats'), h('ol', null, s.blanc.map((b) => h('li', null, h('b', null, `${b.score}/20`), ' · ', new Date(b.at).toLocaleDateString('fr-FR'))))) : null));
   function run() {
-    const set = blancSet(); const ans = new Array(set.length).fill(null); let i = 0; let left = 25 * 60;
+    const set = blancSet().map((q) => shuffled(q)); const ans = new Array(set.length).fill(null); let i = 0; let left = 25 * 60;
     const clock = h('span', { class: 'ex-clock', role: 'timer' }, '25:00');
     const tick = setInterval(() => {
       if (!clock.isConnected) { clearInterval(tick); return; }
@@ -609,7 +613,7 @@ function positionScreen(st, showReport) {
   };
 
   function run() {
-    const set = positionSet(); const ans = new Array(set.length).fill(undefined); let i = 0; const t0 = Date.now();
+    const set = shuffleArr(positionSet()).map((q) => shuffled(q)); const ans = new Array(set.length).fill(undefined); let i = 0; const t0 = Date.now();
     const show = () => {
       const q = set[i]; const p = partById(q.part);
       const go = (val) => { ans[i] = val; if (i < set.length - 1) { i++; show(); window.scrollTo(0, 0); } else finish(); };

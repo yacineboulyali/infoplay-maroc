@@ -194,3 +194,25 @@ test('traduction arabe de l’interface : rangs, badges, niveaux et textes avec 
   assert.equal(uiAr('Texte inconnu du dictionnaire'), '');
   assert.equal(uiAr('12/20'), '', 'pas de traduction pour un texte sans mots');
 });
+
+test('ordre aléatoire : propositions mélangées, bonne réponse conservée, « aucune » en dernier', async () => {
+  const { shuffled, shuffleArr } = await import('../src/examen/engine.js');
+  let seed = 7; const rng = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  let moved = 0;
+  for (const q of QUESTIONS) {
+    const s = shuffled(q, rng);
+    assert.equal(s.id, q.id);
+    assert.equal(s.options[s.answer], q.options[q.answer], 'bonne réponse : ' + q.id);
+    assert.deepEqual([...s.options].sort(), [...q.options].sort(), 'mêmes propositions : ' + q.id);
+    const none = q.options.findIndex((o) => /^aucune de ces|^لا شيء مما سبق/i.test(o));
+    if (none >= 0) assert.match(s.options[s.options.length - 1], /^aucune de ces|^لا شيء مما سبق/i, '« aucune » en dernier : ' + q.id);
+    if (q.type === 'vf') assert.deepEqual(s.options, q.options, 'vrai/faux inchangé');
+    if (s.options.join() !== q.options.join()) moved++;
+    // Le feedback et l'indice s'appuient sur la version mélangée : la lettre annoncée est la bonne.
+    const fb = wrongFeedback(s, (s.answer + 1) % s.options.length, 2);
+    assert.ok(fb.body[0].includes(s.options[s.answer]));
+  }
+  assert.ok(moved > QUESTIONS.length * 0.8, 'la plupart des questions changent d’ordre');
+  const a = [1, 2, 3, 4, 5, 6, 7, 8];
+  assert.deepEqual(shuffleArr(a, rng).sort(), a);
+});
