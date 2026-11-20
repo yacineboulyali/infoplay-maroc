@@ -50,9 +50,12 @@ export function uiAr(text) {
 }
 // Zones déjà traduites autrement (feedback, indice, références) ou qu'on ne traduit pas (code, lettres, chronomètre).
 const SKIP = '.ex-tr,.ex-trbtn,[dir="rtl"],[lang="ar"],script,style,code,svg,input,textarea,.ex-letter,.ex-clock,.ex-src,.ex-fact small,.ex-fb-head h2,.ex-fb-body,.ex-sheet-lead,.ex-elim,.ex-mem,.ex-float,.ex-ring-l';
+// Les boutons gardent leur seul libellé : pas de ligne arabe (les réponses et choix de leçon gardent leur traduction de contenu).
+const BUTTONS = 'button,.ex-btn,.ex-tnav-i,.ex-nav-i,.ex-hint-btn,.ex-cta,.ex-back,.ex-x';
 function decorate(root) {
   for (const el of root.querySelectorAll('*')) {
     if (el.closest(SKIP) || (el.closest('.ex-vis') && !el.closest('.ex-cap'))) continue;
+    if (el.closest(BUTTONS)) continue;
     if (el.querySelector(':scope > .ex-tr')) continue;
     let txt = ''; for (const n of el.childNodes) if (n.nodeType === 3) txt += n.textContent;
     if (!LETTERS.test(txt)) continue;
