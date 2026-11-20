@@ -923,3 +923,5 @@ body.ex-tr-on :is(.ex-phead,.ex-hero,.ex-pos-hero,.ex-cta,.ex-primary) .ex-tr{co
 /* Entre 1024 et 1279 px, le menu passe en icônes (libellé en infobulle et pour les lecteurs d'écran). */
 @media (min-width:1024px) and (max-width:1279px){.ex-top .ex-tnav-i{padding:8px 10px}.ex-top .ex-tnav-i span:not(.ex-nav-ico){position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
 .ex-top .ex-chips{flex-shrink:0}
+/* Petit téléphone : le titre tronqué (« E… ») cède la place à l'interrupteur de thème ; il reste lu par les lecteurs d'écran. */
+@media (max-width:479px){.ex-top h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.ex-top .ex-chips{margin-inline-start:auto}}

@@ -61,13 +61,14 @@ html[data-theme=dark] :is(.ex-hero,.ex-pos-hero){background:linear-gradient(135d
 html[data-theme=dark] .ex-primary{color:#fff}
 html[data-theme=dark] .ex-sheet,html[data-theme=dark] .ex-top,html[data-theme=dark] .ex-foot,html[data-theme=dark] .ex-nav{border-color:var(--line)}
 
-/* ---------- bouton de thème ---------- */
-.theme-toggle{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:.3rem .7rem;font:inherit;font-weight:700;cursor:pointer;min-height:36px}
-.theme-toggle:hover{background:rgba(255,255,255,.2)}
-.theme-toggle .theme-ico{font-size:1rem;line-height:1}
-@media (max-width:700px){.theme-toggle .theme-label{display:none}.theme-toggle{padding:.3rem .55rem}}
-.ex-top .theme-toggle{border-color:var(--ex-line);background:var(--ex-card);color:var(--ex-ink);min-height:34px}
-.ex-top .theme-toggle .theme-label{display:none}
+/* ---------- interrupteur de thème (clair · auto · sombre) ---------- */
+.theme-toggle{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:999px;border:1px solid var(--line-strong,#c5ccd6);background:#f1f3f6}
+.theme-toggle button{display:grid;place-items:center;width:32px;height:32px;padding:0;border:0;border-radius:999px;background:transparent;font-size:1rem;line-height:1;cursor:pointer;opacity:.55;filter:grayscale(.6);transition:background .2s,opacity .2s,box-shadow .2s}
+.theme-toggle button:hover{opacity:.9}
+.theme-toggle button[aria-pressed=true]{background:#fff;opacity:1;filter:none;box-shadow:0 1px 3px rgba(28,35,64,.25)}
+html[data-theme=dark] .theme-toggle{background:#0b0d14;border-color:#2b3654}
+html[data-theme=dark] .theme-toggle button[aria-pressed=true]{background:#8d5a2c;box-shadow:0 0 0 1px #c48a52}
+.ex-top .theme-toggle button{width:28px;height:28px;font-size:.9rem}
 .theme-picker{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin:.3rem 0 .6rem}
 
 /* ---------- page d'accueil (portfolio) ---------- */
@@ -86,3 +87,4 @@ html[data-theme=dark] .lp-portrait-card{border-color:#2b3654;box-shadow:14px 14p
 html[data-theme=dark] .lp .mode-card{background:var(--card);color:var(--ink)}
 html[data-theme=dark] :is(.btn,button.btn):disabled,html[data-theme=dark] .btn[aria-disabled=true]{background:#1a2033;color:#6f6a62;box-shadow:0 0 0 1.5px #262e45 inset;filter:none}
 html[data-theme=dark] .toast{background:#1a2440;color:#f1e9dc;border:1px solid #3a4870}
+html[data-theme=dark] .fs-suggest.mobile .btn.ghost{background:transparent;color:var(--ink);box-shadow:0 0 0 1.5px var(--line) inset}

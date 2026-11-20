@@ -28,20 +28,19 @@ export function setTheme(pref) {
   try { localStorage.setItem(KEY, pref); } catch { /* stockage indisponible : le choix vaut pour la session */ }
   applyTheme(pref);
 }
-function paint(btn) {
+// Interrupteur à trois positions : l'option active est marquée (aria-pressed) et mise en relief.
+function paint(sw) {
   const m = themePref();
-  btn.dataset.mode = m;
-  btn.title = `${LABEL[m]} · ${LABEL_AR[m]} (changer)`;
-  btn.setAttribute('aria-label', `${LABEL[m]}, toucher pour changer`);
-  const ico = btn.querySelector('.theme-ico'); if (ico) ico.textContent = ICON[m];
-  const lab = btn.querySelector('.theme-label'); if (lab) lab.textContent = LABEL[m].replace('Thème ', '');
+  sw.dataset.mode = m;
+  sw.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
 }
-/** Bouton qui fait défiler auto → clair → sombre. */
+/** Interrupteur clair / auto / sombre de l'en-tête. */
 export function themeButton(cls = '') {
-  const b = h('button', { type: 'button', class: 'theme-toggle' + (cls ? ' ' + cls : ''), onclick: () => setTheme(MODES[(MODES.indexOf(themePref()) + 1) % MODES.length]) },
-    h('span', { class: 'theme-ico', 'aria-hidden': 'true' }), h('span', { class: 'theme-label' }));
-  paint(b);
-  return b;
+  const sw = h('div', { class: 'theme-toggle' + (cls ? ' ' + cls : ''), role: 'group', 'aria-label': 'Apparence · المظهر' },
+    ['light', 'auto', 'dark'].map((m) => h('button', { type: 'button', 'data-mode': m, title: `${LABEL[m]} · ${LABEL_AR[m]}`, 'aria-label': LABEL[m], onclick: () => setTheme(m) },
+      h('span', { 'aria-hidden': 'true' }, ICON[m]))));
+  paint(sw);
+  return sw;
 }
 /** Sélecteur explicite (paramètres) : trois boutons radio. */
 export function themePicker() {
