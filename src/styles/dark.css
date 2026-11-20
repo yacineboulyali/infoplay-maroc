@@ -69,7 +69,6 @@ html[data-theme=dark] .ex-sheet,html[data-theme=dark] .ex-top,html[data-theme=da
 html[data-theme=dark] .theme-toggle{background:#0b0d14;border-color:#2b3654}
 html[data-theme=dark] .theme-toggle button[aria-pressed=true]{background:#8d5a2c;box-shadow:0 0 0 1px #c48a52}
 .ex-top .theme-toggle button{width:28px;height:28px;font-size:.9rem}
-.theme-picker{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin:.3rem 0 .6rem}
 
 /* ---------- page d'accueil (portfolio) ---------- */
 html[data-theme=dark] .lp{--lp-ink:#ece4d8;--lp-blue:#c48a52;--lp-gold:#d8a55a;--lp-cream:#0b0d14;background:var(--lp-cream);color:var(--lp-ink)}
@@ -88,3 +87,18 @@ html[data-theme=dark] .lp .mode-card{background:var(--card);color:var(--ink)}
 html[data-theme=dark] :is(.btn,button.btn):disabled,html[data-theme=dark] .btn[aria-disabled=true]{background:#1a2033;color:#6f6a62;box-shadow:0 0 0 1.5px #262e45 inset;filter:none}
 html[data-theme=dark] .toast{background:#1a2440;color:#f1e9dc;border:1px solid #3a4870}
 html[data-theme=dark] .fs-suggest.mobile .btn.ghost{background:transparent;color:var(--ink);box-shadow:0 0 0 1.5px var(--line) inset}
+
+/* ---------- réglage « Apparence » des profils ---------- */
+.theme-picker{border:0;margin:.4rem 0 1rem;padding:0;min-width:0}
+.theme-picker legend{font-weight:800;font-size:1.05rem;margin-bottom:.5rem;padding:0}
+.theme-opts{display:grid;gap:.5rem;grid-template-columns:1fr}
+@media (min-width:640px){.theme-opts{grid-template-columns:repeat(3,1fr)}}
+.theme-opt{position:relative;display:flex;gap:.6rem;align-items:flex-start;padding:.7rem .8rem;border:2px solid var(--line,#e0d8c5);border-radius:14px;background:var(--card,#fff);color:var(--ink);cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.theme-opt:hover{border-color:var(--primary)}
+.theme-opt.on{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
+.theme-opt input{position:absolute;opacity:0;pointer-events:none}
+.theme-opt:has(input:focus-visible){outline:3px solid var(--gold);outline-offset:2px}
+.theme-opt-ico{font-size:1.4rem;line-height:1.2}
+.theme-opt-t{display:grid;gap:.1rem}
+.theme-opt-t small{color:var(--muted);font-size:.8rem;line-height:1.35}
+.theme-now{margin:.5rem 0 0;font-size:.88rem;color:var(--muted)}

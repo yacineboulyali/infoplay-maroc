@@ -19,7 +19,7 @@ function exampleBox(text, lang, label, ar) {
   return h('div', { class: 'ex-example' }, h('b', null, label || (lang === 'ar' ? '🧪 مثال' : '🧪 Exemple')), h('p', null, text), trLine(text, lang, ar));
 }
 import { visual } from './visuals.js';
-import { themeButton } from '../utils/theme.js';
+import { themeButton, themePicker } from '../utils/theme.js';
 
 const BASE = '#/examen';
 const go = (p) => { location.hash = p; };
@@ -589,6 +589,7 @@ function profileScreen(st) {
       h('div', null, h('b', null, `×${s.bestCombo}`), h('small', null, 'meilleur combo'))),
     h('h2', { class: 'ex-h2' }, `Badges · ${Object.keys(s.badges).length}/${BADGES.length}`), badges,
     h('h2', { class: 'ex-h2' }, 'Réglages'),
+    h('section', { class: 'ex-card' }, themePicker()),
     h('div', { class: 'ex-actions col' }, soundBtn(), notifBtn, resetBtn),
     h('p', { class: 'ex-muted' }, 'Ta progression reste dans ce navigateur, liée à ton pseudo InfoPlay. Sources des questions : dossiers unifiés de préparation à l’examen d’aptitude professionnelle (informatique, secondaire qualifiant).')), bottomNav('profil')];
 }

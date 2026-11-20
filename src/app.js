@@ -978,7 +978,6 @@ function dataScreen() {
     h('label', { class: 'f' }, 'Classe ', cl = h('input', { type: 'text', maxlength: '12', value: p.className })),
     h('button', { class: 'btn small', type: 'submit' }, 'Enregistrer')
     ),
-    h('h3', { style: 'margin-top:1rem' }, 'Apparence'),
     themePicker(),
     h('h3', { style: 'margin-top:1rem' }, 'Confort de lecture'),
     ...[['reducedMotion', 'Réduire les animations'], ['largeText', 'Texte plus grand'], ['highContrast', 'Contraste renforcé']].map(([k, l]) =>
