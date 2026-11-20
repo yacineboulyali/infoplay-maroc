@@ -195,7 +195,7 @@ function partPage(st, p) {
   const pr = st.partProgress(p.id); const lv = levelsOf(p.id); const T = L[p.lang];
   const lesson = h('a', { class: 'ex-lesson-tile' + (pr.lesson ? ' done' : ''), href: `${BASE}/p/${p.id}/lecon` },
     h('span', { class: 'ex-lt-ico', 'aria-hidden': 'true' }, pr.lesson ? '✅' : '📖'),
-    h('span', null, h('b', null, p.lang === 'ar' ? 'الدرس المختصر' : 'Leçon express'), h('small', null, `${p.lesson.length} ${p.lang === 'ar' ? 'بطاقات متحركة · +' : 'cartes animées · +'}${XP.lessonDone + p.lesson.length * XP.lessonCard} XP`)),
+    h('span', null, h('b', null, p.lang === 'ar' ? 'الدرس المختصر' : p.lesson.some((c) => c.keys) ? 'Leçon ciblée' : 'Leçon express'), h('small', null, `${p.lesson.length} ${p.lang === 'ar' ? 'بطاقات متحركة · +' : 'cartes animées · +'}${XP.lessonDone + p.lesson.length * XP.lessonCard} XP`)),
     h('span', { class: 'ex-chev', 'aria-hidden': 'true' }, p.lang === 'ar' ? '‹' : '›'));
   const a0 = annalesStart(p.id); const ar = p.lang === 'ar';
   const path = h('ol', { class: 'ex-path' }, lv.flatMap((qs, k) => {
@@ -248,6 +248,7 @@ function lessonPlayer(st, p) {
         h('div', { class: 'ex-eyebrow-row' }, h('small', { class: 'ex-eyebrow' }, `${p.icon} ${p.short} · ${i + 1}/${p.lesson.length}`), trBtn(p.lang)),
         h('h2', { tabindex: '-1' }, card.t, trLine(card.t, p.lang)),
         h('p', { class: 'ex-lead' }, card.p, trLine(card.p, p.lang)),
+        keysBox(card.keys, p.lang),
         visual(card.v, { color: p.color, lang: p.lang }),
         exampleBox(LESSON_EXAMPLES[p.id]?.[i], p.lang, p.lang === 'ar' ? '🧪 مثال من القسم' : '🧪 Exemple en classe'),
         h('aside', { class: 'ex-fact' }, h('span', { 'aria-hidden': 'true' }, '📚'), h('div', null, h('p', null, card.fact.t, trLine(card.fact.t, p.lang)), h('small', null, card.fact.src))),
@@ -288,6 +289,24 @@ function questionText(q, gap) {
   return [a, gap, b];
 }
 const examChip = (q) => (q.exam ? h('span', { class: 'ex-exam-chip', title: q.lang === 'ar' ? 'مستخرج من موضوع الامتحان' : 'Tiré du sujet officiel' }, `📝 ${q.exam}`) : null);
+/** Fiche de notion dans l'indice : définition, caractéristiques, renvoi à la carte de leçon. */
+function notionBox(n, lang) {
+  return h('section', { class: 'ex-notion' },
+    h('h3', null, '📘 ', n.title, trLine(n.title, lang)),
+    h('p', { class: 'ex-notion-def' }, h('b', null, 'Définition. '), n.def, trLine(n.def, lang)),
+    h('p', { class: 'ex-notion-k' }, 'Caractéristiques'),
+    h('ul', null, n.traits.map((t) => h('li', null, t, trLine(t, lang)))),
+    n.card ? h('p', { class: 'ex-notion-card' }, `📖 Leçon, carte ${n.card.n} : « ${n.card.t} »`) : null);
+}
+
+/** Bloc « À retenir » d'une carte de leçon. */
+function keysBox(keys, lang) {
+  if (!keys?.length) return null;
+  return h('section', { class: 'ex-keys' },
+    h('h3', null, lang === 'ar' ? '🎯 أحفظ' : '🎯 À retenir'),
+    h('ul', null, keys.map((k) => h('li', null, k, trLine(k, lang)))));
+}
+
 function typeHint(q) {
   if (q.type !== 'vf' && q.type !== 'fill') return null;
   const ar = q.lang === 'ar';
@@ -339,7 +358,8 @@ function quizPlayer(st, { mode, part, k }) {
       hintBtn.classList.add('used');
       const { close } = openSheet(h('div', null,
         h('div', { class: 'ex-sheet-head' }, h('h2', null, '💡 ', T.hint), trBtn(q.lang)),
-        h('p', { class: 'ex-sheet-lead' }, hi.text),
+        hi.notion ? notionBox(hi.notion, q.lang) : null,
+        h('p', { class: 'ex-sheet-lead' }, hi.notion ? h('b', null, 'Piste : ') : null, hi.text),
         hi.elim ? h('p', { class: 'ex-elim' }, h('b', null, T.elim + ' : '), hi.elim) : null,
         trBlock([hi.textAr, hi.elimAr ? 'استبعاد : ' + hi.elimAr : ''], q.lang),
         h('p', { class: 'ex-src' }, '📚 ', hi.src),

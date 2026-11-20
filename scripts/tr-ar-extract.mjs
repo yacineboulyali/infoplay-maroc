@@ -7,6 +7,7 @@ const { trKey } = await import(base+'i18n.js');
 const { QCM } = await import(base+'data/qcm.js');
 const { PARTS, GROUPS } = await import(base+'data/parts.js');
 const { CONCEPTS_FR } = await import(base+'data/concepts-fr.js');
+const { NOTIONS_FR } = await import(base+'data/notions-fr.js');
 const { DISTRACTORS_FR } = await import(base+'data/distractors.js');
 const { EXAMPLES_FR } = await import(base+'data/examples-fr.js');
 const { LESSON_EXAMPLES } = await import(base+'data/lesson-examples.js');
@@ -18,8 +19,9 @@ const add = (g, s) => { if (typeof s !== 'string') return; s = s.trim(); if (!s 
 const walk = (g, o, skip = []) => { if (typeof o === 'string') return add(g, o); if (Array.isArray(o)) return o.forEach((x) => walk(g, x, skip)); if (o && typeof o === 'object') for (const k in o) if (!skip.includes(k)) walk(g, o[k], skip); };
 const fr = PARTS.filter((p) => p.lang === 'fr');
 for (const g of GROUPS.filter((g) => g.lang === 'fr')) { add('lessons', g.title); add('lessons', g.sub); }
-for (const p of fr) { add('lessons', p.title); add('lessons', p.short); add('lessons', p.weight); walk('lessons', p.lesson, ['src', 'type']); (LESSON_EXAMPLES[p.id] || []).forEach((x) => add('lessons', x)); }
+for (const p of fr) { add('lessons', p.title); add('lessons', p.short); add('lessons', p.weight); walk('lessons', p.lesson, ['src', 'type', 'ids']); (LESSON_EXAMPLES[p.id] || []).forEach((x) => add('lessons', x)); }
 for (const c of CONCEPTS_FR) { add('feedback', c.hint); add('feedback', c.why); }
+for (const n of Object.values(NOTIONS_FR)) { add('feedback', n.def); n.traits.forEach((t) => add('feedback', t)); }
 for (const d of DISTRACTORS_FR) { add('feedback', d.msg); add('feedback', d.label); }
 Object.values(EXAMPLES_FR).forEach((x) => add('feedback', x));
 Object.entries(CONCEPT_TITLES).forEach(([k, v]) => { if (!k.endsWith('-ar')) add('feedback', typeof v === 'string' ? v : v.fr); });

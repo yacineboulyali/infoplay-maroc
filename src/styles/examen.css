@@ -885,3 +885,13 @@ body.ex-tr-on :is(.ex-phead,.ex-hero,.ex-pos-hero,.ex-cta,.ex-primary) .ex-tr{co
 :is(.ex-phead,.ex-hero,.ex-pos-hero) .arh-btn.ex-arh{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.5);color:#fff}
 :is(.ex-phead,.ex-hero,.ex-pos-hero) .arh-btn.ex-arh.is-open{background:var(--ex-gold);border-color:var(--ex-gold);color:var(--ex-ink)}
 .ex-opt .arh-btn.ex-arh,.ex-choice .arh-btn.ex-arh{margin-inline-start:.5rem}
+/* Leçon ciblée : points à retenir ; indice : fiche de notion (définition + caractéristiques) */
+.ex-keys{padding:12px 14px;border-radius:14px;background:var(--ex-card);border:1.5px solid color-mix(in srgb,var(--c) 35%,transparent)}
+.ex-keys h3,.ex-notion h3{font-size:.95rem;margin:0 0 6px}
+.ex-keys ul,.ex-notion ul{margin:0;padding-inline-start:1.15em;display:grid;gap:6px}
+.ex-keys li,.ex-notion li{font-size:.92rem;line-height:1.45}
+.ex-keys li::marker{color:var(--c)}
+.ex-notion{padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--c,#2b3fc4) 8%,var(--ex-card));border-inline-start:4px solid var(--c,#2b3fc4);margin-bottom:10px}
+.ex-notion-def{font-size:.94rem;line-height:1.5;margin:0 0 8px}
+.ex-notion-k{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ex-mut);margin:0 0 4px}
+.ex-notion-card{margin:8px 0 0;font-size:.82rem;color:var(--ex-mut)}

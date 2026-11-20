@@ -4,6 +4,8 @@ import { QCM } from './data/qcm.js';
 import { ANNALES } from './data/annales.js';
 import { PARTS, partById } from './data/parts.js';
 import { CONCEPTS_FR, DEFAULT_FR } from './data/concepts-fr.js';
+import { NOTIONS_FR, CONCEPT_OF } from './data/notions-fr.js';
+import { conceptTitle } from './data/concept-titles.js';
 import { CONCEPTS_AR, DEFAULT_AR } from './data/concepts-ar.js';
 import { DISTRACTORS_FR, DISTRACTORS_AR } from './data/distractors.js';
 import { EXAMPLES_FR } from './data/examples-fr.js';
@@ -68,7 +70,8 @@ export function conceptFor(q) {
   if (conceptCache.has(q.id)) return conceptCache.get(q.id);
   const list = q.lang === 'ar' ? CONCEPTS_AR : CONCEPTS_FR;
   const text = norm(q.lang, q.q + ' ' + q.options[q.answer]);
-  let c = list.find((k) => k.re.test(text));
+  const forced = q.lang === 'fr' && CONCEPT_OF[q.id.split('-').slice(0, 3).join('-')];
+  let c = forced ? list.find((k) => k.id === forced) : list.find((k) => k.re.test(text));
   if (!c) { const def = (q.lang === 'ar' ? DEFAULT_AR : DEFAULT_FR)[q.part]; c = list.find((k) => k.id === def) || list[list.length - 1]; }
   conceptCache.set(q.id, c);
   return c;
@@ -121,6 +124,15 @@ const T = {
 const pick = (arr, seed = 0) => arr[Math.abs(seed) % arr.length];
 const cut = (s, n = 70) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
 
+/** Fiche de notion de l'indice : intitulé, définition, caractéristiques et carte de leçon qui la traite. */
+export function notionOf(id, q) {
+  const n = q.lang === 'fr' ? NOTIONS_FR[id] : null;
+  if (!n) return null;
+  const lesson = partById(q.part)?.lesson || [];
+  const i = lesson.findIndex((c) => c.ids?.includes(id));
+  return { title: conceptTitle(id, q.lang), def: n.def, traits: n.traits, card: i < 0 ? null : { n: i + 1, t: lesson[i].t } };
+}
+
 /** Indice : principe à mobiliser (notion) + une élimination argumentée quand c'est possible. */
 export function hintFor(q) {
   const c = conceptFor(q); const t = T[q.lang];
@@ -134,7 +146,7 @@ export function hintFor(q) {
       break;
     }
   }
-  return { text: c.hint, elim, src: c.src, textAr: q.lang === 'fr' ? trAr(c.hint) : '', elimAr };
+  return { text: c.hint, elim, src: c.src, textAr: q.lang === 'fr' ? trAr(c.hint) : '', elimAr, notion: notionOf(c.id, q) };
 }
 
 /** Feedback d'une bonne réponse. */

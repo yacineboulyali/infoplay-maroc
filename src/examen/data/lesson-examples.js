@@ -4,12 +4,22 @@
 
 export const LESSON_EXAMPLES = {
   D1: [
+    'Planification annuelle : M1 en septembre, M2 jusqu’en janvier, puis M3 et M4. Séquence « tableur » : six séances. Séance 3 : références relatives et absolues, 2 h, avec la durée de chaque étape et les supports.',
     'Compétence : « résoudre un problème simple par un algorithme ». Objectif de la séance : « écrire un algorithme qui affiche admis/non admis ». Prérequis : lecture, écriture, affectation. Situation : le calcul des résultats du conseil de classe.',
+    'Après les formules, l’élève calcule seul les frais d’une sortie scolaire dans un tableau qu’il n’a jamais vu (transfert). En fin de module, il conçoit le tableau de suivi complet d’une coopérative : saisie, formules et graphique (intégration).',
+    '✘ « Connaître les réseaux. » ✔ « À partir de cinq situations décrites (salle informatique, agence bancaire, maison), distinguer sans erreur un réseau local d’Internet. »',
     'Même thème, trois niveaux : « citer les structures de contrôle » (mémoriser), « choisir la structure pour la remise de 10 % » (appliquer), « trouver pourquoi l’algorithme se trompe pour 200 DH » (analyser).',
+    'Objectif : « écrire un algorithme qui affiche admis ou non admis ». Activité : écrire et tester cet algorithme. Évaluation : écrire un algorithme du même type (mention selon la moyenne), et non réciter la définition de la structure sélective.',
+    'Début de séance : « Quelle est l’adresse de la cellule à l’intersection de la colonne C et de la ligne 4 ? Recopie =A1+B1 vers le bas : que devient la formule ? » Si la moitié de la classe échoue, dix minutes de rappel avant les références absolues.',
+    '« Le club doit envoyer l’invitation et le programme (PDF) aux 40 parents sans révéler leurs adresses : comment faire ? » La tâche impose la pièce jointe et la Cci ; plusieurs démarches sont possibles et discutées.',
+    'Approche par compétences ; méthode démonstrative pour montrer la recopie (5 minutes), puis méthode active : en binôme (technique), les élèves construisent leur propre facture et comparent leurs formules.',
+    'L’enseignant circule : « Pourquoi ta formule donne-t-elle 0 ici ? Que se passe-t-il si tu la recopies ? » Les élèves rapides reçoivent un défi (remise variable), les autres une fiche d’aide pas à pas : même objectif, aides différentes.',
+    'Critère « présentation lisible ». Indicateurs : titre centré et en gras, colonnes nommées, nombres alignés à droite. 18 élèves oublient les en-têtes : on analyse, on reprend ce point, puis on fait vérifier sur un nouveau tableau.',
     'Pendant un projet de site Web en groupes, l’enseignant circule et questionne : l’axe élève–savoir est privilégié ; la synthèse finale au tableau rééquilibre vers l’axe enseignant–savoir.',
     'Le routage IP est étudié à l’université (savoir savant) ; le programme du TC retient « distinguer LAN et WAN » (savoir à enseigner) ; l’enseignant le fait classer à partir de la salle et de la banque (savoir enseigné).',
     'Dévolution : « Trouvez comment le tableur peut calculer seul la remise ». Action : essais. Formulation : chaque binôme explique sa formule. Validation : on teste avec 199 et 200. Institutionnalisation : la règle est écrite au tableau.',
     'Récipients de 5 L et 3 L pour obtenir 4 L : ajouter un récipient de 1 L rend le problème trivial (variable didactique) ; dire « jus » au lieu d’« eau » ne change rien (variable de contexte).',
+    'En M3 (16 h), l’enseignant part des tarifs d’un parc d’attractions selon l’âge (structure sélective), fait écrire l’algorithme en classe et préparer le programme hors classe, dans un langage structuré proche de l’algorithme.',
   ],
   D2: [
     'Séance 1 : l’enseignant montre la recopie d’une formule. Séance 2 : fiche avec étapes. Séance 3 : aide sur demande. Séance 4 : l’élève recopie seul et vérifie ses résultats.',

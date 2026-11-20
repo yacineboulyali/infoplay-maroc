@@ -4,6 +4,8 @@
 // Couleurs : celles des modules d’InfoPlay (m1 #2b3fc4, m2 #0a7467, m3 #c8431a, m4 #6d3aa8), du bleu OFPPT et de m5.
 // Chaque élément d'un schéma est [libellé, détail] ; le détail s'affiche quand on touche l'élément.
 
+import { LESSON_D1 } from './lesson-d1.js';
+
 export const GROUPS = [
   { id: 'D', title: 'Didactique de l’informatique', sub: 'Planifier, gérer, évaluer, remédier · 80 % de l’épreuve', lang: 'fr', icon: '🎯' },
   { id: 'M', title: 'Programme du tronc commun', sub: 'Les 4 modules : contenus, démarches, erreurs types', lang: 'fr', icon: '💻' },
@@ -13,33 +15,7 @@ export const GROUPS = [
 export const PARTS = [
   // =====================================================================
   { id: 'D1', group: 'D', lang: 'fr', icon: '🗺️', color: '#2b3fc4', title: 'Planification des apprentissages', short: 'Planifier', weight: '25 % de la didactique',
-    lesson: [
-      { t: 'La chaîne de planification', p: 'Planifier, c’est descendre du programme vers l’activité, en gardant la cohérence à chaque maillon. Touche chaque étape pour voir son rôle.',
-        v: { type: 'flow', steps: [['Programme', 'Texte officiel : compétences, contenus, volumes horaires.'], ['Compétence', 'Mobiliser des ressources dans une famille de situations.'], ['Objectifs', 'Comportements observables visés en fin de séance.'], ['Prérequis', 'Ce que l’élève doit déjà maîtriser ; on le vérifie par un diagnostic.'], ['Situation-problème', 'Une tâche qui crée le besoin d’apprendre.'], ['Activités', 'Ce que l’élève fait réellement pour apprendre.'], ['Évaluation', 'Vérifier l’atteinte de l’objectif, avec des critères.'], ['Remédiation', 'Traiter la difficulté diagnostiquée, puis revérifier.']] },
-        fact: { t: 'Une planification est cohérente et régulable : on l’ajuste si un prérequis manque ou si un obstacle majeur apparaît.', src: 'MEN (2005), Orientations pédagogiques de l’informatique' },
-        check: { q: 'Quel maillon vient juste après les objectifs ?', o: ['Les prérequis', 'L’évaluation', 'La remédiation'], a: 0, why: 'Après avoir fixé les objectifs, on identifie les prérequis nécessaires pour les atteindre.' } },
-      { t: 'Bloom révisé : six niveaux', p: 'On classe une tâche d’après l’opération mentale qu’elle demande, pas d’après le verbe seul. La pyramide monte du plus simple au plus complexe.',
-        v: { type: 'pyramid', levels: [['Mémoriser', 'Citer, définir : « citer trois périphériques ».'], ['Comprendre', 'Expliquer avec ses mots : « expliquer le rôle du processeur ».'], ['Appliquer', 'Utiliser une procédure connue : « recopier une formule ».'], ['Analyser', 'Décomposer, trouver une cause : « trouver pourquoi l’algorithme se trompe ».'], ['Évaluer', 'Juger selon des critères : « choisir la meilleure solution et justifier ».'], ['Créer', 'Produire du nouveau : « concevoir un programme répondant à un besoin ».']] },
-        fact: { t: 'Dans la version de 2001, « créer » remplace « synthèse » et passe au sommet, au-dessus d’« évaluer ».', src: 'Anderson & Krathwohl (2001)' },
-        check: { q: '« Trouver pourquoi un algorithme donne un mauvais résultat » relève de :', o: ['Appliquer', 'Analyser', 'Créer'], a: 1, why: 'Chercher la cause d’une erreur, c’est décomposer et analyser.' } },
-      { t: 'Le triangle pédagogique', p: 'Trois pôles, trois processus. Quand l’enseignant privilégie deux pôles, le troisième « fait le mort ». Touche les côtés.',
-        v: { type: 'triangle', nodes: [['Savoir', 'Les contenus du programme.'], ['Enseignant', 'Prépare, transpose, organise les situations.'], ['Élève', 'Construit ses connaissances.']],
-          edges: [['Enseigner', 'Axe enseignant–savoir : préparer, transposer, structurer.'], ['Former', 'Axe enseignant–élève : relation, motivation, gestion.'], ['Apprendre', 'Axe élève–savoir : l’élève construit, l’enseignant se met en retrait.']] },
-        fact: { t: 'Toute situation pédagogique privilégie deux pôles sur trois : le choix doit être conscient.', src: 'Houssaye (1988), Le triangle pédagogique' },
-        check: { q: 'L’axe élève–savoir correspond au processus :', o: ['Enseigner', 'Former', 'Apprendre'], a: 2, why: 'Sur l’axe élève–savoir, l’élève apprend en construisant lui-même.' } },
-      { t: 'La transposition didactique', p: 'Le savoir se transforme en descendant de la recherche vers la classe : il est sélectionné, simplifié, découpé.',
-        v: { type: 'flow', steps: [['Savoir savant', 'Celui des chercheurs et des informaticiens.'], ['Savoir à enseigner', 'Programmes et manuels : transposition externe (noosphère).'], ['Savoir enseigné', 'Ce que fait le professeur : transposition interne.'], ['Savoir appris', 'Ce que l’élève retient et sait utiliser.']] },
-        fact: { t: 'En informatique, le savoir vient aussi des usages réels (bureautique, Internet) : ce sont les pratiques sociales de référence.', src: 'Chevallard (1985) ; Martinand (1986)' },
-        check: { q: 'Le passage du savoir à enseigner au savoir enseigné est fait par :', o: ['La noosphère', 'L’enseignant', 'L’élève'], a: 1, why: 'C’est la transposition interne, faite par l’enseignant quand il prépare et conduit sa séance.' } },
-      { t: 'Les situations de Brousseau', p: 'L’enseignant confie le problème, se retire pendant que l’élève agit avec le milieu, puis officialise le savoir.',
-        v: { type: 'flow', steps: [['Dévolution', 'L’enseignant fait accepter le problème : l’élève en devient responsable.'], ['Action', 'L’élève essaie ; le milieu répond (le programme marche ou non).'], ['Formulation', 'Il explique sa stratégie aux autres.'], ['Validation', 'Il prouve que sa solution est juste.'], ['Institutionnalisation', 'L’enseignant donne au savoir son statut officiel.']] },
-        fact: { t: 'Action, formulation et validation forment la phase adidactique : l’enseignant n’y donne pas la réponse.', src: 'Brousseau (1998), Théorie des situations didactiques' },
-        check: { q: 'L’enseignant formalise et généralise ce qui a été construit : c’est…', o: ['La dévolution', 'La validation', 'L’institutionnalisation'], a: 2, why: 'L’institutionnalisation donne au savoir construit un statut officiel et réutilisable.' } },
-      { t: 'Variable didactique ou de contexte ?', p: 'Une variable didactique change les stratégies de l’élève, donc ce qu’il apprend. Une variable de contexte ne change que l’habillage.',
-        v: { type: 'versus', a: ['Variable didactique', ['Nombre et capacité des récipients', 'Présence d’un taux fixe à recopier ($)', 'Taille des nombres à convertir en binaire']], b: ['Variable de contexte', ['Eau ou jus', 'Couleur du lutin', 'Nom des produits du tableau']] },
-        fact: { t: 'Une situation-problème a trois composantes : une tâche, des ressources, des contraintes qui créent l’obstacle.', src: 'Brousseau (1998) ; Meirieu (1987)' },
-        check: { q: 'Ajouter un troisième récipient pour aider les élèves bloqués, c’est agir sur :', o: ['Une variable didactique', 'Une variable de contexte', 'Le contrat pédagogique'], a: 0, why: 'Le nombre de récipients change les stratégies possibles : c’est une variable didactique.' } },
-    ] },
+    lesson: LESSON_D1 },
   // =====================================================================
   { id: 'D2', group: 'D', lang: 'fr', icon: '🧭', color: '#0a7467', title: 'Gestion des apprentissages', short: 'Gérer', weight: '25 % de la didactique',
     lesson: [
