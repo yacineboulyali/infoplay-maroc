@@ -1,3 +1,4 @@
+import { AR_OPTIONS } from './ar-options.js';
 const MODULE = { 1:'مبادئ عامة حول الأنظمة المعلوماتية', 2:'البرمجيات', 3:'الخوارزميات والبرمجة', 4:'الشبكات والإنترنت' };
 const SESSION = {
 'm1-s1':'التعريفات والمفردات الأساسية','m1-s2':'المخطط الوظيفي للحاسوب','m1-s3':'الأجهزة الطرفية والوحدة المركزية','m1-s4':'أنواع البرمجيات ومجالات استخدامها',
@@ -37,7 +38,7 @@ const DEF = {
 export const arModule = (id) => MODULE[id] || '';
 export const arSession = (id) => SESSION[id] || '';
 export const arActivity = (id) => ACT[id] || '';
-export const arText = (text) => TERM[String(text).trim()] || DEF[String(text).trim()] || '';
+export const arText = (text) => { const t = String(text).trim(); return TERM[t] || DEF[t] || AR_OPTIONS[t] || ''; };
 const INSTRUCTION = {
   match:'اختر عنصراً من العمود الأيسر، ثم اختر ما يقابله في العمود الأيمن. يمكنك تغيير الربط قبل التحقق.',
   sort:'اختر بطاقة ثم اختر الفئة المناسبة، أو اسحب البطاقة وأفلتها. لن تظهر الإجابة الصحيحة قبل التحقق.',

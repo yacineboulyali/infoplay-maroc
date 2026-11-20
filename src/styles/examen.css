@@ -912,3 +912,14 @@ body.ex-tr-on :is(.ex-phead,.ex-hero,.ex-pos-hero,.ex-cta,.ex-primary) .ex-tr{co
   .ex-foot .ex-btn{min-height:44px;padding:8px 24px;font-size:1rem;border-radius:14px;min-width:220px}
   .ex-player{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 }
+/* Bonne réponse affichée dans l'indice. */
+.ex-hans{margin:10px 0;padding:12px 14px;border-radius:14px;background:var(--ex-ok-bg);border-inline-start:4px solid var(--ex-ok)}
+.ex-hans-k{margin:0 0 6px;font-weight:800;color:var(--ex-ok);font-size:.9rem}
+.ex-hans-a{margin:0 0 6px;display:flex;gap:8px;align-items:flex-start;font-size:1rem}
+.ex-hans-a .ex-letter{flex:none;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--ex-ok);color:#fff;font-weight:800;font-size:.85rem}
+.ex-hans-why{margin:0;font-size:.93rem;line-height:1.5}
+/* L'en-tête garde son menu entier : c'est le titre qui se raccourcit (bouton de thème ajouté). */
+@media (min-width:1024px){.ex-top .ex-tnav{flex:none;min-width:auto}.ex-top h1{flex:1 1 0}}
+/* Entre 1024 et 1279 px, le menu passe en icônes (libellé en infobulle et pour les lecteurs d'écran). */
+@media (min-width:1024px) and (max-width:1279px){.ex-top .ex-tnav-i{padding:8px 10px}.ex-top .ex-tnav-i span:not(.ex-nav-ico){position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+.ex-top .ex-chips{flex-shrink:0}

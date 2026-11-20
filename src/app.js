@@ -18,6 +18,8 @@ import { computeGame, bestTime, fmtTime, BADGES } from './fx/game.js';
 import { gameHud } from './fx/popup.js';
 import { presentResult, makeChrono } from './fx/flow.js';
 import { installInteractions, revealIn } from './fx/interact.js';
+import { installTheme, themeButton, themePicker } from './utils/theme.js';
+installTheme();
 import { fsButton, suggestFullscreen, autoHideHeader } from './fx/fullscreen.js';
 import { PRO, PRO_ACTIVITIES, LEVELS, getLevel, collegeModule, levelActivities, COLLEGE_ACTIVITIES } from './data/index.js';
 import { PRO_POINTS } from './data/pro/index.js';
@@ -131,6 +133,7 @@ function header(prof) {
       ),
       h('div', { class: 'top-tools' },
         soundButton(prof),
+        themeButton(),
         prof ? h('button', { type: 'button', class: 'switch-user', title: `Connecté : ${prof.displayName}`, onclick: () => { store.logout(); go('#/profils'); } }, '👤 ', h('span', { class: 'switch-label' }, 'Changer l’utilisateur')) : null,
         fsButton('fs-btn'))
     )
@@ -975,6 +978,8 @@ function dataScreen() {
     h('label', { class: 'f' }, 'Classe ', cl = h('input', { type: 'text', maxlength: '12', value: p.className })),
     h('button', { class: 'btn small', type: 'submit' }, 'Enregistrer')
     ),
+    h('h3', { style: 'margin-top:1rem' }, 'Apparence'),
+    themePicker(),
     h('h3', { style: 'margin-top:1rem' }, 'Confort de lecture'),
     ...[['reducedMotion', 'Réduire les animations'], ['largeText', 'Texte plus grand'], ['highContrast', 'Contraste renforcé']].map(([k, l]) =>
       h('label', { class: 'sw' },

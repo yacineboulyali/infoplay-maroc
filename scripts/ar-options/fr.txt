@@ -1,0 +1,1350 @@
+De la mémoire vive (RAM)
+Un second clavier
+Un écran plus grand
+Une imprimante
+Libérer de l’espace ou ajouter un disque de stockage
+Ajouter une souris
+Changer le ventilateur
+Brancher des haut-parleurs
+Des haut-parleurs ou un casque
+Un scanner
+Un microphone
+Le ventilateur de refroidissement (poussière, panne)
+Le clavier
+La souris
+Le fond d’écran
+Un vidéoprojecteur
+Une webcam
+Un traitement de texte
+Un tableur
+Un navigateur
+Un lecteur de musique
+Un logiciel de dessin
+Un lecteur vidéo
+Un navigateur web
+Un antivirus
+Un logiciel de dessin ou de mise en page
+Un système d’exploitation
+Un logiciel de présentation
+Un lecteur audio
+Un système d’exploitation libre
+Un type de clé USB
+Des ordinateurs de la marque Apple
+De toutes les imprimantes
+Des clés USB
+Des routeurs uniquement
+Avant les logiciels d’application, car ils en ont besoin pour fonctionner
+Après chaque document créé
+Uniquement dans l’imprimante
+Dans la souris
+Sur le bouton Démarrer
+Sur la corbeille
+Sur l’horloge
+Sur le bureau vide
+En cliquant sur leurs boutons dans la barre des tâches
+En vidant la corbeille
+En changeant le fond d’écran
+En éteignant l’ordinateur
+Ouvrir la corbeille et restaurer le fichier
+Redémarrer l’ordinateur
+Réinstaller le système
+Renommer le bureau
+Regarder la zone de notification à droite de la barre des tâches
+Ouvrir la corbeille
+Agrandir une fenêtre
+Regarder le menu Fichier
+Créer un raccourci sur le bureau
+Supprimer le document
+Imprimer le document
+Réduire la fenêtre
+Un ensemble de données enregistré sous un nom, par exemple devoir.docx
+Un endroit qui contient seulement d’autres éléments
+Un câble réseau
+Un composant de la carte mère
+Regrouper et ranger des fichiers et d’autres dossiers
+Calculer des moyennes
+Afficher une image à l’écran
+Imprimer sans papier
+Un lien qui ouvre un élément situé ailleurs
+Une copie complète du fichier
+Un virus
+Un dossier vide
+Il reste à son emplacement
+Il est supprimé aussi
+Il devient un dossier
+Il change de nom
+Retour arrière (⌫)
+Suppr
+Tabulation
+Maj (Shift)
+Ctrl
+Alt
+Échap
+Espace
+Retour arrière
+Maj
+La barre d’espace
+Verr. Maj
+L’agrandir et le centrer
+Le souligner cinq fois
+Le mettre en blanc sur fond blanc
+Le supprimer
+Garder le gras pour les mots importants seulement
+Mettre aussi tout en italique
+Tout souligner
+Réduire la taille à 4
+Choisir une couleur foncée et contrastée
+Augmenter la luminosité de l’écran
+Le souligner
+Le mettre en italique
+Le bouton Aligner à droite
+Le bouton Souligner
+Le bouton Italique
+Le bouton Enregistrer
+Le sélectionner puis augmenter la taille (par exemple 12)
+L’imprimer en plus grand sans le changer
+Le centrer
+Une image
+Un tableau
+Une forme
+Un saut de page
+Un titre
+Une marge
+Formes
+Images
+Tableaux
+Extensions
+Insertion
+Accueil
+Révision
+Affichage
+Insertion puis Numéro de page
+Accueil puis Gras
+Affichage puis Zoom
+Révision puis Orthographe
+Ajouter le signe = au début
+Remplacer B2:B6 par B2‑B6
+Supprimer les parenthèses
+Rien, c’est correct
+#NOM?
+La parenthèse fermante )
+Un point‑virgule final
+Une seconde parenthèse ouvrante
+Le signe $
+B1 contient 0 ou est vide
+A1 contient un grand nombre
+Le signe / n’existe pas
+La feuille est trop grande
+Entier
+Réel
+Chaîne de caractères
+Booléen
+Une note égale à 10 est refusée : il faut >=
+Il manque Lire
+Sinon est interdit
+Le mot Admis est mal écrit
+n mod 2 = 1 signifie impair : il faut = 0
+mod n’existe pas
+Il faut Sinon
+Il faut écrire impair partout
+Le message ne correspond pas à la condition : age < 18 signifie mineur
+FinSi est inutile
+age ne peut pas être comparé
+m n’a pas de valeur : il manque Sinon m ← b
+m vaut a
+Rien, tout va bien
+L’algorithme affiche b
+Sinon doit se trouver avant FinSi
+x > 5 est interdit
+Alors est de trop
+Écrire est interdit après Si
+Il manque la parenthèse fermante )
+print est interdit
+Il manque un point‑virgule
+Les guillemets sont inutiles
+Python distingue majuscules et minuscules : il faut écrire print
+Il manque des guillemets
+Salut est interdit
+Il manque un deux‑points
+La variable y n’a jamais reçu de valeur
+x est mal écrit
+print ne sait pas afficher
+Il manque une parenthèse
+Il manque les deux‑points : après la condition
+if est interdit
+x > 3 est faux
+print est mal écrit
+La deuxième ligne commence par un espace (indentation inattendue)
+input est interdit
+nom est un mot réservé
+Il manque un point
+Remplacer * par +
+Remplacer print par input
+Supprimer la variable b
+Ajouter un #
+Ajouter : à la fin de la ligne du if
+Remplacer >= par =
+Supprimer print
+Mettre note entre guillemets
+Ajouter des parenthèses : (8 + 12) / 2
+Remplacer / par *
+Écrire 8 + 12 + 2
+Écrire x * x
+Écrire x + x
+Supprimer x
+Écrire print(5, 5)
+Remplacer c par b : la variable c n’existe pas
+Remplacer a par 7
+Supprimer b
+Ajouter print(7)
+Un réseau local (LAN) avec un switch
+Un réseau mondial entre pays
+Une clé USB par poste
+Aucun réseau
+Un LAN étendu à tout le collège, avec des switches reliés
+Un réseau Bluetooth
+Un seul câble de PC en PC
+Un réseau mondial
+Un réseau métropolitain (MAN)
+Un réseau personnel Bluetooth
+Le réseau d’une seule salle
+Un réseau étendu (WAN), par exemple via Internet de façon sécurisée
+Un LAN d’une seule salle
+Des clés USB seulement
+Un réseau personnel (Bluetooth)
+Un réseau métropolitain
+Un câble sous‑marin
+Je ne réponds pas, je ne donne rien et je signale ou supprime le message
+Je donne mon mot de passe pour recevoir le prix
+Je transfère le message à tous mes contacts
+Je clique sur le lien pour voir
+Je refuse et j’en parle à un adulte de confiance
+Je lui envoie ma photo
+Je lui donne mon adresse
+Je lui demande plus de détails
+Je ne participe pas, je soutiens mon camarade et je préviens un adulte
+Je rigole avec les autres
+Je partage le message
+Je quitte le groupe sans rien dire
+Je ne télécharge pas et je demande à l’enseignant
+Je télécharge tout de suite
+J’envoie le lien à mes amis
+Je désactive l’antivirus
+Je vérifie avec des sources fiables avant de la partager
+Je la partage immédiatement
+Je la crois car elle est choquante
+Je l’envoie à toute la classe
+Une donnée brute : on ne sait pas ce qu’elle représente
+Une information complète
+Un support de stockage
+« Le match commence à 14 h au stade de Fès »
+Une clé USB
+Une moyenne
+Une idée
+Un nombre
+Codée sous forme numérique (0 et 1)
+Imprimée sur papier
+Lue à voix haute
+Pliée en quatre
+Communiquer une information
+Calculer une moyenne
+Installer un logiciel
+Brancher une imprimante
+Un câble HDMI
+Un câble RJ45
+Un câble jack
+Aucun, il suffit d’allumer
+Un câble réseau dans le port RJ45
+Un casque
+Une souris
+Le Bluetooth
+Le port HDMI
+La prise jack
+Le câble d’alimentation
+USB
+HDMI
+RJ45
+Jack
+Qu’il est bien branché dans la prise jack ou connecté en Bluetooth
+Que l’imprimante est allumée
+Que le câble HDMI est branché
+Que la clé USB est pleine
+Réduire (–)
+Fermer (✕)
+Agrandir (□)
+La corbeille
+Le menu Démarrer
+Cliquer sur son bouton dans la barre des tâches
+Débrancher la souris
+Sa barre de titre
+Son bouton Fermer
+La barre des tâches
+Restaurer (❐)
+La barre de défilement
+Le pot de peinture
+La gomme
+Le crayon
+L’outil Texte
+La gomme (ou Annuler, Ctrl + Z)
+L’outil Forme
+Le pinceau
+L’outil Texte (A)
+logo_club_environnement.png
+sans titre.png
+aaa.png
+image1.png
+Fichier › Enregistrer sous
+Fichier › Nouveau
+Fichier › Imprimer
+Fermer sans enregistrer
+Une faute d’orthographe probable
+Un lien hypertexte
+Un mot en gras
+Un mot à imprimer
+Faire un clic droit sur le mot souligné
+Appuyer sur Entrée
+Changer la police
+Cliquer sur Ignorer (ou l’ajouter au dictionnaire)
+Le remplacer par la première suggestion
+Supprimer le mot
+La langue de vérification choisie
+La taille de la police
+Les marges
+Le nombre de copies
+Non : le correcteur ne voit pas les erreurs de sens, il faut se relire
+Oui, toujours en rouge
+Oui, en bleu
+Oui, il change le mot tout seul
+Il est bleu et souligné
+Il est en rouge et barré
+Il est écrit en majuscules
+Il est toujours en gras
+Ctrl + clic sur le lien
+Un double clic sur la marge
+Ctrl + P
+Maj + Entrée
+Un signet au début de la partie 3
+Une image dans la partie 3
+Une couleur de fond
+Insertion › Lien
+Accueil › Gras
+Révision › Orthographe
+Mise en page › Marges
+Que l’adresse web est bien écrite
+L’orientation de la page
+Tous les fichiers image au format JPG
+Un seul fichier nommé *.jpg
+Tous les dossiers
+Les fichiers supprimés
+Choisir le support ou le dossier où chercher
+Éteindre l’ordinateur
+Vider la corbeille
+Changer le fond d’écran
+Chercher sur la clé USB ou dans un autre dossier
+Supprimer le disque
+Renommer tous les fichiers
+Arrêter de chercher
+N’importe quelle suite de caractères
+Supprimer
+Multiplier
+Un fichier caché
+Pour les retrouver facilement par une recherche
+Pour qu’ils prennent moins de place
+Pour qu’ils s’impriment mieux
+Pour les protéger des virus
+Il tape « arganier » dans la recherche de l’explorateur
+Il ouvre tous les fichiers un par un
+Il supprime les fichiers inutiles
+Il imprime tous les documents
+Avec les flèches Suivant / Précédent de la recherche
+En recommençant la saisie
+En fermant le document
+Avec Ctrl + P
+arganier Souss
+le
+de
+et
+Remplacer (Ctrl + H)
+Rechercher seulement
+Copier
+Enregistrer sous
+L’orthographe du mot tapé
+La couleur de l’écran
+Le volume
+L’imprimante
+barrage Al Wahda
+eau
+chose
+On ouvre l’article sur le fleuve Sebou
+On supprime l’article
+On imprime la page
+On ferme l’encyclopédie
+La source : nom de l’encyclopédie et de l’article
+Ton numéro de téléphone
+Une couleur rouge
+Rien du tout
+Une image ou une vidéo de l’article (média)
+L’index seulement
+Le correcteur d’orthographe
+Même sans connexion Internet
+Seulement avec Internet
+Seulement sur un téléphone
+Jamais en classe
+Ses fichiers sont enregistrés sur le serveur
+Les deux postes sont identiques
+Il a copié ses fichiers à la main
+C’est un hasard
+L’administrateur du réseau
+Chaque élève sur son poste
+Le commutateur
+Les services partagés (fichiers, comptes) ne sont plus disponibles
+Rien ne change
+Les écrans s’éteignent tous
+Le clavier ne fonctionne plus
+Windows Server
+Paint
+Utiliser les services offerts par le serveur
+Gérer les comptes de tout le collège
+Remplacer le commutateur
+Alimenter le réseau en électricité
+Je ferme ma session
+Je laisse ma session ouverte
+J’éteins l’écran seulement
+Je débranche le câble réseau
+Refuses : le mot de passe est personnel
+Le lui donnes
+L’écris au tableau
+Le changes en 1234
+Ton compte standard n’a pas ce droit
+Le clavier est en panne
+L’écran est trop petit
+Le réseau est trop rapide
+M@roc2AC!Tafraout
+motdepasse
+ton prénom
+Dans ton dossier personnel sur le serveur
+Sur le bureau d’un poste au hasard
+Dans la corbeille
+Nulle part
+Ouvrir et copier les fichiers
+Supprimer les fichiers
+Renommer le dossier
+Modifier les consignes
+Pour économiser du matériel et de l’argent
+Pour imprimer plus lentement
+Pour gaspiller du papier
+Pour bloquer le réseau
+Modification (écriture)
+Lecture seule
+Aucun accès
+Invité
+Une icône de dossier avec des personnes ou un câble
+Une corbeille
+Un cadenas rouge toujours
+Le propriétaire du dossier ou l’administrateur
+N’importe quel élève
+La copier, pour qu’elle reste disponible pour les autres
+La déplacer vers ton poste
+La supprimer
+La renommer
+Pour que le professeur sache à qui il appartient
+Pour qu’il soit plus léger
+Pour l’imprimer en couleur
+Ce n’est pas utile
+Copier les fichiers vers ton poste
+Modifier la consigne
+Que ton poste est bien relié au réseau (câble, Wi-Fi)
+On échange sans se déplacer et sans support amovible
+Les fichiers deviennent plus beaux
+L’ordinateur va plus vite
+Aucun
+Exposé sur l’eau – groupe 3
+Salut
+URGENT !!!
+Bonjour Monsieur,
+Wesh
+Eh toi
+Sans aucune formule
+Ne le transfères pas et préviens un adulte
+Le transfères à toute la classe
+Réponds par une moquerie
+Le gardes pour rire
+Que l’on crie
+Que l’on est poli
+Que le message est court
+Rien
+Entre les postes du réseau local de l’établissement
+Avec n’importe qui dans le monde
+Sans aucun réseau
+Seulement sur téléphone
+Un classeur
+Une diapositive
+Une page web
+Un dessin
+.xlsx
+.docx
+.mp3
+.png
+LibreOffice Calc
+Enregistreur vocal
+Bloc-notes
+Se recalcule automatiquement
+Reste faux
+Disparaît
+Doit être recalculé à la main
+Cliquer sur l’onglet « Trimestre 2 »
+Fermer le classeur
+Appuyer sur Suppr
+Créer un nouveau classeur
+Copier la feuille « Trimestre 1 »
+Tout retaper
+Supprimer la feuille
+La supprimer après avoir vérifié qu’elle est vide
+La garder sans nom
+Supprimer tout le classeur
+Renommer le fichier
+Pour savoir tout de suite ce que contient chacune
+Pour qu’elles calculent plus vite
+Pour changer leur couleur
+Ce n’est pas possible
+Des lettres
+Des numéros
+Des couleurs
+Des symboles
+Des mots
+CC7
+Cliquer sur la lettre B en haut
+Cliquer sur la cellule A1
+Double-cliquer sur l’onglet
+Dans la zone Nom, à gauche de la barre de formule
+Dans la barre des tâches
+Dans l’onglet de la feuille
+Dans la barre de titre
+DD
+Les deux
+Aucune
+Appuyer sur Échap
+Cliquer sur Imprimer
+À droite de la cellule
+À gauche
+Au centre
+En haut
+La colonne est trop étroite pour afficher le nombre
+Le nombre est faux
+La cellule est supprimée
+Il y a un virus
+Double-cliquer dessus ou appuyer sur F2
+Supprimer la ligne
+Fermer le tableur
+Changer de feuille
+=MAX(B2:B30)
+=MIN(B2:B30)
+=SOMME(B2:B30)
+=NB(B2:B30)
+=MOYENNE(B2:B30)
+Fusionner et centrer
+Supprimer les colonnes
+Le format pourcentage
+Monétaire
+Pourcentage
+Date
+Texte
+Élargir la colonne en tirant sa bordure
+Réduire la police à 2
+Supprimer les noms
+Fusionner tout le tableau
+Non, seulement leur affichage
+Oui, elle les arrondit toujours
+Oui, elle les supprime
+Oui, elle les double
+Gras et couleur de remplissage
+Texte blanc sur fond blanc
+Police taille 4
+Masquer la ligne
+Passer en paysage ou ajuster à une page
+Acheter une autre imprimante
+Supprimer la moitié des données
+Imprimer en noir
+Répéter les lignes de titre
+Fusionner les cellules
+Le format monétaire
+Supprimer la page 2
+Ajouter des bordures aux cellules
+Augmenter la taille de police
+Imprimer deux fois
+Pour vérifier la mise en page avant d’imprimer
+Pour calculer les moyennes
+Pour enregistrer le fichier
+Pour supprimer des cellules
+Définit la zone d’impression A1:D15
+Imprime tout le classeur
+Supprime les autres lignes
+Change la police
+Une suite d’instructions exécutées par l’ordinateur
+Un périphérique de sortie
+Un fichier image
+Le langage machine (0 et 1)
+Le français
+Le Logo
+Le Python
+Évolué, conçu pour apprendre à programmer
+Machine
+De dessin uniquement sans instructions
+Réservé aux serveurs
+Ils sont plus faciles à lire et à écrire pour les humains
+Ils n’ont pas besoin d’ordinateur
+Ils sont plus jolis
+Ils remplacent le clavier
+Un ordre élémentaire donné à l’ordinateur
+Un programme complet
+Un écran
+Une erreur
+Au centre, tournée vers le haut
+En bas à gauche, tournée à droite
+Cachée
+Hors de l’écran
+Dans la zone de commandes
+Sur l’écran graphique
+Un trait vertical de 100 pas
+Un cercle
+Un carré
+NETTOIE (ou VE)
+AV 0
+TD 90
+LC
+Revoir et réutiliser les commandes déjà tapées
+Imprimer le dessin
+Changer la couleur
+Supprimer la tortue
+Deux côtés d’un carré (un angle droit)
+Un triangle
+Un seul trait
+Un demi-tour
+Un quart de tour
+Un tour complet
+Un trait de 50 après un espace vide de 50
+Un trait de 100
+Aucun trait
+Deux traits côte à côte
+CT
+MT
+BC
+RE 10
+Revenue à son point de départ
+À 100 pas
+À 50 pas
+Tournée vers le bas
+Un carré de côté 100
+Un trait de 400
+Un trait droit
+Un carré incomplet (3 côtés)
+Un carré complet
+Un hexagone
+On écrit le dessin une fois et on le réutilise
+Le dessin est plus coloré
+La tortue va plus vite
+Il n’y a plus besoin de clavier
+La procédure CARRE n’a pas été définie (ou mal orthographiée)
+La tortue est cachée
+Il manque NETTOIE
+FIN
+REPETE
+TD
+AV
+REPETE 8 [CARRE TD 45]
+REPETE 8 [CARRE TD 90]
+REPETE 4 [CARRE TD 45]
+CARRE 8
+Oui, par exemple ROSACE peut appeler CARRE
+Non, jamais
+Seulement le lundi
+Seulement si elle est vide
+Un LAN
+Un WAN
+Un MAN
+Quelques mètres à quelques centaines de mètres
+Plusieurs pays
+Une ville entière
+Plusieurs continents
+Un satellite
+Local Area Network
+Large Access Node
+Long Area Net
+Line Access Number
+À une seule organisation (école, famille, entreprise)
+À tous les pays
+Aux opérateurs de satellites
+À personne
+Metropolitan Area Network
+Main Access Network
+Mobile Area Node
+Multi Antenna Net
+Plusieurs réseaux locaux d’une même ville
+Deux ordinateurs d’une même table
+Tous les pays du monde
+Une souris et un clavier
+La fibre optique
+Le câble HDMI
+Quelques dizaines de kilomètres
+Quelques centimètres
+Une seule pièce
+Un PAN
+Un câble USB
+PowerPoint ou Impress
+Excel ou Calc
+Le navigateur
+Appuyer sur F5
+Débrancher le vidéoprojecteur
+.pptx
+Un thème
+Une formule
+Une transition
+Une pièce jointe
+Pour que le public suive l’explication
+Pour faire durer l’exposé
+Pour cacher les erreurs
+Distrait le public
+Rend l’exposé plus sérieux
+Est obligatoire
+Améliore la lisibilité
+Transitions
+Animations
+Dans le volet Animation
+Dans l’onglet Fichier
+Dans les marges
+Dans le correcteur
+Un objet de la diapositive
+Tout le fichier seulement
+Le vidéoprojecteur
+Le fichier vidéo n’a pas été copié avec la présentation
+L’écran est trop grand
+La police est trop petite
+Il manque une transition
+L’export en vidéo avec minutage automatique
+L’impression papier
+Le mode Normal
+La suppression des diapositives
+« Lire en arrière-plan » (sur toutes les diapositives)
+« Masquer »
+« Fondu »
+« Recadrer »
+Peut violer les droits d’auteur
+Est toujours permis
+Rend le fichier plus léger
+.mp4
+.jpg
+30 pas
+0 pas
+:n pas
+3 pas
+:taille
+"taille
+taille"
+[taille]
+Pour changer une valeur à un seul endroit et la réutiliser
+Pour colorer le dessin
+Pour effacer l’écran
+Pour cacher la tortue
+Un carré de côté 30
+Trente carrés
+Un triangle de côté 30
+Un triangle équilatéral de côté 100
+Un carré de côté 3
+Trois carrés
+CARRE 50
+CARRE 4
+POLY 50 4
+REPETE 50 [AV 4]
+On a tapé CARRE sans valeur
+La procédure est trop longue
+L’écran est plein
+Pour réutiliser la même procédure avec différentes tailles
+Pour supprimer la procédure
+Pour ralentir la tortue
+Pour rendre le programme lisible et réutilisable
+Pour qu’il prenne plus de place
+Ce n’est pas possible en Logo
+LC, un déplacement, puis BC
+NETTOIE
+TD 360
+Dans la procédure TOIT (ou MAISON) seulement
+Dans toutes les procédures
+Il faut tout réécrire
+Dans la procédure CARRE
+Une petite et une grande maison
+Deux maisons identiques
+150 maisons
+Dans sa position et sa direction de départ
+Crayon levé pour toujours
+Un traitement de texte uniquement
+HTML
+Logo
+Binaire visible
+Excel
+Le pointeur devient une main
+Le texte est toujours rouge
+La page s’éteint
+Le texte est barré
+Sa propre adresse (URL)
+Le même nom que toutes les autres
+Un mot de passe obligatoire
+Du texte, des images, du son, des vidéos et des liens
+Seulement du texte
+Seulement des images
+Rien d’interactif
+Dans « À propos », « Mentions légales » ou en bas de page
+Un site officiel de l’administration marocaine
+Un blog personnel
+Un jeu
+Une boutique
+La page d’accueil
+La page de fin
+La page cachée
+La page imprimée
+Commercial
+Institutionnel
+Éducatif
+Officiel
+Le nom de domaine
+Le même texte
+La même image
+Le même titre
+www.onda.ma
+https
+vols
+.ma/vols
+Que la connexion est sécurisée (chiffrée)
+Que le site est simple
+Que le site est en Espagne
+Que la page est un son
+Dans la barre d’adresse du navigateur
+Dans la zone de recherche de l’explorateur
+Dans Paint
+Dans une cellule
+Deux pages du même site
+Deux sites différents
+Deux courriels
+Deux imprimantes
+La page ne s’ouvre pas ou un autre site s’affiche
+Le navigateur corrige toujours
+L’ordinateur s’éteint
+Un nouvel onglet (Ctrl + T)
+Ouvrir l’historique (Ctrl + H)
+Vider le cache
+Ouvrir un nouvel onglet vide
+Actualiser (F5)
+Supprimer le navigateur
+Changer d’écran
+Imprimer la page
+Firefox
+Chrome
+Edge
+Te déconnectes et fermes le navigateur
+Laisses la page ouverte
+Ajoutes ton mot de passe aux favoris
+Partages ta session
+altitude Toubkal
+montagne
+je cherche une montagne au Maroc
+haut
+Différent : le navigateur affiche les pages, le moteur les cherche
+Exactement la même chose
+Deux tableurs
+Deux réseaux
+L’adresse du site et sa description
+Seulement la couleur du titre
+Le nombre de lettres
+Ajouter des mots-clés précis ou des guillemets
+Fermer le navigateur
+Prendre le premier résultat
+Filtrer le type de résultats
+Changer de navigateur
+Supprimer l’historique
+Dans le dossier Téléchargements
+Dans le menu Démarrer
+Sur le bureau d’un autre poste
+Refuses : c’est souvent un piège
+Acceptes tout
+Donnes ton mot de passe
+Désactives l’antivirus
+Citer le nom de l’auteur
+Ne rien faire
+Signer avec ton nom à la place
+La modifier pour la cacher
+L’analyser avec l’antivirus
+Le renommer en .exe
+Le partager avec tous
+L’ouvrir sans vérifier
+Du plagiat
+Une citation
+Une sauvegarde
+Un favori
+yassine.b@college.ma
+yassine.b.college.ma
+yassine@@college.ma
+@yassine college.ma
+« at » ou « arobase »
+« et »
+« point »
+« tiret »
+Oui, partout
+Oui, avant le @
+Seulement à la fin
+Non, chaque adresse est unique
+Oui, toujours
+Oui, dans la même famille
+Seulement le dimanche
+D’Internet
+Du tableur
+Du système de dessin
+De l’imprimante
+Le webmail dans le navigateur
+Installer Thunderbird
+Le tableur
+Un logiciel installé qui a téléchargé les messages
+Le webmail
+Un moteur de recherche
+Un réseau LAN
+Thunderbird
+Gmail dans Chrome
+Google
+Wikipédia
+Te déconnecter
+Laisser ta session ouverte
+Noter ton mot de passe sur l’écran
+Ajouter le poste aux favoris
+Au même compte de messagerie
+À deux comptes différents forcément
+À aucun compte
+Seulement au réseau local
+salma.alami.3ac
+reine-du-monde-99
+xX_dark_Xx
+salma_tel_0612
+Refuses : il est secret
+Le publies
+Probablement de l’hameçonnage
+Normal
+Une obligation légale
+Un message de ton professeur
+Non : si un site est piraté, tous les comptes le sont
+Oui, c’est plus simple
+Oui, c’est plus sûr
+Peu importe
+Ajouter une protection en plus du mot de passe
+Envoyer deux fois chaque message
+Avoir deux adresses
+Doubler l’espace de stockage
+Dossier SVT – stress hydrique – Salma et Omar 3AC
+Urgent !!!
+Sans objet
+Coucou
+Hey
+Directement le texte
+Cc
+Objet
+Signature
+Corbeille
+Crier
+Être poli
+Être rapide
+Être sérieux
+Relit le message et vérifie le destinataire
+Éteint l’écran
+Supprime l’objet
+Ajoute dix destinataires inconnus
+Envoyer un lien de partage (cloud)
+L’envoyer quand même
+La couper en morceaux de texte
+Abandonner
+Relire et vérifier la présence du trombone avant d’envoyer
+Ne jamais joindre de fichier
+Écrire en majuscules
+Envoyer deux messages vides
+N’ouvres pas et supprimes le message
+Ouvres vite le fichier
+Réponds avec ton adresse
+Non, elle reste sous la limite habituelle
+Oui, il faut l’imprimer
+Impossible à savoir
+Le PDF annoncé par ton professeur
+Un .exe envoyé par un inconnu
+Un .zip au nom bizarre
+Un fichier photo.jpg.exe
+En gras
+Barré
+En gris clair
+Caché
+Répondre
+Répondre à tous
+Transférer
+Signaler comme indésirable
+Ne cliques pas et le signales comme indésirable
+Cliques et donnes tes codes
+Réponds avec ton mot de passe
+Le transfères à tes amis
+Dans le dossier Indésirables ou Corbeille
+Dans le tableur
+À donner un accès direct aux commandes fréquemment utilisées
+À enregistrer automatiquement toutes les cinq minutes
+À changer la langue de Word
+À imprimer le document en un clic sans réglage
+Fichier › Options › Personnaliser le ruban › Nouvel onglet
+Insertion › Nouvel onglet
+Affichage › Onglets › Ajouter
+Accueil › Styles › Nouvel onglet
+Le sélectionner puis cliquer sur Renommer…
+Double-cliquer sur l’onglet Accueil
+Taper « Pages » dans le document
+Créer un style nommé Pages
+Elle sélectionne chaque commande à gauche puis clique sur Ajouter »
+Elle les dessine avec l’outil Formes
+Elle les copie depuis le document
+Elle redémarre Word
+La barre d’état en bas de la fenêtre
+Un onglet
+Un groupe
+Une commande
+Une brochure ou un journal d’information
+Une lettre de motivation
+Un mot de passe
+Une facture d’une ligne
+Le saut de section permet de changer la mise en page de façon indépendante
+Ils sont identiques
+Le saut de page change l’orientation
+Le saut de section supprime le texte suivant
+Pour afficher un large tableau ou un planning sans le couper
+Pour économiser l’encre
+Pour protéger le document
+Pour traduire le texte
+Aucun saut de section n’a été inséré avant l’annexe
+La police est trop grande
+Le thème est mal choisi
+Les colonnes sont désactivées
+Trois sections : intro, corps en 2 colonnes, annexe en Paysage
+Une seule section en 2 colonnes
+Deux pages séparées par un saut de page
+Un tableau de trois cellules
+Pour garantir la cohérence et pouvoir tout modifier d’un coup
+Pour rendre le fichier plus lourd
+Pour empêcher l’impression
+Parce que la mise en forme manuelle est impossible
+Tous les titres en Titre 1 deviennent bleus
+Seul le titre sélectionné change
+Rien tant que l’on n’imprime pas
+Les titres sont supprimés
+Création › Thèmes
+Accueil › Police
+Insertion › Thème
+Révision › Thèmes
+.dotx
+.pdf
+Le texte du document
+Les couleurs
+Les polices
+Les effets
+Grâce aux styles Titre 1, Titre 2, Titre 3 appliqués aux titres
+Grâce à la taille de police seule
+Grâce au gras
+Il les devine au hasard
+Mode Plan › Afficher le niveau › Niveau 2
+Accueil › Police › 2
+Insertion › Niveau 2
+Révision › Niveaux
+Le chapitre est déplacé avec tous ses sous-titres et paragraphes
+Il est copié en double
+Il est converti en image
+Il est supprimé puis retapé
+Abaisser
+Promouvoir
+Monter
+Fermer le mode Plan
+À cliquer sur un titre pour s’y rendre directement
+À changer de thème
+À protéger le document
+À fusionner des lettres
+Elle ne se met pas à jour quand les pages ou les titres changent
+Elle est interdite par Word
+Elle ne s’imprime pas
+Elle efface les titres
+Avoir appliqué des styles de titres
+Avoir mis les titres en rouge
+Avoir inséré des images
+Avoir activé le suivi des modifications
+Insérer des légendes puis Références › Insérer une table des illustrations
+Taper la liste à la main
+Insertion › Images › Liste
+Mettre à jour toute la table
+Mettre à jour les numéros de page uniquement
+Supprimer la table
+Le sélectionner puis Références › Marquer entrée
+Le mettre en gras
+Le copier en fin de document
+Non : le publipostage génère automatiquement une lettre par ligne de la source
+Oui, c’est la seule méthode
+Oui, puis les copier dans Excel
+Non, on n’envoie qu’une lettre pour tous
+Le document principal et la source de données
+Le thème et le modèle
+L’en-tête et le pied de page
+La macro et le mot de passe
+Dans un tableau Excel propre, une ligne par stagiaire
+Dans le pied de page
+Dans un commentaire
+Dans une image
+Avec l’aperçu des résultats
+En imprimant les 150 lettres
+En fermant Word
+Avec le correcteur d’orthographe uniquement
+Filtrer dans « Modifier la liste de destinataires » puis terminer la fusion
+Supprimer les autres stagiaires du fichier Excel
+Imprimer tout puis trier les feuilles
+Changer le thème
+Outils En-tête et pied de page › cocher Première page différente
+Supprimer la première page
+Mettre la page en Paysage
+Insérer un saut de colonne
+Lier au précédent
+Le thème
+La règle
+Le correcteur
+Avec une liste déroulante
+Avec une zone de texte libre
+Avec un saut de page
+Avec une légende
+Dans l’onglet Développeur
+Dans l’onglet Publipostage
+Dans l’onglet Création
+Dans la barre d’état
+Pour que l’on ne puisse remplir que les zones prévues
+Pour l’imprimer plus vite
+Pour changer de couleur
+Pour le convertir en PDF
+Une mise en forme répétée chaque jour à l’identique
+Une décision à prendre au cas par cas
+La lecture d’un courrier
+Un rendez-vous téléphonique
+Activer le suivi des modifications
+Insérer une table des matières
+Mettre le texte en gras
+Fichier › Informations › Inspecter le document
+Insertion › Image
+Accueil › Coller
+On refuse la modification
+On accepte toutes les modifications
+On supprime le document
+On enregistre une macro
+Styles → sections → références → révision → protection
+Protection → styles → révision
+Impression → styles → sections
+Macro → suppression → impression
+Taper janvier puis tirer la poignée de recopie
+Taper chaque mois
+Copier-coller janvier 12 fois
+Insérer un graphique
+Options Excel › Avancé › Modifier les listes personnalisées
+Insertion › Liste
+Révision › Liste
+Données › Consolider
+Avec une règle de mise en forme conditionnelle
+En coloriant chaque cellule à la main
+Avec un commentaire
+Avec une macro de suppression
+La cellule se colore automatiquement
+Rien jusqu’à la réouverture
+Excel affiche une erreur
+Mise en forme conditionnelle › Gérer les règles
+Insertion › Tableau
+Affichage › Zoom
+Avec un lien interne (Insertion › Lien › Emplacement dans ce document)
+Avec un graphique
+Avec un filtre
+Avec une validation
+Images, formes, SmartArt et icônes
+Uniquement des nombres
+Uniquement des formules
+Des diapositives
+Une suite d’actions enregistrée que l’on peut rejouer
+Un type de graphique
+Une formule de somme
+Un format de cellule
+Pour les déplacer et les redimensionner ensemble
+Pour les supprimer
+Pour les trier
+Pour les imprimer en double
+.xlsm
+.csv
+Une courbe
+Des secteurs
+Un SmartArt
+Un tableau croisé
+Un histogramme ou des barres
+Une courbe de tendance
+Un secteur à 20 parts
+Un mauvais type peut rendre le message illisible ou trompeur
+Il change les données
+Il modifie les formules
+Il n’a aucune importance
+Création de graphique › Modifier le type de graphique
+Données › Trier
+Révision › Protéger
+Une liste personnalisée
+Une légende
+Un titre d’axe
+Des étiquettes de données
+Le tri change l’ordre ; le filtre masque des lignes
+Le filtre supprime les lignes définitivement
+Le tri supprime les doublons
+Oui, en filtrant plusieurs colonnes (ex. commercial ET montant)
+Non, un seul filtre à la fois
+Seulement avec une macro
+Seulement dans Word
+À échanger lignes et colonnes d’une plage
+À traduire les textes
+À trier par couleur
+À protéger les formules
+Filtres, mise en forme et extension automatique des formules
+Pour la rendre non modifiable
+Pour l’envoyer par Outlook
+Pour créer une macro
+Un tri à deux niveaux
+Deux filtres
+Une transposition
+Un sous-total
+Pour que chaque client forme un seul groupe
+Pour accélérer l’impression
+Pour colorer les cellules
+Cliquer sur le niveau 2 du plan
+Supprimer les lignes de détail
+Filtrer par couleur
+Transposer
+Révision › Commentaire
+Par étiquette (ligne de gauche et ligne du haut)
+Par position
+Aucune n’est possible
+Choisir la fonction Moyenne dans la boîte Consolider
+Diviser à la main
+Changer de thème
+Avec un tableau croisé dynamique
+En écrivant une formule par ligne
+En imprimant la base
+Avec un SmartArt
+Lignes, Colonnes, Valeurs, Filtres
+Titre, Axe, Légende, Série
+En-tête, Pied, Marge, Saut
+Entrée, Sortie, Stockage, Calcul
+Oui, en déplaçant les champs entre les zones
+Non, il faut tout recommencer
+Seulement en modifiant la source
+Il n’a pas été actualisé
+Le thème est mauvais
+La feuille est protégée
+Le graphique est en courbe
+Non, il la lit sans la modifier
+Oui, il trie la base
+Oui, il supprime les doublons
+Oui, il efface les lignes vides
+Données › Validation des données › Autoriser : Liste
+Accueil › Puces
+Affichage › Liste
+Laisser les formules verrouillées puis protéger la feuille
+Mettre les formules en rouge
+Masquer la colonne
+Ajouter un commentaire
+Avec l’onglet Alerte d’erreur de la validation
+Avec une macro de tri
+Déverrouiller les cellules de saisie avant de protéger
+Insérer un TCD
+Trier les données
+Ajouter une légende
+Protéger le classeur
+Protéger la feuille
+Validation des données
+Figer les volets
+La mise en forme identique du rapport chaque mois
+L’analyse des causes d’une baisse des ventes
+Le choix d’un nouveau fournisseur
+Un entretien client
+Le tableau croisé dynamique
+La transposition
+La liste personnalisée
+Le commentaire
+Comparer un total avec la somme de la colonne source
+Supprimer la source
+Le convertir en image
+Protéger la feuille finale
+Nettoyer la base
+Créer le TCD
+Filtrer
+Pour harmoniser couleurs, polices et effets en un clic
+Pour ajouter des animations
+Pour exporter en PDF
+Pour protéger la présentation
+Non : on l’insère une fois dans le masque
+Oui, sur chaque diapositive
+Oui, puis on groupe
+Non, on le met en commentaire
+À contrôler l’apparence commune de toutes les diapositives
+À cacher des diapositives
+À enregistrer une vidéo
+À traduire la présentation
+Affichage › Masque des diapositives
+Insertion › Masque
+Diaporama › Masque
+Accueil › Disposition
+.potx
+Les sélectionner puis Format › Aligner
+Les déplacer un par un à l’œil
+Les copier dans Word
+Insertion › Action (ou Lien) vers la diapositive choisie
+Animations › Fondu
+Création › Variantes
+Pour guider l’attention et éviter la surcharge
+Pour allonger la présentation
+Pour cacher des erreurs
+Pour décorer seulement
+Après la précédente
+Au clic
+Déclencheur
+Durée 0
+Pour diffuser une version stable lisible partout
+Pour pouvoir modifier les animations
+Pour créer un modèle
+Pour ajouter des macros
+Pour classer les messages et les retrouver rapidement
+Pour envoyer plus vite
+Pour supprimer les pièces jointes
+Pour changer de mot de passe
+Zone Rechercher puis filtre « De »
+Trier par taille
+Ouvrir chaque message
+Créer une signature
+Déplacer, marquer ou signaler automatiquement les messages
+Écrire les réponses à notre place
+Supprimer le compte
+Créer un tableau Excel
+Options › Différer la livraison
+Le garder dans les brouillons et espérer
+Demander un accusé de réception
+Le marquer comme non lu
+Demander une confirmation de lecture
+Importance haute
+Catégoriser en rouge
+Un contact = une personne ; un groupe = plusieurs contacts sous un seul nom
+Aucune différence
+Le groupe ne contient qu’une personne
+Le contact est une tâche
+Pour une image professionnelle et homogène sans retaper ses coordonnées
+Pour chiffrer le message
+Pour bloquer les spams
+Créer la tâche puis régler sa Périodicité sur Mensuelle
+Créer 12 tâches
+Utiliser un indicateur rouge
+Différer la livraison
+Word
+PowerPoint
+Outlook
+Communiquer les résultats et organiser le suivi
+Calculer les totaux
+Mettre en page le rapport
+Animer les diapositives

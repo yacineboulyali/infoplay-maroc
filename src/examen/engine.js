@@ -146,7 +146,16 @@ export function hintFor(q) {
       break;
     }
   }
-  return { text: c.hint, elim, src: c.src, textAr: q.lang === 'fr' ? trAr(c.hint) : '', elimAr, notion: notionOf(c.id, q) };
+  // Réponse attendue et sa justification : l'indice explique la notion puis montre la bonne réponse.
+  const mark = q.type === 'vf' ? '' : letters(q.lang)[q.answer];
+  const opt = q.options[q.answer];
+  const why = [isNone(q, q.answer) ? t.none : null, q.just || c.why].filter(Boolean).join(' ');
+  const answer = { mark, text: opt, why };
+  if (q.lang === 'fr') {
+    answer.textAr = trAr(opt) || (q.type === 'vf' ? (q.answer === 0 ? 'صحيح' : 'خطأ') : opt.replace(/(d) ?h/g, '$1 س'));
+    answer.whyAr = [isNone(q, q.answer) ? T.ar.none : null, trAr(q.just || c.why)].filter(Boolean).join(' ');
+  }
+  return { text: c.hint, elim, src: c.src, textAr: q.lang === 'fr' ? trAr(c.hint) : '', elimAr, notion: notionOf(c.id, q), answer };
 }
 
 /** Feedback d'une bonne réponse. */

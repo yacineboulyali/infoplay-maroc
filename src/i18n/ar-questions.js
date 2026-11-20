@@ -1,3 +1,5 @@
+import { Q_COLLEGE } from './ar-questions-college.js';
+import { Q_M205 } from './ar-questions-m205.js';
 // Traduction arabe des questions (consignes, phrases à compléter, étapes de simulation), par activité.
 // Chaque tableau suit l'ordre des questions dans les données (data.qs, data.lines, data.prompts, data.tasks).
 // Les blancs à compléter sont rendus par « … » : la traduction ne donne jamais la réponse.
@@ -74,6 +76,9 @@ const GENERIC = {
   run: 'جد القيم التي يجب إدخالها ليعرض البرنامج النتيجة المطلوبة.',
   robot: 'برمج الروبوت ليصل إلى الهدف بأقل عدد من الأوامر.',
 };
+
+// Parcours Collège et module M205 : dictionnaires séparés, fusionnés ici.
+Object.assign(Q, Q_COLLEGE, Q_M205);
 
 /** Traduction de la question n° index (base 0) de l'activité, ou '' si elle n'existe pas encore. */
 export const arQuestion = (activityId, index) => (Q[activityId] && Q[activityId][index]) || '';

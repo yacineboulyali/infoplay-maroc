@@ -1,0 +1,88 @@
+/* ==========================================================================
+   InfoPlay — mode sombre « Nuit d'encre » : noir, bleu nuit et brun.
+   Toutes les règles sont écrites pour html[data-theme=dark] ; le script de build
+   les recopie dans @media (prefers-color-scheme:dark) pour le mode automatique
+   (html sans attribut ou avec data-theme=auto). Chargée en dernier.
+   ========================================================================== */
+html[data-theme=dark]{color-scheme:dark;
+  /* Charte : noir (fond), bleu nuit (surfaces), brun / caramel (accents). */
+  --ink:#ece4d8;--muted:#a99f90;--bg:#0b0d14;--card:#131b2e;--card-2:#1a2440;--line:#2b3654;
+  --primary:#c48a52;--primary-d:#8d5a2c;--accent:#b5703c;--gold:#d8a55a;
+  --ok:#52c08a;--ok-bg:#10291f;--ko:#f07e74;--ko-bg:#311618;
+  --sh:0 1px 2px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.45);--sh-lg:0 2px 6px rgba(0,0,0,.5),0 22px 50px rgba(0,0,0,.6);
+  --grad:linear-gradient(135deg,#a8703f,#7a4a24);--grad-warm:linear-gradient(135deg,#c48a52,#8d5a2c);
+  --m1:#5a7cc0;--m2:#3f8f86;--m3:#c07a45;--m4:#8a6fb8}
+html[data-theme=dark] body{background-color:var(--bg);background-image:radial-gradient(900px 500px at -10% -10%,rgba(40,62,120,.35),transparent 60%),radial-gradient(800px 500px at 110% 0%,rgba(141,90,44,.22),transparent 55%),radial-gradient(circle at 1px 1px,rgba(196,138,82,.06) 1px,transparent 0);background-size:auto,auto,24px 24px;background-attachment:fixed;color:var(--ink)}
+html[data-theme=dark] body.high-contrast{--ink:#fff;--muted:#ddd;--line:#fff;--bg:#000;--card:#000;--primary:#ffb86b;background-image:none}
+
+/* ---------- en-tête et navigation ---------- */
+html[data-theme=dark] header.top{background:linear-gradient(100deg,#05060a,#0f1830 60%,#2a1a0f);box-shadow:0 8px 30px rgba(0,0,0,.6);border-bottom:1px solid #2b3654}
+html[data-theme=dark] .brand .logo{background:var(--grad-warm);color:#fff}
+html[data-theme=dark] .nav-more-menu{background:var(--card);border-color:var(--line)}
+html[data-theme=dark] header.top-slim .sound-toggle,html[data-theme=dark] header.top-slim .switch-user,html[data-theme=dark] .fs-btn,html[data-theme=dark] .nav-toggle{background:rgba(255,255,255,.07);color:#ece4d8;border-color:rgba(255,255,255,.15)}
+
+/* ---------- surfaces : cartes, panneaux, fenêtres ---------- */
+html[data-theme=dark] :is(.card,.stage-card,.modal,.profile-btn,.metric-card,.peer-card,.mech-card,.module-preview-card,.quiz-card,.pick,.card.pick,.bucket,.ord-row,.slot,.node,.tab,.result,.taskbox,.hintbox,.notice,.pool,.chips,.tray,.chip,.floating-home,.badge-tile,.lan-feed,.lan-feed-item,.rp,.rp-card,.rp-tabs,.rp-nav,.quest,.card-opt,.conf-btn,.mission-brief,.card.retenir,.pp-node,.egtsi-lesson-block,.egtsi-practice-zone,.egtsi-flip-face,.egtsi-fact,.egtsi-toc a,.egtsi-steps a,.egtsi-tile,.lp-glass,.lp .mode-card,.lp-chip,.mini-mod,.podium-step,.race-feed li,.race-banner,.ach,.fs-suggest,.reaction-btn,.entry-inner,.creator-pill,.section-tag,.errbox,.fblist li,.icon-btn,.fill-line,.lan-bar,.sim-steps li,.dots a,.srow .n,.volume-row,.activity-progress,.activity-actions,.quiz-fieldset,.sort-instruction-bar,.match-intro-banner,.mod){background-color:var(--card);border-color:var(--line);color:var(--ink)}
+html[data-theme=dark] :is(.instr,.activity-brief,.sort-instruction-bar,.match-intro-banner){background-image:linear-gradient(90deg,#17213a,#1a1a24);border-color:var(--primary)}
+html[data-theme=dark] :is(.pick,.chip,.quiz-card,.slot,.ord-row,.profile-btn,.card-opt,.reaction-btn,.icon-btn):hover{background-color:var(--card-2)}
+html[data-theme=dark] :is(.pick.sel,.chip.sel,.quiz-card:has(input:checked),.slot.filled,.conf-btn.on,.peer-card.is-me,.race-feed li.mine,.rp-tab.on){background-color:#2a2016;border-color:var(--primary)}
+html[data-theme=dark] :is(.mod,.dash-hero,.act-hero,.pro-hero,.egtsi-hero,.lan-salon-hero){background-image:none;background-color:var(--card)}
+html[data-theme=dark] .dash-hero,html[data-theme=dark] .act-hero,html[data-theme=dark] :is(.pro-hero,.egtsi-hero,.lan-salon-hero){background:linear-gradient(135deg,#101a33,#0b0d14 55%,#2a1a0f);color:#ece4d8;border:1px solid var(--line)}
+
+/* ---------- boutons ---------- */
+html[data-theme=dark] .btn{background:var(--card-2);color:var(--ink);box-shadow:0 0 0 1.5px var(--line) inset,0 2px 0 #05060a}
+html[data-theme=dark] .btn:hover{box-shadow:0 0 0 1.5px var(--primary) inset,0 6px 16px rgba(0,0,0,.4)}
+html[data-theme=dark] .btn.primary,html[data-theme=dark] .btn.accent{background:var(--grad);color:#fff;box-shadow:0 6px 18px rgba(141,90,44,.35)}
+html[data-theme=dark] .btn.ghost{background:transparent;box-shadow:0 0 0 1.5px var(--line) inset}
+html[data-theme=dark] :is(.pill,.mode-badge,.q-mode-badge,.entry-badge,.mech-badge,.rp-chip,.ghud-chip,.lan-chip-ava,.opt-letter,.mech-icon-box,.track-ico){background-color:var(--card-2);color:var(--ink);border-color:var(--line)}
+
+/* ---------- champs ---------- */
+html[data-theme=dark] :is(input[type=text],input[type=number],input[type=search],input[type=password],select,textarea,.namebox){background:#0e1424;color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] ::placeholder{color:#7d7568}
+html[data-theme=dark] code{background:#0e1424;color:#e6c79c;border-color:var(--line)}
+html[data-theme=dark] .bar,html[data-theme=dark] .xpbar,html[data-theme=dark] .rp-level-bar,html[data-theme=dark] .egtsi-bar{background:#0e1424}
+html[data-theme=dark] .ring>span,html[data-theme=dark] .rp-ring-in,html[data-theme=dark] .dash-kpis .ring>span{background:var(--card);color:var(--ink)}
+
+/* ---------- simulateurs (Word, Excel, bureau, navigateur…) : ils imitent de vrais
+   logiciels clairs, on les garde clairs avec un texte foncé lisible. ---------- */
+html[data-theme=dark] :is(.rb-app,.rb-sim,.desk,.mwin,.browser,.opage,.sheetp,.sim,.office-art,.office-activity-visual,svg.chart,.netboard,table.grid,.figure,.fslist,.rb-page,.rb-canvas,.case3d,.student-illustration,.label-illustration,.generated-item-art,.egtsi-concept-visual,.semantic-icon-large,.portrait-frame,.egtsi-fact-visual){--ink:#1c2340;--muted:#575f80;--card:#fff;--card-2:#f4f1ea;--line:#e0d8c5;--primary:#2b3fc4;color:#1c2340;color-scheme:light}
+html[data-theme=dark] :is(.student-illustration,.label-illustration,.generated-item-art,.egtsi-concept-visual,.semantic-icon-large,.portrait-frame,.office-art,.egtsi-fact-visual){border-radius:14px}
+
+/* ---------- traduction arabe à la demande ---------- */
+html[data-theme=dark] .arh-btn{background:#2a2016;color:#e6c79c;border-color:#5a3f24}
+html[data-theme=dark] .arh-bubble{background:#1a2440;color:#f1e9dc;border-color:#3a4870;box-shadow:0 12px 30px rgba(0,0,0,.6)}
+html[data-theme=dark] .arh-bubble::before,html[data-theme=dark] .arh-bubble::after{border-bottom-color:#1a2440;border-top-color:#1a2440}
+
+/* ---------- module Examen professionnel ---------- */
+html[data-theme=dark] .ex-app,html[data-theme=dark] .ex-layer{--ex-ok-d:#1f6e48;--ex-ko-d:#8a2a22;--ex-gold-d:#c48a2c;--ex-fire:#d0763a;
+  --ex-sh:0 1px 2px rgba(0,0,0,.5),0 6px 18px rgba(0,0,0,.4)}
+html[data-theme=dark] .ex-exam-chip{background:#2a2016;color:#e6c79c;border-color:#5a3f24}
+html[data-theme=dark] :is(.ex-hero,.ex-pos-hero){background:linear-gradient(135deg,#16244a,#0b0d14 70%,#3a2412)}
+html[data-theme=dark] .ex-primary{color:#fff}
+html[data-theme=dark] .ex-sheet,html[data-theme=dark] .ex-top,html[data-theme=dark] .ex-foot,html[data-theme=dark] .ex-nav{border-color:var(--line)}
+
+/* ---------- bouton de thème ---------- */
+.theme-toggle{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:.3rem .7rem;font:inherit;font-weight:700;cursor:pointer;min-height:36px}
+.theme-toggle:hover{background:rgba(255,255,255,.2)}
+.theme-toggle .theme-ico{font-size:1rem;line-height:1}
+@media (max-width:700px){.theme-toggle .theme-label{display:none}.theme-toggle{padding:.3rem .55rem}}
+.ex-top .theme-toggle{border-color:var(--ex-line);background:var(--ex-card);color:var(--ex-ink);min-height:34px}
+.ex-top .theme-toggle .theme-label{display:none}
+.theme-picker{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin:.3rem 0 .6rem}
+
+/* ---------- page d'accueil (portfolio) ---------- */
+html[data-theme=dark] .lp{--lp-ink:#ece4d8;--lp-blue:#c48a52;--lp-gold:#d8a55a;--lp-cream:#0b0d14;background:var(--lp-cream);color:var(--lp-ink)}
+html[data-theme=dark] .lp-bg{background:radial-gradient(70vw 60vh at 85% 10%,rgba(40,62,120,.45),transparent 65%),radial-gradient(60vw 50vh at 10% 90%,rgba(141,90,44,.3),transparent 60%),#0b0d14}
+html[data-theme=dark] .lp-canvas.lp-gl-on{opacity:.28;filter:saturate(.6) brightness(.7)}
+html[data-theme=dark] .lp-blob{opacity:.22}
+html[data-theme=dark] .lp-blob.b1{background:#8d5a2c}html[data-theme=dark] .lp-blob.b2{background:#1f3470}html[data-theme=dark] .lp-blob.b3{background:#5a3a1e}
+html[data-theme=dark] .lp-hero::after{background-image:radial-gradient(rgba(236,228,216,.07) 1px,transparent 1.4px)}
+html[data-theme=dark] .lp-title em{background:linear-gradient(100deg,#7c9ae0 0%,#c48a52 60%,#e6b87a 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+html[data-theme=dark] :is(.lp-lead,.lp-stats span){color:#b3a998}
+html[data-theme=dark] .lp .lp-cta{color:#fff;background:#8d5a2c;border-color:#c48a52;box-shadow:0 5px 0 #3a2412}
+html[data-theme=dark] .lp .lp-cta:hover{background:#a06934}
+html[data-theme=dark] :is(.lp .lp-ghost,.lp-glass,.lp-chip){background:rgba(19,27,46,.7);border-color:rgba(236,228,216,.18);color:var(--lp-ink)}
+html[data-theme=dark] .lp-portrait-card{border-color:#2b3654;box-shadow:14px 14px 0 #8d5a2c,0 30px 60px -20px rgba(0,0,0,.7)}
+html[data-theme=dark] .lp .mode-card{background:var(--card);color:var(--ink)}
+html[data-theme=dark] :is(.btn,button.btn):disabled,html[data-theme=dark] .btn[aria-disabled=true]{background:#1a2033;color:#6f6a62;box-shadow:0 0 0 1.5px #262e45 inset;filter:none}
+html[data-theme=dark] .toast{background:#1a2440;color:#f1e9dc;border:1px solid #3a4870}

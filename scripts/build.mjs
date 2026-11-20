@@ -9,7 +9,10 @@ rmSync(dist, { recursive: true, force: true }); mkdirSync(dist, { recursive: tru
 const ofpptLogo = ['svg', 'png', 'webp'].map((x) => `images/ofppt-logo.${x}`).find((f) => existsSync(join(root, 'public', f))) || '';
 await build({ entryPoints: [join(root, 'src/app.js')], bundle: true, minify: true, format: 'iife', target: 'chrome100', outfile: join(dist, 'app.js'), legalComments: 'none', charset: 'utf8', define: { __OFPPT_LOGO__: JSON.stringify(ofpptLogo) } });
 // Feuille principale + thème v2 (le thème surcharge main.css, il doit donc venir après).
-const css = ['main.css', 'theme.css', 'pro.css', 'clean.css', 'home.css', 'examen.css'].map((f) => readFileSync(join(root, 'src/styles', f), 'utf8')).join('\n');
+let css = ['main.css', 'theme.css', 'pro.css', 'clean.css', 'home.css', 'examen.css'].map((f) => readFileSync(join(root, 'src/styles', f), 'utf8')).join('\n');
+// Mode sombre : règles écrites pour html[data-theme=dark], recopiées pour le mode automatique (réglage du système).
+const dark = readFileSync(join(root, 'src/styles/dark.css'), 'utf8');
+css += '\n' + dark + '\n@media (prefers-color-scheme:dark){' + dark.split('html[data-theme=dark]').join('html:not([data-theme=light])') + '}';
 writeFileSync(join(dist, 'app.css'), (await transform(css, { loader: 'css', minify: true })).code);
 // Mode immersif 3D (Three.js embarqué dans le paquet : aucun CDN).
 await build({ entryPoints: [join(root, 'src/immersive/main.js')], bundle: true, minify: true, format: 'iife', target: 'chrome100', outfile: join(dist, 'immersive.js'), legalComments: 'none' });

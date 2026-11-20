@@ -56,7 +56,7 @@ export function uiAr(text) {
   return segs.every((p, i) => !LETTERS.test(p) || out[i]) ? out.join(' · ') : '';
 }
 // Zones déjà traduites autrement (feedback, indice, références) ou qu'on ne traduit pas (code, lettres, chronomètre).
-const SKIP = '.arh-btn,.arh-bubble,[dir="rtl"],[lang="ar"],script,style,code,svg,input,textarea,.ex-letter,.ex-clock,.ex-src,.ex-fact small,.ex-fb-head h2,.ex-fb-body,.ex-sheet-lead,.ex-elim,.ex-mem,.ex-float,.ex-ring-l';
+const SKIP = '.ex-hans,.arh-btn,.arh-bubble,[dir="rtl"],[lang="ar"],script,style,code,svg,input,textarea,.ex-letter,.ex-clock,.ex-src,.ex-fact small,.ex-fb-head h2,.ex-fb-body,.ex-sheet-lead,.ex-elim,.ex-mem,.ex-float,.ex-ring-l';
 // Les boutons gardent leur seul libellé (les réponses et choix de leçon ont leur pastille de contenu).
 const BUTTONS = 'button,.ex-btn,.ex-tnav-i,.ex-nav-i,.ex-hint-btn,.ex-cta,.ex-back,.ex-x';
 function decorate(root) {

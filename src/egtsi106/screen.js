@@ -217,7 +217,7 @@ function lessonPage(i, k) {
         h('h1', { tabindex: '-1' }, l.title),
         h('p', { class: 'muted' }, `≈ ${Math.max(5, Math.round(total * 1.2))} min de lecture · ${total} notions · ${l.indices.length} activités`),
         h('div', { class: 'egtsi-read-meter' }, h('span', null, 'Notions comprises : ', count), meter),
-        i === 0 && k === 1 ? arHint('تعرّف على مكوّنات الحاسوب، الدور ديال كل واحد وكيفاش تربط الأجهزة.') : null),
+        i === 0 && k === 1 ? arHint('تعرّف على مكوّنات الحاسوب، ودور كل واحد منها، وكيفية ربط الأجهزة.') : null),
       picture(l.image, '', 'egtsi-lesson-cover'),
       h('nav', { class: 'egtsi-steps', 'aria-label': 'Leçons de la séance' }, course.lessons.map((ll, n) => {
         const lv = lessonLevel(ll, session, n + 1, p);
