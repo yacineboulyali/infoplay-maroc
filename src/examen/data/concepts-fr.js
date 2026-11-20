@@ -285,6 +285,10 @@ export const CONCEPTS_FR = [
     hint: 'Demande-toi ce qui rend le jugement explicite et partagé : qu’est-ce que la grille montre au correcteur et à l’élève ?',
     why: 'Une grille d’évaluation rassemble critères, indicateurs, niveaux et barème : elle rend le jugement transparent, la correction plus fiable et le feedback plus précis. La rubrique analytique note chaque critère séparément ; la rubrique holistique porte un jugement global.',
     src: 'Brookhart, S. M. (2013). How to Create and Use Rubrics for Formative Assessment and Grading. ASCD.' },
+  { id: 'modalites', re: /(?!)/,
+    hint: 'Compte d’abord combien d’élèves sont concernés, puis demande-toi si l’erreur exige une analyse avant d’agir.',
+    why: 'La forme de la remédiation dépend de l’étendue de la difficulté : collective si l’erreur est largement partagée, groupe de besoin temporaire pour une partie de la classe, aide ciblée pour quelques élèves. Son moment dépend de la nature de l’erreur : immédiate, différée (erreurs variées à analyser) ou proactive (difficulté attendue).',
+    src: 'Przesmycki, H. (1991). Pédagogie différenciée. Hachette ; Perrenoud, P. (1998). L’évaluation des élèves. De Boeck.' },
 ];
 
 // Notion par défaut quand aucune règle ne correspond (une par partie).

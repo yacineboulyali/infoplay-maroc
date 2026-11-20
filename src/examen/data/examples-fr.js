@@ -67,4 +67,5 @@ export const EXAMPLES_FR = {
   numerique: 'Pour des débutants, l’enseignant installe Dev-C++ (interface simple), dépose l’énoncé dans le dossier partagé et projette une simulation qui montre quelle branche du SI…SINON s’exécute selon la note saisie.',
   debranche: 'Six élèves portent des cartes 1, 2, 4, 8, 16, 32 et se lèvent pour former 13 en binaire, sans ordinateur. Le soir, la classe échange dans un groupe privé modéré par l’enseignant, avec une charte affichée.',
   grille: 'Grille du tableau de notes : quatre critères (calculs, recopie, présentation, graphique), trois niveaux décrits pour chacun. Deux correcteurs qui l’utilisent donnent 13 et 14 à la même copie, au lieu de 17 et 8 sans grille.',
+  modalites: '24 élèves sur 30 oublient les parenthèses : reprise collective au tableau. Six élèves confondent références relatives et absolues : groupe de besoin de 20 minutes. Un élève bloque sur la recopie : aide immédiate à son poste.',
 };

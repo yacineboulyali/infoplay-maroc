@@ -1,7 +1,7 @@
 // Fiches de notion affichées par l’indice (💡) : une définition précise et 3 à 4 caractéristiques
 // de niveau intermédiaire, pour que l’indice explique la notion visée par la question.
 // L’indice ajoute ensuite la piste (hint) et une élimination argumentée (engine.js → hintFor).
-// Les notions couvrent toutes les questions de D1, D2 et D3 ; les autres parties gardent l’indice court.
+// Les notions couvrent toutes les questions de D1 à D4 (didactique) ; les autres parties gardent l’indice court.
 
 export const NOTIONS_FR = {
   planification: {
@@ -163,6 +163,50 @@ export const NOTIONS_FR = {
       'Une activité débranchée utilise cartes, objets ou élèves qui jouent les bits, sans machine.',
       'Pour qu’elle profite à tous : rôles tournants, cartes pour chaque élève, valeurs étendues (16, 32…).',
       'Réseau social : groupe privé administré par l’enseignant, charte d’usage obligatoire ; l’enseignant modère, relance et régule.',
+    ] },
+  // ---------- D4 · Remédiation ----------
+  erreur: {
+    def: 'L’erreur (Astolfi) est un symptôme du raisonnement de l’élève : un outil pour enseigner, et non une faute à sanctionner.',
+    traits: [
+      'L’erreur est le symptôme ; l’obstacle est la cause profonde possible.',
+      'Erreur productive : une erreur exploitée comme support d’apprentissage.',
+      'Le point de départ de la remédiation est l’erreur qui témoigne d’un mécanisme de réflexion.',
+      'Erreur de procédure : l’élève applique mal les étapes d’une méthode.',
+    ] },
+  obstacles: {
+    def: 'Un obstacle est une cause profonde et résistante d’erreurs ; on en distingue quatre familles selon son origine.',
+    traits: [
+      'Épistémologique : il tient au savoir (x ← x + 1 lu comme une équation, variable « case mémoire » contre « inconnue »).',
+      'Didactique : il vient d’un choix d’enseignement (analogie choisie, temps passé sur les menus de l’EDI).',
+      'Ontogénétique : il tient au développement et à l’abstraction. Psychologique : il est affectif (peur de l’erreur, manque de confiance).',
+    ] },
+  modalites: {
+    def: 'Les formes et les moments de la remédiation s’adaptent à l’étendue de la difficulté et à la nature des erreurs.',
+    traits: [
+      'Erreur largement partagée : remédiation collective. Partie de la classe : groupe de besoin temporaire. Deux élèves : aide ciblée.',
+      'Les groupes de besoin sont temporaires et fondés sur la difficulté du moment.',
+      'Immédiate : pendant la séance. Différée : erreurs variées à analyser. Proactive : prévenir une difficulté attendue.',
+    ] },
+  strategies: {
+    def: 'Une stratégie de remédiation est une activité choisie d’après le diagnostic pour faire évoluer le raisonnement de l’élève.',
+    traits: [
+      'Comparaison d’une solution correcte et d’une solution erronée ; contre-exemple qui révèle la limite d’une solution.',
+      'Verbalisation : commenter son algorithme ligne par ligne. Correction de code erroné pour la syntaxe (== au lieu de strcmp() en C).',
+      'Décomposition en sous-problèmes pour les conditions imbriquées ; diagrammes de décision pour le chevauchement des conditions.',
+    ] },
+  tableur: {
+    def: 'Une formule de tableur calcule automatiquement un résultat à partir d’adresses de cellules ; elle suit la priorité des opérations.',
+    traits: [
+      'Dans =B2+C2+D2/3, seul D2 est divisé par 3 : il faut des parenthèses, =(B2+C2+D2)/3.',
+      'On fait tester et comparer avec et sans parenthèses plutôt que dire « c’est faux ».',
+      'Changer une donnée et voir le résultat se mettre à jour montre l’intérêt de la formule.',
+    ] },
+  representations: {
+    def: 'Une représentation est l’idée que l’élève se fait d’une notion avant ou pendant l’apprentissage ; erronée, elle doit émerger puis être mise en défaut.',
+    traits: [
+      '1313 codé « 1101 1101 » : la valeur positionnelle du nombre entier est ignorée ; on fait reconvertir en décimal (221).',
+      'Centrer avec des espaces, confondre Internet et le Web : on compare et on fait classer.',
+      'Représentation métaphorique : un langage « pour parler aux ordinateurs ». Défi de l’algorithmique : concepts complexes et représentations des élèves.',
     ] },
   // ---------- D3 · Évaluation ----------
   fonctions: {
@@ -359,4 +403,14 @@ export const CONCEPT_OF = {
   'D3-0-22': 'validite', 'D3-0-23': 'validite',
   'D3-0-6': 'competence', 'D3-0-28': 'competence', 'D3-1-22': 'competence',
   'D3-2-4': 'competence', 'D3-2-5': 'competence', 'D3-2-6': 'competence',
+  // D4 · Remédiation des apprentissages
+  'D4-0-5': 'modalites', 'D4-0-6': 'modalites', 'D4-0-7': 'modalites', 'D4-0-13': 'modalites', 'D4-0-14': 'modalites',
+  'D4-0-34': 'modalites', 'D4-0-39': 'modalites', 'D4-1-4': 'modalites', 'D4-1-5': 'modalites', 'D4-1-16': 'modalites',
+  'D4-0-33': 'consigne', 'D4-0-8': 'erreur', 'D4-2-16': 'erreur', 'D4-1-13': 'remediation',
+  'D4-1-19': 'obstacles', 'D4-1-20': 'obstacles', 'D4-1-25': 'obstacles', 'D4-2-2': 'obstacles',
+  'D4-0-16': 'etayage', 'D4-0-20': 'etayage', 'D4-0-28': 'etayage', 'D4-0-29': 'etayage', 'D4-0-30': 'etayage',
+  'D4-0-31': 'etayage', 'D4-0-35': 'etayage', 'D4-1-12': 'etayage', 'D4-1-17': 'etayage', 'D4-1-24': 'etayage',
+  'D4-0-24': 'strategies', 'D4-0-36': 'strategies', 'D4-1-28': 'strategies', 'D4-2-9': 'strategies',
+  'D4-0-11': 'tableur', 'D4-0-12': 'tableur', 'D4-0-23': 'tableur', 'D4-1-6': 'tableur',
+  'D4-0-25': 'representations', 'D4-0-26': 'representations', 'D4-1-10': 'representations', 'D4-2-14': 'representations', 'D4-2-15': 'representations',
 };

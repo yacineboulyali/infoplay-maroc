@@ -50,9 +50,13 @@ export const LESSON_EXAMPLES = {
   ],
   D4: [
     'Évaluer : contrôle sur la conversion binaire. Identifier : 1313 devient 1101 1101. Diagnostiquer : l’élève convertit chiffre par chiffre. Remédier : reconversion et divisions par 2. Réévaluer : convertir 2026.',
+    'Salma écrit SI note > 10 et oublie le cas 10. Au lieu de barrer, l’enseignant affiche sa solution : « Qu’affiche-t-elle pour un élève qui a exactement 10 ? » La classe discute de ≥ et de > à partir de son erreur.',
     'Épistémologique : la variable « case mémoire » contredit l’inconnue des mathématiques. Didactique : l’analogie des verres. Ontogénétique : l’abstraction encore difficile à 15 ans. Psychologique : la peur de se tromper devant les autres.',
     'Conversion binaire ratée par toute la classe : remédiation collective le jour même. Confusion copier/déplacer chez six élèves : groupe de besoin de 20 minutes. Un élève oublie l’enregistrement : rappel individuel.',
+    'Le cours sur les conditions n’a pas suffi à trois élèves : l’enseignant change d’entrée avec un organigramme découpé en étapes, puis une checklist « ai-je testé 9, 10 et 11 ? ». La séance suivante, ils vérifient seuls leur programme.',
+    'Deux programmes C comparent un mot de passe : l’un avec ==, l’autre avec strcmp(). Les élèves comparent les résultats, expliquent la différence ligne par ligne, puis corrigent trois codes erronés.',
     'Variante : un élève écrit =B2*C2+D2 pour « B2 fois la somme de C2 et D2 ». Même démarche : constat, test avec des valeurs simples (2, 3, 4), règle des priorités, nouvelle formule à construire.',
+    'Un élève code 1313 en « 1101 1101 ». L’enseignant lui fait reconvertir son résultat : il obtient 221. Surpris, il cherche une autre méthode ; la classe reprend les puissances de 2 jusqu’à 1024.',
   ],
   M1: [
     'Distributeur de billets : entrée = carte et code ; traitement = vérification du solde par l’ordinateur de la banque ; résultat = billets et reçu.',

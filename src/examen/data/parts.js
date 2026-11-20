@@ -7,6 +7,7 @@
 import { LESSON_D1 } from './lesson-d1.js';
 import { LESSON_D2 } from './lesson-d2.js';
 import { LESSON_D3 } from './lesson-d3.js';
+import { LESSON_D4 } from './lesson-d4.js';
 
 export const GROUPS = [
   { id: 'D', title: 'Didactique de l’informatique', sub: 'Planifier, gérer, évaluer, remédier · 80 % de l’épreuve', lang: 'fr', icon: '🎯' },
@@ -26,24 +27,7 @@ export const PARTS = [
     lesson: LESSON_D3 },
   // =====================================================================
   { id: 'D4', group: 'D', lang: 'fr', icon: '🩺', color: '#6d3aa8', title: 'Remédiation des apprentissages', short: 'Remédier', weight: '25 % de la didactique',
-    lesson: [
-      { t: 'La boucle de remédiation', p: 'On remédie à une difficulté identifiée, pas à une note faible. Et la boucle se referme toujours par une réévaluation.',
-        v: { type: 'cycle', steps: [['Évaluer', 'Recueillir des traces.'], ['Identifier', 'Repérer l’erreur précise.'], ['Diagnostiquer', 'Trouver sa cause.'], ['Remédier', 'Agir avec une autre entrée que le cours initial.'], ['Réévaluer', 'Vérifier sur une situation nouvelle.']] },
-        fact: { t: 'Soutien = aide générale. Remédiation = intervention ciblée sur une difficulté diagnostiquée.', src: 'Allal (1979) ; Perrenoud (1998)' },
-        check: { q: 'Après la remédiation, l’étape indispensable est :', o: ['Passer au chapitre suivant', 'Vérifier l’acquisition sur une situation nouvelle', 'Mettre une note'], a: 1, why: 'Sans réévaluation, l’efficacité de la remédiation n’est pas vérifiée.' } },
-      { t: 'Quatre familles d’obstacles', p: 'L’erreur est le symptôme ; l’obstacle est la cause qui résiste. Identifie la famille pour choisir la bonne remédiation.',
-        v: { type: 'grid', items: [['🧩', 'Épistémologique', 'Tient au savoir : x ← x + 1 heurte l’égalité mathématique.'], ['👩‍🏫', 'Didactique', 'Vient de l’enseignement : l’analogie des verres fait croire que A se vide après B ← A.'], ['🌱', 'Ontogénétique', 'Tient au développement : abstraction encore difficile.'], ['💭', 'Psychologique', 'Peur de l’erreur, « je suis nul en maths ».']] },
-        fact: { t: 'L’erreur est un outil pour enseigner : elle témoigne d’un raisonnement.', src: 'Bachelard (1938) ; Brousseau (1983) ; Astolfi (1997)' },
-        check: { q: '« Je suis nul en maths, je ne saurai jamais programmer » révèle un obstacle :', o: ['Épistémologique', 'Didactique', 'Psychologique'], a: 2, why: 'C’est le rapport affectif à la tâche : obstacle psychologique.' } },
-      { t: 'Choisir le bon niveau d’intervention', p: 'L’étendue de la difficulté décide de la forme, et la nature de l’erreur décide du moment.',
-        v: { type: 'versus', a: ['Qui est concerné ?', ['Erreur partagée par la majorité → remédiation collective', 'Une partie de la classe → groupe de besoin temporaire', 'Deux élèves → aide ciblée']], b: ['Quand intervenir ?', ['Blocage pendant la tâche → remédiation immédiate', 'Erreurs variées à analyser → remédiation différée', 'Difficulté attendue → remédiation proactive']] },
-        fact: { t: 'Les groupes de besoin sont temporaires et fondés sur la difficulté du moment.', src: 'Przesmycki (1991)' },
-        check: { q: 'Une difficulté chez deux élèves seulement appelle :', o: ['Une régulation collective', 'Une aide ciblée', 'Une évaluation certificative'], a: 1, why: 'Deux élèves : on cible l’aide sur eux.' } },
-      { t: 'Le cas =B2+C2+D2/3', p: 'Suis la démarche sur une erreur réelle du tableur. Touche chaque étape.',
-        v: { type: 'flow', steps: [['Constat', 'La moyenne affichée est fausse.'], ['Analyse', 'Seul D2 est divisé par 3.'], ['Origine', 'Priorité des opérations non maîtrisée.'], ['Remédiation', 'Faire tester et comparer avec des parenthèses : =(B2+C2+D2)/3.'], ['Vérification', 'Nouvelle moyenne pondérée à construire.']] },
-        fact: { t: 'Un contre-exemple révèle la limite d’une solution ; la comparaison correcte / erronée fait verbaliser la règle.', src: 'Astolfi (1997)' },
-        check: { q: 'La remédiation la plus pertinente pour =B2+C2+D2/3 :', o: ['Recopier la règle 10 fois', 'Faire tester et comparer avec des parenthèses', 'Refaire le même cours'], a: 1, why: 'L’élève constate lui-même l’effet des parenthèses.' } },
-    ] },
+    lesson: LESSON_D4 },
   // =====================================================================
   { id: 'M1', group: 'M', lang: 'fr', icon: '🖥️', color: '#2b3fc4', title: 'M1 · Généralités sur les systèmes informatiques', short: 'M1 · 8 h', weight: '8 h · premier module de l’année',
     lesson: [
