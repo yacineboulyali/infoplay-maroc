@@ -875,3 +875,13 @@ body.ex-tr-on .ex-btn .ex-tr-ui,body.ex-tr-on .ex-cta .ex-tr-ui,body.ex-tr-on .e
 body.ex-tr-on .ex-primary .ex-tr-ui,body.ex-tr-on .ex-cta .ex-tr-ui{color:#fff}
 /* Lignes arabes sur fond coloré (en-tête de partie, rang, bilan) : texte blanc lisible. */
 body.ex-tr-on :is(.ex-phead,.ex-hero,.ex-pos-hero,.ex-cta,.ex-primary) .ex-tr{color:#fff;background:rgba(255,255,255,.2)}
+
+/* ==========================================================================
+   Pastilles « ?AR » (traduction à la demande, comme dans Tronc commun)
+   ========================================================================== */
+.ex-app .arh-btn.ex-arh,.ex-layer .arh-btn.ex-arh{height:1.3rem;min-width:1.55rem;margin-inline-start:.35rem;font-size:.82rem;vertical-align:middle;flex:none}
+.ex-arh-row{display:flex;justify-content:flex-end;margin-top:2px}
+.arh-bubble.ex-arh-bubble{max-width:min(380px,calc(100vw - 16px));white-space:pre-line;font-size:.92rem;line-height:1.7}
+:is(.ex-phead,.ex-hero,.ex-pos-hero) .arh-btn.ex-arh{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.5);color:#fff}
+:is(.ex-phead,.ex-hero,.ex-pos-hero) .arh-btn.ex-arh.is-open{background:var(--ex-gold);border-color:var(--ex-gold);color:var(--ex-ink)}
+.ex-opt .arh-btn.ex-arh,.ex-choice .arh-btn.ex-arh{margin-inline-start:.5rem}
