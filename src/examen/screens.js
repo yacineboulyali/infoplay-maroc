@@ -689,7 +689,7 @@ function positionScreen(st, showReport) {
         h('div', { class: 'ex-pos-col' },
           h('section', { class: 'ex-card' }, h('h3', { class: 'ex-h2' }, '🗺️ Ton parcours recommandé'), h('p', { class: 'ex-muted' }, 'Commence par les parties prioritaires ; à égalité, la didactique passe d’abord (80 % de l’épreuve).'), pathEl),
           h('section', { class: 'ex-card' }, h('h3', { class: 'ex-h2' }, `🔍 Tes lacunes · ${res.gaps.length} notion(s)`), h('p', { class: 'ex-muted' }, 'Touche une notion pour lire l’essentiel et sa référence.'), h('div', { class: 'ex-tr-row' }, trBtn('fr')), gapsEl))),
-      correction,
+      correction || '',
       h('div', { class: 'ex-actions col ex-pos-actions' },
         first ? h('a', { class: 'ex-btn ex-primary', href: `${BASE}/p/${first}/lecon` }, `Commencer le parcours : ${partById(first).short}`) : h('a', { class: 'ex-btn ex-primary', href: BASE + '/blanc' }, 'Passer l’examen blanc'),
         res.missed.length ? h('a', { class: 'ex-btn', href: BASE + '/revision' }, `Revoir les ${res.missed.length} questions ratées`) : null,

@@ -79,6 +79,8 @@ export const UI = {
   // Notifications
   'Continue chaque jour pour garder ta flamme allumée.': 'واصل كل يوم لتبقى شعلتك مشتعلة.', 'Objectif du jour atteint 🎯': 'تحقق هدف اليوم',
   'Niveau 1 débloqué': 'المستوى 1 مفتوح', 'Bilan diagnostique prêt': 'الحصيلة التشخيصية جاهزة',
+  // Anciens intitulés encore présents dans les notifications enregistrées
+  'Bilan de positionnement prêt': 'الحصيلة التشخيصية جاهزة', 'Passer le test de positionnement.': 'اجتياز التقويم التشخيصي.', 'Test de positionnement': 'التقويم التشخيصي',
   'Aucune lacune majeure : passe aux niveaux et à l’examen blanc.': 'لا توجد ثغرة كبيرة: انتقل إلى المستويات والامتحان التجريبي.',
   'Ta série s’est arrêtée': 'توقفت سلسلتك', 'Réponds à quelques questions aujourd’hui pour relancer ta flamme.': 'أجب عن بعض الأسئلة اليوم لتعيد إشعال شعلتك.',
   'La révision espacée fixe durablement ce que tu as raté.': 'المراجعة المتباعدة تثبّت بشكل دائم ما أخطأت فيه.',
@@ -100,6 +102,7 @@ export const UI = {
   'Ton niveau': 'مستواك', 'Par composante': 'حسب المكوّن', 'Par partie': 'حسب الجزء', '🗺️ Ton parcours recommandé': 'مسارك المقترح', 'Ton parcours recommandé': 'مسارك المقترح',
   '🔍 Tes lacunes': 'ثغراتك', 'Tes lacunes': 'ثغراتك', 'Touche une notion pour lire l’essentiel et sa référence.': 'المس مفهوما لقراءة الأساسي ومرجعه.',
   'Passer l’examen blanc': 'اجتياز الامتحان التجريبي', 'Commencer': 'ابدأ',
+  'Commence par les parties prioritaires ; à égalité, la didactique passe d’abord (80 % de l’épreuve).': 'ابدأ بالأجزاء ذات الأولوية؛ وعند التساوي، يأتي الديداكتيك أولا (80 % من الاختبار).',
   // Mot de passe
   'Mot de passe': 'كلمة السر', 'Entrer': 'دخول', 'Retour à l’accueil': 'العودة إلى الرئيسية', 'Mot de passe incorrect. Réessaie.': 'كلمة السر غير صحيحة. أعد المحاولة.',
   // Schémas
@@ -123,6 +126,7 @@ export const UI_PATTERNS = [
   [/^Combo ×(\d+) !$/, (m) => `سلسلة ×${m[1]}!`],
   [/^(\d+) cartes animées$/, (m) => `${m[1]} بطاقات متحركة`],
   [/^(\d+) partie\(s\) prioritaire\(s\)$/, (m) => `${m[1]} جزء/أجزاء ذات أولوية`],
+  [/^(\d+) partie\(s\) prioritaire\(s\) : ton parcours est réordonné\.$/, (m) => `${m[1]} جزء/أجزاء ذات أولوية: أُعيد ترتيب مسارك.`],
   [/^(\d+)\/(\d+) bonnes réponses$/, (m) => `${m[1]}/${m[2]} أجوبة صحيحة`],
   [/^(\d+) « je ne sais pas »$/, (m) => `${m[1]} «لا أعرف»`],
   [/^(\d+) min$/, (m) => `${m[1]} دقيقة`],
@@ -139,7 +143,10 @@ export const UI_PATTERNS = [
   [/^(\d+) questions à revoir$/, (m) => `${m[1]} أسئلة للمراجعة`],
   [/^Nouveau badge : (.+)$/, (m, tr) => `شارة جديدة: ${tr(m[1])}`],
   [/^Gagner (\d+) XP dans la journée\.$/, (m) => `ربح ${m[1]} XP في اليوم.`],
-  [/^−(\d+) XP sur cette question$/, (m) => `−${m[1]} XP على هذا السؤال`],
+  [/^−?(\d+) XP sur cette question$/, (m) => `−${m[1]} XP على هذا السؤال`],
+  [/^Annales (\d+)$/, (m) => `الامتحانات الرسمية ${m[1]}`],
+  [/^Combo ×(\d+)$/, (m) => `سلسلة ×${m[1]}`],
+  [/^(Maîtrisé|À consolider|Prioritaire) (.+)$/, (m) => `${UI[m[1]]} ${m[2]}`],
   [/^Diagnostic des compétences : (\d+)\/(\d+)$/, (m) => `تشخيص الكفايات: ${m[1]}/${m[2]}`],
   [/^Ta réponse : (\S+)\. (.+)$/, (m, tr) => `جوابك: ${m[1]}. ${tr(m[2]) || m[2]}`],
   [/^Bonne réponse : (\S+)\. (.+)$/, (m, tr) => `الجواب الصحيح: ${m[1]}. ${tr(m[2]) || m[2]}`],

@@ -177,3 +177,20 @@ test('traduction arabe : chaque texte français du module a sa traduction', asyn
   assert.ok(hintFor(q).textAr);
   assert.equal(correctFeedback(QUESTIONS.find((x) => x.lang === 'ar')).bodyAr, undefined, 'pas de traduction pour une question déjà en arabe');
 });
+
+test('traduction arabe de l’interface : rangs, badges, niveaux et textes avec nombres', async () => {
+  globalThis.document ??= undefined;
+  const { uiAr } = await import('../src/examen/tr-ui.js');
+  const { RANKS, BADGES, LEVELS_POS, MASTERY_BANDS } = await import('../src/examen/engine.js');
+  for (const r of RANKS) assert.ok(uiAr(r.fr), 'rang : ' + r.fr);
+  for (const b of BADGES.filter((x) => !/[؀-ۿ]/.test(x.t))) assert.ok(uiAr(b.t) && uiAr(b.d), 'badge : ' + b.id);
+  for (const l of LEVELS_POS) assert.ok(uiAr(l.fr) && uiAr(l.text), 'niveau : ' + l.fr);
+  for (const m of MASTERY_BANDS) assert.ok(uiAr(m.fr), 'bande : ' + m.fr);
+  for (const s of ['Vérifier', 'Continuer', '💡 Indice', '100 XP avant « Stagiaire »', '📖 · 0/11 niveaux · ⭐ 0/33', 'Leçon · Planifier',
+    '4.7/20 · Débutant', '10 partie(s) prioritaire(s) · voir le bilan', 'Niveau 3', '8 questions', '6 cartes animées · +50 XP', 'Annales 2',
+    '−3 XP sur cette question', 'Correction des 30 questions', 'Revoir les 23 questions ratées', 'Commencer le parcours : Planifier']) {
+    assert.ok(uiAr(s), 'interface : ' + s);
+  }
+  assert.equal(uiAr('Texte inconnu du dictionnaire'), '');
+  assert.equal(uiAr('12/20'), '', 'pas de traduction pour un texte sans mots');
+});

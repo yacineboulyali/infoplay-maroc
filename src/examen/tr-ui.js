@@ -69,7 +69,8 @@ function watch() {
   if (watching || typeof MutationObserver === 'undefined') return; watching = true;
   new MutationObserver(() => {
     if (queued || !trIsOn()) return; queued = true;
-    requestAnimationFrame(() => { queued = false; decorateAll(); });
+    // setTimeout plutôt que requestAnimationFrame : ce dernier ne s'exécute pas dans un onglet en arrière-plan.
+    setTimeout(() => { queued = false; decorateAll(); }, 30);
   }).observe(document.body, { childList: true, subtree: true });
 }
 
