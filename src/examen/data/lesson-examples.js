@@ -39,8 +39,13 @@ export const LESSON_EXAMPLES = {
   D3: [
     'Recueillir : les tableaux produits. Juger : la formule est-elle juste, recopiable, la présentation lisible ? Décider : la majorité bloque sur la recopie, on y revient demain.',
     'Lundi : 5 questions sur les adresses de cellules (diagnostique). Mercredi : l’enseignant observe les recopies (formative). Fin du module : contrôle noté (sommative).',
+    'Normative : « Tu es 5e sur 32. » Critériée : « Tu réussis 3 critères sur 4 : formule juste, recopie correcte, présentation lisible ; il manque le titre du graphique. » Le seuil « 3 critères sur 4 » était annoncé avant l’épreuve.',
     'Critère « exactitude des calculs ». Indicateurs : la moyenne de chaque ligne est juste ; la formule se met à jour quand on change une note ; aucune valeur n’est tapée à la main.',
+    'Grille du tableau de notes, quatre critères : exactitude des calculs, recopie des formules, présentation, graphique. Chaque critère a trois niveaux décrits (non acquis, en cours, acquis). Les binômes s’en servent pour se co-évaluer avant de rendre.',
+    'Pour la séquence tableur : un QCM de 6 questions sur le vocabulaire, une question ouverte « Pourquoi utiliser $B$1 ? », une observation des binômes pendant la recopie, et un portfolio qui garde les tableaux des trois séances.',
+    'Évaluation finale : « Le club sportif vous transmet ses dépenses. Construisez la facture avec un taux de TVA unique et une remise par ligne, puis testez-la avec 199, 200, 499 et 500 DH. » L’enseignant croise la production, l’observation et une courte explication orale.',
     'Pour « créer un graphique adapté », un QCM sur les types de graphiques manque de validité ; une tâche « produire le graphique des notes et justifier son type » est valide. Une grille commune rend la correction fiable.',
+    'Deux copies au raisonnement identique : l’une soignée et en couleur reçoit 15, l’autre raturée reçoit 11. En corrigeant critère par critère avec la grille, sans regarder les noms, les deux obtiennent 13.',
     '✘ « Pas mal. » ✔ « Ton graphique a un titre et une légende ; les axes ne sont pas nommés. Ajoute "Élèves" et "Moyenne" avant de rendre. »',
   ],
   D4: [

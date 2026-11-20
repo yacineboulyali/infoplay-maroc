@@ -18,7 +18,7 @@ export const CONCEPT_TITLES = {
   ram: 'Mémoires (RAM, disque)', peripheriques: 'Composants et périphériques', ipo: 'Traitement de l’information', logiciels: 'Système et fichiers',
   texte: 'Traitement de texte', tableur: 'Tableur et formules', reseaux: 'Réseaux informatiques', internet: 'Internet et ses services',
   esprit: 'Esprit critique et usages responsables',
-  numerique: 'Outils et ressources numériques', debranche: 'Débranché et réseaux sociaux en classe',
+  numerique: 'Outils et ressources numériques', debranche: 'Débranché et réseaux sociaux en classe', grille: 'Grilles et rubriques d’évaluation',
   // Sciences de l'éducation (ar)
   taaziz: 'السلوكية والتعزيز', piaget: 'البنائية ومراحل بياجي', vygotsky: 'السوسيوبنائية والسقالة', cognitive: 'المعرفية والحمل المعرفي',
   meta: 'ما وراء المعرفة', bandura: 'التعلم الاجتماعي والفعالية الذاتية', erikson: 'المراهقة والهوية', weiner: 'العزو السببي',

@@ -281,7 +281,12 @@ export const CONCEPTS_FR = [
     hint: 'Demande-toi si l’activité exige vraiment une machine, et qui organise et encadre les échanges.',
     why: 'L’informatique débranchée fait manipuler un concept sans ordinateur (cartes, objets, élèves qui jouent les bits). Un réseau social prolonge la classe à condition d’être un espace fermé, administré par l’enseignant, avec une charte d’usage et une modération active.',
     src: 'Bell, T., Witten, I. H. & Fellows, M. (2015). CS Unplugged. University of Canterbury.' },
+  { id: 'grille', re: /(?!)/,
+    hint: 'Demande-toi ce qui rend le jugement explicite et partagé : qu’est-ce que la grille montre au correcteur et à l’élève ?',
+    why: 'Une grille d’évaluation rassemble critères, indicateurs, niveaux et barème : elle rend le jugement transparent, la correction plus fiable et le feedback plus précis. La rubrique analytique note chaque critère séparément ; la rubrique holistique porte un jugement global.',
+    src: 'Brookhart, S. M. (2013). How to Create and Use Rubrics for Formative Assessment and Grading. ASCD.' },
 ];
+
 // Notion par défaut quand aucune règle ne correspond (une par partie).
 export const DEFAULT_FR = {
   D1: 'planification', D2: 'active', D3: 'fonctions', D4: 'remediation',

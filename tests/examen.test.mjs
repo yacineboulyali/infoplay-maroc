@@ -217,11 +217,11 @@ test('ordre aléatoire : propositions mélangées, bonne réponse conservée, «
   assert.deepEqual(shuffleArr(a, rng).sort(), a);
 });
 
-test('D1-D2 : chaque question renvoie à une fiche de notion traduite et à une carte de la leçon ciblée', async () => {
+test('D1-D3 : chaque question renvoie à une fiche de notion traduite et à une carte de la leçon ciblée', async () => {
   const { questionsOf, hintFor } = await import('../src/examen/engine.js');
   const { trAr } = await import('../src/examen/i18n.js');
   const { NOTIONS_FR } = await import('../src/examen/data/notions-fr.js');
-  for (const q of [...questionsOf('D1'), ...questionsOf('D2')]) {
+  for (const q of ['D1', 'D2', 'D3'].flatMap(questionsOf)) {
     const n = hintFor(q).notion;
     assert.ok(n, 'fiche de notion : ' + q.id);
     assert.ok(n.def && n.traits.length >= 3, 'définition et caractéristiques : ' + q.id);

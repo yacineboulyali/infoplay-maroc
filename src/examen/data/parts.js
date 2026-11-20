@@ -6,6 +6,7 @@
 
 import { LESSON_D1 } from './lesson-d1.js';
 import { LESSON_D2 } from './lesson-d2.js';
+import { LESSON_D3 } from './lesson-d3.js';
 
 export const GROUPS = [
   { id: 'D', title: 'Didactique de l’informatique', sub: 'Planifier, gérer, évaluer, remédier · 80 % de l’épreuve', lang: 'fr', icon: '🎯' },
@@ -22,28 +23,7 @@ export const PARTS = [
     lesson: LESSON_D2 },
   // =====================================================================
   { id: 'D3', group: 'D', lang: 'fr', icon: '📏', color: '#c8431a', title: 'Évaluation des apprentissages', short: 'Évaluer', weight: '25 % de la didactique',
-    lesson: [
-      { t: 'Évaluer, en trois temps', p: 'Évaluer n’est pas noter : c’est recueillir des informations, les juger par rapport à des critères, puis décider.',
-        v: { type: 'flow', steps: [['Recueillir', 'Productions, observations, réponses.'], ['Juger', 'Comparer à des critères et indicateurs.'], ['Décider', 'Poursuivre, réguler, remédier, certifier.']] },
-        fact: { t: 'Une note seule ne permet pas de choisir une remédiation : il faut analyser l’erreur.', src: 'Hadji (1989), L’évaluation, règles du jeu' },
-        check: { q: 'Évaluer consiste essentiellement à :', o: ['Attribuer une note', 'Recueillir, juger selon des critères, décider', 'Classer les élèves'], a: 1, why: 'L’évaluation se termine par une décision, pas seulement par une note.' } },
-      { t: 'Les fonctions dans le temps', p: 'La fonction dépend du moment et de l’usage des résultats. Une évaluation formative peut être notée : c’est sa fonction de régulation qui compte.',
-        v: { type: 'stages', items: [['Avant', 'Diagnostique', 'Repérer prérequis et représentations.'], ['Pendant', 'Formative / formatrice', 'Réguler ; l’élève s’évalue avec des critères.'], ['Après', 'Sommative', 'Faire le bilan des acquis.'], ['Fin de cycle', 'Certificative', 'Valider officiellement.']] },
-        fact: { t: 'L’évaluation formatrice fait de l’élève l’acteur de son évaluation, à partir de critères explicites.', src: 'Scriven (1967) ; Nunziati (1990)' },
-        check: { q: 'Un test en début de séquence pour repérer les prérequis est une évaluation :', o: ['Diagnostique', 'Sommative', 'Certificative'], a: 0, why: 'Avant l’apprentissage, l’évaluation est diagnostique.' } },
-      { t: 'Critère et indicateurs', p: 'Le critère est la qualité attendue ; les indicateurs sont ce qu’on voit concrètement dans la production.',
-        v: { type: 'tree', root: 'Critère : respect de la mise en forme', kids: [['Indicateur 1', 'Le titre est centré avec l’outil d’alignement.'], ['Indicateur 2', 'Le titre est en gras, taille 16.'], ['Indicateur 3', 'Les paragraphes sont justifiés.']] },
-        fact: { t: 'Règle des 2/3 : un critère est maîtrisé s’il est réussi dans 2 occasions sur 3. Règle des 3/4 : les critères minimaux reçoivent au moins 3/4 des points.', src: 'De Ketele (1996) ; Roegiers (2004)' },
-        check: { q: '« Le titre est centré et en gras » est :', o: ['Un critère', 'Un indicateur', 'Un objectif'], a: 1, why: 'C’est une manifestation observable : un indicateur.' } },
-      { t: 'Validité et fiabilité', p: 'Deux qualités distinctes d’une épreuve. Une épreuve peut être fiable sans être valide.',
-        v: { type: 'versus', a: ['Validité', ['Mesure ce qu’elle doit mesurer', 'Un QCM de définitions n’est pas valide pour évaluer la création d’un tableau', 'Se travaille par l’alignement objectif–épreuve']], b: ['Fiabilité', ['Résultats stables et cohérents', '17/20 et 8/20 pour la même copie = problème de fiabilité', 'Se travaille par critères, indicateurs, barème']] },
-        fact: { t: 'L’effet de halo : une belle présentation fait monter la note du raisonnement.', src: 'Thorndike (1920) ; Laveault & Grégoire (2014)' },
-        check: { q: 'Deux correcteurs donnent 17/20 et 8/20 à la même copie. Problème de :', o: ['Validité', 'Fiabilité inter-correcteurs', 'Authenticité'], a: 1, why: 'Les résultats ne sont pas stables d’un correcteur à l’autre.' } },
-      { t: 'Un feedback qui fait progresser', p: 'Un bon retour est spécifique, fondé sur des faits, et dit quoi faire ensuite. Le feedforward vise la prochaine tâche.',
-        v: { type: 'flow', steps: [['Où vais-je ?', 'Rappeler le but et les critères de réussite.'], ['Où en suis-je ?', 'Dire précisément ce qui est réussi et ce qui ne l’est pas.'], ['Et après ?', 'Donner une piste concrète : « teste la moyenne égale à 10 ».']] },
-        fact: { t: 'Les feedbacks centrés sur la tâche et la démarche sont plus efficaces que les éloges centrés sur la personne.', src: 'Hattie & Timperley (2007)' },
-        check: { q: 'Quel feedback est le plus utile ?', o: ['« Bien »', '« Vérifie ce qui se passe quand la moyenne vaut exactement 10 »', '« 12/20 »'], a: 1, why: 'Il est spécifique et oriente l’action suivante.' } },
-    ] },
+    lesson: LESSON_D3 },
   // =====================================================================
   { id: 'D4', group: 'D', lang: 'fr', icon: '🩺', color: '#6d3aa8', title: 'Remédiation des apprentissages', short: 'Remédier', weight: '25 % de la didactique',
     lesson: [

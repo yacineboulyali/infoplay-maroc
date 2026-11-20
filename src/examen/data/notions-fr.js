@@ -1,7 +1,7 @@
 // Fiches de notion affichées par l’indice (💡) : une définition précise et 3 à 4 caractéristiques
 // de niveau intermédiaire, pour que l’indice explique la notion visée par la question.
 // L’indice ajoute ensuite la piste (hint) et une élimination argumentée (engine.js → hintFor).
-// Les notions couvrent toutes les questions de D1 et D2 ; les autres parties gardent l’indice court.
+// Les notions couvrent toutes les questions de D1, D2 et D3 ; les autres parties gardent l’indice court.
 
 export const NOTIONS_FR = {
   planification: {
@@ -164,6 +164,71 @@ export const NOTIONS_FR = {
       'Pour qu’elle profite à tous : rôles tournants, cartes pour chaque élève, valeurs étendues (16, 32…).',
       'Réseau social : groupe privé administré par l’enseignant, charte d’usage obligatoire ; l’enseignant modère, relance et régule.',
     ] },
+  // ---------- D3 · Évaluation ----------
+  fonctions: {
+    def: 'Évaluer, c’est recueillir des informations, les juger par rapport à des critères et décider ; la fonction de l’évaluation dépend du moment et de l’usage des résultats.',
+    traits: [
+      'Diagnostique : avant l’apprentissage, pour repérer prérequis et représentations.',
+      'Formative : pendant l’apprentissage, pour réguler ; elle peut être notée. Formatrice : l’élève s’évalue avec des critères explicites.',
+      'Sommative : bilan des acquis d’une période. Certificative : validation officielle. Toute sommative n’est pas certificative.',
+    ] },
+  normcrit: {
+    def: 'L’évaluation normative situe l’élève par rapport à un groupe ou à une norme ; l’évaluation critériée le situe par rapport à des critères préétablis.',
+    traits: [
+      'Normative : classer, comparer aux camarades.',
+      'Critériée : juger l’atteinte de l’objectif, indépendamment des autres élèves.',
+      'L’approche par compétences privilégie l’évaluation critériée ; le seuil de réussite est fixé avant l’évaluation.',
+    ] },
+  regle23: {
+    def: 'Les règles des 2/3 et des 3/4 (De Ketele, Roegiers) fixent quand un critère est maîtrisé et comment répartir les points entre critères minimaux et de perfectionnement.',
+    traits: [
+      'Règle des 2/3 : un critère est maîtrisé si l’élève le réussit dans au moins 2 occasions sur 3.',
+      'Règle des 3/4 : les critères minimaux reçoivent au moins 3/4 des points ; les critères de perfectionnement, le reste.',
+      'Elles limitent le hasard et donnent plusieurs occasions de montrer la maîtrise.',
+    ] },
+  grille: {
+    def: 'Une grille d’évaluation (ou rubrique) rassemble les critères, les indicateurs, les niveaux de maîtrise et le barème d’une tâche.',
+    traits: [
+      'Elle rend le jugement plus transparent et facilite le feedback ; elle rend l’observation plus fiable.',
+      'Critères, indicateurs et barème améliorent l’objectivité ; la co-évaluation s’appuie sur des critères explicites.',
+      'Rubrique analytique : plusieurs critères évalués séparément. Rubrique holistique : un jugement global.',
+      'Chaque niveau (« acquis »…) doit avoir un descripteur précis et observable.',
+    ] },
+  outils: {
+    def: 'Les outils d’évaluation (QCM, question ouverte, observation, portfolio, tâche) se choisissent selon ce que l’on veut observer.',
+    traits: [
+      'QCM : certaines connaissances et compréhensions ; distracteurs plausibles, pas de formulation négative complexe.',
+      'Question ouverte : explication et justification. Observation structurée : démarche et autonomie.',
+      'Portfolio : progression au fil du temps. On évalue le produit et le processus.',
+    ] },
+  validite: {
+    def: 'La validité est le fait qu’une épreuve mesure réellement ce qu’elle doit mesurer ; la fiabilité est la stabilité et la cohérence de ses résultats.',
+    traits: [
+      'Un QCM de définitions pour évaluer la création d’un tableau pose un problème de validité.',
+      'Des notes très différentes d’un correcteur à l’autre révèlent un manque de fiabilité.',
+      'Une épreuve peut être fiable mais peu valide. Effet plafond : épreuve trop facile pour distinguer les niveaux.',
+    ] },
+  halo: {
+    def: 'L’effet de halo (Thorndike) est un biais de jugement : une impression générale positive sur l’élève ou la copie influence l’évaluation de tous les critères.',
+    traits: [
+      'Exemples : une belle présentation fait monter la note du raisonnement ; un élève poli est jugé « bon en tout ».',
+      'Sa version négative s’appelle l’effet Horn.',
+      'On le limite en corrigeant critère par critère avec une grille, si possible sans le nom de l’élève.',
+    ] },
+  feedback: {
+    def: 'Le feedback est une information donnée à l’élève sur l’écart entre sa performance et le but visé, pour l’aider à progresser.',
+    traits: [
+      'Efficace : spécifique, constructif, fondé sur des faits, orienté vers l’amélioration.',
+      'Feedforward : un conseil concret pour réussir la prochaine tâche.',
+      'Il répond à trois questions : où vais-je, où en suis-je, quelle est la prochaine étape ?',
+    ] },
+  autoeval: {
+    def: 'L’auto-évaluation est le jugement que l’élève porte sur son propre travail à l’aide de critères explicites.',
+    traits: [
+      'Elle développe l’autorégulation : vérifier son travail et corriger ses erreurs.',
+      'La co-évaluation entre pairs se fonde aussi sur des critères explicites.',
+      'Elle est au cœur de l’évaluation formatrice.',
+    ] },
   methodes: {
     def: 'Approche, méthode et technique s’emboîtent : l’approche est le cadre général, la méthode organise la démarche d’enseignement, la technique est un procédé concret.',
     traits: [
@@ -284,4 +349,14 @@ export const CONCEPT_OF = {
   'D2-2-13': 'numerique', 'D2-2-14': 'numerique', 'D2-2-15': 'numerique', 'D2-2-16': 'numerique',
   'D2-2-18': 'debranche', 'D2-2-19': 'debranche', 'D2-2-20': 'debranche', 'D2-2-21': 'debranche',
   'D2-2-22': 'debranche', 'D2-2-23': 'debranche', 'D2-2-24': 'debranche',
+  // D3 · Évaluation des apprentissages
+  'D3-0-5': 'fonctions', 'D3-1-1': 'fonctions', 'D3-1-2': 'fonctions', 'D3-1-4': 'fonctions',
+  'D3-0-34': 'remediation', 'D3-1-13': 'remediation',
+  'D3-0-11': 'normcrit', 'D3-0-26': 'normcrit', 'D3-1-10': 'normcrit',
+  'D3-0-8': 'critere', 'D3-1-7': 'critere', 'D3-1-18': 'critere',
+  'D3-0-10': 'grille', 'D3-0-15': 'grille', 'D3-0-17': 'grille', 'D3-0-24': 'grille', 'D3-0-25': 'grille',
+  'D3-0-31': 'grille', 'D3-0-32': 'grille', 'D3-1-16': 'grille', 'D3-2-7': 'grille',
+  'D3-0-22': 'validite', 'D3-0-23': 'validite',
+  'D3-0-6': 'competence', 'D3-0-28': 'competence', 'D3-1-22': 'competence',
+  'D3-2-4': 'competence', 'D3-2-5': 'competence', 'D3-2-6': 'competence',
 };
