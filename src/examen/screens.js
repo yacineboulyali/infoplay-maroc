@@ -11,6 +11,7 @@ import {
 import { conceptTitle } from './data/concept-titles.js';
 import { LESSON_EXAMPLES } from './data/lesson-examples.js';
 import { trBtn, trLine, trBlock } from './tr-ui.js';
+import { trAr } from './i18n.js';
 import { sfx, sfxOn, setSfx } from './sfx.js';
 
 // Encadré « Exemple » : un cas concret qui accompagne chaque explication.
@@ -20,6 +21,7 @@ function exampleBox(text, lang, label, ar) {
 }
 import { visual } from './visuals.js';
 import { themeButton, themePicker } from '../utils/theme.js';
+import { textSizeControl, textSizeMini } from '../utils/textsize.js';
 
 const BASE = '#/examen';
 const go = (p) => { location.hash = p; };
@@ -44,11 +46,15 @@ function storeFor(pid) {
 let toastHost = null;
 function pushToast(n) {
   if (!toastHost || !toastHost.isConnected) { toastHost = h('div', { class: 'ex-toasts ex-layer', role: 'status', 'aria-live': 'polite' }); document.body.append(toastHost); }
-  const t = h('div', { class: 'ex-toast ex-toast-' + n.kind }, h('span', { class: 'ex-toast-ico', 'aria-hidden': 'true' }, n.icon), h('div', null, h('b', null, n.title), h('small', null, n.text)));
+  // Toucher la notification (ou son ✕) la ferme tout de suite ; sinon elle part seule.
+  let gone = false;
+  const dismiss = () => { if (gone) return; gone = true; t.classList.add('out'); setTimeout(() => t.remove(), 450); };
+  const t = h('div', { class: 'ex-toast ex-toast-' + n.kind, onclick: dismiss, title: 'Toucher pour fermer' },
+    h('span', { class: 'ex-toast-ico', 'aria-hidden': 'true' }, n.icon), h('div', null, h('b', null, n.title), h('small', null, n.text)),
+    h('button', { type: 'button', class: 'ex-toast-x', 'aria-label': 'Fermer la notification', onclick: (e) => { e.stopPropagation(); dismiss(); } }, '✕'));
   toastHost.append(t);
   if (n.kind === 'badge' || n.kind === 'rank') audio.play('star', { i: 2 });
-  setTimeout(() => t.classList.add('out'), 3600);
-  setTimeout(() => t.remove(), 4100);
+  setTimeout(dismiss, 4500);
 }
 function systemNotify(st, n) {
   try {
@@ -242,7 +248,7 @@ function lessonPlayer(st, p) {
       why.hidden = false; why.className = 'ex-why ' + (ok ? 'ok' : 'ko');
       if (ok) { sfx('correct'); vibrate(25); st.lessonCard(p.id); floatXp(btn, XP.lessonCard); } else { sfx('wrong'); vibrate([50, 30, 50]); }
       nextBtn.disabled = false; nextBtn.focus();
-    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[pos]), h('span', null, o, trLine(o, p.lang)))));
+    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[pos]), h('span', null, o))));
     const why = h('p', { class: 'ex-why', hidden: true }, card.check.why, trLine(card.check.why, p.lang));
     nextBtn.addEventListener('click', () => { if (i < p.lesson.length - 1) { i++; render(); window.scrollTo(0, 0); } else done(); });
     root.replaceChildren(
@@ -255,7 +261,7 @@ function lessonPlayer(st, p) {
         visual(card.v, { color: p.color, lang: p.lang }),
         exampleBox(LESSON_EXAMPLES[p.id]?.[i], p.lang, p.lang === 'ar' ? '🧪 مثال من القسم' : '🧪 Exemple en classe'),
         h('aside', { class: 'ex-fact' }, h('span', { 'aria-hidden': 'true' }, '📚'), h('div', null, h('p', null, card.fact.t, trLine(card.fact.t, p.lang)), h('small', null, card.fact.src))),
-        h('section', { class: 'ex-check' }, h('h3', null, p.lang === 'ar' ? '⚡ تحدٍّ سريع' : '⚡ Mini-défi'), h('p', null, card.check.q, trLine(card.check.q, p.lang)), choices, why)),
+        h('section', { class: 'ex-check' }, h('h3', null, p.lang === 'ar' ? '⚡ تحدٍّ سريع' : '⚡ Mini-défi'), h('p', null, card.check.q, qPill(card.check.q, ord.map((k) => card.check.o[k]), p.lang)), choices, why)),
       h('footer', { class: 'ex-foot' }, nextBtn));
     root.querySelector('h2')?.focus({ preventScroll: true });
   };
@@ -278,7 +284,7 @@ function playerTop(closeHref, ratio, extra) {
   return h('div', { class: 'ex-ptop' },
     h('a', { class: 'ex-x', href: closeHref, 'aria-label': 'Quitter' }, '✕'),
     h('span', { class: 'ex-prog big', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(Math.round(ratio * 100)) }, h('i', { style: `--w:${ratio * 100}%` })),
-    extra);
+    extra, textSizeMini());
 }
 
 // ---------- Types de questions des annales : QCM, vrai/faux, phrase à trous ----------
@@ -286,6 +292,14 @@ const GAP = '____';
 /** Repère d'option : lettre pour un QCM ou une phrase à trous, ✓ / ✗ pour un vrai/faux. */
 const optMark = (q, i) => (q.type === 'vf' ? (i === 0 ? '✓' : '✗') : letters(q.lang)[i]);
 /** Énoncé ; pour une phrase à trous, le trou devient une case remplie par le mot choisi. */
+/** Pastille de l'énoncé : la question traduite, puis chaque proposition (dans l'ordre affiché).
+ *  Les boutons de réponse n'ont pas de pastille : la traduction reste sur le contenu. */
+function qPill(text, options, lang, mark = (i) => letters(lang)[i], noOpts = false) {
+  if (lang === 'ar') return null;
+  const head = trAr(text); if (!head) return null;
+  if (noOpts) return trLine(text, lang, head);
+  return trLine(text, lang, head + '\n\n' + options.map((o, i) => `${mark(i)}. ${trAr(o) || o}`).join('\n'));
+}
 function questionText(q, gap) {
   if (!gap || !q.q.includes(GAP)) return [q.q];
   const [a, b] = q.q.split(GAP);
@@ -355,7 +369,7 @@ function quizPlayer(st, { mode, part, k }) {
     const checkBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: true }, T.check);
     const gap = q.type === 'fill' ? h('span', { class: 'ex-gap', 'aria-live': 'polite' }, '   ') : null;
     const opts = h('div', { class: 'ex-opts' + (q.type === 'vf' ? ' ex-vf' : q.type === 'fill' ? ' ex-fill' : ''), role: 'radiogroup', 'aria-label': 'Réponses' }, q.options.map((o, i) => {
-      const b = h('button', { type: 'button', class: 'ex-opt', role: 'radio', 'aria-checked': 'false', style: `--i:${i}` }, h('span', { class: 'ex-letter' }, optMark(q, i)), h('span', null, o, trLine(o, q.lang)));
+      const b = h('button', { type: 'button', class: 'ex-opt', role: 'radio', 'aria-checked': 'false', style: `--i:${i}` }, h('span', { class: 'ex-letter' }, optMark(q, i)), h('span', null, o));
       b.addEventListener('click', () => {
         if (off.has(i)) return; selected = i;
         [...opts.children].forEach((c, j) => { c.classList.toggle('sel', j === i); c.setAttribute('aria-checked', String(j === i)); });
@@ -447,7 +461,7 @@ function quizPlayer(st, { mode, part, k }) {
       h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
         h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), examChip(q), h('small', null, `${R.idx + 1}/${list.length}`), trBtn(q.lang)),
         typeHint(q),
-        h('h2', { class: 'ex-q', tabindex: '-1' }, ...questionText(q, gap), trLine(q.q, q.lang)),
+        h('h2', { class: 'ex-q', tabindex: '-1' }, ...questionText(q, gap), qPill(q.q, q.options, q.lang, (i) => optMark(q, i), q.type === 'vf')),
         opts,
         hintBtn),
       h('footer', { class: 'ex-foot' }, checkBtn));
@@ -520,13 +534,13 @@ function blancScreen(st) {
       const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => { if (i < set.length - 1) { i++; show(); window.scrollTo(0, 0); } else { clearInterval(tick); finish(); } } }, i < set.length - 1 ? 'Question suivante' : 'Rendre ma copie');
       const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), onclick: (e) => {
         ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
-      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o, trLine(o, q.lang)))));
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
         h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner' }, '✕'),
-          h('span', { class: 'ex-prog big' }, h('i', { style: `--w:${(i / set.length) * 100}%` })), clock),
+          h('span', { class: 'ex-prog big' }, h('i', { style: `--w:${(i / set.length) * 100}%` })), textSizeMini(), clock),
         h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
           h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('small', null, `${i + 1}/${set.length}`), trBtn(q.lang)),
-          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, trLine(q.q, q.lang)), opts),
+          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, qPill(q.q, q.options, q.lang)), opts),
         h('footer', { class: 'ex-foot' }, nextBtn)));
     };
     const finish = () => {
@@ -592,6 +606,7 @@ function profileScreen(st) {
     h('h2', { class: 'ex-h2' }, `Badges · ${Object.keys(s.badges).length}/${BADGES.length}`), badges,
     h('h2', { class: 'ex-h2' }, 'Réglages'),
     h('section', { class: 'ex-card' }, themePicker()),
+    h('section', { class: 'ex-card' }, textSizeControl()),
     h('div', { class: 'ex-actions col' }, soundBtn(), notifBtn, resetBtn),
     h('p', { class: 'ex-muted' }, 'Ta progression reste dans ce navigateur, liée à ton pseudo InfoPlay. Sources des questions : dossiers unifiés de préparation à l’examen d’aptitude professionnelle (informatique, secondaire qualifiant).')), bottomNav('profil')];
 }
@@ -655,15 +670,15 @@ function positionScreen(st, showReport) {
       const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => go(ans[i]) }, i < set.length - 1 ? (q.lang === 'ar' ? 'السؤال التالي' : 'Question suivante') : (q.lang === 'ar' ? 'عرض الحصيلة' : 'Voir mon bilan'));
       const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), style: `--i:${k}`, onclick: () => {
         ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
-      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o, trLine(o, q.lang)))));
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
       const dunno = h('button', { type: 'button', class: 'ex-hint-btn ex-dunno', onclick: () => go(null) }, q.lang === 'ar' ? '🤷 لا أعرف' : '🤷 Je ne sais pas');
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
         h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner l’évaluation' }, '✕'),
           h('span', { class: 'ex-prog big', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(set.length), 'aria-valuenow': String(i) }, h('i', { style: `--w:${(i / set.length) * 100}%` })),
-          h('span', { class: 'ex-chip' }, `${i + 1}/${set.length}`)),
+          textSizeMini(), h('span', { class: 'ex-chip' }, `${i + 1}/${set.length}`)),
         h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
           h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${groupName[q.part[0]]} · ${p.short}`), h('small', null, q.set === 1 ? (q.lang === 'ar' ? 'نموذج امتحان' : 'type examen 2025') : ''), trBtn(q.lang)),
-          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, trLine(q.q, q.lang)), opts, dunno),
+          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, qPill(q.q, q.options, q.lang)), opts, dunno),
         h('footer', { class: 'ex-foot' }, nextBtn)));
       root.querySelector('.ex-q')?.focus({ preventScroll: true });
     };

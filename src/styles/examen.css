@@ -930,3 +930,14 @@ body.ex-tr-on :is(.ex-phead,.ex-hero,.ex-pos-hero,.ex-cta,.ex-primary) .ex-tr{co
 .ex-lnode.pending .ex-node-c{background:var(--ex-line);color:var(--ex-mut);box-shadow:none;animation:none}
 .ex-lnode.pending .ex-node-t small{color:var(--ex-mut)}
 .ex-lnode.pending:hover,.ex-lnode.pending:focus-visible{opacity:.85;filter:none}
+/* Notifications : cliquables, avec bouton de fermeture. */
+.ex-toast{pointer-events:auto;cursor:pointer}
+.ex-toast > div{flex:1;min-width:0}
+.ex-toast-x{flex:none;align-self:flex-start;width:30px;height:30px;margin:-4px -6px 0 0;border:0;border-radius:50%;background:transparent;color:var(--ex-mut);font-size:.95rem;font-weight:800;cursor:pointer;display:grid;place-items:center}
+.ex-toast-x:hover,.ex-toast-x:focus-visible{background:color-mix(in srgb,var(--ex-ink) 10%,transparent);color:var(--ex-ink)}
+/* Taille du texte, toujours présente dans la barre de progression. */
+.textsize-mini{flex:none;display:inline-flex;gap:2px;padding:2px;border-radius:999px;border:1px solid var(--ex-line,var(--line));background:var(--ex-card,var(--card))}
+.textsize-mini button{width:32px;height:28px;padding:0;border:0;border-radius:999px;background:transparent;color:var(--ex-ink,var(--ink));font:inherit;font-weight:800;font-size:13px;line-height:1;cursor:pointer}
+.textsize-mini button[data-act=plus]{font-size:15px}
+.textsize-mini button:hover:not(:disabled){background:color-mix(in srgb,var(--ex-pri,var(--primary)) 14%,transparent)}
+.textsize-mini button:disabled{opacity:.35;cursor:not-allowed}

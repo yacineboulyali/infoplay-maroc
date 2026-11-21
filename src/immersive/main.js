@@ -36,7 +36,14 @@ function applyPrefs(p) {
   document.body.classList.toggle('high-contrast', !!pr.highContrast);
   audio.configure(pr);
 }
-function toast(msg) { const t = h('div', { class: 'toast', role: 'status' }, msg); document.body.append(t); setTimeout(() => t.remove(), 3200); }
+function toast(msg) {
+  // Notification fermable : un toucher ou le ✕ la retire tout de suite.
+  const close = () => t.remove();
+  const t = h('div', { class: 'toast', role: 'status', onclick: close, title: 'Toucher pour fermer' }, h('span', null, msg),
+    h('button', { type: 'button', class: 'toast-x', 'aria-label': 'Fermer la notification', onclick: (e) => { e.stopPropagation(); close(); } }, '✕'));
+  document.body.append(t);
+  setTimeout(close, 3200);
+}
 function confirmBox(message, ok = 'Continuer') {
   return new Promise((res) => {
     const prev = document.activeElement; const done = (v) => { bg.remove(); prev && prev.focus && prev.focus(); res(v); };

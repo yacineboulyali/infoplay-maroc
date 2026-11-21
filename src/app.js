@@ -19,7 +19,9 @@ import { gameHud } from './fx/popup.js';
 import { presentResult, makeChrono } from './fx/flow.js';
 import { installInteractions, revealIn } from './fx/interact.js';
 import { installTheme, themeButton, themePicker } from './utils/theme.js';
+import { installTextScale, textSizeControl } from './utils/textsize.js';
 installTheme();
+installTextScale();
 import { fsButton, suggestFullscreen, autoHideHeader } from './fx/fullscreen.js';
 import { PRO, PRO_ACTIVITIES, LEVELS, getLevel, collegeModule, levelActivities, COLLEGE_ACTIVITIES } from './data/index.js';
 import { PRO_POINTS } from './data/pro/index.js';
@@ -61,9 +63,12 @@ const arSess = (s) => s.ar || arSession(s.id);
 
 // ---------- Petits composants & utilitaires ----------
 function toast(msg) {
-  const t = h('div', { class: 'toast', role: 'status' }, msg);
+  // Notification fermable : un toucher ou le ✕ la retire tout de suite.
+  const close = () => t.remove();
+  const t = h('div', { class: 'toast', role: 'status', onclick: close, title: 'Toucher pour fermer' }, h('span', null, msg),
+    h('button', { type: 'button', class: 'toast-x', 'aria-label': 'Fermer la notification', onclick: (e) => { e.stopPropagation(); close(); } }, '✕'));
   document.body.append(t);
-  setTimeout(() => t.remove(), 3200);
+  setTimeout(close, 3200);
 }
 
 function confirmBox(message, ok = 'Continuer', danger = false) {
@@ -979,8 +984,9 @@ function dataScreen() {
     h('button', { class: 'btn small', type: 'submit' }, 'Enregistrer')
     ),
     themePicker(),
+    textSizeControl(),
     h('h3', { style: 'margin-top:1rem' }, 'Confort de lecture'),
-    ...[['reducedMotion', 'Réduire les animations'], ['largeText', 'Texte plus grand'], ['highContrast', 'Contraste renforcé']].map(([k, l]) =>
+    ...[['reducedMotion', 'Réduire les animations'], ['highContrast', 'Contraste renforcé']].map(([k, l]) =>
       h('label', { class: 'sw' },
         h('input', {
           type: 'checkbox',

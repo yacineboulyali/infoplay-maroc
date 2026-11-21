@@ -687,7 +687,9 @@ export function quizGame(root, d) {
       );
     });
 
-    const qar = arText(lines[0]) || arQuestion(d.illustrationActivityId, i);
+    // La pastille de la question porte aussi la traduction des propositions (les cartes de réponse n'en ont pas).
+    const qHead = arText(lines[0]) || arQuestion(d.illustrationActivityId, i);
+    const qar = qHead && !isTrueFalse ? qHead + '\n\n' + order.map((k, j) => `${letter(j)}. ${arText(opts[k]) || opts[k]}`).join('\n') : qHead;
     root.append(
       h('fieldset', { class: 'q quiz-fieldset' + (isTrueFalse ? ' is-tf' : isFindFalse ? ' is-find-false' : '') },
         h('legend', null,

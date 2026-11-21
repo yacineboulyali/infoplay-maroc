@@ -3,7 +3,7 @@
 @font-face{font-family:Nunito;font-weight:800;font-style:normal;font-display:swap;src:url(fonts/nunito-latin-800-normal.woff2) format("woff2")}
 @font-face{font-family:Nunito;font-weight:400;font-style:normal;font-display:swap;unicode-range:U+0100-02AF,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;src:url(fonts/nunito-latin-ext-400-normal.woff2) format("woff2")}
 @font-face{font-family:Nunito;font-weight:700;font-style:normal;font-display:swap;unicode-range:U+0100-02AF,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;src:url(fonts/nunito-latin-ext-700-normal.woff2) format("woff2")}
-:root{--ink:#1c2340;--muted:#575f80;--bg:#f7f2e8;--card:#fff;--line:#e0d8c5;--primary:#2b3fc4;--primary-d:#1f2f9b;--accent:#c8431a;--gold:#f2b418;--ok:#15703f;--ok-bg:#e2f4e9;--ko:#a8231b;--ko-bg:#fdeae8;--r:14px;--sh:0 1px 2px rgba(28,35,64,.08),0 6px 18px rgba(28,35,64,.07);--m1:#2b3fc4;--m2:#0a7467;--m3:#c8431a;--m4:#6d3aa8;font-size:17px}
+:root{--ink:#1c2340;--muted:#575f80;--bg:#f7f2e8;--card:#fff;--line:#e0d8c5;--primary:#2b3fc4;--primary-d:#1f2f9b;--accent:#c8431a;--gold:#f2b418;--ok:#15703f;--ok-bg:#e2f4e9;--ko:#a8231b;--ko-bg:#fdeae8;--r:14px;--sh:0 1px 2px rgba(28,35,64,.08),0 6px 18px rgba(28,35,64,.07);--m1:#2b3fc4;--m2:#0a7467;--m3:#c8431a;--m4:#6d3aa8;font-size:calc(17px * var(--text-scale,1))}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:Nunito,"Segoe UI",system-ui,sans-serif;color:var(--ink);line-height:1.5;background:var(--bg);background-image:radial-gradient(circle at 1px 1px,rgba(43,63,196,.07) 1px,transparent 0);background-size:22px 22px;min-height:100vh}
@@ -479,3 +479,27 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .generated-item-art{display:inline-block;flex:0 0 auto;width:3.25rem;height:3.25rem;border-radius:.5rem;background-color:#e5f5fa;background-repeat:no-repeat;background-size:300% 200%;vertical-align:middle}
 .taskbox:has(>.generated-item-art){display:flow-root}
 .taskbox>.generated-item-art{float:right;width:clamp(88px,15vw,120px);height:clamp(88px,15vw,120px);margin:0 0 .6rem .85rem}
+/* Traduction arabe : uniquement sur le contenu. Aucun bouton, lien ou proposition cliquable ne porte de pastille ;
+   la traduction des propositions est regroupée dans la pastille de la question. */
+:is(button,a,[role=button],[role=radio],label) .arh-btn{display:none!important}
+.arh-bubble{white-space:pre-line}
+
+/* ---------- réglage « Taille du texte » (pages Profil) ---------- */
+.textsize-ctl{border:0;margin:.4rem 0 1rem;padding:0;min-width:0}
+.textsize-ctl legend{font-weight:800;font-size:1.05rem;margin-bottom:.5rem;padding:0}
+.textsize-row{display:flex;align-items:center;gap:.75rem}
+.textsize-btn{flex:none;width:52px;height:52px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:800;cursor:pointer;display:grid;place-items:center;transition:border-color .2s,transform .1s}
+.textsize-btn:hover:not(:disabled){border-color:var(--primary)}
+.textsize-btn:active:not(:disabled){transform:scale(.95)}
+.textsize-btn:disabled{opacity:.4;cursor:not-allowed}
+.textsize-mid{flex:1;display:grid;gap:.35rem;justify-items:center}
+.textsize-val{font-weight:800;font-size:1.15rem}
+.textsize-bar{display:block;width:100%;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.textsize-bar i{display:block;height:100%;width:var(--w,33%);border-radius:inherit;background:var(--primary);transition:width .25s}
+.textsize-demo{margin:.6rem 0 0;padding:.5rem .7rem;border-radius:10px;background:color-mix(in srgb,var(--primary) 8%,var(--card));font-size:1rem}
+.textsize-demo + .textsize-demo{margin-top:.3rem}
+.textsize-reset{margin-top:.6rem;border:0;background:none;color:var(--primary);font:inherit;font-weight:700;cursor:pointer;padding:.3rem 0}
+.textsize-reset:disabled{color:var(--muted);opacity:.6;cursor:default}
+.toast{display:flex;align-items:center;gap:.6rem;cursor:pointer}
+.toast-x{border:0;background:rgba(255,255,255,.18);color:inherit;width:26px;height:26px;border-radius:50%;font:inherit;font-size:.8rem;font-weight:800;cursor:pointer;display:grid;place-items:center;flex:none}
+.toast-x:hover{background:rgba(255,255,255,.32)}
