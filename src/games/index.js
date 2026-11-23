@@ -1,4 +1,5 @@
-import { matchGame, sortGame, orderGame, fillGame, quizGame } from './basic.js';
+import { matchGame, sortGame, orderGame, quizGame } from './basic.js';
+import { fillTapGame as fillGame } from './fill-tap.js';
 import { hotspotGame } from './hotspot.js';
 import { asmGame, netGame } from './structure.js';
 import { robotGame } from './robot.js';

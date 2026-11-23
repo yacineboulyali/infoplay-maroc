@@ -503,3 +503,19 @@ table.t{border-collapse:collapse;width:100%}table.t th,table.t td{padding:.5rem 
 .toast{display:flex;align-items:center;gap:.6rem;cursor:pointer}
 .toast-x{border:0;background:rgba(255,255,255,.18);color:inherit;width:26px;height:26px;border-radius:50%;font:inherit;font-size:.8rem;font-weight:800;cursor:pointer;display:grid;place-items:center;flex:none}
 .toast-x:hover{background:rgba(255,255,255,.32)}
+/* ---------- Phrases à trous : cases vides et réserve de mots à toucher ---------- */
+.fill-tap .fill-text{margin:0;line-height:2.5}
+.fill-slot{display:inline-flex;align-items:center;justify-content:center;min-width:6.5em;min-height:2.1em;margin:0 .25rem;padding:.1rem .7rem;vertical-align:middle;border:2px dashed color-mix(in srgb,var(--primary) 55%,var(--line));border-radius:10px;background:color-mix(in srgb,var(--primary) 6%,var(--card));color:var(--ink);font:inherit;font-weight:800;line-height:1.3;cursor:pointer;transition:border-color .2s,background .2s}
+.fill-slot.target{border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 35%,transparent)}
+.fill-slot.filled{border-style:solid;border-color:var(--primary);background:color-mix(in srgb,var(--primary) 14%,var(--card))}
+.fill-slot.pop{animation:fill-pop .32s cubic-bezier(.3,1.6,.5,1)}
+.fill-slot.ok{border-color:var(--ok);background:var(--ok-bg)}
+.fill-slot.ko{border-color:var(--ko);background:var(--ko-bg)}
+.fill-bank{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem;padding-top:.65rem;border-top:1px dashed var(--line);clear:both}
+.fill-chip{padding:.45rem .95rem;border:2px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font:inherit;font-weight:700;line-height:1.3;cursor:pointer;box-shadow:0 2px 0 var(--line);transition:transform .15s,border-color .2s}
+.fill-chip:hover:not(.used){border-color:var(--primary);transform:translateY(-2px)}
+.fill-chip.used{visibility:hidden}
+.fill-chip.nudge{animation:fill-nudge .35s}
+.fill-ghost{position:fixed;z-index:3000;margin:0;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;pointer-events:none;border-color:var(--primary);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+@keyframes fill-pop{50%{transform:scale(1.12)}}
+@keyframes fill-nudge{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
