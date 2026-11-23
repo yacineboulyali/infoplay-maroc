@@ -8,6 +8,7 @@ import { categoryVisual } from '../utils/item-visuals.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 import { visualLabel } from './basic.js';
 import { fly } from './fill-tap.js';
+import { fingerDrag } from './finger-drag.js';
 
 const banner = (fr, ar) => h('div', { class: 'sort-instruction-bar' }, h('span', { class: 'banner-badge' }, fr, arHint(ar)));
 const nudge = (el) => { el.classList.remove('nudge'); void el.offsetWidth; el.classList.add('nudge'); };
@@ -149,7 +150,6 @@ export function sortTapGame(root, d) {
   const cards = shuffle(items.map((_, i) => i)).map((i) => {
     const el = h('button', { type: 'button', class: 'tap-card chip sort-chip', 'data-idx': String(i) }, label(i));
     el.addEventListener('click', () => {
-      if (el.__dragged) { el.__dragged = false; return; } // fin d'un glisser : pas de clic
       if (locked || el.classList.contains('used')) return;
       put(i, active, el);
     });
@@ -182,78 +182,14 @@ export function sortTapGame(root, d) {
     status.textContent = 'Carte reprise : touche-la ou fais-la glisser vers une catégorie.';
   }
 
-  // ---------- glisser-déposer au doigt et à la souris (Pointer Events) ----------
+  // ---------- glisser-déposer au doigt et à la souris (module commun) ----------
   function dragify(el, i) {
-    let start = null; let mode = null; let ghost = null; let over = null; let lastY = 0;
-    const bucketAt = (x, y) => {
-      if (ghost) ghost.style.display = 'none';
-      const hit = document.elementFromPoint(x, y)?.closest('.tap-bucket');
-      if (ghost) ghost.style.display = '';
-      return hit && root.contains(hit) ? hit : null;
-    };
-    const finish = () => {
-      document.removeEventListener('pointermove', move);
-      document.removeEventListener('pointerup', up);
-      document.removeEventListener('pointercancel', cancel);
-      buckets.forEach((b) => b.box.classList.remove('drag-over'));
-      root.classList.remove('is-dragging');
-      start = null; mode = null; over = null;
-    };
-    const begin = (e) => {
-      mode = 'drag'; el.__dragged = true;
-      const r = el.getBoundingClientRect();
-      ghost = el.cloneNode(true);
-      ghost.classList.add('drag-ghost'); ghost.setAttribute('aria-hidden', 'true');
-      Object.assign(ghost.style, { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px` });
-      ghost.__dx = e.clientX - r.left; ghost.__dy = e.clientY - r.top;
-      document.body.append(ghost);
-      setTimeout(() => ghost && ghost.classList.add('shrunk'), 20); // la carte se réduit pendant le glissement
-      el.classList.add('dragging-src');
-      root.classList.add('is-dragging');
-      audio.play('select');
-    };
-    const move = (e) => {
-      if (!start) return;
-      const dx = e.clientX - start.x; const dy = e.clientY - start.y;
-      if (!mode) {
-        if (Math.hypot(dx, dy) < 8) return;
-        // Doigt qui remonte : on fait défiler la page ; sinon (vers le bas ou sur le côté) : on glisse la carte.
-        if (e.pointerType === 'touch' && dy < 0 && Math.abs(dy) > Math.abs(dx)) { mode = 'scroll'; lastY = e.clientY; }
-        else begin(e);
-      }
-      if (mode === 'scroll') { window.scrollBy(0, lastY - e.clientY); lastY = e.clientY; return; }
-      e.preventDefault();
-      ghost.style.transform = `translate(${e.clientX - start.x}px, ${e.clientY - start.y}px)`;
-      const hit = bucketAt(e.clientX, e.clientY);
-      if (hit !== over) { buckets.forEach((b) => b.box.classList.toggle('drag-over', b.box === hit)); over = hit; }
-    };
-    const up = (e) => {
-      if (mode === 'drag') {
-        const hit = bucketAt(e.clientX, e.clientY);
-        const g = ghost; ghost = null;
-        el.classList.remove('dragging-src');
-        if (hit) {
-          const ci = Number(hit.dataset.cat);
-          g.classList.add('dropping');
-          setTimeout(() => g.remove(), 180);
-          put(i, ci, el, true);
-        } else {
-          // Lâchée hors d'une catégorie : la carte revient à sa place.
-          g.classList.remove('shrunk'); g.style.transition = 'transform .25s ease'; g.style.transform = 'translate(0,0)';
-          setTimeout(() => g.remove(), 260);
-        }
-      }
-      finish();
-    };
-    const cancel = () => { if (ghost) { ghost.remove(); ghost = null; } el.classList.remove('dragging-src'); finish(); };
-    el.addEventListener('pointerdown', (e) => {
-      if (locked || el.classList.contains('used') || (e.pointerType === 'mouse' && e.button !== 0)) return;
-      start = { x: e.clientX, y: e.clientY }; mode = null; el.__dragged = false;
-      document.addEventListener('pointermove', move, { passive: false });
-      document.addEventListener('pointerup', up);
-      document.addEventListener('pointercancel', cancel);
+    fingerDrag(el, {
+      root, target: '.tap-bucket',
+      can: () => !locked && !el.classList.contains('used'),
+      start: () => audio.play('select'),
+      drop: (t) => put(i, Number(t.dataset.cat), el, true),
     });
-    el.addEventListener('dragstart', (e) => e.preventDefault()); // pas de glisser natif (images)
   }
 
   root.append(

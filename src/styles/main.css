@@ -545,9 +545,9 @@ ol.tap-slots{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
 /* ---------- Classer : glisser-déposer, grille mobile et catégories fixées en bas ---------- */
 .sort-grid .tap-card{touch-action:none;user-select:none;-webkit-user-select:none}
 .tap-card.dragging-src{opacity:.25}
-.drag-ghost{position:fixed;z-index:3000;margin:0;pointer-events:none;transform-origin:var(--gx,50%) var(--gy,50%);transition:scale .18s ease,opacity .18s;box-shadow:0 16px 32px rgba(0,0,0,.3)}
-.drag-ghost.shrunk{scale:.55;opacity:.95}
-.drag-ghost.dropping{scale:.2;opacity:0}
+.drag-ghost{position:fixed;z-index:3000;margin:0;pointer-events:none;transition:scale .18s ease,opacity .18s;box-shadow:0 16px 32px rgba(0,0,0,.3);touch-action:none}
+.drag-ghost.shrunk{scale:var(--drag-scale,.2);opacity:.95;box-shadow:0 6px 14px rgba(0,0,0,.35)}
+.drag-ghost.dropping{scale:.05;opacity:0}
 .tap-bucket.drag-over{border-color:var(--ok)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 45%,transparent);transform:scale(1.03)}
 .tap-bucket.drop-pulse{animation:fill-pop .35s}
 @media (max-width:700px){
@@ -567,3 +567,4 @@ ol.tap-slots{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
   .tap-buckets .bucket-body .chip{padding:.15rem .5rem;font-size:.72rem;border-radius:8px;min-height:0}
   .tap-buckets .bucket-body .chip :is(.student-illustration,.label-illustration,.item-art,.office-art,img,svg){display:none}
 }
+.finger-drag{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}

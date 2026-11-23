@@ -20,7 +20,7 @@ export function fly(from, to, label, done) {
   let ghost;
   if (typeof label === 'string') ghost = h('span', { class: 'fill-chip fill-ghost', 'aria-hidden': 'true' }, label);
   else { ghost = label.cloneNode(true); ghost.classList.add('fill-ghost', 'tap-ghost'); ghost.setAttribute('aria-hidden', 'true'); ghost.style.visibility = 'visible'; }
-  Object.assign(ghost.style, { left: `${a.left}px`, top: `${a.top}px`, width: `${a.width}px`, height: `${a.height}px` });
+  Object.assign(ghost.style, { position: 'fixed', margin: '0', zIndex: '3000', boxSizing: 'border-box', left: `${a.left}px`, top: `${a.top}px`, width: `${a.width}px`, height: `${a.height}px` });
   document.body.append(ghost);
   const dx = z.left + z.width / 2 - (a.left + a.width / 2);
   const dy = z.top + z.height / 2 - (a.top + a.height / 2);

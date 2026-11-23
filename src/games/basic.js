@@ -10,6 +10,7 @@ import { audio } from '../audio/audio.js';
 import { itemVisual, labelIllustration, categoryVisual } from '../utils/item-visuals.js';
 import { labelKey } from '../utils/label-key.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
+import { fingerDrag } from './finger-drag.js';
 
 const letter = (i) => String.fromCharCode(65 + i);
 
@@ -191,16 +192,6 @@ export function matchGame(root, d) {
     const btn = h('button', {
       type: 'button',
       class: 'card pick match-draggable',
-      draggable: 'true',
-      ondragstart: (e) => {
-        sel = i;
-        btn.classList.add('dragging');
-        e.dataTransfer.setData('text/plain', String(i));
-        paint();
-      },
-      ondragend: () => {
-        btn.classList.remove('dragging');
-      },
       onclick: () => {
         sel = sel === i ? null : i;
         if (sel != null) audio.play('select');
@@ -213,6 +204,9 @@ export function matchGame(root, d) {
     h('span', { class: 'txt' }, visualLabel(p[0], d.visualPart, studentIllustration(d, i), d.textOnly)),
     h('span', { class: 'tag', 'aria-hidden': 'true' })
     );
+    // Glisser au doigt ou à la souris vers une réponse de droite (copie réduite sous le doigt).
+    fingerDrag(btn, { root, target: '.match-droptarget', start: () => { sel = i; audio.play('select'); paint(); },
+      drop: (tg) => linkPair(i, Number(tg.dataset.item)) });
     lb.push(btn);
   });
 
@@ -221,6 +215,7 @@ export function matchGame(root, d) {
     const btn = h('button', {
       type: 'button',
       class: 'card pick match-droptarget',
+      'data-item': String(o),
       ondragenter: (e) => { e.preventDefault(); btn.classList.add('drag-over'); },
       ondragleave: () => { btn.classList.remove('drag-over'); },
       ondragover: (e) => e.preventDefault(),
