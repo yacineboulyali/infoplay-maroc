@@ -1,3 +1,4 @@
+import { AR_COLLEGE_Q } from './ar-college.js';
 // Traduction arabe des questions (consignes, phrases à compléter, étapes de simulation), par activité.
 // Chaque tableau suit l'ordre des questions dans les données (data.qs, data.lines, data.prompts, data.tasks).
 // Les blancs à compléter sont rendus par « … » : la traduction ne donne jamais la réponse.
@@ -76,6 +77,6 @@ const GENERIC = {
 };
 
 /** Traduction de la question n° index (base 0) de l'activité, ou '' si elle n'existe pas encore. */
-export const arQuestion = (activityId, index) => (Q[activityId] && Q[activityId][index]) || '';
+export const arQuestion = (activityId, index) => (Q[activityId] && Q[activityId][index]) || (AR_COLLEGE_Q[activityId] && AR_COLLEGE_Q[activityId][index]) || '';
 export const arGeneric = (key) => GENERIC[key] || '';
-export const AR_QUESTION_IDS = Object.keys(Q);
+export const AR_QUESTION_IDS = [...Object.keys(Q), ...Object.keys(AR_COLLEGE_Q)];

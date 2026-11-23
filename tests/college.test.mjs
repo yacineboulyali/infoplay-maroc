@@ -91,3 +91,29 @@ test('stockage : un essai Collège est enregistré, rechargé et exporté', asyn
   assert.throws(() => st.recordAttempt(p.id, 'm16-s1-a1', 5, 1));
   assert.match(st.csv(COLLEGE_ACTIVITIES), /m35-s6-a4/);
 });
+
+test('traduction arabe : titres, questions et réponses de toutes les activités Collège', async () => {
+  const { arText, arActivity } = await import('../src/i18n/ar.js');
+  const { arQuestion } = await import('../src/i18n/ar-questions.js');
+  const { AR_COLLEGE_SKIP } = await import('../src/i18n/ar-college.js');
+  const skip = new Set(AR_COLLEGE_SKIP);
+  const missing = [];
+  const term = (a, s) => { const k = String(s).trim(); if (!skip.has(k) && !arText(k)) missing.push(`${a.id} : ${k}`); };
+  for (const a of COLLEGE_ACTIVITIES) {
+    const qid = a.illus || a.id; const d = a.data;
+    if (!arActivity(qid)) missing.push(`${a.id} : titre`);
+    const qs = (arr) => arr.forEach((_, i) => { if (!arQuestion(qid, i)) missing.push(`${a.id} : question ${i + 1}`); });
+    if (a.type === 'match') d.pairs.forEach((p) => { term(a, p[0]); term(a, p[1]); });
+    if (a.type === 'sort') d.items.forEach((it) => term(a, it[0]));
+    if (a.type === 'order') d.steps.forEach((s) => term(a, s));
+    if (a.type === 'quiz') d.qs.forEach((x, i) => { if (!arText(x[0].split('\n')[0]) && !arQuestion(qid, i)) missing.push(`${a.id} : question ${i + 1}`); x[1].forEach((o) => term(a, o)); });
+    if (a.type === 'fill') {
+      qs(d.lines);
+      // Comme au Tronc Commun : le blanc reste un blanc (« … ») dans la traduction.
+      if (!a.illus) d.lines.forEach((_, i) => assert.match(arQuestion(qid, i), /…/, `${a.id} : blanc absent de la question ${i + 1}`));
+    }
+    if (a.type === 'hot') qs(d.prompts);
+    if (a.type === 'sim') qs(d.tasks);
+  }
+  assert.deepEqual(missing, []);
+});
