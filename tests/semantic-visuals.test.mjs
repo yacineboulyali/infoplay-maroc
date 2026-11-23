@@ -39,8 +39,9 @@ test('Office imagery distinguishes specific topics and rejects accidental substr
   assert.equal(officeConcept('Contrainte', 'excel'), -1);
   assert.equal(officeConcept('Réunion dans la boîte de réception', 'outlook'), 1);
 });
-test('Unmapped Office concepts receive signs, never an unrelated atlas cell', () => {
-  const art = officeArt('Signet', 'word');
+test('Unmapped Office concepts use their illustration or a semantic fallback', () => {
+  assert.equal(officeArt('Signet', 'word').getAttribute('src'), labelIllustration('Signet').getAttribute('src'));
+  const art = officeArt('Signet de chapitre', 'word');
   assert.equal(art.dataset.symbol, 'bookmark');
   assert.equal(art.getAttribute('aria-hidden'), 'true');
   assert.equal(art.classList.contains('office-art'), false);
