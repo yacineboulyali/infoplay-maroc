@@ -3,6 +3,7 @@ import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
 import { mechanicIcon } from './utils/semantic-icons.js';
 import { STUDENT_ILLUSTRATIONS } from './data/student-illustrations.js';
+import { ACTIVITY_CARDS } from './data/activity-cards.js';
 import { h, downloadText, frDate, celebrate, svgFrom } from './utils/dom.js';
 import { createStore, localAdapter, MAX_IMPORT_BYTES } from './storage/store.js';
 import { CATALOG, ACTIVITIES, getActivity, getModule, getSession, isActivityId, TOTAL_POINTS } from './data/index.js';
@@ -663,12 +664,12 @@ function moduleScreen(mi) {
   );
 }
 
-// Image de tuile d'une activité du Tronc Commun (même format que les repères Office du M205) :
-// première illustration validée de l'activité, sinon l'icône de la mécanique.
+// Première illustration de l'activité, puis vignette dédiée et icône de la mécanique.
 function activityArt(a) {
   const key = a.pics?.find(Boolean) || Object.keys(STUDENT_ILLUSTRATIONS).find((k) => k.startsWith((a.illus || a.id) + '-q'));
-  if (!key) return mechanicIcon(a.type);
-  return h('img', { class: 'office-art tc-art', src: STUDENT_ILLUSTRATIONS[key], alt: '', 'aria-hidden': 'true', width: 112, height: 112, loading: 'lazy', decoding: 'async', draggable: 'false',
+  const src = key ? STUDENT_ILLUSTRATIONS[key] : ACTIVITY_CARDS[a.id];
+  if (!key && !src) return mechanicIcon(a.type);
+  return h('img', { class: 'office-art tc-art', src, alt: '', 'aria-hidden': 'true', width: 112, height: 112, loading: 'lazy', decoding: 'async', draggable: 'false',
     onerror: (e) => e.currentTarget.replaceWith(mechanicIcon(a.type)) });
 }
 
