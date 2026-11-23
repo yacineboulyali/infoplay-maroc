@@ -117,7 +117,11 @@ export function orderTapGame(root, d) {
 }
 
 // -----------------------------------------------------------------
-// CLASSER : on choisit une catégorie (en haut), puis on touche les cartes qui lui appartiennent.
+// CLASSER : deux gestes au choix.
+//  - Toucher : choisir une catégorie, puis toucher les cartes qui lui appartiennent.
+//  - Glisser : appuyer sur une carte et la faire glisser jusqu'à une catégorie ; la carte se réduit
+//    pendant le glissement. Sur téléphone, les cartes forment une grille de 2 colonnes et les catégories
+//    restent fixées en bas, au-dessus du bouton « Vérifier ».
 // -----------------------------------------------------------------
 export function sortTapGame(root, d) {
   const items = d.items;
@@ -139,30 +143,32 @@ export function sortTapGame(root, d) {
   function setActive(ci) {
     active = ci;
     buckets.forEach((b, j) => { b.box.classList.toggle('active', j === ci); b.head.setAttribute('aria-pressed', String(j === ci)); });
-    status.textContent = `Catégorie choisie : « ${d.cats[ci]} ». Touche les cartes qui en font partie.`;
+    status.textContent = `Catégorie choisie : « ${d.cats[ci]} ». Touche une carte, ou fais-la glisser vers une catégorie.`;
   }
 
   const cards = shuffle(items.map((_, i) => i)).map((i) => {
     const el = h('button', { type: 'button', class: 'tap-card chip sort-chip', 'data-idx': String(i) }, label(i));
     el.addEventListener('click', () => {
+      if (el.__dragged) { el.__dragged = false; return; } // fin d'un glisser : pas de clic
       if (locked || el.classList.contains('used')) return;
       put(i, active, el);
     });
+    dragify(el, i);
     return { i, el };
   });
   const cardOf = (i) => cards.find((c) => c.i === i).el;
   const recount = () => buckets.forEach((b, ci) => { b.count.textContent = String(place.filter((p) => p === ci).length); });
 
-  function put(i, ci, el) {
+  function put(i, ci, el, dropped = null) {
     audio.play('snap');
     place[i] = ci;
     const b = buckets[ci];
     const placed = h('button', { type: 'button', class: 'chip sort-chip placed', 'data-idx': String(i), 'aria-label': `${items[i][0]} (dans ${b.name}, toucher pour retirer)` }, label(i));
-    placed.style.visibility = 'hidden';
     placed.addEventListener('click', () => { if (!locked) back(i, placed); });
     b.body.append(placed);
     recount();
-    fly(el, placed, el, () => { placed.style.visibility = ''; pop(placed); });
+    b.box.classList.remove('drop-pulse'); void b.box.offsetWidth; b.box.classList.add('drop-pulse');
+    if (dropped) { pop(placed); } else { placed.style.visibility = 'hidden'; fly(el, placed, el, () => { placed.style.visibility = ''; pop(placed); }); }
     stash(el);
     if (place.every((p) => p != null)) status.textContent = '✨ Toutes les cartes sont classées : clique sur « Vérifier ».';
   }
@@ -173,15 +179,89 @@ export function sortTapGame(root, d) {
     fly(placed, el, placed, () => { el.style.visibility = ''; });
     placed.remove();
     unstash(el); el.style.visibility = 'hidden';
-    status.textContent = 'Carte reprise : choisis une catégorie puis touche-la de nouveau.';
+    status.textContent = 'Carte reprise : touche-la ou fais-la glisser vers une catégorie.';
+  }
+
+  // ---------- glisser-déposer au doigt et à la souris (Pointer Events) ----------
+  function dragify(el, i) {
+    let start = null; let mode = null; let ghost = null; let over = null; let lastY = 0;
+    const bucketAt = (x, y) => {
+      if (ghost) ghost.style.display = 'none';
+      const hit = document.elementFromPoint(x, y)?.closest('.tap-bucket');
+      if (ghost) ghost.style.display = '';
+      return hit && root.contains(hit) ? hit : null;
+    };
+    const finish = () => {
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerup', up);
+      document.removeEventListener('pointercancel', cancel);
+      buckets.forEach((b) => b.box.classList.remove('drag-over'));
+      root.classList.remove('is-dragging');
+      start = null; mode = null; over = null;
+    };
+    const begin = (e) => {
+      mode = 'drag'; el.__dragged = true;
+      const r = el.getBoundingClientRect();
+      ghost = el.cloneNode(true);
+      ghost.classList.add('drag-ghost'); ghost.setAttribute('aria-hidden', 'true');
+      Object.assign(ghost.style, { left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, height: `${r.height}px` });
+      ghost.__dx = e.clientX - r.left; ghost.__dy = e.clientY - r.top;
+      document.body.append(ghost);
+      setTimeout(() => ghost && ghost.classList.add('shrunk'), 20); // la carte se réduit pendant le glissement
+      el.classList.add('dragging-src');
+      root.classList.add('is-dragging');
+      audio.play('select');
+    };
+    const move = (e) => {
+      if (!start) return;
+      const dx = e.clientX - start.x; const dy = e.clientY - start.y;
+      if (!mode) {
+        if (Math.hypot(dx, dy) < 8) return;
+        // Doigt qui remonte : on fait défiler la page ; sinon (vers le bas ou sur le côté) : on glisse la carte.
+        if (e.pointerType === 'touch' && dy < 0 && Math.abs(dy) > Math.abs(dx)) { mode = 'scroll'; lastY = e.clientY; }
+        else begin(e);
+      }
+      if (mode === 'scroll') { window.scrollBy(0, lastY - e.clientY); lastY = e.clientY; return; }
+      e.preventDefault();
+      ghost.style.transform = `translate(${e.clientX - start.x}px, ${e.clientY - start.y}px)`;
+      const hit = bucketAt(e.clientX, e.clientY);
+      if (hit !== over) { buckets.forEach((b) => b.box.classList.toggle('drag-over', b.box === hit)); over = hit; }
+    };
+    const up = (e) => {
+      if (mode === 'drag') {
+        const hit = bucketAt(e.clientX, e.clientY);
+        const g = ghost; ghost = null;
+        el.classList.remove('dragging-src');
+        if (hit) {
+          const ci = Number(hit.dataset.cat);
+          g.classList.add('dropping');
+          setTimeout(() => g.remove(), 180);
+          put(i, ci, el, true);
+        } else {
+          // Lâchée hors d'une catégorie : la carte revient à sa place.
+          g.classList.remove('shrunk'); g.style.transition = 'transform .25s ease'; g.style.transform = 'translate(0,0)';
+          setTimeout(() => g.remove(), 260);
+        }
+      }
+      finish();
+    };
+    const cancel = () => { if (ghost) { ghost.remove(); ghost = null; } el.classList.remove('dragging-src'); finish(); };
+    el.addEventListener('pointerdown', (e) => {
+      if (locked || el.classList.contains('used') || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      start = { x: e.clientX, y: e.clientY }; mode = null; el.__dragged = false;
+      document.addEventListener('pointermove', move, { passive: false });
+      document.addEventListener('pointerup', up);
+      document.addEventListener('pointercancel', cancel);
+    });
+    el.addEventListener('dragstart', (e) => e.preventDefault()); // pas de glisser natif (images)
   }
 
   root.append(
-    banner('🗂️ Classer : touche une catégorie, puis les cartes qui en font partie. Touche une carte rangée pour la reprendre.',
-      'المس تصنيفا، ثم البطاقات التي تنتمي إليه. المس بطاقة مرتبة لاسترجاعها.'),
-    h('div', { class: 'buckets' }, buckets.map((b) => b.box)),
+    banner('🗂️ Classer : fais glisser chaque carte vers sa catégorie, ou touche une catégorie puis ses cartes. Touche une carte rangée pour la reprendre.',
+      'اسحب كل بطاقة نحو تصنيفها، أو المس تصنيفا ثم بطاقاته. المس بطاقة مرتبة لاسترجاعها.'),
+    h('div', { class: 'tap-pool sort-pool sort-grid', role: 'group', 'aria-label': 'Cartes à classer' }, cards.map((c) => c.el)),
     status,
-    h('div', { class: 'tap-pool sort-pool', role: 'group', 'aria-label': 'Cartes à classer' }, cards.map((c) => c.el)));
+    h('div', { class: 'buckets tap-buckets', style: `--cats:${d.cats.length}` }, buckets.map((b) => b.box)));
   setActive(0);
 
   return {

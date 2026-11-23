@@ -103,3 +103,28 @@ html[data-theme=dark] .fs-suggest.mobile .btn.ghost{background:transparent;color
 .theme-opt-t small{color:var(--muted);font-size:.8rem;line-height:1.35}
 .theme-now{margin:.5rem 0 0;font-size:.88rem;color:var(--muted)}
 html[data-theme=dark] .bucket-count{background:#2b3654;color:var(--ink)}
+
+/* ---------- Contraste : textes codés en dur (bleu foncé, ardoise) éclaircis en mode sombre ---------- */
+html[data-theme=dark] .skip{background:#c48a52;color:#0b0d14}
+html[data-theme=dark] :is(.brand .logo,.ghud-lvl,.btn.primary,.btn.accent){background:linear-gradient(135deg,#9a6430,#6e4420);color:#fff}
+html[data-theme=dark] :is(.pro-story,.act-kind,.act-obj,.act-obj b,.chrono,.act-meta,.act-meta span){color:#cfc6b8}
+html[data-theme=dark] .activity-page .act-hero{background:linear-gradient(135deg,#101a33,#0b0d14 55%,#2a1a0f);color:var(--ink)}
+html[data-theme=dark] :is(.banner-badge,.sort-instruction-bar,.match-intro-banner){color:#f0d6a8}
+html[data-theme=dark] :is(.track-ofppt h3,.ofppt-title,.mode-pro .mode-badge,[class*=ofppt] h3){color:#8fc1ee}
+html[data-theme=dark] .mode-card .mode-badge{background:#1a2a44;color:#8fc1ee;border-color:#2b4a70}
+html[data-theme=dark] .mode-examen-min{background:var(--card-2);color:var(--ink);border-color:var(--line)}
+html[data-theme=dark] :is(.mission-brief .mb-ava,.peer-avatar,.prof-ava){background:var(--card-2);color:var(--ink)}
+html[data-theme=dark] :is(.sw,label.sw){background:transparent;color:var(--ink)}
+html[data-theme=dark] .theme-toggle button{color:var(--ink)}
+html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,html[data-theme=dark] h4{color:inherit}
+/* Module Examen : couleurs d'action assez foncées pour un texte blanc, et textes de couleur éclaircis. */
+html[data-theme=dark] .ex-app,html[data-theme=dark] .ex-layer{--ex-pri:#a86d36;--ex-pri-d:#6e4420;--ex-ok-d:#14513a}
+html[data-theme=dark] .ex-cta{background:#1f6e48;color:#fff;box-shadow:0 5px 0 #14513a}
+html[data-theme=dark] .ex-cta :is(small,b){color:#fff}
+html[data-theme=dark] .ex-eyebrow{color:color-mix(in srgb,var(--c,#5a7cc0) 45%,#fff)}
+html[data-theme=dark] .ex-tagp{color:color-mix(in srgb,var(--c,#5a7cc0) 40%,#fff)}
+html[data-theme=dark] .ex-btn.ex-on{color:var(--ok);border-color:var(--ok)}
+html[data-theme=dark] a:not([class]){color:#e6b87a}
+html[data-theme=dark] #grp-ofppt-h{color:#8fc1ee}
+html[data-theme=dark] section.mode-card.mode-pro .mode-badge,html[data-theme=dark] .mode-card .mode-badge{background:#1a2a44!important;color:#8fc1ee!important;border-color:#2b4a70!important}
+html[data-theme=dark] .crumbs a{color:inherit}

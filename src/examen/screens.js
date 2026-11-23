@@ -305,6 +305,18 @@ function questionText(q, gap) {
   const [a, b] = q.q.split(GAP);
   return [a, gap, b];
 }
+/** Source d'une question d'annales, en petit et en gris sous la question : « • Examen 2025 · Q21 ».
+ *  Les questions « notion de Qn » sont construites sur la notion d'une question du sujet : on le dit. */
+function examNote(q) {
+  if (!q.exam) return null;
+  const ar = q.lang === 'ar';
+  const [year, ...rest] = q.exam.split(' · '); const where = rest.join(' · ');
+  const derived = /^notion de /.test(where);
+  const txt = ar
+    ? (derived ? `مستوحى من امتحان ${year} (${where.replace('notion de ', 'مفهوم ')})` : `امتحان ${year}${where ? ' · ' + where : ''}`)
+    : (derived ? `Inspiré de l’examen ${year} (${where})` : `Examen ${year}${where ? ' · ' + where : ''}`);
+  return h('p', { class: 'ex-src-exam', title: ar ? 'مصدر السؤال' : 'Source de la question' }, h('span', { class: 'ex-src-dot', 'aria-hidden': 'true' }), txt);
+}
 const examChip = (q) => (q.exam ? h('span', { class: 'ex-exam-chip', title: q.lang === 'ar' ? 'مستخرج من موضوع الامتحان' : 'Tiré du sujet officiel' }, `📝 ${q.exam}`) : null);
 /** Fiche de notion dans l'indice : définition, caractéristiques, renvoi à la carte de leçon. */
 /** Bonne réponse dans l'indice : option attendue et pourquoi elle est juste. */
@@ -459,11 +471,12 @@ function quizPlayer(st, { mode, part, k }) {
     root.replaceChildren(
       playerTop(closeHref, R.idx / list.length, h('span', { class: 'ex-ptop-r' }, combo, heart)),
       h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
-        h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), examChip(q), h('small', null, `${R.idx + 1}/${list.length}`), trBtn(q.lang)),
+        h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('small', null, `${R.idx + 1}/${list.length}`), trBtn(q.lang)),
         typeHint(q),
         h('h2', { class: 'ex-q', tabindex: '-1' }, ...questionText(q, gap), qPill(q.q, q.options, q.lang, (i) => optMark(q, i), q.type === 'vf')),
         opts,
-        hintBtn),
+        hintBtn,
+        examNote(q)),
       h('footer', { class: 'ex-foot' }, checkBtn));
     root.querySelector('.ex-q')?.focus({ preventScroll: true });
   };
@@ -540,7 +553,7 @@ function blancScreen(st) {
           h('span', { class: 'ex-prog big' }, h('i', { style: `--w:${(i / set.length) * 100}%` })), textSizeMini(), clock),
         h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
           h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('small', null, `${i + 1}/${set.length}`), trBtn(q.lang)),
-          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, qPill(q.q, q.options, q.lang)), opts),
+          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, qPill(q.q, q.options, q.lang)), opts, examNote(q)),
         h('footer', { class: 'ex-foot' }, nextBtn)));
     };
     const finish = () => {
@@ -565,6 +578,7 @@ function blancScreen(st) {
               h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`, trLine(q.options[q.answer], q.lang)),
               q.just ? h('p', null, q.just, trLine(q.just, q.lang)) : null,
               h('p', null, conceptFor(q).why, trLine(conceptFor(q).why, q.lang)),
+              examNote(q),
               exampleBox(exampleFor(q), q.lang),
               h('p', { class: 'ex-src' }, '📚 ', conceptFor(q).src)));
         })),
@@ -678,7 +692,7 @@ function positionScreen(st, showReport) {
           textSizeMini(), h('span', { class: 'ex-chip' }, `${i + 1}/${set.length}`)),
         h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
           h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${groupName[q.part[0]]} · ${p.short}`), h('small', null, q.set === 1 ? (q.lang === 'ar' ? 'نموذج امتحان' : 'type examen 2025') : ''), trBtn(q.lang)),
-          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, qPill(q.q, q.options, q.lang)), opts, dunno),
+          h('h2', { class: 'ex-q', tabindex: '-1' }, q.q, qPill(q.q, q.options, q.lang)), opts, dunno, examNote(q)),
         h('footer', { class: 'ex-foot' }, nextBtn)));
       root.querySelector('.ex-q')?.focus({ preventScroll: true });
     };
@@ -728,7 +742,7 @@ function positionScreen(st, showReport) {
           h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : answers[k] == null ? '? ' : '✗ '), q.q, trLine(q.q, q.lang)),
           answers[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[answers[k]]}. ${q.options[answers[k]]}`) : null,
           h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`, trLine(q.options[q.answer], q.lang)),
-          h('p', null, conceptFor(q).why, trLine(conceptFor(q).why, q.lang)), exampleBox(exampleFor(q), q.lang)));
+          h('p', null, conceptFor(q).why, trLine(conceptFor(q).why, q.lang)), exampleBox(exampleFor(q), q.lang), examNote(q)));
       }))) : null;
     const first = res.path[0];
     root.replaceChildren(

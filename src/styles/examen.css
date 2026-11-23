@@ -941,3 +941,6 @@ body.ex-tr-on :is(.ex-phead,.ex-hero,.ex-pos-hero,.ex-cta,.ex-primary) .ex-tr{co
 .textsize-mini button[data-act=plus]{font-size:15px}
 .textsize-mini button:hover:not(:disabled){background:color-mix(in srgb,var(--ex-pri,var(--primary)) 14%,transparent)}
 .textsize-mini button:disabled{opacity:.35;cursor:not-allowed}
+/* Source d'une question d'annales : petite ligne grise sous la question. */
+.ex-src-exam{display:flex;align-items:center;gap:6px;margin:10px 0 0;font-size:.78rem;color:var(--ex-mut);font-weight:600}
+.ex-src-dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7;flex:none}

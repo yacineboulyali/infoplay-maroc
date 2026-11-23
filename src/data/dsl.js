@@ -14,8 +14,8 @@ export const sim = (title, obj, view, cfg, tasks, x) => A('sim:' + view, title, 
 
 export const INSTR = {
   match: 'Clique sur un élément de la colonne de gauche, puis sur la réponse qui lui correspond à droite. Pour changer, recommence avec le même élément.',
-  sort: 'Clique sur une carte, puis sur la catégorie où la ranger (tu peux aussi la faire glisser). Clique sur une carte rangée pour la reprendre.',
-  order: 'Remets les éléments dans le bon ordre avec les boutons ▲ et ▼, puis clique sur « Vérifier ».',
+  sort: 'Fais glisser chaque carte vers sa catégorie, ou touche une catégorie puis ses cartes. Touche une carte rangée pour la reprendre.',
+  order: 'Touche les étapes dans le bon ordre : elles se rangent dans les cases numérotées. Touche une case remplie pour reprendre l’étape.',
   fill: 'Touche le mot qui convient sous chaque phrase : il vient remplir la case vide. Touche une case remplie pour reprendre le mot.',
   quiz: 'Lis chaque question et choisis une seule réponse.',
   hot: 'Choisis une consigne dans la liste, puis clique sur la zone correspondante de l’image (ou choisis-la dans la liste de zones).',

@@ -542,3 +542,28 @@ ol.tap-slots{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
 .tap-bucket.active .bucket-cta::before{content:'✔ '}
 .tap-bucket .bucket-body{min-height:64px}
 .tap-status{margin:.6rem 0 0;font-weight:700;color:var(--muted);min-height:1.4em}
+/* ---------- Classer : glisser-déposer, grille mobile et catégories fixées en bas ---------- */
+.sort-grid .tap-card{touch-action:none;user-select:none;-webkit-user-select:none}
+.tap-card.dragging-src{opacity:.25}
+.drag-ghost{position:fixed;z-index:3000;margin:0;pointer-events:none;transform-origin:var(--gx,50%) var(--gy,50%);transition:scale .18s ease,opacity .18s;box-shadow:0 16px 32px rgba(0,0,0,.3)}
+.drag-ghost.shrunk{scale:.55;opacity:.95}
+.drag-ghost.dropping{scale:.2;opacity:0}
+.tap-bucket.drag-over{border-color:var(--ok)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 45%,transparent);transform:scale(1.03)}
+.tap-bucket.drop-pulse{animation:fill-pop .35s}
+@media (max-width:700px){
+  .sort-grid.tap-pool{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;padding:.55rem}
+  .sort-grid .tap-card{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.4rem;border-radius:16px;min-width:0;font-size:.9rem;line-height:1.25}
+  .sort-grid .tap-card .visual-label{align-items:center;gap:.35rem;width:100%}
+  .sort-grid .tap-card :is(.student-illustration,.label-illustration,.item-art,.office-art,img){max-width:68%;max-height:58%;margin:0 auto}
+  .sort-grid .tap-card.used{border-style:dashed}
+  /* Catégories fixées au-dessus de la barre « Vérifier » (fixe sur téléphone). */
+  .tap-buckets{position:sticky;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:11;display:grid;grid-template-columns:repeat(min(var(--cats,2),3),1fr);gap:.45rem;margin:.8rem calc(-1*var(--pad,.5rem)) 0;padding:.5rem;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-top:1px solid var(--line);box-shadow:0 -8px 20px rgba(0,0,0,.12)}
+  .tap-buckets .tap-bucket{border-width:2px;border-radius:14px;transition:transform .15s,box-shadow .15s}
+  .tap-buckets .bucket-head{flex-direction:column;align-items:center;gap:.15rem;padding:.45rem .3rem;text-align:center}
+  .tap-buckets .bucket-title-box{flex-direction:column;gap:.2rem;font-size:.85rem}
+  .tap-buckets .bucket-title-box :is(.semantic-icon,.category-visual,img,svg){width:28px;height:28px}
+  .tap-buckets .bucket-cta{display:none}
+  .tap-buckets .bucket-body{min-height:0;max-height:22vh;overflow:auto;padding:.3rem;gap:.25rem}
+  .tap-buckets .bucket-body .chip{padding:.15rem .5rem;font-size:.72rem;border-radius:8px;min-height:0}
+  .tap-buckets .bucket-body .chip :is(.student-illustration,.label-illustration,.item-art,.office-art,img,svg){display:none}
+}
