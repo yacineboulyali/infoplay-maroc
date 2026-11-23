@@ -7,11 +7,8 @@ import { STUDENT_ILLUSTRATIONS } from '../src/data/student-illustrations.js';
 
 const publicDir = new URL('../public/', import.meta.url);
 const studentKeys = Object.keys(STUDENT_ILLUSTRATIONS);
-// Le lot de vignettes 2AC est encore en cours de production.
-const collegeWithCompleteCards = COLLEGE_ACTIVITIES.filter(({ moduleId }) => moduleId < 21 || moduleId > 25);
-
-test('Les activités du Tronc Commun, du 1AC et du 3AC ont toutes une vignette locale', () => {
-  for (const activity of [...ACTIVITIES, ...collegeWithCompleteCards]) {
+test('Les activités du Tronc Commun et du Collège ont toutes une vignette locale', () => {
+  for (const activity of [...ACTIVITIES, ...COLLEGE_ACTIVITIES]) {
     const key = activity.pics?.find(Boolean) || studentKeys.find((candidate) => candidate.startsWith(`${activity.illus || activity.id}-q`));
     const path = key ? STUDENT_ILLUSTRATIONS[key] : ACTIVITY_CARDS[activity.id];
     assert.ok(path && existsSync(new URL(path, publicDir)), `${activity.id} : vignette introuvable`);
