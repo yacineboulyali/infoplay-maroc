@@ -6,7 +6,7 @@
    ========================================================================== */
 html[data-theme=dark]{color-scheme:dark;
   /* Charte : noir (fond), bleu nuit (surfaces), brun / caramel (accents). */
-  --ink:#ece4d8;--muted:#a99f90;--bg:#0b0d14;--card:#131b2e;--card-2:#1a2440;--line:#2b3654;
+  --ink:#ece4d8;--muted:#a99f90;--bg:#0b0d14;--card:#131b2e;--card-2:#1a2440;--line:#2b3654;--line-strong:#3a4870;--surface-2:#1a2440;--primary-bg:#2a2016;
   --primary:#c48a52;--primary-d:#8d5a2c;--accent:#b5703c;--gold:#d8a55a;
   --ok:#52c08a;--ok-bg:#10291f;--ko:#f07e74;--ko-bg:#311618;
   --sh:0 1px 2px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.45);--sh-lg:0 2px 6px rgba(0,0,0,.5),0 22px 50px rgba(0,0,0,.6);
@@ -102,3 +102,4 @@ html[data-theme=dark] .fs-suggest.mobile .btn.ghost{background:transparent;color
 .theme-opt-t{display:grid;gap:.1rem}
 .theme-opt-t small{color:var(--muted);font-size:.8rem;line-height:1.35}
 .theme-now{margin:.5rem 0 0;font-size:.88rem;color:var(--muted)}
+html[data-theme=dark] .bucket-count{background:#2b3654;color:var(--ink)}

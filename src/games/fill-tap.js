@@ -12,11 +12,14 @@ const still = () => typeof document === 'undefined' || document.body.classList.c
   || (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
 /** Vol d'un mot d'un élément à un autre : copie flottante animée, puis `done()`. */
-function fly(from, to, label, done) {
+export function fly(from, to, label, done) {
   if (still() || typeof from.animate !== 'function') { done(); return; }
   const a = from.getBoundingClientRect(); const z = to.getBoundingClientRect();
   if (!a.width || !z.width) { done(); return; }
-  const ghost = h('span', { class: 'fill-chip fill-ghost', 'aria-hidden': 'true' }, label);
+  // `label` : un texte, ou un élément dont on fait voler une copie (carte avec image).
+  let ghost;
+  if (typeof label === 'string') ghost = h('span', { class: 'fill-chip fill-ghost', 'aria-hidden': 'true' }, label);
+  else { ghost = label.cloneNode(true); ghost.classList.add('fill-ghost', 'tap-ghost'); ghost.setAttribute('aria-hidden', 'true'); ghost.style.visibility = 'visible'; }
   Object.assign(ghost.style, { left: `${a.left}px`, top: `${a.top}px`, width: `${a.width}px`, height: `${a.height}px` });
   document.body.append(ghost);
   const dx = z.left + z.width / 2 - (a.left + a.width / 2);

@@ -1,6 +1,7 @@
 import { h } from '../utils/dom.js';
 import { cardsOf } from './engine.js';
-import { quizGame, sortGame } from '../games/basic.js';
+import { quizGame } from '../games/basic.js';
+import { sortTapGame as sortGame } from '../games/tap-place.js';
 import { officeArt } from './visuals.js';
 import { semanticIcon } from '../utils/semantic-icons.js';
 
