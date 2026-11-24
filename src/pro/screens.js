@@ -1,3 +1,4 @@
+import { moduleIcon } from '../utils/module-icon.js';
 import { officeArt } from './visuals.js';
 import { semanticIcon } from '../utils/semantic-icons.js';
 // Écrans du parcours M205 : tableau de bord carrière, révision espacée et Défi mixte.
@@ -54,7 +55,7 @@ export function proHub({ prof, rec }) {
       const ps = moduleStats(p, rec); const cert = ps.n && ps.sessionsDone === p.sessions.length && ps.best / ps.max >= 0.7;
       return h('section', { class: 'card pro-part part-' + p.key },
         officeArt(p.label, p.key),
-        h('header', null, h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, p.icon), h('div', null, h('h3', null, p.label), h('small', { class: 'muted' }, `${ps.done}/${ps.n} activités · ${fmt(ps.best)}/${ps.max} pts`)),
+        h('header', null, moduleIcon('m205-' + p.key, p.icon), h('div', null, h('h3', null, p.label), h('small', { class: 'muted' }, `${ps.done}/${ps.n} activités · ${fmt(ps.best)}/${ps.max} pts`)),
           h('span', { class: 'pill ' + (cert ? 'done' : '') , title: cert ? 'Toutes les séances terminées avec au moins 70 %' : 'Termine toutes les séances avec au moins 70 %' }, cert ? '🎓 ' + p.cert : '🔒 Certificat')),
         h('ol', { class: 'pp-nodes' }, p.sessions.map((s) => { const lv = mastery(s, rec, prof.id); const ss = sessionStats(s, rec);
           return h('li', null, h('a', { class: 'pp-node lv' + lv, href: `#/m/${PRO.id}/s/${s.index}`, title: `${MASTERY[lv].label} · ${fmt(ss.best)}/20` },
@@ -66,7 +67,7 @@ export function proHub({ prof, rec }) {
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, 'OFPPT · M205 · 20 séances × 2 h · Formateur : ', PRO.trainer),
-        h('h1', { tabindex: '-1' }, '💼 Bureautique avancée'),
+        h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('m205', '💼', 'module-heading-icon'), h('span', null, 'Bureautique avancée')),
         h('p', { class: 'pro-story' }, `Tu rejoins Atlas Services comme ${game.rank.toLowerCase()}. Chaque séance est une mission confiée par un collègue : réussis-les pour monter en grade jusqu’à « Légende Office ».`),
         gameHud(game),
         h('div', { class: 'row' },

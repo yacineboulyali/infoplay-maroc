@@ -3,6 +3,7 @@ import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
 import { mechanicIcon } from './utils/semantic-icons.js';
 import { STUDENT_ILLUSTRATIONS } from './data/student-illustrations.js';
+import { moduleIcon } from './utils/module-icon.js';
 import { ACTIVITY_CARDS } from './data/activity-cards.js';
 import { h, downloadText, frDate, celebrate, svgFrom } from './utils/dom.js';
 import { createStore, localAdapter, MAX_IMPORT_BYTES } from './storage/store.js';
@@ -331,7 +332,7 @@ function homeScreen() {
             h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Parcours OFPPT' },
             h('section', { class: 'mode-card mode-pro mode-ofppt', 'aria-labelledby': 'mode-pro-h' },
               h('span', { class: 'mode-badge' }, 'Nouveau'),
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '💼'),
+              moduleIcon('m205', '💼', 'mode-ico'),
               h('h3', { id: 'mode-pro-h' }, 'M205 · Bureautique avancée'),
               h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint, Outlook.'),
               h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/pro') }, 'Ouvrir le parcours →')
@@ -339,7 +340,7 @@ function homeScreen() {
             h('section', { class: 'mode-card mode-pro mode-ofppt', 'aria-labelledby': 'mode-egtsi-h' },
               h('span', { class: 'mode-badge' }, 'Partie 1'),
               h('h3', { id: 'mode-egtsi-h' }, 'EGTSI106 · Culture et techniques du numérique'),
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🖥️'),
+              moduleIcon('egtsi106', '🖥️', 'mode-ico'),
               h('p', null, '3 séances : numérique, appareils et réseaux, Windows.'),
               h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir le parcours →')
             )
@@ -498,7 +499,7 @@ function dashScreen() {
     const done = ms.n && ms.sessionsDone === m.sessions.length && ms.best / ms.max >= 0.7;
     return h('section', { class: 'card pro-part tc-part ' + m.color },
       h('header', null,
-        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
+        moduleIcon('m' + m.id, m.icon),
         h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.id} · ${m.short || m.title}`)), h('small', { class: 'muted' }, `${ms.done}/${ms.n} activités · ${fmt(ms.best)}/${ms.max} pts`)),
         h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validé' : '🔒 À valider')),
       h('ol', { class: 'pp-nodes' }, m.sessions.map((s) => {
@@ -552,7 +553,7 @@ function levelScreen(n) {
     const done = ms.n && ms.sessionsDone === m.plan.length && ms.best / ms.max >= 0.7;
     return h('section', { class: 'card pro-part tc-part ' + m.color },
       h('header', null,
-        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
+        moduleIcon('m' + m.id, m.icon),
         h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.rank} · ${m.title}`)),
           h('small', { class: 'muted' }, `${m.unit} · ${m.comp} · ${m.hours} h · ${m.sessions.length ? `${ms.done}/${ms.n} activités · ${fmt(ms.best)}/${ms.max} pts` : 'en préparation'}`)),
         h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validé' : '🔒 À valider')),
@@ -630,7 +631,7 @@ function moduleScreen(mi) {
     const done = gs.n && gs.sessionsDone === g.sessions.length && gs.best / gs.max >= 0.7;
     return h('section', { class: 'card pro-part tc-part ' + m.color },
       h('header', null,
-        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
+        moduleIcon('m' + m.id, m.icon),
         h('div', null, h('h3', null, g.label), h('small', { class: 'muted' }, `${gs.done}/${gs.n} activités · ${fmt(gs.best)}/${gs.max} pts`)),
         h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validée' : '🔒 À valider')),
       h('ol', { class: 'pp-nodes' }, g.sessions.map(node), gi === groups.length - 1 ? planned : null));
@@ -643,7 +644,7 @@ function moduleScreen(mi) {
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, col ? `Informatique Collège · ${col.levelCode} · Module ${col.rank} · ${m.unit} · ${m.comp} · ${m.hours} h` : `Tronc commun · Module ${m.id} · ${m.sessions.length} séances`),
-        h('h1', { tabindex: '-1' }, `${m.icon} ${m.title}`),
+        h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('m' + m.id, m.icon, 'module-heading-icon'), h('span', null, m.title)),
         m.languageNote ? h('p', { class: 'notice' }, m.languageNote) : null,
         h('div', { class: 'row' },
           next ? h('a', { class: 'btn primary', href: `#/m/${m.id}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : S${next.sessionIndex} · ${next.title}`) : m.sessions.length ? h('span', { class: 'pill done' }, '🏆 Module terminé') : h('span', { class: 'pill' }, '🛠️ Séances en préparation'),
