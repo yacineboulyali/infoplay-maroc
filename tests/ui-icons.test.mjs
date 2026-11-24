@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { UI_ICONS } from '../src/data/ui-icons.js';
 
-const lots = ['tools', 'badges', 'sims'];
+const lots = ['tools', 'badges', 'sims', 'avatars'];
 const lists = new URL('../output/missing-images/', import.meta.url);
 const publicDir = new URL('../public/', import.meta.url);
 

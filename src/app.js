@@ -13,7 +13,7 @@ import { engineOf } from './games/index.js';
 import { activityScore, band, sessionStats, moduleStats, fmt, MAX } from './scoring/scoring.js';
 import { audio, installInterfaceSounds } from './audio/audio.js';
 import { lanManager } from './multiplayer/lan.js';
-import { raceScreen, monitorScreen, progressSnapshot, trackRace, avatarFor } from './multiplayer/screens.js';
+import { raceScreen, monitorScreen, progressSnapshot, trackRace, avatarFor, avatarIcon } from './multiplayer/screens.js';
 import { computeGame, bestTime, fmtTime, BADGES } from './fx/game.js';
 import { gameHud } from './fx/popup.js';
 import { presentResult, makeChrono } from './fx/flow.js';
@@ -203,7 +203,7 @@ function homeScreen() {
           closeEntry(); go(entryTarget);
         },
       },
-      h('span', { class: 'prof-ava', 'aria-hidden': 'true' }, avatarFor(p.displayName)),
+      avatarIcon(avatarFor(p.displayName), 'prof-ava'),
       h('span', { class: 'prof-meta' },
         h('b', null, p.displayName),
         p.className ? h('small', { class: 'muted' }, ' · ' + p.className) : null
@@ -422,7 +422,7 @@ function multiplayerScreen() {
 
   const playersGrid = h('div', { class: 'grid g3' },
     lanState.players.filter((p) => p.role !== 'observer').map((p) => h('div', { class: 'peer-card' + (p.isMe ? ' is-me' : '') },
-      h('span', { class: 'peer-avatar', 'aria-hidden': 'true' }, p.avatar || '🎮'),
+      avatarIcon(p.avatar || '🎮', 'peer-avatar', 48),
       h('div', { class: 'peer-info' },
         h('b', null, p.name, p.isMe ? ' (Moi)' : ''),
         p.className ? h('small', { class: 'muted' }, 'Classe ' + p.className + ' · ') : null,

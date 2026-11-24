@@ -50,6 +50,8 @@
 .ui-icon img{display:block;object-fit:contain}
 .brand .logo.ui-icon img{border-radius:inherit}
 .finish.ui-icon img{border-radius:6px}
+.peer-avatar.ui-icon,.prof-ava.ui-icon{display:grid;place-items:center}
+.peer-avatar.ui-icon img,.prof-ava.ui-icon img,.ava.ui-icon img,.runner .ui-icon img{border-radius:50%}
 .pp-ico.module-icon img{width:48px;height:48px}
 .mode-ico.module-icon img{width:56px;height:56px}
 .module-heading{display:flex;align-items:center;gap:.55rem}

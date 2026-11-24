@@ -10,6 +10,11 @@ const ALL = { sessions: CATALOG.flatMap((m) => m.sessions) };
 const AVATARS = ['🐪', '🦊', '🐢', '🦁', '🐬', '🦅', '🐎', '🐼', '🦉', '🐙', '🦋', '🐝', '🐧', '🦒', '🐞', '🐸', '🦔', '🐳'];
 const MEDAL = ['🥇', '🥈', '🥉'];
 
+const AVATAR_ART = AVATARS.map((_, i) => 'avatar-' + String(i + 1).padStart(2, '0'));
+export function avatarIcon(emoji, className, size = 32) {
+  return uiIcon(AVATAR_ART[AVATARS.indexOf(emoji)], emoji, { className, size });
+}
+
 export function avatarFor(name) {
   let x = 0; for (const ch of String(name || '?')) x = (x * 31 + ch.codePointAt(0)) >>> 0;
   return AVATARS[x % AVATARS.length];
@@ -107,7 +112,7 @@ export function raceScreen() {
       race ? timeEl : null);
     if (race && !race.ended && !countdown) countdown = setInterval(() => { const c = view.querySelector('.race-clock'); const r = lanManager.getState().race; if (!view.isConnected || !r) { clearInterval(countdown); countdown = null; return; } if (c) c.textContent = clock(r.remainingMs); }, 1000);
 
-    podium.replaceChildren(...rows.slice(0, 3).map((r, i) => h('div', { class: `podium-step p${i + 1}` + (r.p.isMe ? ' me' : '') }, h('span', { class: 'medal' }, MEDAL[i]), h('span', { class: 'ava' }, avatarFor(r.p.name)), h('b', null, r.p.name), h('span', null, `${fmt(r.value)} pts`))));
+    podium.replaceChildren(...rows.slice(0, 3).map((r, i) => h('div', { class: `podium-step p${i + 1}` + (r.p.isMe ? ' me' : '') }, h('span', { class: 'medal' }, MEDAL[i]), avatarIcon(avatarFor(r.p.name), 'ava'), h('b', null, r.p.name), h('span', null, `${fmt(r.value)} pts`))));
     podium.hidden = rows.length === 0;
 
     const lead = Math.max(10, ...rows.map((r) => r.value)) * 1.12;
@@ -124,7 +129,8 @@ export function raceScreen() {
       lane.el.style.top = (r.rank - 1) * LANE + 'px';
       lane.el.querySelector('.lane-rank').textContent = MEDAL[r.rank - 1] || r.rank;
       lane.info.replaceChildren(h('b', null, r.p.name, r.p.isMe ? ' (moi)' : ''), h('small', null, `${fmt(r.value)} pts · ${r.p.progress.done}/${r.p.progress.total} act. · ${r.p.online ? '📍 ' + (r.p.activity || '') : 'hors ligne'}`));
-      lane.runner.textContent = avatarFor(r.p.name); lane.runner.style.left = `calc(${pct}% - ${pct / 100 * 2}rem)`; lane.fill.style.width = pct + '%';
+      const emoji = avatarFor(r.p.name);
+      if (lane.avatar !== emoji) { lane.runner.replaceChildren(avatarIcon(emoji)); lane.avatar = emoji; } lane.runner.style.left = `calc(${pct}% - ${pct / 100 * 2}rem)`; lane.fill.style.width = pct + '%';
       lane.el.setAttribute('aria-label', `${r.rank}e : ${r.p.name}, ${fmt(r.value)} points${r.p.online ? '' : ', hors ligne'}`);
     });
     for (const [id, lane] of lanes) if (!seen.has(id)) { lane.el.remove(); lanes.delete(id); }
@@ -182,7 +188,7 @@ export function monitorScreen() {
     if (st.race) raceMsg.textContent = st.race.ended ? `Course « ${st.race.label} » terminée.` : `Course « ${st.race.label} » en cours — reste ${clock(st.race.remainingMs)}.`;
     const now = Date.now(); const rows = rowsOf(st);
     tbody.replaceChildren(...(rows.length ? rows.map((p) => h('tr', { class: p.online ? '' : 'offline' },
-      h('td', null, h('span', { class: 'ava', 'aria-hidden': 'true' }, avatarFor(p.name)), ' ', h('b', null, p.name), p.isMe ? ' (moi)' : '', p.className ? h('small', { class: 'muted' }, ' · ' + p.className) : null),
+      h('td', null, avatarIcon(avatarFor(p.name), 'ava'), ' ', h('b', null, p.name), p.isMe ? ' (moi)' : '', p.className ? h('small', { class: 'muted' }, ' · ' + p.className) : null),
       h('td', null, p.online ? h('span', { class: 'pill done' }, '● en ligne') : h('span', { class: 'pill' }, '○ ' + since(now - p.lastSeen))),
       h('td', null, p.activity || '—'),
       h('td', null, `${p.progress.done}/${p.progress.total}`, h('div', { class: 'bar', role: 'progressbar', 'aria-valuenow': p.progress.pct, 'aria-valuemin': 0, 'aria-valuemax': 100, 'aria-label': `${p.name} : ${p.progress.pct} %` }, h('i', { style: `width:${p.progress.pct}%` }))),
