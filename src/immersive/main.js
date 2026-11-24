@@ -5,8 +5,6 @@ import { CATALOG, ACTIVITIES, getActivity, getModule, getSession, isActivityId, 
 import { engineOf } from '../games/index.js';
 import { activityScore, band, sessionStats, moduleStats, fmt, MAX } from '../scoring/scoring.js';
 import { audio, installInterfaceSounds } from '../audio/audio.js';
-import { arModule, arSession, arActivity, arInstruction } from '../i18n/ar.js';
-import { arHint } from '../i18n/arhint.js';
 import { createWorld, webglAvailable, MODULE_COLORS } from './world.js';
 import { robot3dGame } from './robot3d.js';
 import { computeGame, bestTime, fmtTime } from '../fx/game.js';
@@ -22,7 +20,6 @@ const STATUS = { todo: 'Pas commencée', doing: 'En cours', done: 'Terminée' };
 const ALL = { sessions: CATALOG.flatMap((m) => m.sessions) };
 const recOf = (pid) => (id) => store.record(pid, id);
 const go = (p) => { location.hash = p; };
-const arSub = (text) => arHint(text);
 
 const $ = {
   world: document.getElementById('world'), hud: document.getElementById('hud'), panel: document.getElementById('panel'),
@@ -119,7 +116,7 @@ function renderGate() {
   const profiles = store.profiles();
   $.gate.replaceChildren(h('div', { class: 'gate-card glass', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'gate-h' },
     h('p', { class: 'eyebrow' }, 'Mode immersif 3D'), h('h1', { id: 'gate-h', tabindex: '-1' }, 'Bienvenue dans le monde InfoPlay'),
-    h('p', { class: 'muted' }, 'Explore les 4 îles de l’informatique, traverse les portails des séances et relève les défis. Ta progression est la même que dans le mode classique.', arHint('استكشف جزر المعلوميات الأربع وادخل بوابات الحصص')),
+    h('p', { class: 'muted' }, 'Explore les 4 îles de l’informatique, traverse les portails des séances et relève les défis. Ta progression est la même que dans le mode classique.'),
     profiles.length ? h('div', null, h('h2', null, 'Qui joue ?'), h('div', { class: 'gate-profiles' }, profiles.map((p) => { const t = moduleStats(ALL, recOf(p.id));
       return h('button', { type: 'button', class: 'profile-btn', onclick: () => { store.setActive(p.id); audio.play('snap'); render(); } }, h('b', null, p.displayName), h('span', { class: 'pill' }, `${fmt(t.best)} / ${TOTAL_POINTS} pts`)); })), h('p', { class: 'or' }, 'ou crée un nouveau profil')) : null,
     form, h('p', { class: 'notice' }, 'Pas de mot de passe : n’écris ni ton nom complet, ni ton adresse, ni ton téléphone. Les résultats restent dans ce navigateur.')));
@@ -138,14 +135,14 @@ function hubPanel(prof) {
       ); })(),
     h('h2', null, 'Les 4 îles'),
     h('div', { class: 'island-list' }, CATALOG.map((m) => { const s = moduleStats(m, rec);
-      return h('a', { class: 'island-btn', href: `#/m/${m.id}`, style: `--c:${MODULE_COLORS[m.id]}` }, h('span', { class: 'em', 'aria-hidden': 'true' }, m.icon), h('span', null, h('b', null, `Module ${m.id} — ${m.short || m.title}`), arSub(arModule(m.id)), bar(s.pct, `Module ${m.id} : ${s.pct} %`)), h('span', { class: 'pct' }, `${s.pct} %`)); }))];
+      return h('a', { class: 'island-btn', href: `#/m/${m.id}`, style: `--c:${MODULE_COLORS[m.id]}` }, h('span', { class: 'em', 'aria-hidden': 'true' }, m.icon), h('span', null, h('b', null, `Module ${m.id} — ${m.short || m.title}`), bar(s.pct, `Module ${m.id} : ${s.pct} %`)), h('span', { class: 'pct' }, `${s.pct} %`)); }))];
 }
 function modulePanel(prof, mi) {
   const m = getModule(mi); const rec = recOf(prof.id); const ms = moduleStats(m, rec);
   const row = (s) => { const st = sessionStats(s, rec);
-    return h('a', { class: 'portal-btn ' + st.status, href: `#/m/${mi}/s/${s.index}` }, h('span', { class: 'n' }, st.status === 'done' ? '✓' : s.index), h('span', null, h('b', null, s.title), arSub(arSession(s.id))), h('span', { class: 'sc' }, `${fmt(st.best)}/20`)); };
+    return h('a', { class: 'portal-btn ' + st.status, href: `#/m/${mi}/s/${s.index}` }, h('span', { class: 'n' }, st.status === 'done' ? '✓' : s.index), h('span', null, h('b', null, s.title)), h('span', { class: 'sc' }, `${fmt(st.best)}/20`)); };
   const body = m.groups ? m.groups.flatMap((g) => [h('h3', { class: 'group-h' }, g.label), ...g.sessions.map((k) => row(m.sessions[k - 1]))]) : m.sessions.map(row);
-  return [h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `Île ${m.id}`), h('h1', { tabindex: '-1' }, `${m.icon} ${m.title}`, arSub(arModule(m.id))),
+  return [h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `Île ${m.id}`), h('h1', { tabindex: '-1' }, `${m.icon} ${m.title}`),
     h('p', { class: 'muted' }, `${m.sessions.length} portails · ${fmt(ms.best)} / ${ms.max} points`), bar(ms.pct, `Module ${m.id} : ${ms.pct} %`),
     h('p', { class: 'muted small' }, 'Chaque portail est une séance. Couleur : bleu = à faire, or = en cours, vert = terminée.'),
     m.languageNote ? h('p', { class: 'notice' }, m.languageNote) : null, h('div', { class: 'portal-list' }, body)];
@@ -153,10 +150,10 @@ function modulePanel(prof, mi) {
 function sessionPanel(prof, mi, si) {
   const s = getSession(mi, si); const rec = recOf(prof.id); const st = sessionStats(s, rec);
   const next = s.acts.find((a) => !rec(a.id)?.attempts.length) || s.acts[0];
-  return [h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `Module ${mi} · Portail ${si}`), h('h1', { tabindex: '-1' }, s.title, arSub(arSession(s.id))),
+  return [h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `Module ${mi} · Portail ${si}`), h('h1', { tabindex: '-1' }, s.title),
     h('p', { class: 'muted' }, h('b', null, 'Notions : '), s.topics.join(', '), '.'),
     h('div', { class: 'act-cards' }, s.acts.map((a) => { const r = rec(a.id); const best = r?.attempts.length ? Math.max(...r.attempts.map((x) => x.score)) : null;
-      return h('a', { class: 'act-card' + (best != null ? ' done' : ''), href: `#/m/${mi}/s/${si}/a/${a.index}` }, h('span', { class: 'ico', 'aria-hidden': 'true' }, KIND_ICON[a.type]), h('span', null, h('small', null, `${a.index}. ${KIND[a.type]}`), h('b', null, a.title), arSub(arActivity(a.id))), h('span', { class: 'sc' }, best != null ? `${fmt(best)}/5` : `~${a.estimatedMinutes} min`)); })),
+      return h('a', { class: 'act-card' + (best != null ? ' done' : ''), href: `#/m/${mi}/s/${si}/a/${a.index}` }, h('span', { class: 'ico', 'aria-hidden': 'true' }, KIND_ICON[a.type]), h('span', null, h('small', null, `${a.index}. ${KIND[a.type]}`), h('b', null, a.title)), h('span', { class: 'sc' }, best != null ? `${fmt(best)}/5` : `~${a.estimatedMinutes} min`)); })),
     h('div', { class: 'row' }, h('a', { class: 'btn primary', href: `#/m/${mi}/s/${si}/a/${next.index}` }, st.done ? '▶ Continuer' : '▶ Entrer dans le portail'), st.done ? h('a', { class: 'btn', href: `#/m/${mi}/s/${si}/bilan` }, 'Bilan') : null),
     h('p', null, h('a', { href: `#/m/${mi}` }, '← Retour à l’île'))];
 }
@@ -209,10 +206,10 @@ function openActivity(prof, mi, si, ai) {
   const dots = h('nav', { class: 'dots', 'aria-label': 'Activités de la séance' }, s.acts.map((a) => h('a', { href: `#/m/${mi}/s/${si}/a/${a.index}`, class: (a.index === ai ? 'cur ' : '') + (rec(a.id)?.attempts.length ? 'done' : ''), 'aria-label': `Activité ${a.index} : ${a.title}`, 'aria-current': a.index === ai ? 'step' : null }, a.index)));
   const bestT = bestTime(prof.id, act.id);
   const body = h('div', { class: 'holo-body' },
-    h('div', { class: 'holo-head' }, h('div', null, h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `${KIND_ICON[act.type]} ${KIND[act.type]} · Module ${mi} · Séance ${si}`), h('h1', { tabindex: '-1', id: 'holo-h' }, act.title, arSub(arActivity(act.id)))),
+    h('div', { class: 'holo-head' }, h('div', null, h('p', { class: 'eyebrow', style: `color:${MODULE_COLORS[mi]}` }, `${KIND_ICON[act.type]} ${KIND[act.type]} · Module ${mi} · Séance ${si}`), h('h1', { tabindex: '-1', id: 'holo-h' }, act.title)),
       h('div', { class: 'holo-side' }, dots, h('div', { class: 'holo-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null))),
     h('p', { class: 'muted', style: 'margin:.2rem 0' }, h('b', null, 'Objectif : '), act.objective, ` · environ ${act.estimatedMinutes} min · note sur 5`),
-    h('div', { class: 'instr activity-brief' }, h('b', null, 'Consigne : '), act.instructions, arHint(arInstruction(act.type))),
+    h('div', { class: 'instr activity-brief' }, h('b', null, 'Consigne : '), act.instructions),
     hintBox, stage, h('div', { class: 'row activity-actions' }, checkBtn, hintBtn), out);
   body.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); submit(); } });
   const frame = h('div', { class: 'holo-frame', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'holo-h', style: `--c:${MODULE_COLORS[mi]}` },

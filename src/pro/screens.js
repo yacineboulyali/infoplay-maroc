@@ -1,8 +1,8 @@
+import { moduleIcon } from '../utils/module-icon.js';
 import { officeArt } from './visuals.js';
 import { semanticIcon } from '../utils/semantic-icons.js';
 // Écrans du parcours M205 : tableau de bord carrière, révision espacée et Défi mixte.
 import { h, shuffle, celebrate, reduced } from '../utils/dom.js';
-import { arHint } from '../i18n/arhint.js';
 import { audio } from '../audio/audio.js';
 import { PRO, PRO_ACTIVITIES, PRO_PARTS, PRO_POINTS } from '../data/pro/index.js';
 import { moduleStats, sessionStats, fmt } from '../scoring/scoring.js';
@@ -27,7 +27,7 @@ export function proHub({ prof, rec }) {
   const opened = openedSessions(rec).length;
 
   const questCard = h('section', { class: 'card pro-quests', 'data-reveal': '' },
-    h('h2', null, '🗓️ Quêtes du jour', arHint('مهام اليوم: أهداف قصيرة ودقيقة')),
+    h('h2', null, '🗓️ Quêtes du jour'),
     h('p', { class: 'muted' }, 'Trois objectifs courts et précis : chaque quête accomplie rapporte de l’XP, les trois ensemble un bonus.'),
     h('ul', { class: 'quest-list' }, qs.map((q) => h('li', { class: 'quest' + (q.done ? ' done' : '') },
       h('span', { class: 'q-ico', 'aria-hidden': 'true' }, q.done ? '✅' : q.icon),
@@ -37,13 +37,13 @@ export function proHub({ prof, rec }) {
   const tools = h('div', { class: 'grid g2 pro-tools', 'data-reveal': '' },
     h('a', { class: 'card pro-tool review', href: '#/pro/revision', 'data-tilt': '' },
       h('span', { class: 'pt-ico', 'aria-hidden': 'true' }, '🧠'),
-      h('h3', null, 'Révision espacée', arHint('المراجعة المتباعدة: بطاقات تعود في الوقت المناسب')),
+      h('h3', null, 'Révision espacée'),
       h('p', null, opened ? `${due.length} carte(s) à réviser maintenant.` : 'Termine une activité pour débloquer tes premières cartes.'),
       h('small', { class: 'muted' }, 'Les cartes réussies reviennent après 1, 3, 7, 16 puis 35 jours ; les cartes ratées reviennent tout de suite.'),
       h('span', { class: 'btn primary small' }, due.length ? '▶ Réviser' : 'Voir mes cartes')),
     h('a', { class: 'card pro-tool defi', href: '#/pro/defi', 'data-tilt': '' },
       h('span', { class: 'pt-ico', 'aria-hidden': 'true' }, '⚡'),
-      h('h3', null, 'Défi mixte', arHint('تحدٍّ مختلط: أسئلة من عدة حصص مع سلسلة ومضاعِف')),
+      h('h3', null, 'Défi mixte'),
       h('p', null, `12 questions mélangées de plusieurs séances · 3 vies · combo ×4. Record : ${st.defiBest} pts.`),
       h('small', { class: 'muted' }, 'Mélanger les séances oblige à choisir la bonne méthode : c’est ce qui prépare le mieux à l’examen.'),
       h('span', { class: 'btn accent small' }, '⚡ Lancer le défi')));
@@ -55,7 +55,7 @@ export function proHub({ prof, rec }) {
       const ps = moduleStats(p, rec); const cert = ps.n && ps.sessionsDone === p.sessions.length && ps.best / ps.max >= 0.7;
       return h('section', { class: 'card pro-part part-' + p.key },
         officeArt(p.label, p.key),
-        h('header', null, h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, p.icon), h('div', null, h('h3', null, p.label), h('small', { class: 'muted' }, `${ps.done}/${ps.n} activités · ${fmt(ps.best)}/${ps.max} pts`)),
+        h('header', null, moduleIcon('m205-' + p.key, p.icon), h('div', null, h('h3', null, p.label), h('small', { class: 'muted' }, `${ps.done}/${ps.n} activités · ${fmt(ps.best)}/${ps.max} pts`)),
           h('span', { class: 'pill ' + (cert ? 'done' : '') , title: cert ? 'Toutes les séances terminées avec au moins 70 %' : 'Termine toutes les séances avec au moins 70 %' }, cert ? '🎓 ' + p.cert : '🔒 Certificat')),
         h('ol', { class: 'pp-nodes' }, p.sessions.map((s) => { const lv = mastery(s, rec, prof.id); const ss = sessionStats(s, rec);
           return h('li', null, h('a', { class: 'pp-node lv' + lv, href: `#/m/${PRO.id}/s/${s.index}`, title: `${MASTERY[lv].label} · ${fmt(ss.best)}/20` },
@@ -67,7 +67,7 @@ export function proHub({ prof, rec }) {
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, 'OFPPT · M205 · 20 séances × 2 h · Formateur : ', PRO.trainer),
-        h('h1', { tabindex: '-1' }, '💼 Bureautique avancée', arHint('المكتبيات المتقدمة: وورد، إكسل، باوربوينت، أوتلوك')),
+        h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('m205', '💼', 'module-heading-icon'), h('span', null, 'Bureautique avancée')),
         h('p', { class: 'pro-story' }, `Tu rejoins Atlas Services comme ${game.rank.toLowerCase()}. Chaque séance est une mission confiée par un collègue : réussis-les pour monter en grade jusqu’à « Légende Office ».`),
         gameHud(game),
         h('div', { class: 'row' },
@@ -138,7 +138,7 @@ export function reviewScreen({ prof, rec }) {
   show();
   return h('main', { id: 'main', class: 'pro-page' },
     crumbs(['💼', 'M205', '#/pro'], ['🧠', 'Révision espacée']),
-    h('h1', { tabindex: '-1' }, '🧠 Révision espacée', arHint('المراجعة المتباعدة')),
+    h('h1', { tabindex: '-1' }, '🧠 Révision espacée'),
     h('p', { class: 'muted' }, `${deck.length} carte(s) aujourd’hui. Indique ta certitude, réponds, puis lis la correction : c’est le geste qui fixe la mémoire.`),
     prog, stage);
 }
@@ -181,7 +181,7 @@ export function defiScreen({ prof, rec }) {
   show();
   return h('main', { id: 'main', class: 'pro-page' },
     crumbs(['💼', 'M205', '#/pro'], ['⚡', 'Défi mixte']),
-    h('h1', { tabindex: '-1' }, '⚡ Défi mixte', arHint('تحدٍّ مختلط')),
+    h('h1', { tabindex: '-1' }, '⚡ Défi mixte'),
     h('p', { class: 'muted' }, 'Questions entrelacées de plusieurs séances. Chaque bonne réponse augmente le combo (jusqu’à ×4) ; une réponse rapide (< 8 s) rapporte +5. Trois erreurs et la partie s’arrête.'),
     hud, stage);
 }

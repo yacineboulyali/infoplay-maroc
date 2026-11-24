@@ -4,14 +4,14 @@ import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
 import { mechanicIcon } from './utils/semantic-icons.js';
 import { STUDENT_ILLUSTRATIONS } from './data/student-illustrations.js';
+import { moduleIcon } from './utils/module-icon.js';
+import { ACTIVITY_CARDS } from './data/activity-cards.js';
 import { h, downloadText, frDate, celebrate, svgFrom } from './utils/dom.js';
 import { createStore, localAdapter, MAX_IMPORT_BYTES } from './storage/store.js';
 import { CATALOG, ACTIVITIES, getActivity, getModule, getSession, isActivityId, TOTAL_POINTS } from './data/index.js';
 import { engineOf } from './games/index.js';
 import { activityScore, band, sessionStats, moduleStats, fmt, MAX } from './scoring/scoring.js';
 import { audio, installInterfaceSounds } from './audio/audio.js';
-import { arModule, arSession, arActivity, arInstruction } from './i18n/ar.js';
-import { arHint } from './i18n/arhint.js';
 import { lanManager } from './multiplayer/lan.js';
 import { raceScreen, monitorScreen, progressSnapshot, trackRace, avatarFor } from './multiplayer/screens.js';
 import { computeGame, bestTime, fmtTime, BADGES } from './fx/game.js';
@@ -31,7 +31,6 @@ const recOf = (pid) => (id) => store.record(pid, id);
 const go = (p) => { location.hash = p; };
 const link = (href, ...kids) => h('a', { href }, ...kids);
 const STATUS = { todo: 'Pas commencée', doing: 'En cours', done: 'Terminée' };
-const arSub = (text) => arHint(text);
 // Parcours M205 : libellés et périmètre de jeu propres (le Tronc Commun garde les siens).
 const isPro = (mi) => Number(mi) === PRO.id;
 // Parcours Informatique Collège : chaque niveau (1AC, 2AC, 3AC) est un parcours à part.
@@ -55,7 +54,6 @@ const modLabel = (mi) => (isPro(mi) ? 'M205' : colMod(mi) ? `${colMod(mi).levelC
 const modHref = (mi) => (isPro(mi) ? '#/pro' : '#/m/' + mi);
 const scopeOf = (mi, pid) => (isPro(mi) ? proScope(pid, recOf(pid)) : colMod(mi) ? colScope(getLevel(colMod(mi).level)) : undefined);
 const trackHref = (t) => (t === 'pro' ? '#/pro' : t === 'examen' ? '#/examen' : t === 'egtsi' ? '#/egtsi106' : t && t.startsWith('col') ? '#/college/' + t.slice(3) : '#/dash');
-const arSess = (s) => s.ar || arSession(s.id);
 
 // ---------- Petits composants & utilitaires ----------
 function toast(msg) {
@@ -336,7 +334,7 @@ function homeScreen() {
             h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Parcours OFPPT' },
             h('section', { class: 'mode-card mode-pro mode-ofppt', 'aria-labelledby': 'mode-pro-h' },
               h('span', { class: 'mode-badge' }, 'Nouveau'),
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '💼'),
+              moduleIcon('m205', '💼', 'mode-ico'),
               h('h3', { id: 'mode-pro-h' }, 'M205 · Bureautique avancée'),
               h('p', null, '20 séances, 80 activités : Word, Excel, PowerPoint, Outlook.'),
               h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/pro') }, 'Ouvrir le parcours →')
@@ -344,7 +342,7 @@ function homeScreen() {
             h('section', { class: 'mode-card mode-pro mode-ofppt', 'aria-labelledby': 'mode-egtsi-h' },
               h('span', { class: 'mode-badge' }, 'Partie 1'),
               h('h3', { id: 'mode-egtsi-h' }, 'EGTSI106 · Culture et techniques du numérique'),
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🖥️'),
+              moduleIcon('egtsi106', '🖥️', 'mode-ico'),
               h('p', null, '3 séances : numérique, appareils et réseaux, Windows.'),
               h('a', { class: 'btn primary mode-go', href: '#/egtsi106' }, 'Ouvrir le parcours →')
             )
@@ -507,7 +505,7 @@ function dashScreen() {
     const done = ms.n && ms.sessionsDone === m.sessions.length && ms.best / ms.max >= 0.7;
     return h('section', { class: 'card pro-part tc-part ' + m.color },
       h('header', null,
-        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
+        moduleIcon('m' + m.id, m.icon),
         h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.id} · ${m.short || m.title}`)), h('small', { class: 'muted' }, `${ms.done}/${ms.n} activités · ${fmt(ms.best)}/${ms.max} pts`)),
         h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validé' : '🔒 À valider')),
       h('ol', { class: 'pp-nodes' }, m.sessions.map((s) => {
@@ -561,8 +559,8 @@ function levelScreen(n) {
     const done = ms.n && ms.sessionsDone === m.plan.length && ms.best / ms.max >= 0.7;
     return h('section', { class: 'card pro-part tc-part ' + m.color },
       h('header', null,
-        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
-        h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.rank} · ${m.title}`), arSub(m.ar)),
+        moduleIcon('m' + m.id, m.icon),
+        h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.rank} · ${m.title}`)),
           h('small', { class: 'muted' }, `${m.unit} · ${m.comp} · ${m.hours} h · ${m.sessions.length ? `${ms.done}/${ms.n} activités · ${fmt(ms.best)}/${ms.max} pts` : 'en préparation'}`)),
         h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validé' : '🔒 À valider')),
       h('ol', { class: 'pp-nodes' },
@@ -584,7 +582,7 @@ function levelScreen(n) {
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, `Collège · ${L.title} · ${L.modules.length} modules · programme officiel (1 h par semaine)`),
-        h('h1', { tabindex: '-1' }, `${L.icon} Informatique — ${L.code}`, arSub(L.ar)),
+        h('h1', { tabindex: '-1' }, `${L.icon} Informatique — ${L.code}`),
         h('p', { class: 'pro-story' }, `Bonjour ${p.displayName} ! Les modules suivent l’ordre du programme. Chaque séance contient 4 activités interactives ; les séances marquées 🔒 sont en préparation.`),
         gameHud(game),
         h('div', { class: 'row' },
@@ -639,7 +637,7 @@ function moduleScreen(mi) {
     const done = gs.n && gs.sessionsDone === g.sessions.length && gs.best / gs.max >= 0.7;
     return h('section', { class: 'card pro-part tc-part ' + m.color },
       h('header', null,
-        h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, m.icon),
+        moduleIcon('m' + m.id, m.icon),
         h('div', null, h('h3', null, g.label), h('small', { class: 'muted' }, `${gs.done}/${gs.n} activités · ${fmt(gs.best)}/${gs.max} pts`)),
         h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validée' : '🔒 À valider')),
       h('ol', { class: 'pp-nodes' }, g.sessions.map(node), gi === groups.length - 1 ? planned : null));
@@ -652,7 +650,7 @@ function moduleScreen(mi) {
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, col ? `Informatique Collège · ${col.levelCode} · Module ${col.rank} · ${m.unit} · ${m.comp} · ${m.hours} h` : `Tronc commun · Module ${m.id} · ${m.sessions.length} séances`),
-        h('h1', { tabindex: '-1' }, `${m.icon} ${m.title}`, arSub(col ? m.ar : arModule(m.id))),
+        h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('m' + m.id, m.icon, 'module-heading-icon'), h('span', null, m.title)),
         m.languageNote ? h('p', { class: 'notice' }, m.languageNote) : null,
         h('div', { class: 'row' },
           next ? h('a', { class: 'btn primary', href: `#/m/${m.id}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : S${next.sessionIndex} · ${next.title}`) : m.sessions.length ? h('span', { class: 'pill done' }, '🏆 Module terminé') : h('span', { class: 'pill' }, '🛠️ Séances en préparation'),
@@ -669,12 +667,12 @@ function moduleScreen(mi) {
   );
 }
 
-// Image de tuile d'une activité du Tronc Commun (même format que les repères Office du M205) :
-// première illustration validée de l'activité, sinon l'icône de la mécanique.
+// Première illustration de l'activité, puis vignette dédiée et icône de la mécanique.
 function activityArt(a) {
   const key = a.pics?.find(Boolean) || Object.keys(STUDENT_ILLUSTRATIONS).find((k) => k.startsWith((a.illus || a.id) + '-q'));
-  if (!key) return mechanicIcon(a.type);
-  return h('img', { class: 'office-art tc-art', src: STUDENT_ILLUSTRATIONS[key], alt: '', 'aria-hidden': 'true', width: 112, height: 112, loading: 'lazy', decoding: 'async', draggable: 'false',
+  const src = key ? STUDENT_ILLUSTRATIONS[key] : ACTIVITY_CARDS[a.id];
+  if (!key && !src) return mechanicIcon(a.type);
+  return h('img', { class: 'office-art tc-art', src, alt: '', 'aria-hidden': 'true', width: 112, height: 112, loading: 'lazy', decoding: 'async', draggable: 'false',
     onerror: (e) => e.currentTarget.replaceWith(mechanicIcon(a.type)) });
 }
 
@@ -699,7 +697,7 @@ function sessionScreen(mi, si) {
 
   return h('main', { id: 'main' },
     crumbs(homeStep(mi), ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si]),
-    h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`, arSub(arSess(s))),
+    h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`),
     s.situation ? h('section', { class: 'mission-brief', 'data-reveal': '' },
       h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, s.situation.ico),
       h('div', null, h('p', { class: 'eyebrow' }, colMod(mi) ? 'Situation de départ' : 'Mission · situation professionnelle'), h('b', null, s.situation.who), h('p', null, s.situation.text))) : null,
@@ -714,7 +712,7 @@ function sessionScreen(mi, si) {
           h('span', { class: 'pill' }, `${a.index}. ${KIND[a.type]}`),
           best != null ? h('span', { class: 'pill done' }, `${fmt(best)}/5 ★`) : h('span', { class: 'pill' }, `~${a.estimatedMinutes} min`)
         ),
-        h('h3', { style: 'margin-top:.5rem' }, a.title, arSub(arActivity(a.illus || a.id))),
+        h('h3', { style: 'margin-top:.5rem' }, a.title),
         h('p', { class: 'muted', style: 'margin:0' }, a.objective)
       );
     })),
@@ -824,12 +822,11 @@ function activityScreen(mi, si, ai) {
     h('header', { class: 'act-hero', 'data-reveal': '' },
       h('div', { class: 'act-hero-main' },
         h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
-        h('h1', { tabindex: '-1' }, act.title, arSub(arActivity(act.illus || act.id))),
+        h('h1', { tabindex: '-1' }, act.title),
         h('p', { class: 'act-obj' }, h('b', null, 'Objectif : '), act.objective)),
       h('div', { class: 'act-hero-side' }, dots, h('div', { class: 'act-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null, h('span', { class: 'chip-meta' }, `~${act.estimatedMinutes} min · /5`)), hud)),
     h('div', { class: 'instr activity-brief', 'data-reveal': '' },
-      h('b', null, 'Consigne : '), act.instructions,
-      arHint(arInstruction(act.type))
+      h('b', null, 'Consigne : '), act.instructions
     ),
     mi === 205 ? activityVisual(act, s) : null,
     hintBox,

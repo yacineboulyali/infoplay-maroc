@@ -263,7 +263,7 @@ export function matchGame(root, d) {
 
   root.append(
     h('div', { class: 'match-intro-banner' },
-      h('span', { class: 'banner-badge' }, '🔗 Cliquer-déposer ou Glisser-déposer', arHint('انقر أو اسحب من اليسار للربط مع الإجابة المناسبة على اليمين'))
+      h('span', { class: 'banner-badge' }, '🔗 Cliquer-déposer ou Glisser-déposer')
     ),
     matchArea,
     live,
@@ -351,7 +351,7 @@ export function sortGame(root, d) {
           draw();
         }
       },
-    }, head, arHint('ضع هنا'), body);
+    }, head, body);
 
     return { box, body, countBadge };
   });
@@ -422,7 +422,7 @@ export function sortGame(root, d) {
 
   root.append(
     h('div', { class: 'sort-instruction-bar' },
-      h('span', { class: 'banner-badge' }, '🗂️ Classement interactif : Glisse ou clique sur une carte puis sur sa catégorie', arHint('اسحب البطاقات أو انقر عليها ثم اختر التصنيف المناسب لها'))
+      h('span', { class: 'banner-badge' }, '🗂️ Classement interactif : Glisse ou clique sur une carte puis sur sa catégorie')
     ),
     pool,
     h('div', { class: 'buckets', style: '' }, buckets.map((b) => b.box)),
@@ -541,7 +541,7 @@ export function orderGame(root, d) {
 
   root.append(
     h('div', { class: 'sort-instruction-bar' },
-      h('span', { class: 'banner-badge' }, '🔢 Ordonner les étapes : Fais glisser les lignes ou utilise ▲ et ▼', arHint('رتب الخطوات بالسحب أو بالضغط على الأسهم'))
+      h('span', { class: 'banner-badge' }, '🔢 Ordonner les étapes : Fais glisser les lignes ou utilise ▲ et ▼')
     ),
     ol
   );
@@ -655,11 +655,11 @@ export function quizGame(root, d) {
 
     let modeBanner = null;
     if (isTrueFalse) {
-      modeBanner = h('span', { class: 'q-mode-badge tf' }, '⚖️ VRAI OU FAUX', arHint('صحيح أم خطأ'));
+      modeBanner = h('span', { class: 'q-mode-badge tf' }, '⚖️ VRAI OU FAUX');
     } else if (isFindFalse) {
-      modeBanner = h('span', { class: 'q-mode-badge false-mode' }, '🚨 Trouver la réponse fausse / l’intrus', arHint('ابحث عن الإجابة الخاطئة'));
+      modeBanner = h('span', { class: 'q-mode-badge false-mode' }, '🚨 Trouver la réponse fausse / l’intrus');
     } else {
-      modeBanner = h('span', { class: 'q-mode-badge good-mode' }, '🎯 Trouver la bonne réponse', arHint('اختر الإجابة الصحيحة'));
+      modeBanner = h('span', { class: 'q-mode-badge good-mode' }, '🎯 Trouver la bonne réponse');
     }
 
     const inputs = order.map((k) => h('input', {

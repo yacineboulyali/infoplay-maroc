@@ -1,5 +1,5 @@
+import { moduleIcon } from '../utils/module-icon.js';
 import { h, norm } from '../utils/dom.js';
-import { arHint } from '../i18n/arhint.js';
 import { engineOf } from '../games/index.js';
 import { activities, title, topics, ports, portPictures } from '../data/egtsi106/lesson.js';
 
@@ -216,8 +216,7 @@ function lessonPage(i, k) {
         h('p', { class: 'egtsi-kicker' }, `📘 Cours · Leçon ${k} sur ${course.lessons.length} · Séance ${x.id}`),
         h('h1', { tabindex: '-1' }, l.title),
         h('p', { class: 'muted' }, `≈ ${Math.max(5, Math.round(total * 1.2))} min de lecture · ${total} notions · ${l.indices.length} activités`),
-        h('div', { class: 'egtsi-read-meter' }, h('span', null, 'Notions comprises : ', count), meter),
-        i === 0 && k === 1 ? arHint('تعرّف على مكوّنات الحاسوب، الدور ديال كل واحد وكيفاش تربط الأجهزة.') : null),
+        h('div', { class: 'egtsi-read-meter' }, h('span', null, 'Notions comprises : ', count), meter)),
       picture(l.image, '', 'egtsi-lesson-cover'),
       h('nav', { class: 'egtsi-steps', 'aria-label': 'Leçons de la séance' }, course.lessons.map((ll, n) => {
         const lv = lessonLevel(ll, session, n + 1, p);
@@ -352,7 +351,7 @@ function hub() {
     h('section', { class: 'pro-hero' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, 'OFPPT · EGTSI106 · Partie 1 · ' + SESSIONS.length + ' séances × 2 h'),
-        h('h1', { tabindex: '-1' }, '🖥️ Culture et techniques du numérique'),
+        h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('egtsi106', '🖥️', 'module-heading-icon'), h('span', null, 'Culture et techniques du numérique')),
         h('p', { class: 'pro-story' }, 'Choisis une séance, puis une leçon : chaque leçon contient son cours illustré et ses activités de mise en pratique.'),
         h('div', { class: 'row' }, button(sessionHref(null), '▶ Commencer : Séance 1', true))),
       h('div', { class: 'pro-kpis' },
@@ -368,7 +367,7 @@ function hub() {
         return h('section', { class: 'card pro-part egtsi-part' },
           picture(course.lessons[0].image, '', 'egtsi-part-art'),
           h('header', null,
-            h('span', { class: 'pp-ico', 'aria-hidden': 'true' }, ICONS[i] || '📘'),
+            moduleIcon('egtsi106-s' + (i + 1), ICONS[i] || '📘'),
             h('div', null, h('h3', null, h('a', { href: sessionHref(x.session) }, 'Séance 0' + x.id + ' · ' + x.title)), h('small', { class: 'muted' }, course.lessons.length + ' leçons · ' + course.activities.length + ' activités')),
             (() => { const cert = course.lessons.every((l, k) => lessonLevel(l, x.session, k + 1, p) === 3); return h('span', { class: 'pill' + (cert ? ' done' : ''), title: 'Réussis toutes les activités de la séance avec au moins 80 %' }, cert ? '🎓 Certificat' : '🔒 Certificat'); })()),
           h('ol', { class: 'pp-nodes' }, course.lessons.map((l, k) => { const lv = lessonLevel(l, x.session, k + 1, p); return h('li', null,
