@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 
 const root = new URL('../', import.meta.url);
 const directory = new URL('public/images/module-icons/', root);
-const worklist = new URL('output/missing-images/module-icons.jsonl', root);
+const worklists = ['module-icons', 'parcours-icons'];
 const output = new URL('src/data/module-icons.js', root);
 
 mkdirSync(directory, { recursive: true });
@@ -16,6 +16,7 @@ writeFileSync(output, [
   '',
 ].join('\n'));
 
-const keys = readFileSync(worklist, 'utf8').trim().split(/\r?\n/).map((line) => JSON.parse(line).key);
+const keys = worklists.flatMap((list) => readFileSync(new URL(`output/missing-images/${list}.jsonl`, root), 'utf8')
+  .trim().split(/\r?\n/).map((line) => JSON.parse(line).key));
 const missing = keys.filter((key) => !existsSync(new URL(`${key}.webp`, directory)));
 console.log(`${files.length} icône(s) indexée(s). Clés manquantes : ${missing.join(', ') || 'aucune'}`);

@@ -238,3 +238,5 @@ header.top-slim .sound-toggle:hover,header.top-slim .switch-user:hover{backgroun
 .lp .mode-card.mode-ofppt .btn.primary:hover{background:var(--ofppt-dark)}
 .lp .mode-card.mode-ofppt:hover,.lp .mode-card.mode-ofppt:focus-within{border-color:var(--ofppt-dark);box-shadow:0 8px 0 var(--ofppt-dark)}
 @media (min-width:481px){.track-ofppt{padding:1.25rem 1.4rem}}
+.track-ico.module-icon{background:none;border:0;padding:0}
+.track-ico.module-icon img{width:48px;height:48px;border-radius:14px}
