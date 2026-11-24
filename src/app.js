@@ -815,7 +815,7 @@ function activityScreen(mi, si, ai) {
     crumbs(homeStep(mi), ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si, `#/m/${mi}/s/${si}`], ['🎯', 'Activité ' + ai]),
     h('header', { class: 'act-hero', 'data-reveal': '' },
       h('div', { class: 'act-hero-main' },
-        h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
+        h('span', { class: 'act-kind' }, moduleIcon('m' + mi, m.icon, 'act-kind-icon'), `${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
         h('h1', { tabindex: '-1' }, act.title),
         h('p', { class: 'act-obj' }, h('b', null, 'Objectif : '), act.objective)),
       h('div', { class: 'act-hero-side' }, dots, h('div', { class: 'act-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null, h('span', { class: 'chip-meta' }, `~${act.estimatedMinutes} min · /5`)), hud)),
@@ -899,7 +899,8 @@ function progressScreen() {
     [...CATALOG, PRO, ...LEVELS.flatMap((L) => L.modules.filter((x) => x.sessions.length))].map((m) => {
       const ms = moduleStats(m, rec);
       return h('section', { class: 'card', style: 'margin-bottom:1rem;overflow:auto' },
-        h('h2', null, `${m.icon} ${colMod(m.id) ? modLabel(m.id) : 'Module ' + m.id} — ${m.title}`),
+        h('h2', { class: 'module-heading' }, moduleIcon('m' + m.id, m.icon, 'progress-mod-icon'),
+          h('span', null, `${colMod(m.id) ? modLabel(m.id) : 'Module ' + m.id} — ${m.title}`)),
         h('p', { class: 'muted' }, `${fmt(ms.best)} / ${ms.max} points · ${ms.done}/${ms.n} activités`),
         bar(ms.pct, `Module ${m.id}`),
         h('table', { class: 't' },

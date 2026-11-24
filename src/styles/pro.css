@@ -51,6 +51,11 @@
 .module-heading{display:flex;align-items:center;gap:.55rem}
 .module-heading-icon{flex:none;font-size:1.8rem;line-height:1}
 .module-heading-icon img{width:40px;height:40px}
+.progress-mod-icon img{width:32px;height:32px}
+.act-kind-icon{display:inline-block;vertical-align:middle;margin-inline-end:.35rem}
+.act-kind-icon img{width:20px;height:20px;border-radius:6px}
+.mission-brief .mb-ava.module-icon{background:none;border:0;box-shadow:none}
+.mb-ava.module-icon img{width:54px;height:54px;border-radius:50%}
 @media (max-width:479px){.pp-ico.module-icon img{width:40px;height:40px}}
 .part-word{border-top:4px solid #2b579a}.part-excel{border-top:4px solid #217346}.part-ppt{border-top:4px solid #b7472a}.part-outlook{border-top:4px solid #0072c6}
 .pp-nodes{list-style:none;margin:0;padding:0;display:grid;gap:.4rem;position:relative}

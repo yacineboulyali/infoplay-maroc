@@ -116,7 +116,7 @@ function sessionPage(i) {
     crumbs(['📖', 'Séance ' + x.id]),
     h('h1', { tabindex: '-1' }, 'Séance ' + x.id + ' — ' + x.title),
     h('section', { class: 'mission-brief' },
-      h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, ICONS[i] || '📘'),
+      moduleIcon('egtsi106-s' + (i + 1), ICONS[i] || '📘', 'mb-ava'),
       h('div', null, h('p', { class: 'eyebrow' }, 'Mission · situation professionnelle'), h('b', null, mission.who), h('p', null, mission.text))),
     h('section', { class: 'egtsi-overview card' },
       h('div', { class: 'egtsi-overview-head' },
