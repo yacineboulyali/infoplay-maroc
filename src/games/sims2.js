@@ -28,7 +28,7 @@ function office(host, st, ctx) {
   let nameIn, folderSel;
   const saveBar = show.has('save') ? h('div', { class: 'tgrp' }, h('label', null, 'Nom du fichier ', nameIn = h('input', { type: 'text', maxlength: '30', autocomplete: 'off', oninput: (e) => { st.name = e.target.value.replace(/[^\w.\- ]/g, ''); st.saved = false; titleBar.textContent = tb(); } })),
     h('label', null, 'Dossier ', folderSel = h('select', { 'aria-label': 'Dossier d’enregistrement', onchange: (e) => { st.folder = e.target.value; st.saved = false; } }, ['Bureau', 'Mes documents', 'Téléchargements'].map((o) => h('option', { value: o }, o)))),
-    h('button', { type: 'button', class: 'btn small', onclick: () => { if (!st.name.trim()) msg.textContent = 'Donne un nom au document avant de l’enregistrer.'; else { st.saved = true; msg.textContent = `Document « ${st.name} » enregistré dans ${st.folder}.`; } paint(); } }, '💾 Enregistrer')) : null;
+    h('button', { type: 'button', class: 'btn small', onclick: () => { if (!st.name.trim()) msg.textContent = 'Donne un nom au document avant de l’enregistrer.'; else { st.saved = true; msg.textContent = `Document « ${st.name} » enregistré dans ${st.folder}.`; } paint(); } }, semanticIcon('', { kind: 'save' }), 'Enregistrer')) : null;
   let printBox = null; const pvw = h('div', { class: 'pvw' });
   if (show.has('print')) printBox = h('div', { class: 'tgrp printp' },
     h('label', null, 'Orientation ', sel(['portrait', 'paysage'], st.orient, (v) => set('orient', v, false), 'Orientation')), h('label', null, 'Format ', sel(['A4', 'A5', 'Lettre'], st.paper, (v) => set('paper', v, false), 'Format du papier')),
