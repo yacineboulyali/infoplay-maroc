@@ -216,3 +216,57 @@ test('ordre aléatoire : propositions mélangées, bonne réponse conservée, «
   const a = [1, 2, 3, 4, 5, 6, 7, 8];
   assert.deepEqual(shuffleArr(a, rng).sort(), a);
 });
+
+test('doublons : aucune question n’est reprise avec le même énoncé et la même bonne réponse', async () => {
+  const { normFr, normAr } = await import('../src/examen/engine.js');
+  const n = (q, s) => (q.lang === 'ar' ? normAr(s) : normFr(s)).replace(/[^\p{L}\p{N} ]/gu, ' ').replace(/\s+/g, ' ').trim();
+  const seen = new Map();
+  for (const q of QUESTIONS) {
+    const key = q.lang + '|' + n(q, q.q) + '|' + n(q, q.options[q.answer]);
+    assert.ok(!seen.has(key) || /aucune de ces|لا شيء مما سبق/i.test(q.options[q.answer]), `doublon : ${q.id} = ${seen.get(key)}`);
+    seen.set(key, q.id);
+  }
+  // Chaque question appartient à un seul niveau.
+  const where = new Map();
+  for (const p of PARTS) levelsOf(p.id).forEach((lv, k) => lv.forEach((q) => { assert.ok(!where.has(q.id), 'niveau en double : ' + q.id); where.set(q.id, k); }));
+});
+
+test('niveaux : ordre aléatoire dans le niveau, les questions pas encore vues passent d’abord', () => {
+  const st = createExamStore(memory(), 'ordre');
+  const part = PARTS[0].id; const qs = levelsOf(part)[0];
+  const first = st.levelOrder(part, 0, qs);
+  assert.deepEqual([...first.map((q) => q.id)].sort(), qs.map((q) => q.id).sort(), 'mêmes questions, celles du niveau');
+  // On quitte après trois questions : au retour, les autres passent en premier.
+  first.slice(0, 3).forEach((q) => st.markShown(part, 0, q.id, qs.length));
+  const again = st.levelOrder(part, 0, qs);
+  const seen = new Set(first.slice(0, 3).map((q) => q.id));
+  assert.ok(again.slice(0, qs.length - 3).every((q) => !seen.has(q.id)), 'les questions manquantes d’abord');
+  assert.ok(again.slice(qs.length - 3).every((q) => seen.has(q.id)));
+  // Dès que tout a été affiché, un nouveau cycle commence : les questions vues ensuite y comptent déjà.
+  again.forEach((q) => st.markShown(part, 0, q.id, qs.length));
+  assert.deepEqual(st.levelShown(part, 0).sort(), again.slice(qs.length - 3).map((q) => q.id).sort());
+  // L'ordre change d'une fois à l'autre.
+  const orders = new Set(Array.from({ length: 12 }, () => st.levelOrder(part, 0, qs).map((q) => q.id).join()));
+  assert.ok(orders.size > 1, 'ordre aléatoire');
+});
+
+test('progression : dans chaque partie, la difficulté croît du niveau 1 au dernier', async () => {
+  const { difficultyOf } = await import('../src/examen/engine.js');
+  const mean = (qs) => qs.reduce((a, q) => a + difficultyOf(q), 0) / qs.length;
+  for (const p of PARTS) {
+    const lv = levelsOf(p.id);
+    for (const track of [lv.filter((qs) => !isAnnales(qs[0])), lv.filter((qs) => isAnnales(qs[0]))]) {
+      for (let k = 1; k < track.length; k++) assert.ok(mean(track[k]) >= mean(track[k - 1]), `${p.id} : niveau ${k + 1} plus facile que le niveau ${k}`);
+    }
+  }
+});
+
+test('propositions : dans la banque d’entraînement, la bonne réponse ne se devine pas à sa longueur', () => {
+  const none = /^aucune de ces|^لا شيء مما سبق/i;
+  for (const q of QUESTIONS.filter((x) => x.type === 'qcm' && !isAnnales(x))) {
+    const good = q.options[q.answer]; if (none.test(good)) continue;
+    const others = q.options.filter((o, i) => i !== q.answer && !none.test(o));
+    const avg = others.reduce((a, o) => a + o.length, 0) / others.length;
+    assert.ok(!(good.length >= 2 * avg && good.length > Math.max(...others.map((o) => o.length)) * 1.4), 'propositions trop faciles : ' + q.id);
+  }
+});

@@ -10,7 +10,7 @@ import {
 } from './engine.js';
 import { conceptTitle } from './data/concept-titles.js';
 import { LESSON_EXAMPLES } from './data/lesson-examples.js';
-import { trBtn, trLine, trBlock } from './tr-ui.js';
+import { trBtn, trLine, trBlock, trOpt } from './tr-ui.js';
 import { sfx, sfxOn, setSfx } from './sfx.js';
 
 // Encadré « Exemple » : un cas concret qui accompagne chaque explication.
@@ -239,8 +239,8 @@ function lessonPlayer(st, p) {
       why.hidden = false; why.className = 'ex-why ' + (ok ? 'ok' : 'ko');
       if (ok) { sfx('correct'); vibrate(25); st.lessonCard(p.id); floatXp(btn, XP.lessonCard); } else { sfx('wrong'); vibrate([50, 30, 50]); }
       nextBtn.disabled = false; nextBtn.focus();
-    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[pos]), h('span', null, o))));
-    const why = h('p', { class: 'ex-why', hidden: true }, card.check.why, trLine(card.check.why, p.lang));
+    } }, h('span', { class: 'ex-letter' }, letters(p.lang)[pos]), h('span', null, o, trOpt(o, p.lang)))));
+    const why = h('p', { class: 'ex-why', hidden: true }, card.check.why);
     nextBtn.addEventListener('click', () => { if (i < p.lesson.length - 1) { i++; render(); window.scrollTo(0, 0); } else done(); });
     root.replaceChildren(
       playerTop(`${BASE}/p/${p.id}`, (i + 1) / p.lesson.length, null),
@@ -287,7 +287,10 @@ function questionText(q, gap) {
   const [a, b] = q.q.split(GAP);
   return [a, gap, b];
 }
-const examChip = (q) => (q.exam ? h('span', { class: 'ex-exam-chip', title: q.lang === 'ar' ? 'مستخرج من موضوع الامتحان' : 'Tiré du sujet officiel' }, `📝 ${q.exam}`) : null);
+// Source courte d'une question tirée des annales : examen et année (« Examen pro 2025 »), placée à côté de l'indice.
+const examYear = (q) => String(q.exam || '').match(/\b(20\d\d)\b/)?.[1] || '';
+export const examSource = (q) => (examYear(q) ? (q.lang === 'ar' ? `امتحان مهني ${examYear(q)}` : `Examen pro ${examYear(q)}`) : '');
+const examChip = (q) => (examSource(q) ? h('span', { class: 'ex-exam-chip', title: (q.lang === 'ar' ? 'مستخرج من موضوع الامتحان المهني : ' : 'Tiré du sujet de l’examen d’aptitude professionnelle : ') + q.exam }, `📝 ${examSource(q)}`) : null);
 function typeHint(q) {
   if (q.type !== 'vf' && q.type !== 'fill') return null;
   const ar = q.lang === 'ar';
@@ -309,13 +312,16 @@ function quizPlayer(st, { mode, part, k }) {
       h('p', null, 'Les questions ratées au premier essai arrivent ici. Les revoir plus tard (révision espacée) les fixe durablement en mémoire.'),
       h('a', { class: 'ex-btn ex-primary', href: BASE }, 'Retour au parcours'))), bottomNav('rev')];
   }
-  // Questions et propositions dans un ordre aléatoire à chaque tentative.
-  list = shuffleArr(list).map((q) => shuffled(q));
+  // Questions et propositions dans un ordre aléatoire à chaque tentative. Dans un niveau, les questions pas encore
+  // affichées passent d'abord : quitter puis revenir reprend par celles qui manquent.
+  const order = () => (mode === 'level' ? st.levelOrder(part.id, k, levelsOf(part.id)[k]) : shuffleArr(list)).map((q) => shuffled(q));
+  list = order();
   const R = { idx: 0, hearts: HEARTS, combo: 0, maxCombo: 0, firstTry: 0, hints: 0, mistakes: 0, xp: 0 };
   const root = h('div', { class: 'ex-player' + (mode === 'review' ? ' review' : '') });
 
   const render = () => {
     const q = list[R.idx]; const T = L[q.lang]; const p = partById(q.part);
+    if (mode === 'level') st.markShown(part.id, k, q.id, list.length);
     let selected = null; let attempt = 1; let hinted = false; const off = new Set();
     root.style.setProperty('--c', p.color);
     const heart = mode === 'level' ? h('span', { class: 'ex-hearts', 'aria-label': `${R.hearts} cœurs` }, '❤️', h('b', null, String(R.hearts))) : h('span', { class: 'ex-chip' }, '♻️');
@@ -323,7 +329,7 @@ function quizPlayer(st, { mode, part, k }) {
     const checkBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: true }, T.check);
     const gap = q.type === 'fill' ? h('span', { class: 'ex-gap', 'aria-live': 'polite' }, '   ') : null;
     const opts = h('div', { class: 'ex-opts' + (q.type === 'vf' ? ' ex-vf' : q.type === 'fill' ? ' ex-fill' : ''), role: 'radiogroup', 'aria-label': 'Réponses' }, q.options.map((o, i) => {
-      const b = h('button', { type: 'button', class: 'ex-opt', role: 'radio', 'aria-checked': 'false', style: `--i:${i}` }, h('span', { class: 'ex-letter' }, optMark(q, i)), h('span', null, o));
+      const b = h('button', { type: 'button', class: 'ex-opt', role: 'radio', 'aria-checked': 'false', style: `--i:${i}` }, h('span', { class: 'ex-letter' }, optMark(q, i)), h('span', null, o, trOpt(o, q.lang)));
       b.addEventListener('click', () => {
         if (off.has(i)) return; selected = i;
         [...opts.children].forEach((c, j) => { c.classList.toggle('sel', j === i); c.setAttribute('aria-checked', String(j === i)); });
@@ -359,10 +365,10 @@ function quizPlayer(st, { mode, part, k }) {
       }
       const hintLink = !fb.ok && !fb.reveal ? h('button', { type: 'button', class: 'ex-hint-btn in-sheet', 'data-act': 'hint' }, '💡 ', T.hint) : null;
       const { close, sheet } = openSheet(h('div', null,
-        h('div', { class: 'ex-fb-head' }, h('span', { class: 'ex-fb-ico', 'aria-hidden': 'true' }, fb.ok ? '✓' : '✗'), h('h2', null, fb.title), xpTag, trBtn(q.lang)),
+        h('div', { class: 'ex-fb-head' }, h('span', { class: 'ex-fb-ico', 'aria-hidden': 'true' }, fb.ok ? '✓' : '✗'), h('h2', null, fb.title), xpTag),
         h('div', { class: 'ex-fb-body' }, fb.body.map((t, i) => h('p', { class: i === 0 && fb.reveal ? 'ex-reveal' : '' }, t))),
-        trBlock(fb.bodyAr, q.lang, fb.titleAr),
-        exampleBox(fb.ex, q.lang, null, fb.exAr),
+        // Feedback sans traduction arabe (ni bloc, ni exemple).
+        exampleBox(fb.ex, q.lang, null, ''),
         fb.src ? h('p', { class: 'ex-src' }, '📚 ', fb.src) : null,
         hintLink,
         h('div', { class: 'ex-actions' }, ...btns)), { tone, lang: q.lang, label: fb.title });
@@ -411,11 +417,11 @@ function quizPlayer(st, { mode, part, k }) {
     root.replaceChildren(
       playerTop(closeHref, R.idx / list.length, h('span', { class: 'ex-ptop-r' }, combo, heart)),
       h('article', { class: 'ex-card ex-qcard', ...langAttrs(q.lang) },
-        h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), examChip(q), h('small', null, `${R.idx + 1}/${list.length}`), trBtn(q.lang)),
+        h('div', { class: 'ex-qmeta' }, h('span', { class: 'ex-tagp' }, `${p.icon} ${p.short}`), h('small', null, `${R.idx + 1}/${list.length}`), trBtn(q.lang)),
         typeHint(q),
         h('h2', { class: 'ex-q', tabindex: '-1' }, ...questionText(q, gap), trLine(q.q, q.lang)),
         opts,
-        hintBtn),
+        h('div', { class: 'ex-hint-row' }, hintBtn, examChip(q))),
       h('footer', { class: 'ex-foot' }, checkBtn));
     root.querySelector('.ex-q')?.focus({ preventScroll: true });
   };
@@ -428,7 +434,7 @@ function quizPlayer(st, { mode, part, k }) {
       h('h2', { tabindex: '-1' }, 'Plus de cœurs !'),
       h('p', null, 'Ce n’est pas un échec : les questions ratées t’attendent dans la révision. Relis la leçon, puis retente le niveau.'),
       h('div', { class: 'ex-actions col' },
-        h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: () => { Object.assign(R, { idx: 0, hearts: HEARTS, combo: 0, maxCombo: 0, firstTry: 0, hints: 0, mistakes: 0, xp: 0 }); render(); } }, 'Recommencer le niveau'),
+        h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: () => { Object.assign(R, { idx: 0, hearts: HEARTS, combo: 0, maxCombo: 0, firstTry: 0, hints: 0, mistakes: 0, xp: 0 }); list = order(); render(); } }, 'Recommencer le niveau'),
         h('a', { class: 'ex-btn', href: `${BASE}/p/${part.id}/lecon` }, 'Revoir la leçon'))));
   };
   const end = () => {
@@ -486,7 +492,7 @@ function blancScreen(st) {
       const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => { if (i < set.length - 1) { i++; show(); window.scrollTo(0, 0); } else { clearInterval(tick); finish(); } } }, i < set.length - 1 ? 'Question suivante' : 'Rendre ma copie');
       const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), onclick: (e) => {
         ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
-      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o, trOpt(o, q.lang)))));
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
         h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner' }, '✕'),
           h('span', { class: 'ex-prog big' }, h('i', { style: `--w:${(i / set.length) * 100}%` })), clock),
@@ -513,11 +519,13 @@ function blancScreen(st) {
           if (!ok && !st.state.review.includes(q.id)) st.state.review.push(q.id);
           return h('li', { class: ok ? 'ok' : 'ko', ...langAttrs(q.lang) },
             h('details', null, h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : '✗ '), q.q, trLine(q.q, q.lang)),
-              ans[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[ans[k]]}. ${q.options[ans[k]]}`) : null,
-              h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`, trLine(q.options[q.answer], q.lang)),
-              q.just ? h('p', null, q.just, trLine(q.just, q.lang)) : null,
-              h('p', null, conceptFor(q).why, trLine(conceptFor(q).why, q.lang)),
-              exampleBox(exampleFor(q), q.lang),
+              ans[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[ans[k]]}. ${q.options[ans[k]]}`, trOpt(q.options[ans[k]], q.lang)) : null,
+              h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`, trOpt(q.options[q.answer], q.lang)),
+              // Explications de la correction : feedback, sans traduction.
+              h('div', { class: 'ex-fbx' },
+                q.just ? h('p', null, q.just) : null,
+                h('p', null, conceptFor(q).why),
+                exampleBox(exampleFor(q), q.lang, null, '')),
               h('p', { class: 'ex-src' }, '📚 ', conceptFor(q).src)));
         })),
         h('div', { class: 'ex-actions col' }, h('button', { type: 'button', class: 'ex-btn ex-primary', onclick: run }, 'Nouvel examen blanc'), h('a', { class: 'ex-btn', href: BASE }, 'Retour au parcours')));
@@ -620,7 +628,7 @@ function positionScreen(st, showReport) {
       const nextBtn = h('button', { type: 'button', class: 'ex-btn ex-primary', disabled: ans[i] == null, onclick: () => go(ans[i]) }, i < set.length - 1 ? (q.lang === 'ar' ? 'السؤال التالي' : 'Question suivante') : (q.lang === 'ar' ? 'عرض الحصيلة' : 'Voir mon bilan'));
       const opts = h('div', { class: 'ex-opts' }, q.options.map((o, k) => h('button', { type: 'button', class: 'ex-opt' + (ans[i] === k ? ' sel' : ''), style: `--i:${k}`, onclick: () => {
         ans[i] = k; [...opts.children].forEach((c, j) => c.classList.toggle('sel', j === k)); nextBtn.disabled = false;
-      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o))));
+      } }, h('span', { class: 'ex-letter' }, letters(q.lang)[k]), h('span', null, o, trOpt(o, q.lang)))));
       const dunno = h('button', { type: 'button', class: 'ex-hint-btn ex-dunno', onclick: () => go(null) }, q.lang === 'ar' ? '🤷 لا أعرف' : '🤷 Je ne sais pas');
       root.replaceChildren(h('div', { class: 'ex-player', style: `--c:${p.color}` },
         h('div', { class: 'ex-ptop' }, h('a', { class: 'ex-x', href: BASE, 'aria-label': 'Abandonner l’évaluation' }, '✕'),
@@ -676,9 +684,10 @@ function positionScreen(st, showReport) {
         const ok = answers[k] === q.answer;
         return h('li', { class: ok ? 'ok' : 'ko', ...langAttrs(q.lang) }, h('details', null,
           h('summary', null, h('span', { 'aria-hidden': 'true' }, ok ? '✓ ' : answers[k] == null ? '? ' : '✗ '), q.q, trLine(q.q, q.lang)),
-          answers[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[answers[k]]}. ${q.options[answers[k]]}`) : null,
-          h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`, trLine(q.options[q.answer], q.lang)),
-          h('p', null, conceptFor(q).why, trLine(conceptFor(q).why, q.lang)), exampleBox(exampleFor(q), q.lang)));
+          answers[k] != null && !ok ? h('p', { class: 'ex-yours' }, `${q.lang === 'ar' ? 'جوابك' : 'Ta réponse'} : ${letters(q.lang)[answers[k]]}. ${q.options[answers[k]]}`, trOpt(q.options[answers[k]], q.lang)) : null,
+          h('p', { class: 'ex-reveal' }, `${q.lang === 'ar' ? 'الجواب الصحيح' : 'Bonne réponse'} : ${letters(q.lang)[q.answer]}. ${q.options[q.answer]}`, trOpt(q.options[q.answer], q.lang)),
+          // Explication de la correction : feedback, sans traduction.
+          h('div', { class: 'ex-fbx' }, h('p', null, conceptFor(q).why), exampleBox(exampleFor(q), q.lang, null, ''))));
       }))) : null;
     const first = res.path[0];
     root.replaceChildren(

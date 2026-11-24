@@ -40,12 +40,41 @@ const chunk = (qs) => {
   if (out.length > 1 && out[out.length - 1].length < 4) out[out.length - 2].push(...out.pop());
   return out;
 };
+// ---------- Difficulté : les niveaux vont du plus facile au plus difficile ----------
+const NONE_RE = /^aucune de ces|^لا شيء مما سبق/i;
+const words = (q, s) => new Set((q.lang === 'ar' ? normAr(s) : normFr(s)).replace(/[^\p{L}\p{N} ]/gu, ' ').split(/\s+/).filter((w) => w.length > 2));
+const jaccard = (a, b) => { let n = 0; for (const x of a) if (b.has(x)) n++; return n / (a.size + b.size - n || 1); };
+const diffCache = new Map();
+/**
+ * Indice de difficulté d'une question (plus il est grand, plus elle est difficile) :
+ * propositions proches de la bonne réponse (vocabulaire commun), bonne réponse qui ne se repère pas à sa longueur,
+ * série « niveau examen 2025 », énoncé long (situation professionnelle à analyser).
+ */
+export function difficultyOf(q) {
+  if (diffCache.has(q.id)) return diffCache.get(q.id);
+  const good = q.options[q.answer] || '';
+  const others = q.options.filter((o, i) => i !== q.answer && !NONE_RE.test(o));
+  let d = 0;
+  if (q.type === 'vf') d = 0.6;
+  else if (others.length) {
+    const gw = words(q, good);
+    const overlap = others.reduce((a, o) => a + jaccard(gw, words(q, o)), 0) / others.length;
+    const avg = others.reduce((a, o) => a + o.length, 0) / others.length;
+    const gap = Math.min(2, Math.max(0, good.length / (avg || 1) - 1)); // 0 = longueurs comparables
+    d = 2 * overlap - gap + (NONE_RE.test(good) ? 0.4 : 0);
+  }
+  d += (q.set === 1 ? 0.5 : 0) + Math.min(0.6, q.q.length / 250);
+  diffCache.set(q.id, d);
+  return d;
+}
+const byDifficulty = (qs) => qs.map((q, i) => [q, i]).sort((a, b) => difficultyOf(a[0]) - difficultyOf(b[0]) || a[1] - b[1]).map(([q]) => q);
+
 const levelCache = new Map();
-/** Niveaux d'une partie : banque d'entraînement d'abord, puis niveaux « Annales » (jamais mélangés). */
+/** Niveaux d'une partie, du plus facile au plus difficile : banque d'entraînement d'abord, puis niveaux « Annales » (jamais mélangés). */
 export const levelsOf = (partId) => {
   if (!levelCache.has(partId)) {
     const qs = questionsOf(partId);
-    levelCache.set(partId, [...chunk(qs.filter((q) => !isAnnales(q))), ...chunk(qs.filter(isAnnales))]);
+    levelCache.set(partId, [...chunk(byDifficulty(qs.filter((q) => !isAnnales(q)))), ...chunk(byDifficulty(qs.filter(isAnnales)))]);
   }
   return levelCache.get(partId);
 };
@@ -211,7 +240,7 @@ export const BADGES = [
 const today = (d = new Date()) => d.toISOString().slice(0, 10);
 const dayDiff = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
 export function freshState() {
-  return { v: 1, xp: 0, lessons: {}, levels: {}, seen: {}, review: [], answered: 0, reviewWins: 0,
+  return { v: 1, xp: 0, lessons: {}, levels: {}, levelSeen: {}, seen: {}, review: [], answered: 0, reviewWins: 0,
     bestCombo: 0, badges: {}, day: today(), dayXp: 0, streak: 0, lastDay: null, notifs: [], unread: 0, blanc: [], sysNotif: false, position: [] };
 }
 
@@ -273,6 +302,27 @@ export function createExamStore(storage, pid = 'invite') {
     partProgress,
     // Les annales forment une piste à part : leur premier niveau est ouvert d'emblée.
     isLevelOpen(id, k) { return k === 0 || k === annalesStart(id) ? true : !!s.levels[id + ':' + (k - 1)]; },
+    /**
+     * Ordre des questions d'un niveau : toujours tiré au hasard parmi les questions de CE niveau, mais celles
+     * qui n'ont pas encore été affichées dans le cycle en cours passent d'abord. Quitter puis revenir reprend
+     * donc par les questions manquantes : toutes finissent par être vues.
+     */
+    levelOrder(id, k, qs, rng = Math.random) {
+      const key = id + ':' + k; const ids = new Set(qs.map((q) => q.id));
+      let shown = (s.levelSeen[key] || []).filter((x) => ids.has(x));
+      if (shown.length >= qs.length) shown = [];
+      s.levelSeen[key] = shown;
+      const done = new Set(shown);
+      return [...shuffleArr(qs.filter((q) => !done.has(q.id)), rng), ...shuffleArr(qs.filter((q) => done.has(q.id)), rng)];
+    },
+    /** Note qu'une question du niveau a été affichée ; le cycle repart à zéro quand tout a été vu. */
+    markShown(id, k, qid, total) {
+      const key = id + ':' + k; const shown = s.levelSeen[key] || (s.levelSeen[key] = []);
+      if (!shown.includes(qid)) shown.push(qid);
+      if (shown.length >= total) s.levelSeen[key] = [];
+      save();
+    },
+    levelShown(id, k) { return (s.levelSeen[id + ':' + k] || []).slice(); },
     lessonCard(id) { gain(XP.lessonCard); save(); },
     lessonDone(id) {
       const first = !s.lessons[id];

@@ -24,7 +24,15 @@ export function trLine(fr, lang = 'fr', ar) {
   return t ? pill(t) : null;
 }
 
-/** Pastille d'un bloc de plusieurs paragraphes (feedback, indice). */
+/** Pastille réduite (moitié de celle des questions) d'une réponse proposée. */
+export function trOpt(fr, lang = 'fr') {
+  if (lang === 'ar' || !fr) return null;
+  watch();
+  const t = trAr(fr);
+  return t ? pill(t, 'ex-arh-opt') : null;
+}
+
+/** Pastille d'un bloc de plusieurs paragraphes (indice). */
 export function trBlock(lines, lang = 'fr', title) {
   const list = (lines || []).filter(Boolean);
   if (lang === 'ar' || (!list.length && !title)) return null;
@@ -55,8 +63,10 @@ export function uiAr(text) {
   // Tous les morceaux qui contiennent des mots doivent être traduits ; les nombres et symboles restent tels quels.
   return segs.every((p, i) => !LETTERS.test(p) || out[i]) ? out.join(' · ') : '';
 }
-// Zones déjà traduites autrement (feedback, indice, références) ou qu'on ne traduit pas (code, lettres, chronomètre).
-const SKIP = '.arh-btn,.arh-bubble,[dir="rtl"],[lang="ar"],script,style,code,svg,input,textarea,.ex-letter,.ex-clock,.ex-src,.ex-fact small,.ex-fb-head h2,.ex-fb-body,.ex-sheet-lead,.ex-elim,.ex-mem,.ex-float,.ex-ring-l';
+// Zones déjà traduites autrement (indice, références), feedback après une réponse (jamais traduit : feuilles
+// « bonne / mauvaise réponse », explication du mini-défi, explications des corrections) ou qu'on ne traduit pas
+// (code, lettres, chronomètre).
+const SKIP = '.arh-btn,.arh-bubble,[dir="rtl"],[lang="ar"],script,style,code,svg,input,textarea,.ex-letter,.ex-clock,.ex-src,.ex-fact small,.ex-fb-head h2,.ex-fb-body,.ex-sheet-lead,.ex-elim,.ex-mem,.ex-float,.ex-ring-l,.ex-sheet-ok,.ex-sheet-ko,.ex-why,.ex-fbx';
 // Les boutons gardent leur seul libellé (les réponses et choix de leçon ont leur pastille de contenu).
 const BUTTONS = 'button,.ex-btn,.ex-tnav-i,.ex-nav-i,.ex-hint-btn,.ex-cta,.ex-back,.ex-x';
 function decorate(root) {
