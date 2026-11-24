@@ -1,3 +1,4 @@
+import { uiIcon } from '../utils/ui-icon.js';
 // Écrans « Course en direct » et « Suivi des élèves » sur le réseau local.
 // Ce n'est pas du jeu collaboratif : chacun joue seul, la classe voit la progression et le classement.
 import { h, downloadText } from '../utils/dom.js';
@@ -88,7 +89,7 @@ export function raceScreen() {
   const empty = h('p', { class: 'muted', hidden: true }, 'Aucun élève connecté pour l’instant. Dès qu’un élève ouvre InfoPlay sur le réseau, il apparaît ici.');
   const lanes = new Map(); const LANE = 64;
   const view = h('main', { id: 'main', class: 'race-page' },
-    h('h1', { tabindex: '-1' }, '🏁 Course en direct'),
+    h('h1', { tabindex: '-1', class: 'module-heading' }, uiIcon('tool-course', '🏁', { size: 40 }), h('span', null, 'Course en direct')),
     h('p', { class: 'muted' }, 'Chaque élève joue seul ; ici, tout le monde voit qui avance le plus vite. Les points viennent des activités réussies (meilleur essai).'),
     status, banner, podium,
     h('div', { class: 'race-layout' }, h('section', { class: 'card race-card', 'aria-label': 'Piste' }, track, empty), h('section', { class: 'card race-side' }, h('h2', null, '📣 Fil de la course'), feedBox)));
@@ -115,7 +116,7 @@ export function raceScreen() {
       const id = r.p.peerId; seen.add(id); let lane = lanes.get(id);
       if (!lane) {
         lane = { el: h('div', { class: 'lane', role: 'listitem' }), runner: h('span', { class: 'runner', 'aria-hidden': 'true' }), info: h('div', { class: 'lane-info' }), fill: h('i') };
-        lane.el.append(h('span', { class: 'lane-rank' }), lane.info, h('div', { class: 'lane-road' }, lane.fill, lane.runner, h('span', { class: 'finish', 'aria-hidden': 'true' }, '🏁')));
+        lane.el.append(h('span', { class: 'lane-rank' }), lane.info, h('div', { class: 'lane-road' }, lane.fill, lane.runner, uiIcon('tool-course', '🏁', { size: 28, className: 'finish' })));
         lane.el.style.top = rows.length * LANE + 'px'; track.append(lane.el); lanes.set(id, lane);
       }
       const pct = Math.max(0, Math.min(100, (r.value / lead) * 100));
@@ -141,9 +142,9 @@ export function monitorScreen() {
   const showOff = h('input', { type: 'checkbox', checked: true });
   const label = h('input', { type: 'text', maxlength: '60', placeholder: 'Ex : Course du module 3', 'aria-label': 'Nom de la course' });
   const minutes = h('select', { 'aria-label': 'Durée' }, [5, 10, 15, 20, 30, 45].map((m) => h('option', { value: m, selected: m === 15 }, `${m} min`)));
-  const startBtn = h('button', { type: 'button', class: 'btn accent small', onclick: async () => { raceMsg.textContent = (await lanManager.startRace(+minutes.value, label.value.trim())) ? 'Course lancée : les élèves voient le chrono dans « Course ».' : 'Impossible de lancer la course : serveur local introuvable.'; } }, '🏁 Lancer la course');
+  const startBtn = h('button', { type: 'button', class: 'btn accent small', onclick: async () => { raceMsg.textContent = (await lanManager.startRace(+minutes.value, label.value.trim())) ? 'Course lancée : les élèves voient le chrono dans « Course ».' : 'Impossible de lancer la course : serveur local introuvable.'; } }, uiIcon('tool-course', '🏁', { size: 20 }), ' Lancer la course');
   const stopBtn = h('button', { type: 'button', class: 'btn danger small', onclick: async () => { raceMsg.textContent = (await lanManager.stopRace()) ? 'Course arrêtée.' : 'Serveur local introuvable.'; } }, 'Arrêter la course');
-  const raceCard = h('section', { class: 'card', 'aria-label': 'Course chronométrée' }, h('h2', null, '🏁 Course chronométrée'),
+  const raceCard = h('section', { class: 'card', 'aria-label': 'Course chronométrée' }, h('h2', { class: 'module-heading' }, uiIcon('tool-course', '🏁', { size: 28 }), h('span', null, 'Course chronométrée')),
     h('p', { class: 'muted' }, 'Au départ, les points de chaque élève sont mémorisés ; le classement compte ensuite les points gagnés pendant la course.'),
     h('div', { class: 'row' }, label, minutes, startBtn, stopBtn, h('a', { class: 'btn small', href: '#/course' }, 'Voir la piste →')), raceMsg);
   let last = null;
@@ -156,7 +157,7 @@ export function monitorScreen() {
   sortSel.onchange = () => last && update(last); showOff.onchange = () => last && update(last);
 
   const view = h('main', { id: 'main', class: 'monitor-page' },
-    h('h1', { tabindex: '-1' }, '👀 Suivi des élèves en direct'),
+    h('h1', { tabindex: '-1', class: 'module-heading' }, uiIcon('tool-suivi', '👀', { size: 40 }), h('span', null, 'Suivi des élèves en direct')),
     h('p', { class: 'muted' }, 'Les élèves connectés au même serveur local apparaissent automatiquement, avec leur progression mise à jour toutes les 2 à 3 secondes.'),
     status, tiles, raceCard,
     h('section', { class: 'card', style: 'margin-top:1rem' },

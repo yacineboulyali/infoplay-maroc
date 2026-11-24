@@ -46,6 +46,10 @@
 .pro-part .pp-ico{font-size:1.8rem}
 .module-icon{flex:none}
 .module-icon img{display:block;object-fit:contain;border-radius:12px}
+.ui-icon{display:inline-block;vertical-align:middle;line-height:1;flex:none}
+.ui-icon img{display:block;object-fit:contain}
+.brand .logo.ui-icon img{border-radius:inherit}
+.finish.ui-icon img{border-radius:6px}
 .pp-ico.module-icon img{width:48px;height:48px}
 .mode-ico.module-icon img{width:56px;height:56px}
 .module-heading{display:flex;align-items:center;gap:.55rem}

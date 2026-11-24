@@ -1,3 +1,4 @@
+import { uiIcon } from '../utils/ui-icon.js';
 import { moduleIcon } from '../utils/module-icon.js';
 import { h, norm } from '../utils/dom.js';
 import { engineOf } from '../games/index.js';
@@ -360,7 +361,7 @@ function hub() {
         h('div', { class: 'kpi' }, h('b', null, nActs), h('span', null, 'activités')),
         h('div', { class: 'kpi' }, h('b', null, '6 h'), h('span', null, 'de formation')))),
     h('section', { class: 'pro-map' },
-      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('h2', { class: 'section-h module-heading' }, uiIcon('tool-carte', '🗺️', { size: 28 }), h('span', null, 'Carte des compétences')),
       h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((m) => h('span', null, m.icon + ' ' + m.label))),
       h('div', { class: 'pro-parts' }, SESSIONS.map((x, i) => {
         const course = courses[i];

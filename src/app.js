@@ -1,3 +1,4 @@
+import { uiIcon } from './utils/ui-icon.js';
 import { egtsiScreen } from './egtsi106/screen.js';
 import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
@@ -122,7 +123,7 @@ function header(prof) {
   return h('header', { class: 'top top-slim' },
     h('div', { class: 'in' },
       h('a', { class: 'brand', href: '#/profils' },
-        h('span', { class: 'logo', 'aria-hidden': 'true' }, '🎮'),
+        uiIcon('logo-infoplay', '🎮', { size: 30, className: 'logo' }),
         h('span', null, 'InfoPlay ', h('b', null, 'Maroc'))
       ),
       h('div', { class: 'top-tools' },
@@ -453,7 +454,7 @@ function multiplayerScreen() {
 
   return h('main', { id: 'main' },
     h('section', { class: 'lan-salon-hero' },
-      h('h1', { tabindex: '-1' }, '🌐 Salon Multijoueur Réseau Local'),
+      h('h1', { tabindex: '-1', class: 'module-heading' }, uiIcon('tool-multijoueur', '🌐', { size: 40 }), h('span', null, 'Salon Multijoueur Réseau Local')),
       h('p', { class: 'muted', style: 'color:#cbd5e1' },
         'Tous les joueurs connectés sur le même réseau (Wi-Fi ou câblé dans la salle informatique) apparaissent ici en direct !'
       ),
@@ -521,14 +522,14 @@ function dashScreen() {
         gameHud(game),
         h('div', { class: 'row' },
           next ? h('a', { class: 'btn primary', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : M${next.moduleId} · S${next.sessionIndex} · ${next.title}`) : h('span', { class: 'pill done' }, '🏆 Parcours terminé'),
-          h('a', { class: 'btn ghost', href: '#/progres' }, '📊 Mon progrès'))),
+          h('a', { class: 'btn ghost', href: '#/progres' }, uiIcon('tool-progres', '📊', { size: 20 }), ' Mon progrès'))),
       h('div', { class: 'pro-kpis' },
         h('div', { class: 'kpi' }, h('b', null, fmt(t.best)), h('span', null, `pts / ${TOTAL_POINTS}`)),
         h('div', { class: 'kpi' }, h('b', null, `${t.done}/${t.n}`), h('span', null, 'activités')),
         h('div', { class: 'kpi' }, h('b', null, `${pct} %`), h('span', null, 'progression')),
         h('div', { class: 'kpi' }, h('b', null, `${t.sessionsDone}/30`), h('span', null, 'séances')))),
     h('section', { class: 'pro-map', 'data-reveal': '' },
-      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('h2', { class: 'section-h module-heading' }, uiIcon('tool-carte', '🗺️', { size: 28 }), h('span', null, 'Carte des compétences')),
       h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
       h('div', { class: 'pro-parts' }, parts))
   );
@@ -581,14 +582,14 @@ function levelScreen(n) {
         gameHud(game),
         h('div', { class: 'row' },
           next ? h('a', { class: 'btn primary', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : ${modLabel(next.moduleId)} · S${next.sessionIndex} · ${next.title}`) : acts.length ? h('span', { class: 'pill done' }, '🏆 Séances disponibles terminées') : null,
-          h('a', { class: 'btn ghost', href: '#/progres' }, '📊 Mon progrès'))),
+          h('a', { class: 'btn ghost', href: '#/progres' }, uiIcon('tool-progres', '📊', { size: 20 }), ' Mon progrès'))),
       h('div', { class: 'pro-kpis' },
         h('div', { class: 'kpi' }, h('b', null, fmt(t.best)), h('span', null, `pts / ${acts.length * 5}`)),
         h('div', { class: 'kpi' }, h('b', null, `${t.done}/${t.n}`), h('span', null, 'activités')),
         h('div', { class: 'kpi' }, h('b', null, `${L.modules.reduce((k, m) => k + m.sessions.length, 0)}/${nSessions}`), h('span', null, 'séances disponibles')),
         h('div', { class: 'kpi' }, h('b', null, `${t.sessionsDone}`), h('span', null, 'séances terminées')))),
     h('section', { class: 'pro-map', 'data-reveal': '' },
-      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('h2', { class: 'section-h module-heading' }, uiIcon('tool-carte', '🗺️', { size: 28 }), h('span', null, 'Carte des compétences')),
       h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
       h('div', { class: 'pro-parts' }, parts))
   );
@@ -655,7 +656,7 @@ function moduleScreen(mi) {
         h('div', { class: 'kpi' }, h('b', null, `${ms.pct || 0} %`), h('span', null, 'progression')),
         h('div', { class: 'kpi' }, h('b', null, `${ms.sessionsDone}/${nPlan}`), h('span', null, 'séances')))),
     h('section', { class: 'pro-map', 'data-reveal': '' },
-      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('h2', { class: 'section-h module-heading' }, uiIcon('tool-carte', '🗺️', { size: 28 }), h('span', null, 'Carte des compétences')),
       h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
       h('div', { class: 'pro-parts' }, parts))
   );
@@ -757,7 +758,7 @@ function activityScreen(mi, si, ai) {
       toast('⚡ Défi réseau lancé ! Les autres élèves sur le réseau ont été notifiés.');
     },
     'aria-label': 'Défier la classe',
-  }, h('span', { 'aria-hidden': 'true' }, '⚡'), h('span', { class: 'lbl' }, ' Défier la classe'));
+  }, uiIcon('tool-defi', '⚡', { size: 20 }), h('span', { class: 'lbl' }, ' Défier la classe'));
 
   function mount() {
     stage.replaceChildren();
@@ -894,7 +895,7 @@ function progressScreen() {
   const rec = recOf(p.id);
 
   return h('main', { id: 'main' },
-    h('h1', { tabindex: '-1' }, 'Mon progrès'),
+    h('h1', { tabindex: '-1', class: 'module-heading' }, uiIcon('tool-progres', '📊', { size: 40 }), h('span', null, 'Mon progrès')),
     h('p', { class: 'muted' }, 'Les points d’une séance sont sur 20 : « Premier » = premiers essais, « Meilleur » = meilleurs essais.'),
     [...CATALOG, PRO, ...LEVELS.flatMap((L) => L.modules.filter((x) => x.sessions.length))].map((m) => {
       const ms = moduleStats(m, rec);
