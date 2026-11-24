@@ -18,7 +18,7 @@ const axeSrc = fs.readFileSync(path.resolve(__dirname, '../../node_modules/axe-c
     await page.waitForFunction((id) => document.querySelector(`.activity-${id}`), a.id);
     try {
       await page.evaluate(() => window.__ip.eng.solve());
-      await page.click('text=✔ Vérifier');
+      await page.click('.check-btn');
       await page.waitForSelector('.rb-score b', { timeout: 8000 });
       results.push([a.id, a.mech, (await page.textContent('.rb-score b')).trim()]);
     } catch (e) {

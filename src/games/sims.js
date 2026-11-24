@@ -1,3 +1,4 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
 import { uiIcon } from '../utils/ui-icon.js';
 // Moteur de simulation guidée : une vue interactive + des étapes validées une à une.
 import { h, norm, fmtNum, reduced } from '../utils/dom.js';
@@ -84,8 +85,8 @@ const VIEWS = {
     const fld = (k, label, el) => { el.setAttribute('aria-label', label); el.addEventListener('input', (e) => { st[k] = e.target.value; st.sent = false; paint(); }); return h('label', { class: 'mrow' }, h('span', null, label), el); };
     const to = h('input', { type: 'text', autocomplete: 'off', placeholder: 'adresse@ecole.exemple' }), sub = h('input', { type: 'text', autocomplete: 'off' }), body = h('textarea', { rows: '5' });
     const msg = h('p', { class: 'hint-line', 'aria-live': 'polite' }); const att = h('button', { type: 'button', class: 'btn ghost small', 'aria-pressed': 'false', onclick: () => { st.att = !st.att; st.sent = false; paint(); } });
-    const send = h('button', { type: 'button', class: 'btn primary', onclick: () => { if (!st.to.trim()) msg.textContent = 'Il manque l’adresse du destinataire.'; else if (!st.subject.trim()) msg.textContent = 'Écris un objet pour que le destinataire comprenne le sujet.'; else { st.sent = true; msg.textContent = 'Message simulé « envoyé » : rien n’a quitté cet ordinateur.'; } paint(); } }, '✉ Envoyer');
-    function paint() { att.textContent = st.att ? '📎 devoir.docx joint (retirer)' : '📎 Joindre devoir.docx'; att.setAttribute('aria-pressed', String(st.att)); }
+    const send = h('button', { type: 'button', class: 'btn primary', onclick: () => { if (!st.to.trim()) msg.textContent = 'Il manque l’adresse du destinataire.'; else if (!st.subject.trim()) msg.textContent = 'Écris un objet pour que le destinataire comprenne le sujet.'; else { st.sent = true; msg.textContent = 'Message simulé « envoyé » : rien n’a quitté cet ordinateur.'; } paint(); } }, semanticIcon('', { kind: 'mail' }), 'Envoyer');
+    function paint() { att.replaceChildren(semanticIcon('', { kind: 'link' }), st.att ? 'devoir.docx joint (retirer)' : 'Joindre devoir.docx'); att.setAttribute('aria-pressed', String(st.att)); }
     host.append(h('div', { class: 'mailbox' }, h('p', { class: 'muted' }, 'Simulation : aucun message réel n’est envoyé et aucune adresse réelle n’est utilisée.'), fld('to', 'À (destinataire)', to), fld('subject', 'Objet', sub), fld('body', 'Message', body), att, send, msg)); paint();
     return { refresh() { to.value = st.to; sub.value = st.subject; body.value = st.body; paint(); } };
   },

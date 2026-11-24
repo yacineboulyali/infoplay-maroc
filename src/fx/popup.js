@@ -1,3 +1,4 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
 import { uiIcon } from '../utils/ui-icon.js';
 // Fenêtres surgissantes de correction, partagées par le mode classique et le mode immersif.
 import { h, reduced } from '../utils/dom.js';
@@ -46,16 +47,16 @@ export function resultPopup(opts) {
   const stars = h('div', { class: 'rp-stars', 'aria-hidden': 'true' }, Array.from({ length: 5 }, (_, i) => h('span', { class: 'rp-star' + (i < Math.round(opts.score) ? ' on' : ''), style: i < Math.round(opts.score) ? `animation-delay:${reduced() ? 0 : (opts.starDelay ?? 0.6) + i * (opts.starStep ?? 0.17)}s` : null }, '★')));
   const g = opts.game; const chips = h('div', { class: 'rp-chips' });
   if (g) {
-    const xp = h('b', null, '+0'); chips.append(h('span', { class: 'rp-chip xp' }, '✨ ', xp, ' XP'));
+    const xp = h('b', null, '+0'); chips.append(h('span', { class: 'rp-chip xp' }, semanticIcon('', { kind: 'bolt' }), xp, ' XP'));
     countUp(xp, g.xpGain, 1200, (v) => '+' + Math.round(v));
     if (g.after.streak >= 2) chips.append(h('span', { class: 'rp-chip streak' }, uiIcon('badge-streak3', '🔥', { size: 18 }), ` Série de ${g.after.streak}`));
   }
-  if (opts.time) chips.append(h('span', { class: 'rp-chip time' + (opts.time.record ? ' record' : '') }, `⏱ ${fmtTime(opts.time.ms)}`, opts.time.record ? ' · Record !' : opts.time.best != null ? ` · record ${fmtTime(opts.time.best)}` : ''));
+  if (opts.time) chips.append(h('span', { class: 'rp-chip time' + (opts.time.record ? ' record' : '') }, semanticIcon('', { kind: 'timer' }), fmtTime(opts.time.ms), opts.time.record ? ' · Record !' : opts.time.best != null ? ` · record ${fmtTime(opts.time.best)}` : ''));
   let levelBox = null;
   if (g) {
     const fill = h('i', { style: `width:${g.levelUp ? 0 : g.before.pct}%` });
     levelBox = h('div', { class: 'rp-level' + (g.levelUp ? ' up' : '') },
-      g.levelUp ? h('div', { class: 'rp-levelup' }, `⬆ Niveau ${g.after.level} atteint ! · ${g.after.rank}`) : null,
+      g.levelUp ? h('div', { class: 'rp-levelup' }, semanticIcon('', { kind: 'upload' }), `Niveau ${g.after.level} atteint ! · ${g.after.rank}`) : null,
       h('div', { class: 'rp-level-head' }, h('b', null, `Niveau ${g.after.level}`), h('span', null, g.after.rank), h('small', null, `${g.after.into} / ${g.after.need} XP`)),
       h('div', { class: 'rp-level-bar' }, fill));
     setTimeout(() => { fill.style.width = g.after.pct + '%'; }, reduced() ? 0 : 500);
@@ -72,7 +73,7 @@ export function resultPopup(opts) {
   const list = h('ul', { class: 'rp-list', hidden: true }, items.map((it) => h('li', { class: it.info ? 'info' : it.ok ? 'ok' : 'ko' }, h('span', { class: 'ic', 'aria-hidden': 'true' }, it.info ? 'ℹ' : it.ok ? '✔' : '✖'), h('span', null, h('span', { class: 'vh' }, it.info ? 'Information : ' : it.ok ? 'Correct : ' : 'À revoir : '), it.msg))));
   const prevBtn = h('button', { type: 'button', class: 'rp-nav', 'aria-label': 'Réponse précédente', onclick: () => show(idx - 1) }, '‹');
   const nextBtn = h('button', { type: 'button', class: 'rp-nav', 'aria-label': 'Réponse suivante', onclick: () => show(idx + 1) }, '›');
-  const listToggle = h('button', { type: 'button', class: 'btn ghost small', 'aria-pressed': 'false', onclick: () => { const on = list.hidden; list.hidden = !on; carousel.hidden = on; listToggle.setAttribute('aria-pressed', String(on)); listToggle.textContent = on ? '🃏 Une par une' : '☰ Toutes les réponses'; } }, '☰ Toutes les réponses');
+  const listToggle = h('button', { type: 'button', class: 'btn ghost small', 'aria-pressed': 'false', onclick: () => { const on = list.hidden; list.hidden = !on; carousel.hidden = on; listToggle.setAttribute('aria-pressed', String(on)); listToggle.replaceChildren(...(on && opts.illustrated ? [semanticIcon('', { kind: 'document' }), 'Une par une'] : [on ? '🃏 Une par une' : '☰ Toutes les réponses'])); } }, '☰ Toutes les réponses');
   const carousel = h('div', { class: 'rp-carousel' }, prevBtn, card, nextBtn);
   function show(i, silent = false) {
     if (!items.length) return; idx = (i + items.length) % items.length; const it = items[idx];
@@ -90,8 +91,8 @@ export function resultPopup(opts) {
   const answersTab = h('section', { class: 'rp-pane rp-answers', hidden: true }, h('div', { class: 'rp-answers-head' }, h('h2', null, 'Correction détaillée'), counter, listToggle), carousel, dots, list);
 
   // ---------- onglets + actions ----------
-  const tabScore = h('button', { type: 'button', role: 'tab', class: 'rp-tab on', 'aria-selected': 'true', onclick: () => tab('score') }, '🏆 Résultat');
-  const tabAns = h('button', { type: 'button', role: 'tab', class: 'rp-tab', 'aria-selected': 'false', onclick: () => tab('answers') }, `🔎 Réponses (${okN} ✔ · ${koN} ✖)`);
+  const tabScore = h('button', { type: 'button', role: 'tab', class: 'rp-tab on', 'aria-selected': 'true', onclick: () => tab('score') }, opts.illustrated ? [semanticIcon('', { kind: 'chart' }), 'Résultat'] : '🏆 Résultat');
+  const tabAns = h('button', { type: 'button', role: 'tab', class: 'rp-tab', 'aria-selected': 'false', onclick: () => tab('answers') }, opts.illustrated ? [semanticIcon('', { kind: 'search' }), `Réponses (${okN} ✔ · ${koN} ✖)`] : `🔎 Réponses (${okN} ✔ · ${koN} ✖)`);
   const switchBtn = h('button', { type: 'button', class: 'btn', onclick: () => tab(answersTab.hidden ? 'answers' : 'score') }, 'Voir les réponses →');
   function tab(which) {
     const ans = which === 'answers'; answersTab.hidden = !ans; scoreTab.hidden = ans;
@@ -149,10 +150,10 @@ export function badgePopup(badges, delay = 0) {
 }
 
 /** Barre de jeu compacte : niveau, XP, série, badges. */
-export function gameHud(game, { compact = false } = {}) {
+export function gameHud(game, { compact = false, illustrated = false } = {}) {
   return h('div', { class: 'ghud' + (compact ? ' compact' : ''), role: 'group', 'aria-label': `Niveau ${game.level}, ${game.into} XP sur ${game.need}, série ${game.streak}` },
     h('span', { class: 'ghud-lvl', title: game.rank }, h('b', null, game.level), h('small', null, 'niv.')),
     h('span', { class: 'ghud-xp' }, h('span', { class: 'ghud-xp-top' }, h('b', null, game.rank), h('small', null, `${game.into}/${game.need} XP`)), h('span', { class: 'ghud-bar' }, h('i', { style: `width:${game.pct}%` }))),
-    h('span', { class: 'ghud-chip' + (game.streak >= 3 ? ' hot' : ''), title: `Meilleure série : ${game.bestStreak}` }, uiIcon('badge-streak3', '🔥', { size: 18 }), ' ', game.streak));
+    h('span', { class: 'ghud-chip' + (game.streak >= 3 ? ' hot' : ''), title: `Meilleure série : ${game.bestStreak}` }, illustrated ? uiIcon('badge-streak3', '🔥', { size: 18 }) : '🔥', ' ', game.streak));
 }
 export { RANKS };

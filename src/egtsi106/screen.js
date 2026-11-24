@@ -1,3 +1,4 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
 import { uiIcon } from '../utils/ui-icon.js';
 import { moduleIcon } from '../utils/module-icon.js';
 import { h, norm } from '../utils/dom.js';
@@ -96,7 +97,7 @@ function activityTile(course, session, i, order, p = loadProgress()) {
     h('span', { class: 'egtsi-act-goal' }, a.objective),
     h('span', { class: 'egtsi-act-foot' },
       h('span', { class: 'egtsi-act-state' }, done ? (pct >= 80 ? '✓ Réussie · ' : '◐ À consolider · ') + pct + ' %' : '○ À faire · ~5 min'),
-      h('span', { class: 'egtsi-act-go', 'aria-hidden': 'true' }, done ? 'Refaire ↻' : 'Commencer ▶')));
+      h('span', { class: 'egtsi-act-go', 'aria-hidden': 'true' }, done ? 'Refaire ↻' : 'Commencer', done ? null : semanticIcon('', { kind: 'play' }))));
 }
 
 function bar(value, max, label) {
@@ -122,7 +123,7 @@ function sessionPage(i) {
     h('section', { class: 'egtsi-overview card' },
       h('div', { class: 'egtsi-overview-head' },
         h('div', null, h('b', null, `${doneActs} / ${course.activities.length} activités faites`), h('small', { class: 'muted' }, ` · ${course.lessons.length} leçons · 2 h`)),
-        button(href(firstTodo, session), doneActs ? '▶ Reprendre' : '▶ Commencer la séance', true)),
+        button(href(firstTodo, session), [semanticIcon('', { kind: 'play' }), doneActs ? 'Reprendre' : 'Commencer la séance'], true)),
       bar(doneActs, course.activities.length, 'Progression de la séance'),
       h('nav', { class: 'egtsi-toc', 'aria-label': 'Sommaire des leçons' }, h('ol', null, course.lessons.map((l, k) => {
         const lv = lessonLevel(l, session, k + 1, p);
@@ -136,13 +137,13 @@ function sessionPage(i) {
         h('header', { class: 'egtsi-lesson-head' },
           h('span', { class: 'egtsi-lesson-thumb' }, picture(l.image) || visual(l.title)),
           h('div', { class: 'egtsi-lesson-meta' },
-            h('p', { class: 'egtsi-kicker' }, '📘 Leçon ' + (k + 1) + ' · Cours'),
+            h('p', { class: 'egtsi-kicker' }, semanticIcon('', { kind: 'document' }), 'Leçon ' + (k + 1) + ' · Cours'),
             h('h2', { id: 'egtsi-l' + (k + 1) + '-t' }, l.title),
             h('p', { class: 'egtsi-lesson-sub' }, `${l.entries.length} notions · ${l.indices.length} activités · ${MASTERY[lv].icon} ${MASTERY[lv].label}`),
             bar(done, l.indices.length, 'Activités faites dans la leçon ' + (k + 1))),
           h('a', { class: 'btn egtsi-read', href: lessonHref(session, k + 1) }, 'Lire le cours →')),
         h('ul', { class: 'egtsi-notions', 'aria-label': 'Mots clés de la leçon' }, l.terms.map(([term]) => h('li', null, term))),
-        h('p', { class: 'egtsi-acts-label' }, '🎯 Activités de la leçon'),
+        h('p', { class: 'egtsi-acts-label' }, semanticIcon('', { kind: 'target' }), 'Activités de la leçon'),
         h('div', { class: 'egtsi-acts' }, l.indices.map((ai, order) => activityTile(course, session, ai, order, p))));
     }),
     !session ? practicalWork() : null,
@@ -164,7 +165,7 @@ function practicalWork() {
       h('details', null, h('summary', null, 'Voir un exemple de fiche'),
         h('p', null, 'Clavier — saisir du texte — connexion USB-A. RAM — conserver temporairement les données utilisées — 8 Go si cette capacité est affichée sur le poste. Windows — gérer le matériel et les programmes — système d’exploitation.'))),
     h('section', { class: 'card retenir' },
-      h('h2', null, '📌 À retenir'),
+      h('h2', null, semanticIcon('', { kind: 'pin' }), 'À retenir'),
       h('ul', null,
         h('li', null, 'Un poste informatique associe du matériel et des logiciels.'),
         h('li', null, 'Le CPU traite les données, la RAM les conserve temporairement et le SSD ou HDD les conserve durablement.'),
@@ -188,7 +189,7 @@ function lessonPage(i, k) {
     const q = loadProgress(); q.read[rk] = [...read]; saveProgress(q);
     cheer.hidden = read.size !== total;
   };
-  const cheer = h('p', { class: 'egtsi-cheer', role: 'status', hidden: read.size !== total }, '🎉 Toutes les notions sont comprises : passe aux activités !');
+  const cheer = h('p', { class: 'egtsi-cheer', role: 'status', hidden: read.size !== total }, semanticIcon('', { kind: 'check' }), 'Toutes les notions sont comprises : passe aux activités !');
 
   const flip = ([term, clue]) => {
     const card = h('button', { type: 'button', class: 'egtsi-flip', 'aria-pressed': 'false', 'aria-label': `${term} : retourner la carte pour voir la définition`,
@@ -214,7 +215,7 @@ function lessonPage(i, k) {
     crumbs(['📖', 'Séance ' + x.id, sessionHref(session)], ['📘', 'Leçon ' + k]),
     h('header', { class: 'egtsi-lesson-hero card' },
       h('div', { class: 'egtsi-lesson-hero-text' },
-        h('p', { class: 'egtsi-kicker' }, `📘 Cours · Leçon ${k} sur ${course.lessons.length} · Séance ${x.id}`),
+        h('p', { class: 'egtsi-kicker' }, semanticIcon('', { kind: 'document' }), `Cours · Leçon ${k} sur ${course.lessons.length} · Séance ${x.id}`),
         h('h1', { tabindex: '-1' }, l.title),
         h('p', { class: 'muted' }, `≈ ${Math.max(5, Math.round(total * 1.2))} min de lecture · ${total} notions · ${l.indices.length} activités`),
         h('div', { class: 'egtsi-read-meter' }, h('span', null, 'Notions comprises : ', count), meter)),
@@ -354,7 +355,7 @@ function hub() {
         h('p', { class: 'eyebrow' }, 'OFPPT · EGTSI106 · Partie 1 · ' + SESSIONS.length + ' séances × 2 h'),
         h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('egtsi106', '🖥️', 'module-heading-icon'), h('span', null, 'Culture et techniques du numérique')),
         h('p', { class: 'pro-story' }, 'Choisis une séance, puis une leçon : chaque leçon contient son cours illustré et ses activités de mise en pratique.'),
-        h('div', { class: 'row' }, button(sessionHref(null), '▶ Commencer : Séance 1', true))),
+        h('div', { class: 'row' }, button(sessionHref(null), [semanticIcon('', { kind: 'play' }), 'Commencer : Séance 1'], true))),
       h('div', { class: 'pro-kpis' },
         h('div', { class: 'kpi' }, h('b', null, SESSIONS.length), h('span', null, 'séances')),
         h('div', { class: 'kpi' }, h('b', null, nLessons), h('span', null, 'leçons')),
@@ -370,7 +371,7 @@ function hub() {
           h('header', null,
             moduleIcon('egtsi106-s' + (i + 1), ICONS[i] || '📘'),
             h('div', null, h('h3', null, h('a', { href: sessionHref(x.session) }, 'Séance 0' + x.id + ' · ' + x.title)), h('small', { class: 'muted' }, course.lessons.length + ' leçons · ' + course.activities.length + ' activités')),
-            (() => { const cert = course.lessons.every((l, k) => lessonLevel(l, x.session, k + 1, p) === 3); return h('span', { class: 'pill' + (cert ? ' done' : ''), title: 'Réussis toutes les activités de la séance avec au moins 80 %' }, cert ? '🎓 Certificat' : '🔒 Certificat'); })()),
+            (() => { const cert = course.lessons.every((l, k) => lessonLevel(l, x.session, k + 1, p) === 3); return h('span', { class: 'pill' + (cert ? ' done' : ''), title: 'Réussis toutes les activités de la séance avec au moins 80 %' }, cert ? semanticIcon('', { kind: 'check' }) : semanticIcon('', { kind: 'lock' }), 'Certificat'); })()),
           h('ol', { class: 'pp-nodes' }, course.lessons.map((l, k) => { const lv = lessonLevel(l, x.session, k + 1, p); return h('li', null,
             h('a', { class: 'pp-node lv' + lv, href: lessonHref(x.session, k + 1), title: MASTERY[lv].label },
               h('span', { class: 'pp-n', 'aria-hidden': 'true' }, MASTERY[lv].icon),

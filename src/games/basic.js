@@ -263,7 +263,7 @@ export function matchGame(root, d) {
 
   root.append(
     h('div', { class: 'match-intro-banner' },
-      h('span', { class: 'banner-badge' }, '🔗 Cliquer-déposer ou Glisser-déposer')
+      h('span', { class: 'banner-badge' }, semanticIcon('', { kind: 'match' }), 'Cliquer-déposer ou Glisser-déposer')
     ),
     matchArea,
     live,
@@ -326,7 +326,7 @@ export function sortGame(root, d) {
       onclick: () => put(ci),
     },
     h('span', { class: 'bucket-title-box' }, d.categoryPicture?.(c) || categoryVisual(c), h('b', null, c), countBadge),
-    h('small', { class: 'bucket-cta' }, '📥 Déposer ici')
+    h('small', { class: 'bucket-cta' }, semanticIcon('', { kind: 'download' }), 'Déposer ici')
     );
 
     const box = h('div', {
@@ -422,7 +422,7 @@ export function sortGame(root, d) {
 
   root.append(
     h('div', { class: 'sort-instruction-bar' },
-      h('span', { class: 'banner-badge' }, '🗂️ Classement interactif : Glisse ou clique sur une carte puis sur sa catégorie')
+      h('span', { class: 'banner-badge' }, semanticIcon('', { kind: 'sort' }), 'Classement interactif : Glisse ou clique sur une carte puis sur sa catégorie')
     ),
     pool,
     h('div', { class: 'buckets', style: '' }, buckets.map((b) => b.box)),
@@ -541,7 +541,7 @@ export function orderGame(root, d) {
 
   root.append(
     h('div', { class: 'sort-instruction-bar' },
-      h('span', { class: 'banner-badge' }, '🔢 Ordonner les étapes : Fais glisser les lignes ou utilise ▲ et ▼')
+      h('span', { class: 'banner-badge' }, semanticIcon('', { kind: 'order' }), 'Ordonner les étapes : Fais glisser les lignes ou utilise ▲ et ▼')
     ),
     ol
   );
@@ -655,11 +655,11 @@ export function quizGame(root, d) {
 
     let modeBanner = null;
     if (isTrueFalse) {
-      modeBanner = h('span', { class: 'q-mode-badge tf' }, '⚖️ VRAI OU FAUX');
+      modeBanner = h('span', { class: 'q-mode-badge tf' }, semanticIcon('', { kind: 'check' }), 'VRAI OU FAUX');
     } else if (isFindFalse) {
-      modeBanner = h('span', { class: 'q-mode-badge false-mode' }, '🚨 Trouver la réponse fausse / l’intrus');
+      modeBanner = h('span', { class: 'q-mode-badge false-mode' }, semanticIcon('', { kind: 'flag' }), 'Trouver la réponse fausse / l’intrus');
     } else {
-      modeBanner = h('span', { class: 'q-mode-badge good-mode' }, '🎯 Trouver la bonne réponse');
+      modeBanner = h('span', { class: 'q-mode-badge good-mode' }, semanticIcon('', { kind: 'target' }), 'Trouver la bonne réponse');
     }
 
     const inputs = order.map((k) => h('input', {

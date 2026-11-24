@@ -1,3 +1,4 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
 import { h, reduced } from '../utils/dom.js';
 import { audio } from '../audio/audio.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
@@ -34,7 +35,7 @@ export function shortest(lv) {
 }
 const ARROW = ['▶', '▼', '◀', '▲'];
 const NAME = { A: 'Avancer', G: 'Pivoter à gauche', D: 'Pivoter à droite' };
-const ICON = { A: '⬆ Avancer', G: '⟲ Gauche', D: '⟳ Droite' };
+const ICON = { A: 'Avancer', G: '⟲ Gauche', D: '⟳ Droite' };
 
 export function robotGame(root, d) {
   const lvs = d.levels.map((l) => ({ ...l, ...parseLevel(l.grid), best: shortest(parseLevel(l.grid)) }));
@@ -76,7 +77,7 @@ export function robotGame(root, d) {
   }
   const bar = h('div', { class: 'rbar' }, ['A', 'G', 'D'].map((c) => h('button', { type: 'button', class: 'btn', 'aria-label': NAME[c], onclick: () => add(c) }, ICON[c])),
     h('button', { type: 'button', class: 'btn ghost', onclick: () => { progs[cur].pop(); drawSeq(); } }, '⌫ Retirer la dernière'), h('button', { type: 'button', class: 'btn ghost', onclick: () => { progs[cur] = []; stop(); draw(); } }, 'Tout effacer'),
-    h('button', { type: 'button', class: 'btn primary', onclick: run }, '▶ Exécuter'));
+    h('button', { type: 'button', class: 'btn primary', onclick: run }, semanticIcon('', { kind: 'play' }), 'Exécuter'));
   root.append(h('p', { class: 'muted' }, 'Le robot démarre tourné vers la droite (▶). Construis la suite de commandes, exécute-la autant de fois que tu veux, puis clique sur « Vérifier » quand tu as terminé.', arHint(arGeneric('robot'))), tabs, h('div', { class: 'rwrap' }, board, h('div', null, h('h3', { class: 'small-h' }, 'Programme'), seq, counter)), bar, msg);
   root.prepend(illustration);
   draw();

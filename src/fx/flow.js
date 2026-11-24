@@ -1,3 +1,4 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
 // Enchaînement de la correction, commun aux deux modes :
 // 1) les pastilles ✔/✖ surgissent sur les réponses (une note par réponse),
 // 2) la fenêtre de résultat s'ouvre (jingle, note animée, étoiles, XP, niveau),
@@ -18,6 +19,7 @@ export const AR_MSG = (ratio) => ratio === 1 ? 'ممتاز! إجابة كامل�
 export function presentResult(o) {
   const rec = (id) => o.store.record(o.prof.id, id);
   const ratio = o.score / MAX;
+  const withoutEmoji = (message) => o.illustrated ? message.replace(/\s*\p{Extended_Pictographic}\uFE0F?/gu, '') : message;
   const prevBest = bestTime(o.prof.id, o.act.id);
   const record = saveTime(o.prof.id, o.act.id, o.elapsedMs, o.score);
   const after = computeGame(rec, o.prof.id, o.scope); const d = diffGame(o.before, after, o.scope?.badges);
@@ -30,7 +32,7 @@ export function presentResult(o) {
   let popup = null;
   const open = () => {
     popup = resultPopup({
-      score: o.score, ratio, items: o.res.items, msg: MSG(ratio), arMsg: AR_MSG(ratio), attemptLine, accent: o.accent,
+      score: o.score, ratio, items: o.res.items, msg: withoutEmoji(MSG(ratio)), arMsg: withoutEmoji(AR_MSG(ratio)), illustrated: o.illustrated, attemptLine, accent: o.accent,
       game: { before: o.before, after, ...d }, time: o.elapsedMs > 0 ? { ms: o.elapsedMs, record, best: prevBest } : null,
       starDelay: tm.starAt - tm.end, starStep: tm.starStep, onRetry: o.onRetry, next: o.next,
       onClose: () => { bar.classList.add('show'); },
@@ -42,19 +44,21 @@ export function presentResult(o) {
   const stars = '★'.repeat(Math.round(o.score)) + '☆'.repeat(5 - Math.round(o.score));
   const bar = h('section', { class: 'result-bar' + (ratio === 1 ? ' perfect' : ratio >= 0.6 ? ' good' : ' low'), 'aria-label': 'Résultat' },
     h('div', { class: 'rb-score' }, h('b', null, fmt(o.score)), h('small', null, '/5'), h('span', { class: 'rb-stars', 'aria-hidden': 'true' }, stars)),
-    h('div', { class: 'rb-text' }, h('b', null, MSG(ratio)), h('small', null, `${o.res.items.filter((x) => !x.info && x.ok).length} juste(s) · ${o.res.items.filter((x) => !x.info && !x.ok).length} à revoir · +${d.xpGain} XP${o.elapsedMs > 0 ? ' · ⏱ ' + fmtTime(o.elapsedMs) : ''}`)),
+    h('div', { class: 'rb-text' }, h('b', null, withoutEmoji(MSG(ratio))), h('small', null, `${o.res.items.filter((x) => !x.info && x.ok).length} juste(s) · ${o.res.items.filter((x) => !x.info && !x.ok).length} à revoir · +${d.xpGain} XP`, o.elapsedMs > 0 ? [' · ', o.illustrated ? semanticIcon('', { kind: 'timer' }) : '⏱ ', fmtTime(o.elapsedMs)] : null)),
     h('div', { class: 'row' },
-      h('button', { type: 'button', class: 'btn small', onclick: () => open() }, '🔎 Revoir la correction'),
+      h('button', { type: 'button', class: 'btn small', onclick: () => open() }, o.illustrated ? [semanticIcon('', { kind: 'search' }), 'Revoir la correction'] : '🔎 Revoir la correction'),
       h('button', { type: 'button', class: 'btn small', onclick: () => o.onRetry && o.onRetry() }, '↻ Réessayer'),
       o.next ? h('a', { class: 'btn primary small', href: o.next.href }, o.next.label) : null));
   return bar;
 }
 
 /** Chronomètre affiché pendant l'activité. */
-export function makeChrono() {
-  const el = h('span', { class: 'chrono', role: 'timer', 'aria-label': 'Temps passé' }, '⏱ 0:00');
+export function makeChrono({ illustrated = false } = {}) {
+  const elapsed = h('span', null, '0:00');
+  const symbol = illustrated ? semanticIcon('', { kind: 'timer' }) : '⏱ ';
+  const el = h('span', { class: 'chrono', role: 'timer', 'aria-label': 'Temps passé' }, symbol, elapsed);
   let t0 = performance.now(), stopped = null, id = null;
-  const paint = () => { el.textContent = '⏱ ' + fmtTime((stopped ?? performance.now()) - t0); };
+  const paint = () => { elapsed.textContent = fmtTime((stopped ?? performance.now()) - t0); };
   const tick = () => { if (!el.isConnected && id) { clearInterval(id); id = null; return; } paint(); };
   return {
     el,

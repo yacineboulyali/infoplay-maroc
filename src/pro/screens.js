@@ -42,7 +42,7 @@ export function proHub({ prof, rec }) {
       h('h3', null, 'Révision espacée'),
       h('p', null, opened ? `${due.length} carte(s) à réviser maintenant.` : 'Termine une activité pour débloquer tes premières cartes.'),
       h('small', { class: 'muted' }, 'Les cartes réussies reviennent après 1, 3, 7, 16 puis 35 jours ; les cartes ratées reviennent tout de suite.'),
-      h('span', { class: 'btn primary small' }, due.length ? '▶ Réviser' : 'Voir mes cartes')),
+      h('span', { class: 'btn primary small' }, due.length ? [semanticIcon('', { kind: 'play' }), 'Réviser'] : 'Voir mes cartes')),
     h('a', { class: 'card pro-tool defi', href: '#/pro/defi', 'data-tilt': '' },
       uiIcon('tool-defi', '⚡', { size: 44, className: 'pt-ico' }),
       h('h3', null, 'Défi mixte'),
@@ -58,7 +58,7 @@ export function proHub({ prof, rec }) {
       return h('section', { class: 'card pro-part part-' + p.key },
         officeArt(p.label, p.key),
         h('header', null, moduleIcon('m205-' + p.key, p.icon), h('div', null, h('h3', null, p.label), h('small', { class: 'muted' }, `${ps.done}/${ps.n} activités · ${fmt(ps.best)}/${ps.max} pts`)),
-          h('span', { class: 'pill ' + (cert ? 'done' : '') , title: cert ? 'Toutes les séances terminées avec au moins 70 %' : 'Termine toutes les séances avec au moins 70 %' }, cert ? '🎓 ' + p.cert : '🔒 Certificat')),
+          h('span', { class: 'pill ' + (cert ? 'done' : '') , title: cert ? 'Toutes les séances terminées avec au moins 70 %' : 'Termine toutes les séances avec au moins 70 %' }, cert ? uiIcon('badge-module-pro', '🎓', { size: 18 }) : semanticIcon('', { kind: 'lock' }), cert ? p.cert : 'Certificat')),
         h('ol', { class: 'pp-nodes' }, p.sessions.map((s) => { const lv = mastery(s, rec, prof.id); const ss = sessionStats(s, rec);
           return h('li', null, h('a', { class: 'pp-node lv' + lv, href: `#/m/${PRO.id}/s/${s.index}`, title: `${MASTERY[lv].label} · ${fmt(ss.best)}/20` },
             h('span', { class: 'pp-n' }, MASTERY[lv].icon), h('span', { class: 'pp-t' }, h('b', null, `S${s.index}`), ' ', s.title), h('small', null, `${fmt(ss.best)}/20`))); })));
@@ -71,14 +71,14 @@ export function proHub({ prof, rec }) {
         h('p', { class: 'eyebrow' }, 'OFPPT · M205 · 20 séances × 2 h · Formateur : ', PRO.trainer),
         h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('m205', '💼', 'module-heading-icon'), h('span', null, 'Bureautique avancée')),
         h('p', { class: 'pro-story' }, `Tu rejoins Atlas Services comme ${game.rank.toLowerCase()}. Chaque séance est une mission confiée par un collègue : réussis-les pour monter en grade jusqu’à « Légende Office ».`),
-        gameHud(game),
+        gameHud(game, { illustrated: true }),
         h('div', { class: 'row' },
-          next ? h('a', { class: 'btn primary', href: `#/m/${PRO.id}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : S${next.sessionIndex} · ${next.title}`) : h('span', { class: 'pill done' }, '👑 Parcours terminé'),
+          next ? h('a', { class: 'btn primary', href: `#/m/${PRO.id}/s/${next.sessionIndex}/a/${next.index}` }, semanticIcon('', { kind: 'play' }), `Continuer : S${next.sessionIndex} · ${next.title}`) : h('span', { class: 'pill done' }, uiIcon('badge-all', '👑', { size: 18 }), 'Parcours terminé'),
           h('a', { class: 'btn ghost', href: '#/pro/revision' }, uiIcon('tool-revision', '🧠', { size: 20 }), ` Réviser (${due.length})`))),
       h('div', { class: 'pro-kpis' },
         h('div', { class: 'kpi' }, h('b', null, fmt(all.best)), h('span', null, `pts / ${PRO_POINTS}`)),
         h('div', { class: 'kpi' }, h('b', null, `${all.done}/${all.n}`), h('span', null, 'activités')),
-        h('div', { class: 'kpi' + (streak >= 3 ? ' hot' : '') }, h('b', null, `📅 ${streak}`), h('span', null, 'jour(s) d’affilée')),
+        h('div', { class: 'kpi' + (streak >= 3 ? ' hot' : '') }, h('b', null, semanticIcon('', { kind: 'calendar' }), streak), h('span', null, 'jour(s) d’affilée')),
         h('div', { class: 'kpi' }, h('b', null, `${all.sessionsDone}/20`), h('span', null, 'séances')))),
     h('div', { class: 'grid g2 pro-row' }, questCard, tools),
     map);
@@ -89,7 +89,7 @@ export function proHub({ prof, rec }) {
 function cardView(card, { onAnswer, confidence = true }) {
   let conf = 1, answered = false;
   const opts = shuffle([card.answer, ...card.wrong].slice(0, 4), false);
-  const confBtns = [['🤔', 'Je devine', 0], ['🙂', 'Je pense', 1], ['💪', 'Je suis sûr(e)', 2]].map(([ico, label, v]) => h('button', { type: 'button', class: 'conf-btn' + (v === 1 ? ' on' : ''), 'aria-pressed': String(v === 1), onclick: (e) => { conf = v; e.currentTarget.parentElement.querySelectorAll('.conf-btn').forEach((b, i) => { b.classList.toggle('on', i === v); b.setAttribute('aria-pressed', String(i === v)); }); } }, h('span', { 'aria-hidden': 'true' }, ico), ' ', label));
+  const confBtns = [['help', 'Je devine', 0], ['task', 'Je pense', 1], ['target', 'Je suis sûr(e)', 2]].map(([ico, label, v]) => h('button', { type: 'button', class: 'conf-btn' + (v === 1 ? ' on' : ''), 'aria-pressed': String(v === 1), onclick: (e) => { conf = v; e.currentTarget.parentElement.querySelectorAll('.conf-btn').forEach((b, i) => { b.classList.toggle('on', i === v); b.setAttribute('aria-pressed', String(i === v)); }); } }, semanticIcon('', { kind: ico }), label));
   const fb = h('div', { class: 'card-fb', 'aria-live': 'polite' });
   const buttons = opts.map((o) => h('button', { type: 'button', class: 'card-opt', onclick: () => {
     if (answered) return; answered = true; const ok = o === card.answer;
@@ -119,9 +119,9 @@ export function reviewScreen({ prof, rec }) {
       audio.play(ok ? 'correct' : 'wrong');
       fb.replaceChildren(...kids(
         h('p', { class: ok ? 'good' : 'bad' }, ok ? `✔ Juste ! La carte passe en boîte ${r.box} : elle reviendra dans ${r.days} jour(s).` : '✖ Pas encore : la carte revient en boîte 0 et sera reproposée bientôt.'),
-        r.hypercorrection ? h('p', { class: 'hyper' }, '⚡ Tu étais sûr(e) de toi : c’est justement le type d’erreur qu’on retient le mieux une fois corrigée. Lis bien l’explication.') : null,
-        r.calibrated ? h('p', { class: 'muted' }, '🎯 Certitude bien évaluée : +2 XP de métacognition.') : null,
-        c.why ? h('p', { class: 'why' }, '💡 ', c.why) : null,
+        r.hypercorrection ? h('p', { class: 'hyper' }, semanticIcon('', { kind: 'bolt' }), 'Tu étais sûr(e) de toi : c’est justement le type d’erreur qu’on retient le mieux une fois corrigée. Lis bien l’explication.') : null,
+        r.calibrated ? h('p', { class: 'muted' }, semanticIcon('', { kind: 'target' }), 'Certitude bien évaluée : +2 XP de métacognition.') : null,
+        c.why ? h('p', { class: 'why' }, semanticIcon('', { kind: 'bulb' }), c.why) : null,
         h('p', { class: 'muted' }, `Bonne réponse : ${c.answer}`),
         h('button', { type: 'button', class: 'btn primary', onclick: () => { i++; show(); } }, i + 1 < deck.length ? 'Carte suivante →' : 'Terminer')));
       fb.querySelector('.btn').focus();
@@ -163,7 +163,7 @@ export function defiScreen({ prof, rec }) {
     stage.replaceChildren(cardView(c, { confidence: false, onAnswer: (ok, _c, fb) => {
       const fast = performance.now() - q0 < 8000;
       if (ok) { const gain = 10 * combo + (fast ? 5 : 0); score += gain; combo = Math.min(4, combo + 1); best = Math.max(best, combo); audio.play('correct', { i: combo }); fb.replaceChildren(...kids(h('p', { class: 'good' }, `✔ +${gain} pts${fast ? ' (rapide !)' : ''}`))); }
-      else { lives--; combo = 1; audio.play('wrong'); fb.replaceChildren(...kids(h('p', { class: 'bad' }, `✖ Réponse : ${c.answer}`), c.why ? h('p', { class: 'why' }, '💡 ', c.why) : null)); }
+      else { lives--; combo = 1; audio.play('wrong'); fb.replaceChildren(...kids(h('p', { class: 'bad' }, `✖ Réponse : ${c.answer}`), c.why ? h('p', { class: 'why' }, semanticIcon('', { kind: 'bulb' }), c.why) : null)); }
       paintHud();
       fb.append(h('button', { type: 'button', class: 'btn primary', onclick: () => { i++; show(); } }, lives > 0 && i + 1 < deck.length ? 'Suivante →' : 'Voir le score'));
       fb.querySelector('.btn').focus();
@@ -174,8 +174,8 @@ export function defiScreen({ prof, rec }) {
     const r = finishDefi(prof.id, score); const secs = Math.round((performance.now() - t0) / 1000);
     if (r.record && score > 0) celebrate(); audio.play(lives > 0 ? 'complete' : 'error');
     stage.replaceChildren(h('div', { class: 'flash-end' },
-      h('h2', null, lives > 0 ? '🏁 Défi terminé !' : '💥 Plus de vies !'),
-      h('p', { class: 'defi-score' }, h('b', null, score), ' points', r.record && score > 0 ? h('span', { class: 'pill done' }, ' 🏆 Nouveau record !') : h('span', { class: 'muted' }, ` · record ${r.best}`)),
+      h('h2', null, semanticIcon('', { kind: lives > 0 ? 'flag' : 'cross' }), lives > 0 ? 'Défi terminé !' : 'Plus de vies !'),
+      h('p', { class: 'defi-score' }, h('b', null, score), ' points', r.record && score > 0 ? h('span', { class: 'pill done' }, uiIcon('badge-speed', '🏆', { size: 18 }), ' Nouveau record !') : h('span', { class: 'muted' }, ` · record ${r.best}`)),
       h('p', { class: 'muted' }, `Meilleur combo ×${best} · ${secs} s · ${i} question(s) jouée(s).`),
       h('div', { class: 'row' }, h('button', { type: 'button', class: 'btn accent', onclick: () => { location.hash = '#/pro/defi?' + Date.now(); } }, '↻ Rejouer'), h('a', { class: 'btn primary', href: '#/pro/revision' }, uiIcon('tool-revision', '🧠', { size: 20 }), ' Réviser mes erreurs'), h('a', { class: 'btn', href: '#/pro' }, '← M205'))));
   }

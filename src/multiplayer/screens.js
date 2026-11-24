@@ -1,3 +1,4 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
 import { uiIcon } from '../utils/ui-icon.js';
 // Écrans « Course en direct » et « Suivi des élèves » sur le réseau local.
 // Ce n'est pas du jeu collaboratif : chacun joue seul, la classe voit la progression et le classement.
@@ -97,7 +98,7 @@ export function raceScreen() {
     h('h1', { tabindex: '-1', class: 'module-heading' }, uiIcon('tool-course', '🏁', { size: 40 }), h('span', null, 'Course en direct')),
     h('p', { class: 'muted' }, 'Chaque élève joue seul ; ici, tout le monde voit qui avance le plus vite. Les points viennent des activités réussies (meilleur essai).'),
     status, banner, podium,
-    h('div', { class: 'race-layout' }, h('section', { class: 'card race-card', 'aria-label': 'Piste' }, track, empty), h('section', { class: 'card race-side' }, h('h2', null, '📣 Fil de la course'), feedBox)));
+    h('div', { class: 'race-layout' }, h('section', { class: 'card race-card', 'aria-label': 'Piste' }, track, empty), h('section', { class: 'card race-side' }, h('h2', null, semanticIcon('', { kind: 'flag' }), 'Fil de la course'), feedBox)));
   let countdown = null;
 
   function update(st) {
@@ -128,7 +129,7 @@ export function raceScreen() {
       lane.el.classList.toggle('me', !!r.p.isMe); lane.el.classList.toggle('offline', !r.p.online);
       lane.el.style.top = (r.rank - 1) * LANE + 'px';
       lane.el.querySelector('.lane-rank').textContent = MEDAL[r.rank - 1] || r.rank;
-      lane.info.replaceChildren(h('b', null, r.p.name, r.p.isMe ? ' (moi)' : ''), h('small', null, `${fmt(r.value)} pts · ${r.p.progress.done}/${r.p.progress.total} act. · ${r.p.online ? '📍 ' + (r.p.activity || '') : 'hors ligne'}`));
+      lane.info.replaceChildren(h('b', null, r.p.name, r.p.isMe ? ' (moi)' : ''), h('small', null, `${fmt(r.value)} pts · ${r.p.progress.done}/${r.p.progress.total} act. · `, r.p.online ? [semanticIcon('', { kind: 'pin' }), r.p.activity || ''] : 'hors ligne'));
       const emoji = avatarFor(r.p.name);
       if (lane.avatar !== emoji) { lane.runner.replaceChildren(avatarIcon(emoji)); lane.avatar = emoji; } lane.runner.style.left = `calc(${pct}% - ${pct / 100 * 2}rem)`; lane.fill.style.width = pct + '%';
       lane.el.setAttribute('aria-label', `${r.rank}e : ${r.p.name}, ${fmt(r.value)} points${r.p.online ? '' : ', hors ligne'}`);
@@ -159,7 +160,7 @@ export function monitorScreen() {
     const head = ['Élève', 'Classe', 'État', 'En ce moment', 'Activités', 'Points', ...CATALOG.map((m) => `Module ${m.id} %`), 'Dernier résultat', 'Poste'];
     const lines = rowsOf(last).map((p) => [p.name, p.className, p.online ? 'en ligne' : 'inactif', p.activity, `${p.progress.done}/${p.progress.total}`, fmt(p.progress.points), ...CATALOG.map((m) => p.progress.modules.find((x) => x.id === m.id)?.pct ?? 0), p.lastResult ? `${p.lastResult.title} ${fmt(p.lastResult.score)}/5` : '', p.ip || ''].map(esc).join(';'));
     downloadText('infoplay-suivi-reseau.csv', '﻿' + [head.map(esc).join(';'), ...lines].join('\r\n'), 'text/csv');
-  } }, '⬇ Exporter (CSV)');
+  } }, semanticIcon('', { kind: 'download' }), 'Exporter (CSV)');
   sortSel.onchange = () => last && update(last); showOff.onchange = () => last && update(last);
 
   const view = h('main', { id: 'main', class: 'monitor-page' },
