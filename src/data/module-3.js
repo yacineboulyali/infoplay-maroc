@@ -165,7 +165,7 @@ export default {
 function sim3(title, obj) {
   return {
     mech: 'sim:vending', title, objective: obj, data: {
-      view: 'vending', cfg: { items: [['jus', 'Jus', 5, '🧃'], ['gateau', 'Gâteau', 3, '🍰'], ['eau', 'Eau', 2, '💧']] }, tasks: [
+      view: 'vending', cfg: { items: [['jus', 'Jus', 5, '🧃', 'sim-jus'], ['gateau', 'Gâteau', 3, '🍰', 'sim-gateau'], ['eau', 'Eau', 2, '💧', 'sim-eau']] }, tasks: [
         ['Achète 2 jus (5 DH l’un), puis saisis le total à payer.', { jus: 2, gateau: 0, eau: 0, total: 10 }, 'total ← 5 × 2 = 10 DH.'],
         ['Achète 1 jus et 1 gâteau, puis saisis le total.', { jus: 1, gateau: 1, eau: 0, total: 8 }, 'total ← 5 + 3 = 8 DH.'],
         ['Achète 2 gâteaux et 3 eaux, puis saisis le total.', { jus: 0, gateau: 2, eau: 3, total: 12 }, 'total ← 2 × 3 + 3 × 2 = 12 DH.'],

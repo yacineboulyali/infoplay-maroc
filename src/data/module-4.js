@@ -16,7 +16,7 @@ export default {
       ], [['p1', 'sw', 'chaque poste se branche sur le switch'], ['p2', 'sw', 'chaque poste se branche sur le switch'], ['p3', 'sw', 'chaque poste se branche sur le switch'], ['p4', 'sw', 'chaque poste se branche sur le switch'], ['p5', 'sw', 'chaque poste se branche sur le switch']]),
       sim('Mission : le réseau de la classe', 'Valider logiquement la connectivité d’un réseau local.', 'toggles', {
         init: { sw: false, c1: false, c2: false, c3: false, imp: false },
-        items: [['sw', 'Switch alimenté', '⇄'], ['c1', 'Câble du PC 1 branché', '🔌'], ['c2', 'Câble du PC 2 branché', '🔌'], ['c3', 'Câble du PC 3 branché', '🔌'], ['imp', 'Imprimante partagée allumée', '🖨']],
+        items: [['sw', 'Switch alimenté', '⇄', 'sim-switch'], ['c1', 'Câble du PC 1 branché', '🔌', 'sim-cable-pc'], ['c2', 'Câble du PC 2 branché', '🔌', 'sim-cable-pc'], ['c3', 'Câble du PC 3 branché', '🔌', 'sim-cable-pc'], ['imp', 'Imprimante partagée allumée', '🖨', 'sim-imprimante']],
         status: (s) => [['Le switch est alimenté', s.sw], ['PC 1 communique avec le réseau', s.sw && s.c1], ['PC 2 communique avec le réseau', s.sw && s.c2], ['PC 3 communique avec le réseau', s.sw && s.c3], ['L’imprimante est utilisable depuis le réseau', s.sw && s.imp]],
       }, [
         ['Le switch est éteint : aucun PC ne communique. Alimente‑le.', { sw: true }, 'Sans courant, le switch ne transmet rien.'], ['Branche le câble du PC 1 pour qu’il rejoigne le réseau.', { c1: true }, 'Un poste a besoin d’un câble et d’un switch allumé.'],
@@ -81,7 +81,7 @@ export default {
       order('Les étapes de la connexion', 'Ordonner les étapes de connexion d’un ordinateur à Internet.', ['Brancher le modem/routeur à la prise électrique.', 'Brancher la ligne de l’opérateur au modem.', 'Attendre que les voyants indiquent la connexion.', 'Connecter l’ordinateur (câble Ethernet, ou Wi‑Fi avec le mot de passe).', 'Ouvrir le navigateur et tester une page web.'], { explain: 'On alimente, on relie à l’opérateur, on attend, on connecte le poste, puis on teste.' }),
       sim('Mission diagnostic', 'Diagnostiquer une panne de connexion simulée.', 'toggles', {
         init: { power: false, line: false, cable: false, wifi: false, pass: false },
-        items: [['power', 'Routeur alimenté', '🔌'], ['line', 'Ligne de l’opérateur active', '📞'], ['cable', 'Câble Ethernet branché au PC', '🔗'], ['wifi', 'Wi‑Fi activé sur le PC', '📶'], ['pass', 'Bon mot de passe Wi‑Fi saisi', '🔑']],
+        items: [['power', 'Routeur alimenté', '🔌', 'sim-routeur'], ['line', 'Ligne de l’opérateur active', '📞', 'sim-ligne'], ['cable', 'Câble Ethernet branché au PC', '🔗', 'sim-ethernet'], ['wifi', 'Wi‑Fi activé sur le PC', '📶', 'sim-wifi'], ['pass', 'Bon mot de passe Wi‑Fi saisi', '🔑', 'sim-cle-wifi']],
         derive: (s) => { s.internet = !!(s.power && s.line && (s.cable || (s.wifi && s.pass))); },
         status: (s) => [['Le routeur est sous tension', s.power], ['La ligne de l’opérateur fonctionne', s.line], ['Le PC est relié au routeur (câble, ou Wi‑Fi avec bon mot de passe)', s.cable || (s.wifi && s.pass)], ['Accès à Internet disponible', s.internet]],
       }, [
