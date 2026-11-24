@@ -10,6 +10,7 @@ import { audio } from '../audio/audio.js';
 import { itemVisual, labelIllustration, categoryVisual } from '../utils/item-visuals.js';
 import { labelKey } from '../utils/label-key.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
+import { dragWith, flyFrom, flipList } from '../fx/motion.js';
 
 const letter = (i) => String.fromCharCode(65 + i);
 
@@ -191,16 +192,16 @@ export function matchGame(root, d) {
     const btn = h('button', {
       type: 'button',
       class: 'card pick match-draggable',
-      draggable: 'true',
-      ondragstart: (e) => {
-        sel = i;
-        btn.classList.add('dragging');
-        e.dataTransfer.setData('text/plain', String(i));
-        paint();
-      },
-      ondragend: () => {
-        btn.classList.remove('dragging');
-      },
+      onpointerdown: (e) => dragWith(e, btn, {
+        target: (x, y) => { const el = document.elementFromPoint(x, y); const t = el && el.closest('.match-droptarget'); return t && rb.includes(t) ? t : null; },
+        start: () => { sel = i; paint(); },
+        move: (ev) => { pointer = { x: ev.clientX, y: ev.clientY }; drawWires(); },
+        drop: (t) => {
+          if (!t) { sel = null; pointer = null; paint(); return null; }
+          linkPair(i, order[rb.indexOf(t)]);
+          return { el: t, keep: true };
+        },
+      }),
       onclick: () => {
         sel = sel === i ? null : i;
         if (sel != null) audio.play('select');
@@ -221,22 +222,13 @@ export function matchGame(root, d) {
     const btn = h('button', {
       type: 'button',
       class: 'card pick match-droptarget',
-      ondragenter: (e) => { e.preventDefault(); btn.classList.add('drag-over'); },
-      ondragleave: () => { btn.classList.remove('drag-over'); },
-      ondragover: (e) => e.preventDefault(),
-      ondrop: (e) => {
-        e.preventDefault();
-        btn.classList.remove('drag-over');
-        const draggedIdx = Number(e.dataTransfer.getData('text/plain'));
-        if (Number.isInteger(draggedIdx) && d.pairs[draggedIdx]) {
-          linkPair(draggedIdx, o);
-        }
-      },
       onclick: () => {
         if (sel == null) {
           live.textContent = 'Clique d’abord sur un élément à gauche, ou fais-le glisser ici.';
           return;
         }
+        // L'élément choisi s'envole vers la réponse cliquée.
+        flyFrom(lb[sel], btn, { keep: true });
         linkPair(sel, o);
       },
     },
@@ -258,7 +250,6 @@ export function matchGame(root, d) {
   // La flèche en attente suit la souris, le doigt ou le glisser-déposer.
   const track = (e) => { if (sel == null) return; pointer = { x: e.clientX, y: e.clientY }; drawWires(); };
   matchArea.addEventListener('pointermove', track);
-  matchArea.addEventListener('dragover', track);
   matchArea.addEventListener('pointerleave', () => { if (sel != null && pointer) { pointer = null; drawWires(); } });
 
   root.append(
@@ -332,35 +323,44 @@ export function sortGame(root, d) {
     const box = h('div', {
       class: 'bucket sort-bucket',
       'data-cat': ci,
-      ondragenter: (e) => { e.preventDefault(); box.classList.add('drag-over'); },
-      ondragleave: (e) => {
-        if (!box.contains(e.relatedTarget)) box.classList.remove('drag-over');
-      },
-      ondragover: (e) => e.preventDefault(),
-      ondrop: (e) => {
-        e.preventDefault();
-        box.classList.remove('drag-over');
-        const i = Number(e.dataTransfer.getData('text/plain'));
-        if (Number.isInteger(i) && items[i]) {
-          place[i] = ci;
-          lastMoved = i;
-          pulseBucket = ci;
-          sel = null;
-          live.textContent = 'Carte déplacée dans : ' + c + '. Vérifie ensuite ta réponse.';
-          audio.play('snap');
-          draw();
-        }
-      },
     }, head, body);
 
     return { box, body, countBadge };
   });
+
+  const chipOf = (i) => root.querySelector(`.sort-chip[data-idx="${i}"]`);
+
+  // Glisser une carte : le fantôme suit le pointeur puis se pose dans la catégorie.
+  function dropCard(i, t) {
+    if (!t) return null;
+    const ci = t.classList.contains('sort-pool') ? null : Number(t.dataset.cat);
+    if (place[i] === ci) return chipOf(i);
+    place[i] = ci;
+    sel = null;
+    if (ci == null) {
+      live.textContent = 'Carte reprise. Tu peux la ranger ailleurs.';
+      audio.play('pop');
+    } else {
+      pulseBucket = ci;
+      live.textContent = 'Carte déplacée dans : ' + d.cats[ci] + '. Vérifie ensuite ta réponse.';
+      audio.play('snap');
+    }
+    draw();
+    return chipOf(i);
+  }
+  const sortTarget = (x, y) => {
+    const el = document.elementFromPoint(x, y);
+    const t = el && el.closest('.sort-bucket, .sort-pool');
+    return t && root.contains(t) ? t : null;
+  };
 
   function put(ci) {
     if (sel == null) {
       live.textContent = 'Sélectionne d’abord une carte ci-dessus, puis clique ici.';
       return;
     }
+    const moving = sel;
+    flyFrom(chipOf(moving), () => chipOf(moving));
     place[sel] = ci;
     lastMoved = sel;
     pulseBucket = ci;
@@ -374,20 +374,12 @@ export function sortGame(root, d) {
     type: 'button',
     'data-idx': String(i),
     class: 'chip sort-chip' + (d.visualPart || artFor(items[i][0]) ? ' has-art' : '') + (sel === i ? ' sel' : '') + (lastMoved === i ? ' just-dropped' : ''),
-    draggable: 'true',
     'aria-pressed': String(sel === i),
-    ondragstart: (e) => {
-      e.currentTarget.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', String(i));
-    },
-    ondragend: (e) => {
-      e.currentTarget.classList.remove('dragging');
-      root.querySelectorAll('.bucket').forEach((b) => b.classList.remove('drag-over'));
-    },
+    onpointerdown: (e) => dragWith(e, e.currentTarget, { target: sortTarget, drop: (t) => dropCard(i, t) }),
     onclick: () => {
       if (place[i] != null) {
-        // Retirer la carte du bucket et la remettre dans le pool
+        // Retirer la carte du bucket et la remettre dans le pool (elle y revole)
+        flyFrom(chipOf(i), () => chipOf(i));
         place[i] = null;
         sel = i;
         audio.play('pop');
@@ -481,25 +473,22 @@ export function orderGame(root, d) {
     ol.replaceChildren(...list.map((idx, pos) => {
       const row = h('li', {
         class: 'ord-row order-draggable-row',
-        draggable: 'true',
-        ondragstart: (e) => {
-          row.classList.add('dragging');
-          e.dataTransfer.setData('text/plain', String(pos));
-        },
-        ondragend: () => row.classList.remove('dragging'),
-        ondragenter: (e) => { e.preventDefault(); row.classList.add('drag-over'); },
-        ondragleave: () => row.classList.remove('drag-over'),
-        ondragover: (e) => e.preventDefault(),
-        ondrop: (e) => {
-          e.preventDefault();
-          row.classList.remove('drag-over');
-          const fromPos = Number(e.dataTransfer.getData('text/plain'));
-          if (Number.isInteger(fromPos) && fromPos !== pos) {
-            const item = list.splice(fromPos, 1)[0];
-            list.splice(pos, 0, item);
-            audio.play('move');
-            draw();
-          }
+        'data-item': String(idx),
+        // Souris : toute la ligne se saisit ; doigt : par la poignée (le reste laisse défiler la page).
+        onpointerdown: (e) => {
+          if (e.target.closest('button')) return;
+          if (e.pointerType !== 'mouse' && !e.target.closest('.grip-icon')) return;
+          dragWith(e, row, {
+            target: (x, y) => { const el = document.elementFromPoint(x, y); const t = el && el.closest('.ord-row'); return t && t.parentElement === ol && t !== row ? t : null; },
+            drop: (t) => {
+              if (!t) return null;
+              const fromPos = list.indexOf(idx);
+              const toPos = list.indexOf(Number(t.dataset.item));
+              flipList(ol, 'data-item', () => { list.splice(fromPos, 1); list.splice(toPos, 0, idx); draw(); });
+              audio.play('move');
+              return ol.querySelector(`[data-item="${idx}"]`);
+            },
+          });
         },
       },
       h('span', { class: 'grip-icon', 'aria-hidden': 'true' }, '⠿'),
@@ -534,9 +523,11 @@ export function orderGame(root, d) {
 
   function mv(pos, dlt) {
     const j = pos + dlt;
-    [list[pos], list[j]] = [list[j], list[pos]];
     audio.play('move');
-    draw(j + ':' + (dlt < 0 ? 'u' : 'd'));
+    flipList(ol, 'data-item', () => {
+      [list[pos], list[j]] = [list[j], list[pos]];
+      draw(j + ':' + (dlt < 0 ? 'u' : 'd'));
+    });
   }
 
   root.append(

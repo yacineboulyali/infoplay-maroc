@@ -465,3 +465,14 @@ ol.prompts li.dragging{opacity:.4}
 .case3d.hot-case{width:92%;aspect-ratio:auto;overflow:visible;background:#1a2029;border-radius:6px}
 .case3d.hot-case svg.scene{position:relative;transform:translateZ(3px);border-radius:4px}
 @media (max-width:620px){.activity-page .case3d.hot-case{aspect-ratio:auto}.hot-3d .stage{padding:1.6rem .6rem 2rem}}
+
+/* ---- Fantôme de glisser et vol vers la case (src/fx/motion.js) ---- */
+.fly-ghost{position:fixed;z-index:300;pointer-events:none;transform-origin:center;will-change:transform;transition:none!important;animation:none!important;opacity:1;cursor:grabbing;box-shadow:0 14px 30px rgba(15,23,42,.28)}
+.fly-ghost.dragging-ghost{box-shadow:0 22px 44px rgba(15,23,42,.34),0 0 0 3px rgba(43,63,196,.35)}
+.asm-ghost.flying,.hot-ghost.flying{position:fixed;transform-origin:center}
+body.is-dragging,body.is-dragging *{cursor:grabbing!important;user-select:none;-webkit-user-select:none}
+.sort-chip,.match-draggable,.asm-tray .chip,.order-draggable-row .grip-icon{touch-action:none}
+.order-draggable-row{cursor:grab}
+.sort-chip.dragging,.match-draggable.dragging,.order-draggable-row.dragging{opacity:.3;transform:none;box-shadow:none;animation:none}
+.sort-bucket.drag-over,.sort-pool.drag-over{outline:3px dashed var(--primary);outline-offset:3px}
+.match-droptarget.drag-over,.order-draggable-row.drag-over{box-shadow:0 0 0 3px var(--primary)}

@@ -4,6 +4,7 @@ import { audio } from '../audio/audio.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
 import { arHint } from '../i18n/arhint.js';
 import { arQuestion } from '../i18n/ar-questions.js';
+import { adopt, dragWith, flyFrom } from '../fx/motion.js';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 function shapeMarkup(s) {
@@ -75,7 +76,10 @@ export function hotspotGame(root, d) {
 
   const zoneName = (id) => (d.scene === 'lines' ? desc[id] : 'Zone ' + (ids.indexOf(id) + 1));
 
-  function pick(id) {
+  const regionEl = (id) => root.querySelector(`[data-r="${id}"]`);
+  function pick(id, fly = true) {
+    // La consigne active s'envole vers l'élément choisi sur l'image.
+    if (fly) flyFrom(list.children[cur]?.querySelector('.prompt-btn'), regionEl(id), { keep: true });
     ans[cur] = id;
     audio.play('click');
     const nx = ans.findIndex((a, i) => a == null && i !== cur);
@@ -85,31 +89,26 @@ export function hotspotGame(root, d) {
   }
 
   // ---- Glisser une consigne sur l'élément de l'image (souris, doigt, stylet) ; le clic reste possible ----
-  let drag = null; let justDragged = false;
   const regionAt = (x, y) => { const el = document.elementFromPoint(x, y); const g = el && el.closest('[data-r]'); return g && root.contains(g) ? g : null; };
-  const mark = (g) => root.querySelectorAll('[data-r].drag-over').forEach((n) => { if (n !== g) n.classList.remove('drag-over'); }) || (g && g.classList.add('drag-over'));
   function startDrag(e, i) {
-    if (e.button || d.scene === 'lines') return;
-    drag = { i, sx: e.clientX, sy: e.clientY, ghost: null, src: e.currentTarget.closest('li') };
-    window.addEventListener('pointermove', onMove); window.addEventListener('pointerup', onUp); window.addEventListener('pointercancel', onCancel);
-  }
-  function onMove(e) {
-    if (!drag) return;
-    if (!drag.ghost) {
-      if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < 7) return;
-      drag.ghost = h('div', { class: 'hot-ghost', 'aria-hidden': 'true' }, h('b', null, drag.i + 1), prompts[drag.i][1]);
-      document.body.append(drag.ghost); drag.src.classList.add('dragging'); audio.play('select');
-    }
-    drag.ghost.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 14}px)`;
-    mark(regionAt(e.clientX, e.clientY)); e.preventDefault();
-  }
-  function stop() { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); window.removeEventListener('pointercancel', onCancel); if (drag && drag.ghost) drag.ghost.remove(); if (drag) drag.src.classList.remove('dragging'); mark(null); }
-  function onCancel() { stop(); drag = null; }
-  function onUp(e) {
-    const g = drag; stop(); drag = null; if (!g || !g.ghost) return; // simple clic : géré par onclick
-    justDragged = true; setTimeout(() => { justDragged = false; }, 0);
-    const region = regionAt(e.clientX, e.clientY);
-    if (region) { cur = g.i; pick(region.getAttribute('data-r')); } else { live.textContent = 'Dépose la consigne sur un élément de l’image.'; }
+    if (d.scene === 'lines') return;
+    const src = e.currentTarget.closest('li');
+    dragWith(e, src, {
+      threshold: 7,
+      // Fantôme « consigne » juste sous le pointeur ; la page défile près des bords.
+      ghost: () => {
+        const el = h('div', { class: 'hot-ghost', 'aria-hidden': 'true' }, h('b', null, i + 1), prompts[i][1]);
+        el.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 14}px)`;
+        document.body.append(el); audio.play('select');
+        return adopt(el);
+      },
+      target: regionAt,
+      drop: (region) => {
+        if (!region) { live.textContent = 'Dépose la consigne sur un élément de l’image.'; return null; }
+        cur = i; pick(region.getAttribute('data-r'), false);
+        return { el: regionEl(region.getAttribute('data-r')), keep: true };
+      },
+    });
   }
 
   function draw() {
@@ -120,7 +119,7 @@ export function hotspotGame(root, d) {
         class: 'prompt-btn',
         'aria-current': i === cur ? 'step' : null,
         onpointerdown: (e) => { if (e.pointerType === 'mouse') startDrag(e, i); },
-        onclick: () => { if (justDragged) return; cur = i; audio.play('select'); draw(); },
+        onclick: () => { cur = i; audio.play('select'); draw(); },
       }, studentIllustration(d, i), p[1]),
       arHint(arQuestion(d.illustrationActivityId, i)),
       h('span', { class: 'ans' }, ans[i] ? zoneName(ans[i]) : '—')
