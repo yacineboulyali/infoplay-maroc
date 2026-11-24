@@ -1,3 +1,4 @@
+import { uiIcon } from '../utils/ui-icon.js';
 // Fenêtres surgissantes de correction, partagées par le mode classique et le mode immersif.
 import { h, reduced } from '../utils/dom.js';
 import { arHint } from '../i18n/arhint.js';
@@ -47,7 +48,7 @@ export function resultPopup(opts) {
   if (g) {
     const xp = h('b', null, '+0'); chips.append(h('span', { class: 'rp-chip xp' }, '✨ ', xp, ' XP'));
     countUp(xp, g.xpGain, 1200, (v) => '+' + Math.round(v));
-    if (g.after.streak >= 2) chips.append(h('span', { class: 'rp-chip streak' }, `🔥 Série de ${g.after.streak}`));
+    if (g.after.streak >= 2) chips.append(h('span', { class: 'rp-chip streak' }, uiIcon('badge-streak3', '🔥', { size: 18 }), ` Série de ${g.after.streak}`));
   }
   if (opts.time) chips.append(h('span', { class: 'rp-chip time' + (opts.time.record ? ' record' : '') }, `⏱ ${fmtTime(opts.time.ms)}`, opts.time.record ? ' · Record !' : opts.time.best != null ? ` · record ${fmtTime(opts.time.best)}` : ''));
   let levelBox = null;
@@ -141,7 +142,7 @@ export function badgePopup(badges, delay = 0) {
   let stack = document.querySelector('.ach-stack');
   if (!stack) { stack = h('div', { class: 'ach-stack', role: 'status', 'aria-live': 'polite' }); document.body.append(stack); }
   badges.forEach((b, i) => setTimeout(() => {
-    const t = h('div', { class: 'ach' }, h('span', { class: 'ach-ic', 'aria-hidden': 'true' }, b.icon), h('div', null, h('small', null, 'Badge débloqué !'), h('b', null, b.title), h('span', null, b.desc)));
+    const t = h('div', { class: 'ach' }, uiIcon(b.art, b.icon, { className: 'ach-ic', size: 48 }), h('div', null, h('small', null, 'Badge débloqué !'), h('b', null, b.title), h('span', null, b.desc)));
     stack.append(t); audio.play('star', { i: Math.min(4, i + 2) });
     setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 400); }, 5200);
   }, (delay + i * 0.6) * 1000));
@@ -152,6 +153,6 @@ export function gameHud(game, { compact = false } = {}) {
   return h('div', { class: 'ghud' + (compact ? ' compact' : ''), role: 'group', 'aria-label': `Niveau ${game.level}, ${game.into} XP sur ${game.need}, série ${game.streak}` },
     h('span', { class: 'ghud-lvl', title: game.rank }, h('b', null, game.level), h('small', null, 'niv.')),
     h('span', { class: 'ghud-xp' }, h('span', { class: 'ghud-xp-top' }, h('b', null, game.rank), h('small', null, `${game.into}/${game.need} XP`)), h('span', { class: 'ghud-bar' }, h('i', { style: `width:${game.pct}%` }))),
-    h('span', { class: 'ghud-chip' + (game.streak >= 3 ? ' hot' : ''), title: `Meilleure série : ${game.bestStreak}` }, '🔥 ', game.streak));
+    h('span', { class: 'ghud-chip' + (game.streak >= 3 ? ' hot' : ''), title: `Meilleure série : ${game.bestStreak}` }, uiIcon('badge-streak3', '🔥', { size: 18 }), ' ', game.streak));
 }
 export { RANKS };
