@@ -694,7 +694,7 @@ function sessionScreen(mi, si) {
     crumbs(homeStep(mi), ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si]),
     h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`),
     s.situation ? h('section', { class: 'mission-brief', 'data-reveal': '' },
-      h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, s.situation.ico),
+      uiIcon(`sit-m${mi}-s${si}`, s.situation.ico, { className: 'mb-ava', size: 54 }),
       h('div', null, h('p', { class: 'eyebrow' }, colMod(mi) ? 'Situation de départ' : 'Mission · situation professionnelle'), h('b', null, s.situation.who), h('p', null, s.situation.text))) : null,
     h('p', null, h('b', null, 'Notions : '), s.topics.join(', '), '.'),
     h('p', { class: 'muted' }, `4 activités interactives · environ ${s.acts.reduce((a, b) => a + b.estimatedMinutes, 0)} minutes · /20 points`),
