@@ -4,6 +4,8 @@ export const MODULE_ICONS = {
   "egtsi106-s2": "images/module-icons/egtsi106-s2.webp",
   "egtsi106-s3": "images/module-icons/egtsi106-s3.webp",
   "egtsi106": "images/module-icons/egtsi106.webp",
+  "groupe-college": "images/module-icons/groupe-college.webp",
+  "groupe-lycee": "images/module-icons/groupe-lycee.webp",
   "m1": "images/module-icons/m1.webp",
   "m11": "images/module-icons/m11.webp",
   "m12": "images/module-icons/m12.webp",
@@ -28,4 +30,9 @@ export const MODULE_ICONS = {
   "m34": "images/module-icons/m34.webp",
   "m35": "images/module-icons/m35.webp",
   "m4": "images/module-icons/m4.webp",
+  "parcours-1ac": "images/module-icons/parcours-1ac.webp",
+  "parcours-2ac": "images/module-icons/parcours-2ac.webp",
+  "parcours-3ac": "images/module-icons/parcours-3ac.webp",
+  "parcours-3d": "images/module-icons/parcours-3d.webp",
+  "parcours-tc": "images/module-icons/parcours-tc.webp",
 };

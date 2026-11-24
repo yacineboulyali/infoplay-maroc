@@ -1,3 +1,4 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
 import { h, norm, fmtNum, svgFrom } from '../utils/dom.js';
 import { computeCell, colName } from './sheetcalc.js';
 
@@ -27,7 +28,7 @@ function office(host, st, ctx) {
   let nameIn, folderSel;
   const saveBar = show.has('save') ? h('div', { class: 'tgrp' }, h('label', null, 'Nom du fichier ', nameIn = h('input', { type: 'text', maxlength: '30', autocomplete: 'off', oninput: (e) => { st.name = e.target.value.replace(/[^\w.\- ]/g, ''); st.saved = false; titleBar.textContent = tb(); } })),
     h('label', null, 'Dossier ', folderSel = h('select', { 'aria-label': 'Dossier d’enregistrement', onchange: (e) => { st.folder = e.target.value; st.saved = false; } }, ['Bureau', 'Mes documents', 'Téléchargements'].map((o) => h('option', { value: o }, o)))),
-    h('button', { type: 'button', class: 'btn small', onclick: () => { if (!st.name.trim()) msg.textContent = 'Donne un nom au document avant de l’enregistrer.'; else { st.saved = true; msg.textContent = `Document « ${st.name} » enregistré dans ${st.folder}.`; } paint(); } }, '💾 Enregistrer')) : null;
+    h('button', { type: 'button', class: 'btn small', onclick: () => { if (!st.name.trim()) msg.textContent = 'Donne un nom au document avant de l’enregistrer.'; else { st.saved = true; msg.textContent = `Document « ${st.name} » enregistré dans ${st.folder}.`; } paint(); } }, semanticIcon('', { kind: 'save' }), 'Enregistrer')) : null;
   let printBox = null; const pvw = h('div', { class: 'pvw' });
   if (show.has('print')) printBox = h('div', { class: 'tgrp printp' },
     h('label', null, 'Orientation ', sel(['portrait', 'paysage'], st.orient, (v) => set('orient', v, false), 'Orientation')), h('label', null, 'Format ', sel(['A4', 'A5', 'Lettre'], st.paper, (v) => set('paper', v, false), 'Format du papier')),
@@ -121,18 +122,18 @@ function fsView(host, st, ctx) {
   };
   const pathOf = (n) => { const a = []; while (n && n.parent) { a.unshift(n.name); n = n.parent; } return a.join('/'); };
   const list = h('div', { class: 'fslist', role: 'tree', 'aria-label': 'Explorateur de fichiers (simulation)' }); const nameIn = h('input', { type: 'text', maxlength: '30', 'aria-label': 'Nom du dossier ou du fichier', placeholder: 'Nom…' }); const msg = h('p', { class: 'hint-line', 'aria-live': 'polite' });
-  const row = (n, depth, inBin) => h('button', { type: 'button', role: 'treeitem', class: 'fsrow' + ((inBin ? curBin === n : cur === n && !curBin) ? ' on' : ''), style: `padding-left:${10 + depth * 20}px`, onclick: () => { if (inBin) { curBin = n; } else { cur = n; curBin = null; } msg.textContent = ''; paint(); } }, (n.dir ? '📁 ' : '📄 ') + n.name);
+  const fileButton = (kind, label, run) => h('button', { type: 'button', class: 'btn small', onclick: run }, semanticIcon('', { kind }), label);
+  const row = (n, depth, inBin) => h('button', { type: 'button', role: 'treeitem', class: 'fsrow' + ((inBin ? curBin === n : cur === n && !curBin) ? ' on' : ''), style: `padding-left:${10 + depth * 20}px`, onclick: () => { if (inBin) { curBin = n; } else { cur = n; curBin = null; } msg.textContent = ''; paint(); } }, semanticIcon('', { kind: n.dir ? 'folder' : 'document' }), n.name);
   function walk(n, d, out) { out.push(row(n, d, false)); n.kids.forEach((k) => walk(k, d + 1, out)); }
-  function paint() { const out = []; walk(root, 0, out); out.push(h('div', { class: 'fsbin' }, '🗑 Corbeille', bin.length ? '' : ' (vide)')); bin.forEach((b) => out.push(row(b.n, 1, true))); list.replaceChildren(...out); }
+  function paint() { const out = []; walk(root, 0, out); out.push(h('div', { class: 'fsbin' }, semanticIcon('', { kind: 'trash' }), 'Corbeille', bin.length ? '' : ' (vide)')); bin.forEach((b) => out.push(row(b.n, 1, true))); list.replaceChildren(...out); }
   const need = () => { if (curBin || !cur.parent) { msg.textContent = 'Sélectionne d’abord un fichier ou un dossier (pas le dossier racine).'; return false; } return true; };
-  const btn = (l, f) => h('button', { type: 'button', class: 'btn small', onclick: f }, l);
   const destDir = () => (cur.dir ? cur : cur.parent);
   host.append(h('div', { class: 'fsbox' }, h('div', { class: 'fsbar' }, nameIn,
-    btn('📁 Nouveau dossier', () => { if (!nameIn.value.trim()) { msg.textContent = 'Écris un nom dans la case.'; return; } if (curBin) return; const p = destDir(); p.kids.push({ id: ++nid, name: uniq(p, nameIn.value.trim()), dir: true, kids: [], parent: p }); nameIn.value = ''; paint(); }),
-    btn('✏ Renommer', () => { if (!need() || !nameIn.value.trim()) { if (!nameIn.value.trim()) msg.textContent = 'Écris le nouveau nom dans la case.'; return; } A.rename(pathOf(cur), nameIn.value); nameIn.value = ''; }),
-    btn('⧉ Copier', () => { if (need()) { clip = { n: cur, cut: false }; msg.textContent = `« ${cur.name} » copié.`; } }), btn('✂ Couper', () => { if (need()) { clip = { n: cur, cut: true }; msg.textContent = `« ${cur.name} » coupé.`; } }),
-    btn('📋 Coller', () => { if (!clip) { msg.textContent = 'Rien à coller : copie ou coupe d’abord un élément.'; return; } const d = destDir(); if (clip.cut) { if (clip.n.parent && d !== clip.n) A.move(pathOf(clip.n), pathOf(d)); clip = null; } else d.kids.push(clone(clip.n, d)); paint(); }),
-    btn('🗑 Supprimer', () => { if (need()) { A.remove(pathOf(cur)); cur = root; } }), btn('↩ Restaurer', () => { if (!curBin) { msg.textContent = 'Sélectionne un élément dans la corbeille.'; return; } A.restore(curBin.name); curBin = null; })), list, msg));
+    fileButton('folder', 'Nouveau dossier', () => { if (!nameIn.value.trim()) { msg.textContent = 'Écris un nom dans la case.'; return; } if (curBin) return; const p = destDir(); p.kids.push({ id: ++nid, name: uniq(p, nameIn.value.trim()), dir: true, kids: [], parent: p }); nameIn.value = ''; paint(); }),
+    fileButton('pencil', 'Renommer', () => { if (!need() || !nameIn.value.trim()) { if (!nameIn.value.trim()) msg.textContent = 'Écris le nouveau nom dans la case.'; return; } A.rename(pathOf(cur), nameIn.value); nameIn.value = ''; }),
+    fileButton('copy', 'Copier', () => { if (need()) { clip = { n: cur, cut: false }; msg.textContent = `« ${cur.name} » copié.`; } }), fileButton('scissors', 'Couper', () => { if (need()) { clip = { n: cur, cut: true }; msg.textContent = `« ${cur.name} » coupé.`; } }),
+    fileButton('copy', 'Coller', () => { if (!clip) { msg.textContent = 'Rien à coller : copie ou coupe d’abord un élément.'; return; } const d = destDir(); if (clip.cut) { if (clip.n.parent && d !== clip.n) A.move(pathOf(clip.n), pathOf(d)); clip = null; } else d.kids.push(clone(clip.n, d)); paint(); }),
+    fileButton('trash', 'Supprimer', () => { if (need()) { A.remove(pathOf(cur)); cur = root; } }), fileButton('history', 'Restaurer', () => { if (!curBin) { msg.textContent = 'Sélectionne un élément dans la corbeille.'; return; } A.restore(curBin.name); curBin = null; })), list, msg));
   paint(); return { ...A, refresh: paint };
 }
 

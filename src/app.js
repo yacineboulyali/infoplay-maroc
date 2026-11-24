@@ -1,8 +1,9 @@
+import { uiIcon } from './utils/ui-icon.js';
 import { egtsiScreen } from './egtsi106/screen.js';
 import { examenScreen } from './examen/screens.js';
 import { activityVisual, visualPractice } from './pro/practice.js';
 import { officeArt } from './pro/visuals.js';
-import { mechanicIcon } from './utils/semantic-icons.js';
+import { mechanicIcon, semanticIcon } from './utils/semantic-icons.js';
 import { STUDENT_ILLUSTRATIONS } from './data/student-illustrations.js';
 import { moduleIcon } from './utils/module-icon.js';
 import { ACTIVITY_CARDS } from './data/activity-cards.js';
@@ -13,7 +14,7 @@ import { engineOf } from './games/index.js';
 import { activityScore, band, sessionStats, moduleStats, fmt, MAX } from './scoring/scoring.js';
 import { audio, installInterfaceSounds } from './audio/audio.js';
 import { lanManager } from './multiplayer/lan.js';
-import { raceScreen, monitorScreen, progressSnapshot, trackRace, avatarFor } from './multiplayer/screens.js';
+import { raceScreen, monitorScreen, progressSnapshot, trackRace, avatarFor, avatarIcon } from './multiplayer/screens.js';
 import { computeGame, bestTime, fmtTime, BADGES } from './fx/game.js';
 import { gameHud } from './fx/popup.js';
 import { presentResult, makeChrono } from './fx/flow.js';
@@ -103,7 +104,7 @@ function soundButton(prof) {
       render();
     },
   },
-  h('span', { 'aria-hidden': 'true' }, on ? '🔊' : '🔇'),
+  semanticIcon('', { kind: on ? 'sound' : 'mute' }),
   h('span', { class: 'sound-label' }, on ? 'Son activé' : 'Son coupé')
   );
 }
@@ -124,12 +125,12 @@ function header(prof) {
   return h('header', { class: 'top top-slim' },
     h('div', { class: 'in' },
       h('a', { class: 'brand', href: '#/profils' },
-        h('span', { class: 'logo', 'aria-hidden': 'true' }, '🎮'),
+        uiIcon('logo-infoplay', '🎮', { size: 30, className: 'logo' }),
         h('span', null, 'InfoPlay ', h('b', null, 'Maroc'))
       ),
       h('div', { class: 'top-tools' },
         soundButton(prof),
-        prof ? h('button', { type: 'button', class: 'switch-user', title: `Connecté : ${prof.displayName}`, onclick: () => { store.logout(); go('#/profils'); } }, '👤 ', h('span', { class: 'switch-label' }, 'Changer l’utilisateur')) : null,
+        prof ? h('button', { type: 'button', class: 'switch-user', title: `Connecté : ${prof.displayName}`, onclick: () => { store.logout(); go('#/profils'); } }, semanticIcon('', { kind: 'user' }), h('span', { class: 'switch-label' }, 'Changer l’utilisateur')) : null,
         fsButton('fs-btn'))
     )
   );
@@ -142,7 +143,7 @@ function floatingHome(prof) {
     'aria-label': 'Retour à l’accueil InfoPlay',
     title: 'Accueil InfoPlay — ياسين بوليالي (Yacine BOULYALI)',
   },
-  h('span', { 'aria-hidden': 'true' }, '🏠'),
+  semanticIcon('', { kind: 'home' }),
   h('span', { class: 'floating-home-label' }, 'Accueil')
   );
 }
@@ -204,7 +205,7 @@ function homeScreen() {
           closeEntry(); go(entryTarget);
         },
       },
-      h('span', { class: 'prof-ava', 'aria-hidden': 'true' }, avatarFor(p.displayName)),
+      avatarIcon(avatarFor(p.displayName), 'prof-ava'),
       h('span', { class: 'prof-meta' },
         h('b', null, p.displayName),
         p.className ? h('small', { class: 'muted' }, ' · ' + p.className) : null
@@ -297,11 +298,11 @@ function homeScreen() {
         h('div', { class: 'track-groups' },
           h('section', { class: 'track-group track-college', 'aria-labelledby': 'grp-college-h' },
             h('header', { class: 'track-head' },
-              h('span', { class: 'track-ico', 'aria-hidden': 'true' }, '🏫'),
+              moduleIcon('groupe-college', '🏫', 'track-ico'),
               h('div', null, h('h3', { id: 'grp-college-h' }, 'Collège · Informatique'), h('p', null, 'Secondaire collégial : 1re, 2e et 3e année (programme ANPI).'))),
             h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Parcours du collège' },
             ...LEVELS.map((L) => h('section', { class: 'mode-card mode-pro mode-college', 'aria-labelledby': `mode-col${L.level}-h` },
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, L.icon),
+              moduleIcon('parcours-' + L.code.toLowerCase(), L.icon, 'mode-ico'),
               h('h3', { id: `mode-col${L.level}-h` }, `${L.code} · ${L.title}`),
               h('p', null, `${L.modules.length} modules : ${L.modules.map((m) => m.title).join(', ')}.`),
               h('button', { type: 'button', class: 'btn primary mode-go', onclick: () => openPath('#/college/' + L.level) }, 'Ouvrir le parcours →'))),
@@ -309,18 +310,18 @@ function homeScreen() {
           h('hr', { class: 'track-sep' }),
           h('section', { class: 'track-group track-lycee', 'aria-labelledby': 'grp-lycee-h' },
             h('header', { class: 'track-head' },
-              h('span', { class: 'track-ico', 'aria-hidden': 'true' }, '🎓'),
+              moduleIcon('groupe-lycee', '🎓', 'track-ico'),
               h('div', null, h('h3', { id: 'grp-lycee-h' }, 'Lycée · Tronc commun'), h('p', null, 'Secondaire qualifiant : informatique du tronc commun, en classe ou en 3D.'))),
             h('div', { class: 'mode-choice', role: 'group', 'aria-label': 'Parcours du tronc commun' },
             h('section', { class: 'mode-card mode-classic', 'aria-labelledby': 'mode-classic-h' },
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '📚'),
+              moduleIcon('parcours-tc', '📚', 'mode-ico'),
               h('h3', { id: 'mode-classic-h' }, 'Tronc commun'),
               h('p', null, '4 modules, 30 séances, 120 activités.'),
               h('button', { type: 'button', class: 'btn primary mode-go welcome-cta', onclick: () => openPath('#/dash') }, 'Ouvrir le parcours →')
             ),
             h('section', { class: 'mode-card mode-immersive', 'aria-labelledby': 'mode-3d-h' },
               h('span', { class: 'mode-badge' }, 'Nouveau · 3D'),
-              h('span', { class: 'mode-ico', 'aria-hidden': 'true' }, '🏝️'),
+              moduleIcon('parcours-3d', '🏝️', 'mode-ico'),
               h('h3', { id: 'mode-3d-h' }, 'InfoPlay Immersif 3D'),
               h('p', null, 'Les mêmes séances dans un monde en 3D.'),
               h('a', { class: 'btn primary mode-go', href: 'immersive.html' }, 'Ouvrir le parcours →')
@@ -427,12 +428,12 @@ function multiplayerScreen() {
 
   const playersGrid = h('div', { class: 'grid g3' },
     lanState.players.filter((p) => p.role !== 'observer').map((p) => h('div', { class: 'peer-card' + (p.isMe ? ' is-me' : '') },
-      h('span', { class: 'peer-avatar', 'aria-hidden': 'true' }, p.avatar || '🎮'),
+      avatarIcon(p.avatar || '🎮', 'peer-avatar', 48),
       h('div', { class: 'peer-info' },
         h('b', null, p.name, p.isMe ? ' (Moi)' : ''),
         p.className ? h('small', { class: 'muted' }, 'Classe ' + p.className + ' · ') : null,
         h('span', { class: 'peer-online' }, 'En ligne'),
-        h('div', { class: 'peer-activity' }, '📍 ' + (p.activity || 'Dans le salon')),
+        h('div', { class: 'peer-activity' }, semanticIcon('', { kind: 'pin' }), p.activity || 'Dans le salon'),
         h('span', { class: 'pill done', style: 'margin-top:.3rem' }, `${p.score || 0} pts`)
       ),
       p.activityId && !p.isMe ? h('a', {
@@ -444,7 +445,7 @@ function multiplayerScreen() {
   );
 
   const challengeList = lanState.challenges.length ? h('div', { class: 'card', style: 'margin-top:1.2rem;border-color:var(--accent)' },
-    h('h2', { style: 'color:var(--accent)' }, '⚡ Défis en direct sur le réseau local :'),
+    h('h2', { style: 'color:var(--accent)' }, semanticIcon('', { kind: 'bolt' }), 'Défis en direct sur le réseau local :'),
     h('div', { class: 'grid g2' }, lanState.challenges.map((c) => h('div', { class: 'row', style: 'justify-content:space-between;padding:.5rem;background:#fff5f2;border-radius:10px' },
       h('div', null,
         h('b', null, c.creatorName, ' vous défie !'),
@@ -453,18 +454,18 @@ function multiplayerScreen() {
       h('a', {
         class: 'btn accent small',
         href: '#/m/' + c.activityId.split('-')[0].replace('m', '') + '/s/' + c.activityId.split('-')[1].replace('s', '') + '/a/' + c.activityId.split('-')[2].replace('a', ''),
-      }, '▶ Relever le défi !')
+      }, semanticIcon('', { kind: 'play' }), 'Relever le défi !')
     )))
   ) : null;
 
   return h('main', { id: 'main' },
     h('section', { class: 'lan-salon-hero' },
-      h('h1', { tabindex: '-1' }, '🌐 Salon Multijoueur Réseau Local'),
+      h('h1', { tabindex: '-1', class: 'module-heading' }, uiIcon('tool-multijoueur', '🌐', { size: 40 }), h('span', null, 'Salon Multijoueur Réseau Local')),
       h('p', { class: 'muted', style: 'color:#cbd5e1' },
         'Tous les joueurs connectés sur le même réseau (Wi-Fi ou câblé dans la salle informatique) apparaissent ici en direct !'
       ),
       h('div', { class: 'lan-info-banner' },
-        h('span', null, '💡 Pour jouer ensemble sur d’autres ordinateurs de la salle, ouvrez :'),
+        h('span', null, semanticIcon('', { kind: 'bulb' }), 'Pour jouer ensemble sur d’autres ordinateurs de la salle, ouvrez :'),
         h('code', null, location.origin || 'http://localhost:8765'),
         h('span', { class: 'pill done' }, `${lanState.playerCount} joueur(s) actif(s) sur le réseau`)
       )
@@ -473,7 +474,7 @@ function multiplayerScreen() {
     playersGrid,
     challengeList,
     h('div', { class: 'card lan-chat-box' },
-      h('h2', null, '💬 Réactions et encouragements sur le réseau :'),
+      h('h2', null, semanticIcon('', { kind: 'comment' }), 'Réactions et encouragements sur le réseau :'),
       h('div', { class: 'lan-reactions' }, reactionBtns),
       feedList,
       chatForm
@@ -507,7 +508,7 @@ function dashScreen() {
       h('header', null,
         moduleIcon('m' + m.id, m.icon),
         h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.id} · ${m.short || m.title}`)), h('small', { class: 'muted' }, `${ms.done}/${ms.n} activités · ${fmt(ms.best)}/${ms.max} pts`)),
-        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validé' : '🔒 À valider')),
+        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, semanticIcon('', { kind: done ? 'check' : 'lock' }), done ? 'Validé' : 'À valider')),
       h('ol', { class: 'pp-nodes' }, m.sessions.map((s) => {
         const lv = tcMastery(s, rec); const ss = sessionStats(s, rec);
         return h('li', null, h('a', { class: 'pp-node lv' + lv, href: `#/m/${m.id}/s/${s.index}`, title: `${MASTERY[lv].label} · ${STATUS[ss.status]} · ${fmt(ss.best)}/20` },
@@ -522,19 +523,19 @@ function dashScreen() {
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, 'Lycée · Tronc commun · 4 modules · 30 séances'),
-        h('h1', { tabindex: '-1' }, '📚 Informatique — Tronc commun'),
+        h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('parcours-tc', '📚', 'module-heading-icon'), h('span', null, 'Informatique — Tronc commun')),
         h('p', { class: 'pro-story' }, `Bonjour ${p.displayName} ! Choisis un module, puis une séance : chaque séance contient 4 activités interactives.`),
-        gameHud(game),
+        gameHud(game, { illustrated: true }),
         h('div', { class: 'row' },
-          next ? h('a', { class: 'btn primary', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : M${next.moduleId} · S${next.sessionIndex} · ${next.title}`) : h('span', { class: 'pill done' }, '🏆 Parcours terminé'),
-          h('a', { class: 'btn ghost', href: '#/progres' }, '📊 Mon progrès'))),
+          next ? h('a', { class: 'btn primary', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, semanticIcon('', { kind: 'play' }), `Continuer : M${next.moduleId} · S${next.sessionIndex} · ${next.title}`) : h('span', { class: 'pill done' }, uiIcon('badge-module', '🏆', { size: 18 }), 'Parcours terminé'),
+          h('a', { class: 'btn ghost', href: '#/progres' }, uiIcon('tool-progres', '📊', { size: 20 }), ' Mon progrès'))),
       h('div', { class: 'pro-kpis' },
         h('div', { class: 'kpi' }, h('b', null, fmt(t.best)), h('span', null, `pts / ${TOTAL_POINTS}`)),
         h('div', { class: 'kpi' }, h('b', null, `${t.done}/${t.n}`), h('span', null, 'activités')),
         h('div', { class: 'kpi' }, h('b', null, `${pct} %`), h('span', null, 'progression')),
         h('div', { class: 'kpi' }, h('b', null, `${t.sessionsDone}/30`), h('span', null, 'séances')))),
     h('section', { class: 'pro-map', 'data-reveal': '' },
-      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('h2', { class: 'section-h module-heading' }, uiIcon('tool-carte', '🗺️', { size: 28 }), h('span', null, 'Carte des compétences')),
       h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
       h('div', { class: 'pro-parts' }, parts))
   );
@@ -562,7 +563,7 @@ function levelScreen(n) {
         moduleIcon('m' + m.id, m.icon),
         h('div', null, h('h3', null, h('a', { href: `#/m/${m.id}` }, `Module ${m.rank} · ${m.title}`)),
           h('small', { class: 'muted' }, `${m.unit} · ${m.comp} · ${m.hours} h · ${m.sessions.length ? `${ms.done}/${ms.n} activités · ${fmt(ms.best)}/${ms.max} pts` : 'en préparation'}`)),
-        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validé' : '🔒 À valider')),
+        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, semanticIcon('', { kind: done ? 'check' : 'lock' }), done ? 'Validé' : 'À valider')),
       h('ol', { class: 'pp-nodes' },
         m.sessions.map((s) => {
           const lv = tcMastery(s, rec); const ss = sessionStats(s, rec);
@@ -572,7 +573,7 @@ function levelScreen(n) {
             h('small', null, `${fmt(ss.best)}/20`)));
         }),
         m.plan.slice(m.sessions.length).map((title, i) => h('li', null, h('span', { class: 'pp-node lv0 planned', title: 'Séance en préparation' },
-          h('span', { class: 'pp-n', 'aria-hidden': 'true' }, '🔒'),
+          h('span', { class: 'pp-n', 'aria-hidden': 'true' }, semanticIcon('', { kind: 'lock' })),
           h('span', { class: 'pp-t' }, h('b', null, `S${m.sessions.length + i + 1}`), ' ', title),
           h('small', null, 'À venir'))))));
   });
@@ -582,19 +583,19 @@ function levelScreen(n) {
     h('section', { class: 'pro-hero', 'data-reveal': '' },
       h('div', { class: 'pro-hero-main' },
         h('p', { class: 'eyebrow' }, `Collège · ${L.title} · ${L.modules.length} modules · programme officiel (1 h par semaine)`),
-        h('h1', { tabindex: '-1' }, `${L.icon} Informatique — ${L.code}`),
-        h('p', { class: 'pro-story' }, `Bonjour ${p.displayName} ! Les modules suivent l’ordre du programme. Chaque séance contient 4 activités interactives ; les séances marquées 🔒 sont en préparation.`),
-        gameHud(game),
+        h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('parcours-' + L.code.toLowerCase(), L.icon, 'module-heading-icon'), h('span', null, 'Informatique — ' + L.code)),
+        h('p', { class: 'pro-story' }, `Bonjour ${p.displayName} ! Les modules suivent l’ordre du programme. Chaque séance contient 4 activités interactives ; les séances avec un cadenas sont en préparation.`),
+        gameHud(game, { illustrated: true }),
         h('div', { class: 'row' },
-          next ? h('a', { class: 'btn primary', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : ${modLabel(next.moduleId)} · S${next.sessionIndex} · ${next.title}`) : acts.length ? h('span', { class: 'pill done' }, '🏆 Séances disponibles terminées') : null,
-          h('a', { class: 'btn ghost', href: '#/progres' }, '📊 Mon progrès'))),
+          next ? h('a', { class: 'btn primary', href: `#/m/${next.moduleId}/s/${next.sessionIndex}/a/${next.index}` }, semanticIcon('', { kind: 'play' }), `Continuer : ${modLabel(next.moduleId)} · S${next.sessionIndex} · ${next.title}`) : acts.length ? h('span', { class: 'pill done' }, uiIcon('badge-module', '🏆', { size: 18 }), 'Séances disponibles terminées') : null,
+          h('a', { class: 'btn ghost', href: '#/progres' }, uiIcon('tool-progres', '📊', { size: 20 }), ' Mon progrès'))),
       h('div', { class: 'pro-kpis' },
         h('div', { class: 'kpi' }, h('b', null, fmt(t.best)), h('span', null, `pts / ${acts.length * 5}`)),
         h('div', { class: 'kpi' }, h('b', null, `${t.done}/${t.n}`), h('span', null, 'activités')),
         h('div', { class: 'kpi' }, h('b', null, `${L.modules.reduce((k, m) => k + m.sessions.length, 0)}/${nSessions}`), h('span', null, 'séances disponibles')),
         h('div', { class: 'kpi' }, h('b', null, `${t.sessionsDone}`), h('span', null, 'séances terminées')))),
     h('section', { class: 'pro-map', 'data-reveal': '' },
-      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('h2', { class: 'section-h module-heading' }, uiIcon('tool-carte', '🗺️', { size: 28 }), h('span', null, 'Carte des compétences')),
       h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
       h('div', { class: 'pro-parts' }, parts))
   );
@@ -629,7 +630,7 @@ function moduleScreen(mi) {
   const col = colMod(mi);
   // Ressources du programme pas encore jouables : affichées dans l'ordre officiel, verrouillées.
   const planned = (m.plan || []).slice(m.sessions.length).map((t, i) => h('li', null, h('span', { class: 'pp-node lv0 planned', title: 'Séance en préparation' },
-    h('span', { class: 'pp-n', 'aria-hidden': 'true' }, '🔒'),
+    h('span', { class: 'pp-n', 'aria-hidden': 'true' }, semanticIcon('', { kind: 'lock' })),
     h('span', { class: 'pp-t' }, h('b', null, `S${m.sessions.length + i + 1}`), ' ', t, h('small', { class: 'muted pp-topics' }, 'À venir')),
     h('small', null, '—'))));
   const parts = groups.map((g, gi) => {
@@ -639,7 +640,7 @@ function moduleScreen(mi) {
       h('header', null,
         moduleIcon('m' + m.id, m.icon),
         h('div', null, h('h3', null, g.label), h('small', { class: 'muted' }, `${gs.done}/${gs.n} activités · ${fmt(gs.best)}/${gs.max} pts`)),
-        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, done ? '🎓 Validée' : '🔒 À valider')),
+        h('span', { class: 'pill ' + (done ? 'done' : ''), title: 'Termine toutes les séances avec au moins 70 %' }, semanticIcon('', { kind: done ? 'check' : 'lock' }), done ? 'Validée' : 'À valider')),
       h('ol', { class: 'pp-nodes' }, g.sessions.map(node), gi === groups.length - 1 ? planned : null));
   });
   const backHref = col ? '#/college/' + col.level : '#/dash';
@@ -653,7 +654,7 @@ function moduleScreen(mi) {
         h('h1', { tabindex: '-1', class: 'module-heading' }, moduleIcon('m' + m.id, m.icon, 'module-heading-icon'), h('span', null, m.title)),
         m.languageNote ? h('p', { class: 'notice' }, m.languageNote) : null,
         h('div', { class: 'row' },
-          next ? h('a', { class: 'btn primary', href: `#/m/${m.id}/s/${next.sessionIndex}/a/${next.index}` }, `▶ Continuer : S${next.sessionIndex} · ${next.title}`) : m.sessions.length ? h('span', { class: 'pill done' }, '🏆 Module terminé') : h('span', { class: 'pill' }, '🛠️ Séances en préparation'),
+          next ? h('a', { class: 'btn primary', href: `#/m/${m.id}/s/${next.sessionIndex}/a/${next.index}` }, semanticIcon('', { kind: 'play' }), `Continuer : S${next.sessionIndex} · ${next.title}`) : m.sessions.length ? h('span', { class: 'pill done' }, uiIcon('badge-module', '🏆', { size: 18 }), 'Module terminé') : h('span', { class: 'pill' }, semanticIcon('', { kind: 'task' }), 'Séances en préparation'),
           h('a', { class: 'btn ghost', href: backHref }, col ? `← ${col.levelCode}` : '← Tableau de bord'))),
       h('div', { class: 'pro-kpis' },
         h('div', { class: 'kpi' }, h('b', null, fmt(ms.best)), h('span', null, `pts / ${ms.max}`)),
@@ -661,7 +662,7 @@ function moduleScreen(mi) {
         h('div', { class: 'kpi' }, h('b', null, `${ms.pct || 0} %`), h('span', null, 'progression')),
         h('div', { class: 'kpi' }, h('b', null, `${ms.sessionsDone}/${nPlan}`), h('span', null, 'séances')))),
     h('section', { class: 'pro-map', 'data-reveal': '' },
-      h('h2', { class: 'section-h' }, '🗺️ Carte des compétences'),
+      h('h2', { class: 'section-h module-heading' }, uiIcon('tool-carte', '🗺️', { size: 28 }), h('span', null, 'Carte des compétences')),
       h('p', { class: 'muted legend' }, MASTERY.slice(0, 4).map((x) => h('span', null, `${x.icon} ${x.label}`))),
       h('div', { class: 'pro-parts' }, parts))
   );
@@ -699,7 +700,7 @@ function sessionScreen(mi, si) {
     crumbs(homeStep(mi), ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si]),
     h('h1', { tabindex: '-1' }, `Séance ${si} — ${s.title}`),
     s.situation ? h('section', { class: 'mission-brief', 'data-reveal': '' },
-      h('span', { class: 'mb-ava', 'aria-hidden': 'true' }, s.situation.ico),
+      uiIcon(`sit-m${mi}-s${si}`, s.situation.ico, { className: 'mb-ava', size: 54 }),
       h('div', null, h('p', { class: 'eyebrow' }, colMod(mi) ? 'Situation de départ' : 'Mission · situation professionnelle'), h('b', null, s.situation.who), h('p', null, s.situation.text))) : null,
     h('p', null, h('b', null, 'Notions : '), s.topics.join(', '), '.'),
     h('p', { class: 'muted' }, `4 activités interactives · environ ${s.acts.reduce((a, b) => a + b.estimatedMinutes, 0)} minutes · /20 points`),
@@ -717,10 +718,10 @@ function sessionScreen(mi, si) {
       );
     })),
     h('div', { class: 'row', style: 'margin-top:1.2rem' },
-      h('a', { class: 'btn primary', href: `#/m/${mi}/s/${si}/a/${next.index}` }, st.done ? '▶ Continuer la séance' : '▶ Commencer la séance'),
+      h('a', { class: 'btn primary', href: `#/m/${mi}/s/${si}/a/${next.index}` }, semanticIcon('', { kind: 'play' }), st.done ? 'Continuer la séance' : 'Commencer la séance'),
       st.done ? h('a', { class: 'btn', href: `#/m/${mi}/s/${si}/bilan` }, 'Voir le bilan') : null
     ),
-    s.retenir && st.status === 'done' ? h('div', { class: 'card retenir' }, h('h2', null, '📌 À retenir'), h('p', null, s.retenir)) : null
+    s.retenir && st.status === 'done' ? h('div', { class: 'card retenir' }, h('h2', null, semanticIcon('', { kind: 'pin' }), 'À retenir'), h('p', null, s.retenir)) : null
   );
 }
 
@@ -738,11 +739,11 @@ function activityScreen(mi, si, ai) {
 
   const stage = h('div', { class: `stage-card activity-${act.id}`, id: 'stage' });
   const out = h('div', { class: 'result-slot' });
-  const hintBox = h('div', { class: 'hintbox', hidden: true }, '💡 ' + act.hint);
-  const chrono = makeChrono();
+  const hintBox = h('div', { class: 'hintbox', hidden: true }, semanticIcon('', { kind: 'bulb' }), ' ', act.hint);
+  const chrono = makeChrono({ illustrated: true });
   let eng = null, submitted = false;
 
-  const checkBtn = h('button', { type: 'button', class: 'btn primary check-btn', onclick: submit, 'aria-keyshortcuts': 'Control+Enter' }, h('span', null, '✔ Vérifier'), h('kbd', { 'aria-hidden': 'true' }, 'Ctrl+⏎'));
+  const checkBtn = h('button', { type: 'button', class: 'btn primary check-btn', onclick: submit, 'aria-keyshortcuts': 'Control+Enter' }, h('span', null, semanticIcon('', { kind: 'check' }), 'Vérifier'), h('kbd', { 'aria-hidden': 'true' }, 'Ctrl+⏎'));
   const hintBtn = h('button', {
     type: 'button',
     class: 'btn ghost',
@@ -753,17 +754,17 @@ function activityScreen(mi, si, ai) {
       hintBtn.setAttribute('aria-expanded', String(!hintBox.hidden));
     },
     'aria-label': 'Indice',
-  }, h('span', { 'aria-hidden': 'true' }, '💡'), h('span', { class: 'lbl' }, ' Indice'));
+  }, semanticIcon('', { kind: 'bulb' }), h('span', { class: 'lbl' }, ' Indice'));
 
   const challengeBtn = h('button', {
     type: 'button',
     class: 'btn ghost small',
     onclick: async () => {
       await lanManager.createChallenge(act.id, act.title);
-      toast('⚡ Défi réseau lancé ! Les autres élèves sur le réseau ont été notifiés.');
+      toast('Défi réseau lancé ! Les autres élèves sur le réseau ont été notifiés.');
     },
     'aria-label': 'Défier la classe',
-  }, h('span', { 'aria-hidden': 'true' }, '⚡'), h('span', { class: 'lbl' }, ' Défier la classe'));
+  }, uiIcon('tool-defi', '⚡', { size: 20 }), h('span', { class: 'lbl' }, ' Défier la classe'));
 
   function mount() {
     stage.replaceChildren();
@@ -800,12 +801,12 @@ function activityScreen(mi, si, ai) {
 
     const nextHref = ai < 4 ? `#/m/${mi}/s/${si}/a/${ai + 1}` : `#/m/${mi}/s/${si}/bilan`;
     out.replaceChildren(presentResult({
-      scope: scopeOf(mi, prof.id), store, prof, act, res, score, n, before, elapsedMs: elapsed, stage,
+      illustrated: true, scope: scopeOf(mi, prof.id), store, prof, act, res, score, n, before, elapsedMs: elapsed, stage,
       next: { href: nextHref, label: ai < 4 ? 'Activité suivante →' : 'Bilan de la séance →' },
       onRetry: () => { mount(); stage.scrollIntoView({ block: 'start', behavior: 'smooth' }); },
       onPeak: (ratio) => { if (ratio === 1) celebrate(); },
     }));
-    hud.replaceWith(hud = gameHud(computeGame(rec, prof.id, scopeOf(mi, prof.id)), { compact: true }));
+    hud.replaceWith(hud = gameHud(computeGame(rec, prof.id, scopeOf(mi, prof.id)), { compact: true, illustrated: true }));
   }
 
   const dots = h('nav', { class: 'dots', 'aria-label': 'Activités de la séance' }, s.acts.map((a) => h('a', {
@@ -815,16 +816,16 @@ function activityScreen(mi, si, ai) {
     'aria-current': a.index === ai ? 'step' : null,
   }, a.index)));
 
-  let hud = gameHud(computeGame(rec, prof.id, scopeOf(mi, prof.id)), { compact: true });
+  let hud = gameHud(computeGame(rec, prof.id, scopeOf(mi, prof.id)), { compact: true, illustrated: true });
   const bestT = bestTime(prof.id, act.id);
   const view = h('main', { id: 'main', class: `activity-page ${m.color}` },
     crumbs(homeStep(mi), ['📚', modLabel(mi), modHref(mi)], ['📖', 'Séance ' + si, `#/m/${mi}/s/${si}`], ['🎯', 'Activité ' + ai]),
     h('header', { class: 'act-hero', 'data-reveal': '' },
       h('div', { class: 'act-hero-main' },
-        h('span', { class: 'act-kind' }, `${m.icon} ${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
+        h('span', { class: 'act-kind' }, moduleIcon('m' + mi, m.icon, 'act-kind-icon'), `${act.mech === 'sim:ribbon' ? 'Simulateur' : KIND[act.type]} · ${modLabel(mi)} · Séance ${si}`),
         h('h1', { tabindex: '-1' }, act.title),
         h('p', { class: 'act-obj' }, h('b', null, 'Objectif : '), act.objective)),
-      h('div', { class: 'act-hero-side' }, dots, h('div', { class: 'act-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, '🏆 ' + fmtTime(bestT)) : null, h('span', { class: 'chip-meta' }, `~${act.estimatedMinutes} min · /5`)), hud)),
+      h('div', { class: 'act-hero-side' }, dots, h('div', { class: 'act-meta' }, chrono.el, bestT != null ? h('span', { class: 'chrono best', title: 'Ton meilleur temps' }, semanticIcon('', { kind: 'timer' }), ' ', fmtTime(bestT)) : null, h('span', { class: 'chip-meta' }, `~${act.estimatedMinutes} min · /5`)), hud)),
     h('div', { class: 'instr activity-brief', 'data-reveal': '' },
       h('b', null, 'Consigne : '), act.instructions
     ),
@@ -889,7 +890,7 @@ function summaryScreen(mi, si) {
     ),
     h('div', { class: 'row noprint', style: 'margin-top:1rem' },
       nextS ? h('a', { class: 'btn primary', href: `#/m/${mi}/s/${si + 1}` }, 'Séance suivante →') : h('a', { class: 'btn primary', href: `#/m/${mi}` }, 'Retour au module'),
-      h('button', { type: 'button', class: 'btn', onclick: () => window.print() }, '🖨 Imprimer le bilan')
+      h('button', { type: 'button', class: 'btn', onclick: () => window.print() }, semanticIcon('', { kind: 'print' }), 'Imprimer le bilan')
     )
   );
 }
@@ -900,12 +901,13 @@ function progressScreen() {
   const rec = recOf(p.id);
 
   return h('main', { id: 'main' },
-    h('h1', { tabindex: '-1' }, 'Mon progrès'),
+    h('h1', { tabindex: '-1', class: 'module-heading' }, uiIcon('tool-progres', '📊', { size: 40 }), h('span', null, 'Mon progrès')),
     h('p', { class: 'muted' }, 'Les points d’une séance sont sur 20 : « Premier » = premiers essais, « Meilleur » = meilleurs essais.'),
     [...CATALOG, PRO, ...LEVELS.flatMap((L) => L.modules.filter((x) => x.sessions.length))].map((m) => {
       const ms = moduleStats(m, rec);
       return h('section', { class: 'card', style: 'margin-bottom:1rem;overflow:auto' },
-        h('h2', null, `${m.icon} ${colMod(m.id) ? modLabel(m.id) : 'Module ' + m.id} — ${m.title}`),
+        h('h2', { class: 'module-heading' }, moduleIcon('m' + m.id, m.icon, 'progress-mod-icon'),
+          h('span', null, `${colMod(m.id) ? modLabel(m.id) : 'Module ' + m.id} — ${m.title}`)),
         h('p', { class: 'muted' }, `${fmt(ms.best)} / ${ms.max} points · ${ms.done}/${ms.n} activités`),
         bar(ms.pct, `Module ${m.id}`),
         h('table', { class: 't' },
@@ -1020,8 +1022,8 @@ function dataScreen() {
       )
     ) : h('p', null, 'Aucun profil sur cet ordinateur.'),
     h('div', { class: 'row', style: 'margin-top:.6rem' },
-      h('button', { type: 'button', class: 'btn small', onclick: () => downloadText('infoplay-resultats.csv', store.csv([...ACTIVITIES, ...PRO_ACTIVITIES, ...COLLEGE_ACTIVITIES]), 'text/csv') }, '⬇ Exporter les résultats (CSV)'),
-      h('button', { type: 'button', class: 'btn small', onclick: () => exp(null, 'infoplay-classe.json') }, '⬇ Exporter tous les profils (JSON)')
+      h('button', { type: 'button', class: 'btn small', onclick: () => downloadText('infoplay-resultats.csv', store.csv([...ACTIVITIES, ...PRO_ACTIVITIES, ...COLLEGE_ACTIVITIES]), 'text/csv') }, semanticIcon('', { kind: 'download' }), 'Exporter les résultats (CSV)'),
+      h('button', { type: 'button', class: 'btn small', onclick: () => exp(null, 'infoplay-classe.json') }, semanticIcon('', { kind: 'download' }), 'Exporter tous les profils (JSON)')
     )
   );
 
@@ -1033,10 +1035,10 @@ function dataScreen() {
         h('h2', null, 'Sauvegarde'),
         h('p', { class: 'muted' }, 'Exporte ton profil pour le réutiliser sur un autre ordinateur de la classe.'),
         h('div', { class: 'row' },
-          p ? h('button', { type: 'button', class: 'btn primary', onclick: () => exp([p.id], `infoplay-${p.displayName.replace(/[^\w-]+/g, '_')}.json`) }, '⬇ Exporter mon profil') : null,
-          h('button', { type: 'button', class: 'btn', onclick: () => exp(null, 'infoplay-sauvegarde.json') }, '⬇ Tout exporter')
+          p ? h('button', { type: 'button', class: 'btn primary', onclick: () => exp([p.id], `infoplay-${p.displayName.replace(/[^\w-]+/g, '_')}.json`) }, semanticIcon('', { kind: 'download' }), 'Exporter mon profil') : null,
+          h('button', { type: 'button', class: 'btn', onclick: () => exp(null, 'infoplay-sauvegarde.json') }, semanticIcon('', { kind: 'download' }), 'Tout exporter')
         ),
-        h('label', { class: 'f', for: 'imp' }, '⬆ Importer une sauvegarde (.json)'),
+        h('label', { class: 'f', for: 'imp' }, semanticIcon('', { kind: 'upload' }), 'Importer une sauvegarde (.json)'),
         file,
         msg,
         h('hr'),
@@ -1169,7 +1171,7 @@ window.addEventListener('error', () => toast('Une erreur est survenue. Recharge 
 // redessiné que si son contenu change réellement et jamais pendant la saisie d'un message.
 let salonSig = '';
 lanManager.subscribe((st) => {
-  trackRace(st, (who) => { if (st.race && !st.race.ended) { audio.play('overtaken'); toast(`🏁 ${who} vient de te dépasser ! À toi de jouer.`); } },
+  trackRace(st, (who) => { if (st.race && !st.race.ended) { audio.play('overtaken'); toast(`${who} vient de te dépasser ! À toi de jouer.`); } },
     (kind) => { if (kind === 'race-start' || kind === 'overtake' || (kind === 'join' && live)) audio.play(kind); });
   const cur = location.hash.split('/')[1] || '';
   if (live && (cur === 'course' || cur === 'suivi')) { live.update(st); return; }

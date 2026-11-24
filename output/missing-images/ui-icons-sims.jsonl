@@ -1,0 +1,15 @@
+{"key":"sim-entree","style":"OBJECT","emoji":"⌨","where":["m1-s2-a4 schéma fonctionnel · bloc Entrée (src/games/sims.js:37)"],"icon":"A keyboard with a small arrow going into it."}
+{"key":"sim-traitement","style":"OBJECT","emoji":"⚙","where":["m1-s2-a4 · bloc Traitement"],"icon":"A processor chip with a gear on it."}
+{"key":"sim-stockage","style":"OBJECT","emoji":"💽","where":["m1-s2-a4 · bloc Stockage (h4 et output.disk 💾)"],"icon":"A hard drive / SSD with a small save arrow going into it."}
+{"key":"sim-sortie","style":"OBJECT","emoji":"🖥","where":["m1-s2-a4 · bloc Sortie"],"icon":"A monitor with a small arrow coming out of its screen."}
+{"key":"sim-jus","style":"OBJECT","emoji":"🧃","where":["m3-s3-a4 Mission distributeur · Jus"],"icon":"A juice box with a straw."}
+{"key":"sim-gateau","style":"OBJECT","emoji":"🍰","where":["m3-s3-a4 · Gâteau"],"icon":"A slice of cake (a Moroccan pastry look is welcome)."}
+{"key":"sim-eau","style":"OBJECT","emoji":"💧","where":["m3-s3-a4 · Eau"],"icon":"A small plastic water bottle."}
+{"key":"sim-switch","style":"OBJECT","emoji":"⇄","where":["m4-s1-a4 et m21-s2-a3 · Switch alimenté"],"icon":"A network switch box with several ports and green lights."}
+{"key":"sim-cable-pc","style":"OBJECT","emoji":"🔌","where":["m4-s1-a4 et m21-s2-a3 · Câble du PC branché"],"icon":"A desktop computer with an RJ45 network cable plugged in."}
+{"key":"sim-imprimante","style":"OBJECT","emoji":"🖨","where":["m4-s1-a4 et m21-s2-a3 · Imprimante partagée"],"icon":"A printer with a small sharing symbol (three connected dots)."}
+{"key":"sim-routeur","style":"OBJECT","emoji":"🔌","where":["m4-s4-a4 Mission diagnostic · Routeur alimenté"],"icon":"A home internet router (box) with antennas and a power plug."}
+{"key":"sim-ligne","style":"OBJECT","emoji":"📞","where":["m4-s4-a4 · Ligne de l’opérateur active"],"icon":"A telephone wall socket with a cable going to a small antenna tower."}
+{"key":"sim-ethernet","style":"OBJECT","emoji":"🔗","where":["m4-s4-a4 · Câble Ethernet branché au PC"],"icon":"A laptop with a blue Ethernet cable plugged into its side."}
+{"key":"sim-wifi","style":"OBJECT","emoji":"📶","where":["m4-s4-a4 · Wi-Fi activé sur le PC"],"icon":"A laptop with Wi-Fi waves above it."}
+{"key":"sim-cle-wifi","style":"OBJECT","emoji":"🔑","where":["m4-s4-a4 · Bon mot de passe Wi-Fi"],"icon":"A key next to Wi-Fi waves and a password field drawn as dots."}

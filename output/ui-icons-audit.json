@@ -1,0 +1,1406 @@
+[
+  {
+    "width": 1440,
+    "route": "/profils",
+    "title": "Bienvenue dans mon univers",
+    "emoji": {
+      "🏝 btn": "🏝️ Monde 3D",
+      "🎮 lp-chip": "🎮 120 activités",
+      "⚡ lp-chip": "⚡ 100 % hors ligne",
+      "© footer-credit": "InfoPlay Maroc © 2026 · Conçu et développé par"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/dash",
+    "title": "Informatique — Tronc commun",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/college/1",
+    "title": "Informatique — 1AC",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🏫 chev-ico": "🏫",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/college/2",
+    "title": "Informatique — 2AC",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🏫 chev-ico": "🏫",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/college/3",
+    "title": "Informatique — 3AC",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🏫 chev-ico": "🏫",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1",
+    "title": "Généralités sur les systèmes informatiques",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/24",
+    "title": "Tableurs",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/11/s/1",
+    "title": "Séance 1 — Information",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m11-s1.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/11/s/3",
+    "title": "Séance 3 — Système informatique",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m11-s3.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/12/s/2",
+    "title": "Séance 2 — Gestion des fenêtres",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m12-s2.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/15/s/1",
+    "title": "Séance 1 — Recherche d’un fichier sur un support de stockage",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m15-s1.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/21/s/2",
+    "title": "Séance 2 — Réseau local",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m21-s2.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/24/s/2",
+    "title": "Séance 2 — Feuilles",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m24-s2.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/25/s/3",
+    "title": "Séance 3 — Primitives de base",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m25-s3.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/31/s/2",
+    "title": "Séance 2 — MAN",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m31-s2.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/34/s/4",
+    "title": "Séance 4 — Adresses",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m34-s4.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/35/s/5",
+    "title": "Séance 5 — Pièces jointes",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m35-s5.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/205/s/1",
+    "title": "Séance 1 — Personnalisation de Word et environnement de travail",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m205-s1.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/205/s/9",
+    "title": "Séance 9 — Excel : séries, listes et mise en forme conditionnelle",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m205-s9.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/205/s/17",
+    "title": "Séance 17 — PowerPoint : thèmes, arrière-plans et masques",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m205-s17.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/1/bilan",
+    "title": "Bilan — Séance 1 : Définitions et vocabulaire de base",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📊 chev-ico": "📊"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/pro",
+    "title": "Bureautique avancée",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "💼 chev-ico": "💼",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "💎 muted": "💎 Ancrée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/pro/revision",
+    "title": "Révision espacée",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "💼 chev-ico": "💼",
+      "🧠 chev-ico": "🧠"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/pro/defi",
+    "title": "Défi mixte",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "💼 chev-ico": "💼",
+      "⚡ chev-ico": "⚡",
+      "❤ dh": "❤️❤️❤️"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/egtsi106",
+    "title": "Culture et techniques du numérique",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🖥 chev-ico": "🖥️",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/egtsi106/seance/1",
+    "title": "Séance 1 — Fondamentaux du digital",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🖥 chev-ico": "🖥️",
+      "📖 chev-ico": "📖",
+      "⚪ egtsi-lesson-sub": "3 notions · 3 activités · ⚪ À découvrir"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/egtsi106/seance/1/lecon/1",
+    "title": "Digitalisation et informatique",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🖥 chev-ico": "🖥️",
+      "📖 chev-ico": "📖",
+      "📘 chev-ico": "📘"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/multijoueur",
+    "title": "Salon Multijoueur Réseau Local",
+    "emoji": {
+      "👋 reaction-btn": "👋 Salut !",
+      "🎮 reaction-btn": "🎮 Prêt à jouer !",
+      "🔥 reaction-btn": "🔥 Défi accepté !",
+      "⭐ reaction-btn": "⭐ Bravo !",
+      "🚀 reaction-btn": "🚀 En route pour le score max !"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/course",
+    "title": "Course en direct",
+    "emoji": {
+      "🥇 medal": "🥇",
+      "🥇 lane-rank": "🥇"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/suivi",
+    "title": "Suivi des élèves en direct",
+    "emoji": {},
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/progres",
+    "title": "Mon progrès",
+    "emoji": {},
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/donnees",
+    "title": "Profil et données",
+    "emoji": {},
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/1/a/1",
+    "title": "Associe les définitions",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/1/a/2",
+    "title": "Information ou traitement ?",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/1/a/3",
+    "title": "Compléter le schéma Entrée → Traitement → Sortie",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/1/a/4",
+    "title": "Mission : le bulletin scolaire",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/2/a/3",
+    "title": "Le parcours de l’information",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/2/a/4",
+    "title": "Mission ordinateur",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/3/a/1",
+    "title": "Reconnais les composants",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "❄ reg": "❄",
+      "⚡ reg": "⚡ ALIMENTATION (PSU)"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/1/s/3/a/3",
+    "title": "Assemble l’ordinateur",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/3/s/1/a/4",
+    "title": "Mission robot",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "▶ muted": "Le robot démarre tourné vers la droite (▶). Construis la suite de commandes, exécute-la autant de fois qu",
+      "▶ bot": "▶"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/3/s/2/a/3",
+    "title": "Simule les variables",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/4/s/1/a/3",
+    "title": "Construis le réseau de la salle",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/2/s/3/a/4",
+    "title": "Mission Explorateur",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/3/s/3/a/4",
+    "title": "Mission distributeur",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/4/s/1/a/4",
+    "title": "Mission : le réseau de la classe",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "✖ ko": "✖ Le switch est alimenté"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/4/s/4/a/4",
+    "title": "Mission diagnostic",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "✖ ko": "✖ Le routeur est sous tension"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/4/s/6/a/4",
+    "title": "Mission : écrire et envoyer (simulation)",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/205/s/1/a/1",
+    "title": "Le vocabulaire de l’interface",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 1440,
+    "route": "/m/21/s/2/a/3",
+    "title": "Mission : le réseau de la classe",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "✖ ko": "✖ Le switch est alimenté"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/profils",
+    "title": "Bienvenue dans mon univers",
+    "emoji": {
+      "🏝 btn": "🏝️ Monde 3D",
+      "🎮 lp-chip": "🎮 120 activités",
+      "⚡ lp-chip": "⚡ 100 % hors ligne",
+      "© footer-credit": "InfoPlay Maroc © 2026 · Conçu et développé par"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/dash",
+    "title": "Informatique — Tronc commun",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/college/1",
+    "title": "Informatique — 1AC",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🏫 chev-ico": "🏫",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/college/2",
+    "title": "Informatique — 2AC",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🏫 chev-ico": "🏫",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/college/3",
+    "title": "Informatique — 3AC",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🏫 chev-ico": "🏫",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1",
+    "title": "Généralités sur les systèmes informatiques",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/24",
+    "title": "Tableurs",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/11/s/1",
+    "title": "Séance 1 — Information",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m11-s1.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/11/s/3",
+    "title": "Séance 3 — Système informatique",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m11-s3.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/12/s/2",
+    "title": "Séance 2 — Gestion des fenêtres",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m12-s2.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/15/s/1",
+    "title": "Séance 1 — Recherche d’un fichier sur un support de stockage",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m15-s1.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/21/s/2",
+    "title": "Séance 2 — Réseau local",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m21-s2.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/24/s/2",
+    "title": "Séance 2 — Feuilles",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m24-s2.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/25/s/3",
+    "title": "Séance 3 — Primitives de base",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m25-s3.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/31/s/2",
+    "title": "Séance 2 — MAN",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m31-s2.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/34/s/4",
+    "title": "Séance 4 — Adresses",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m34-s4.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/35/s/5",
+    "title": "Séance 5 — Pièces jointes",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m35-s5.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/205/s/1",
+    "title": "Séance 1 — Personnalisation de Word et environnement de travail",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m205-s1.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/205/s/9",
+    "title": "Séance 9 — Excel : séries, listes et mise en forme conditionnelle",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m205-s9.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/205/s/17",
+    "title": "Séance 17 — PowerPoint : thèmes, arrière-plans et masques",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖"
+    },
+    "situation": "images/ui-icons/sit-m205-s17.webp",
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/1/bilan",
+    "title": "Bilan — Séance 1 : Définitions et vocabulaire de base",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📊 chev-ico": "📊"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/pro",
+    "title": "Bureautique avancée",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "💼 chev-ico": "💼",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "💎 muted": "💎 Ancrée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/pro/revision",
+    "title": "Révision espacée",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "💼 chev-ico": "💼",
+      "🧠 chev-ico": "🧠"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/pro/defi",
+    "title": "Défi mixte",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "💼 chev-ico": "💼",
+      "⚡ chev-ico": "⚡",
+      "❤ dh": "❤️❤️❤️"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/egtsi106",
+    "title": "Culture et techniques du numérique",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🖥 chev-ico": "🖥️",
+      "⚪ muted": "⚪ À découvrir",
+      "🟡 muted": "🟡 Découverte",
+      "🟠 muted": "🟠 En progrès",
+      "🟢 muted": "🟢 Maîtrisée",
+      "⚪ pp-n": "⚪"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/egtsi106/seance/1",
+    "title": "Séance 1 — Fondamentaux du digital",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🖥 chev-ico": "🖥️",
+      "📖 chev-ico": "📖",
+      "⚪ egtsi-lesson-sub": "3 notions · 3 activités · ⚪ À découvrir"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/egtsi106/seance/1/lecon/1",
+    "title": "Digitalisation et informatique",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "🖥 chev-ico": "🖥️",
+      "📖 chev-ico": "📖",
+      "📘 chev-ico": "📘"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/multijoueur",
+    "title": "Salon Multijoueur Réseau Local",
+    "emoji": {
+      "👋 reaction-btn": "👋 Salut !",
+      "🎮 reaction-btn": "🎮 Prêt à jouer !",
+      "🔥 reaction-btn": "🔥 Défi accepté !",
+      "⭐ reaction-btn": "⭐ Bravo !",
+      "🚀 reaction-btn": "🚀 En route pour le score max !"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/course",
+    "title": "Course en direct",
+    "emoji": {
+      "🥇 medal": "🥇",
+      "🥇 lane-rank": "🥇"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/suivi",
+    "title": "Suivi des élèves en direct",
+    "emoji": {},
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/progres",
+    "title": "Mon progrès",
+    "emoji": {},
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/donnees",
+    "title": "Profil et données",
+    "emoji": {},
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/1/a/1",
+    "title": "Associe les définitions",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/1/a/2",
+    "title": "Information ou traitement ?",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/1/a/3",
+    "title": "Compléter le schéma Entrée → Traitement → Sortie",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/1/a/4",
+    "title": "Mission : le bulletin scolaire",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/2/a/3",
+    "title": "Le parcours de l’information",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/2/a/4",
+    "title": "Mission ordinateur",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/3/a/1",
+    "title": "Reconnais les composants",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "❄ reg": "❄",
+      "⚡ reg": "⚡ ALIMENTATION (PSU)"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/1/s/3/a/3",
+    "title": "Assemble l’ordinateur",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/3/s/1/a/4",
+    "title": "Mission robot",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "▶ muted": "Le robot démarre tourné vers la droite (▶). Construis la suite de commandes, exécute-la autant de fois qu",
+      "▶ bot": "▶"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/3/s/2/a/3",
+    "title": "Simule les variables",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/4/s/1/a/3",
+    "title": "Construis le réseau de la salle",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/2/s/3/a/4",
+    "title": "Mission Explorateur",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/3/s/3/a/4",
+    "title": "Mission distributeur",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/4/s/1/a/4",
+    "title": "Mission : le réseau de la classe",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "✖ ko": "✖ Le switch est alimenté"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/4/s/4/a/4",
+    "title": "Mission diagnostic",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "✖ ko": "✖ Le routeur est sous tension"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/4/s/6/a/4",
+    "title": "Mission : écrire et envoyer (simulation)",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/205/s/1/a/1",
+    "title": "Le vocabulaire de l’interface",
+    "emoji": {
+      "🏠 chev-ico": "🏠",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  },
+  {
+    "width": 375,
+    "route": "/m/21/s/2/a/3",
+    "title": "Mission : le réseau de la classe",
+    "emoji": {
+      "🏫 chev-ico": "🏫",
+      "📚 chev-ico": "📚",
+      "📖 chev-ico": "📖",
+      "🎯 chev-ico": "🎯",
+      "✖ ko": "✖ Le switch est alimenté"
+    },
+    "situation": null,
+    "overflow": 0,
+    "broken": []
+  }
+]

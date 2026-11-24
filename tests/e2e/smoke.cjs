@@ -19,7 +19,7 @@ const URL = 'file://' + path.resolve(__dirname, '../../dist/index.html') + '?tes
     await page.evaluate((a) => { location.hash = `#/m/${a.m}/s/${a.s}/a/${a.i}`; }, a);
     await page.waitForSelector('#stage');
     await page.evaluate(() => window.__ip.eng.solve());
-    await page.click('text=✔ Vérifier');
+    await page.click('.check-btn');
     await page.waitForSelector('.rb-score b');
     const sc = await page.textContent('.rb-score b'); results.push([a.id, a.mech, sc.trim()]);
     if (['m1-s3-a3', 'm2-s2-a1', 'm2-s9-a3', 'm3-s1-a4', 'm4-s1-a3', 'm2-s3-a4', 'm2-s11-a4'].includes(a.id)) await page.screenshot({ path: `shots/${a.id}.png`, fullPage: true });
@@ -32,13 +32,13 @@ const URL = 'file://' + path.resolve(__dirname, '../../dist/index.html') + '?tes
   console.log('points après rechargement :', pts); assert.equal(pts, 600);
   // export / import
   await page.goto(URL.replace('index.html', 'index.html') + '#/donnees'); await page.waitForSelector('text=Sauvegarde');
-  const [dl] = await Promise.all([page.waitForEvent('download'), page.click('text=⬇ Exporter mon profil')]); const f = await dl.path(); const json = require('fs').readFileSync(f, 'utf8'); assert.ok(JSON.parse(json).profiles.length === 1);
+  const [dl] = await Promise.all([page.waitForEvent('download'), page.click('text=Exporter mon profil')]); const f = await dl.path(); const json = require('fs').readFileSync(f, 'utf8'); assert.ok(JSON.parse(json).profiles.length === 1);
   // interactions manuelles : fenêtre simulée (chaque étape réussie se valide toute seule)
   const advance = async (act) => { const before = await page.textContent('.step-h'); await act(); await page.waitForFunction((b) => document.querySelector('.step-h')?.textContent !== b, before, { timeout: 6000 }); };
   await page.evaluate(() => { location.hash = '#/m/2/s/2/a/3'; }); await page.waitForSelector('#stage');
   await advance(() => page.click('[aria-label=Réduire]')); await advance(() => page.click('.tbtn'));
   await advance(() => page.click('[aria-label=Agrandir]')); await advance(() => page.click('[aria-label=Restaurer]')); await advance(() => page.click('[aria-label=Fermer]'));
-  await page.click('text=✔ Vérifier'); await page.waitForSelector('.rb-score b'); const w = await page.textContent('.rb-score b'); console.log('fenêtre (clics réels) :', w.trim()); assert.ok(w.startsWith('5'));
+  await page.click('.check-btn'); await page.waitForSelector('.rb-score b'); const w = await page.textContent('.rb-score b'); console.log('fenêtre (clics réels) :', w.trim()); assert.ok(w.startsWith('5'));
   // interactions manuelles : tableur (deux formules justes, puis une valeur tapée à la main : étape passée = ratée)
   await page.evaluate(() => { location.hash = '#/m/2/s/10/a/4'; }); await page.waitForSelector('#stage');
   const cell = async (ref, v) => { await page.click(`[aria-label="Cellule ${ref}"]`); await page.keyboard.type(v); await page.keyboard.press('Enter'); };

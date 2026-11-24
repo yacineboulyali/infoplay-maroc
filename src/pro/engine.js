@@ -154,18 +154,18 @@ export function dayStreak(pid, rec, now = Date.now()) {
 
 export const PRO_RANKS = ['Stagiaire', 'Assistant(e) junior', 'Assistant(e) administratif(ve)', 'Assistant(e) confirmé(e)', 'Office manager', 'Responsable bureautique', 'Expert(e) MOS', 'Formateur(trice) Office', 'Légende Office'];
 export const PRO_BADGES = [
-  { id: 'first', icon: '🚀', title: 'Premier jour', desc: 'Terminer une première activité M205.' },
-  { id: 'perfect', icon: '💎', title: 'Sans faute', desc: 'Obtenir 5/5 à une activité.' },
-  { id: 'sharp', icon: '🎯', title: 'Précision MOS', desc: '5 activités réussies à 5/5 dès le premier essai.' },
-  { id: 'streak3', icon: '🔥', title: 'En feu', desc: '3 activités d’affilée à au moins 4/5.' },
-  { id: 'streak7', icon: '☄️', title: 'Inarrêtable', desc: '7 activités d’affilée à au moins 4/5.' },
-  { id: 'session', icon: '🏅', title: 'Séance bouclée', desc: 'Terminer les 4 activités d’une séance.' },
-  { id: 'ten', icon: '📚', title: 'Studieux', desc: 'Terminer 10 activités.' },
-  { id: 'module', icon: '🎓', title: 'Certifié(e)', desc: 'Terminer toute une partie : Word, Excel, PowerPoint ou Outlook.' },
-  { id: 'speed', icon: '⚡', title: 'Éclair', desc: 'Réussir une activité à 5/5 en moins de 45 secondes.' },
-  { id: 'comeback', icon: '💪', title: 'Persévérant', desc: 'Passer de moins de 3/5 à 5/5 sur une même activité.' },
-  { id: 'half', icon: '🌗', title: 'Mi-parcours', desc: 'Terminer 40 activités.' },
-  { id: 'all', icon: '👑', title: 'Légende Office', desc: 'Terminer les 80 activités du M205.' },
+  { id: 'first', art: 'badge-first', icon: '🚀', title: 'Premier jour', desc: 'Terminer une première activité M205.' },
+  { id: 'perfect', art: 'badge-perfect', icon: '💎', title: 'Sans faute', desc: 'Obtenir 5/5 à une activité.' },
+  { id: 'sharp', art: 'badge-sharp', icon: '🎯', title: 'Précision MOS', desc: '5 activités réussies à 5/5 dès le premier essai.' },
+  { id: 'streak3', art: 'badge-streak3', icon: '🔥', title: 'En feu', desc: '3 activités d’affilée à au moins 4/5.' },
+  { id: 'streak7', art: 'badge-streak7', icon: '☄️', title: 'Inarrêtable', desc: '7 activités d’affilée à au moins 4/5.' },
+  { id: 'session', art: 'badge-session', icon: '🏅', title: 'Séance bouclée', desc: 'Terminer les 4 activités d’une séance.' },
+  { id: 'ten', art: 'badge-ten', icon: '📚', title: 'Studieux', desc: 'Terminer 10 activités.' },
+  { id: 'module', art: 'badge-module-pro', icon: '🎓', title: 'Certifié(e)', desc: 'Terminer toute une partie : Word, Excel, PowerPoint ou Outlook.' },
+  { id: 'speed', art: 'badge-speed', icon: '⚡', title: 'Éclair', desc: 'Réussir une activité à 5/5 en moins de 45 secondes.' },
+  { id: 'comeback', art: 'badge-comeback', icon: '💪', title: 'Persévérant', desc: 'Passer de moins de 3/5 à 5/5 sur une même activité.' },
+  { id: 'half', art: 'badge-half', icon: '🌗', title: 'Mi-parcours', desc: 'Terminer 40 activités.' },
+  { id: 'all', art: 'badge-all', icon: '👑', title: 'Légende Office', desc: 'Terminer les 80 activités du M205.' },
 ];
 /** Périmètre de jeu M205 transmis au moteur XP commun. */
 export const proScope = (pid, rec) => ({ activities: PRO_ACTIVITIES, groups: PRO_PARTS, ranks: PRO_RANKS, badges: PRO_BADGES, extraXp: pid ? bonusXp(pid, rec) : 0 });

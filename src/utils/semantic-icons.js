@@ -2,6 +2,17 @@ import { svgFrom } from './dom.js';
 
 // Code-native signs complement photographs; each keeps the visible label beside it.
 const paths = {
+  home: '<path d="m2 11 10-9 10 9M5 9v13h14V9M9 22v-8h6v8"/>',
+  user: '<circle cx="12" cy="7" r="4"/><path d="M4 22v-2a8 8 0 0 1 16 0v2"/>',
+  sound: '<path d="M3 9h4l5-4v14l-5-4H3zM16 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/>',
+  mute: '<path d="M3 9h4l5-4v14l-5-4H3zM16 9l6 6m0-6-6 6"/>',
+  play: '<path d="m7 4 14 8-14 8z"/>',
+  timer: '<circle cx="12" cy="14" r="8"/><path d="M9 2h6m-3 4V2m6 6 2-2m-8 4v5l3 2"/>',
+  bolt: '<path d="m13 2-9 12h7l-1 8 10-12h-7z"/>',
+  pencil: '<path d="m4 16-1 5 5-1L21 7l-4-4zM14 6l4 4M4 16l4 4"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  pin: '<path d="m9 3 9 4-2 3-2 1-2 5-3-2-3 5m3-16-1 4-3 3 7 6"/>',
+  bulb: '<path d="M9 18v-3a6 6 0 1 1 6 0v3zm0 3h6M12 1v1"/>',
   document: '<path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/>',
   folder: '<path d="M3 6h7l2 3h9v11H3z"/>',
   save: '<path d="M4 3h14l3 3v15H3V3zM7 3v6h10V3M7 21v-8h10v8"/>',

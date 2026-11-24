@@ -142,7 +142,7 @@ export function hotspotGame(root, d) {
         )
       ),
       h('div', null,
-        h('p', { class: 'muted' }, d.scene === 'lines' ? '👉 Clique directement sur l’élément correspondant dans l’image ci-contre.' : '👉 Fais glisser chaque consigne sur l’élément correspondant de l’image, ou clique directement dessus.'),
+        h('p', { class: 'muted' }, d.scene === 'lines' ? 'Clique directement sur l’élément correspondant dans l’image ci-contre.' : 'Fais glisser chaque consigne sur l’élément correspondant de l’image, ou clique directement dessus.'),
         list
       )
     ),

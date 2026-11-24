@@ -1,3 +1,4 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
 // Mini‑interpréteur d'algorithmes en pseudo‑code français. Aucun eval : analyse syntaxique maison.
 import { h, norm, fmtNum } from '../utils/dom.js';
 import { studentIllustration } from '../utils/student-illustrations.js';
@@ -84,7 +85,7 @@ export function progGame(root, d) {
     const out = h('output', { class: 'pout', 'aria-live': 'polite' });
     let ask, inputs, target, sol;
     if (run) { target = t[1]; sol = t[2]; body.append(h('p', null, h('b', null, `${i + 1}. `), 'Trouve les valeurs à saisir pour que le programme affiche ', h('code', null, String(target)), '.'), h('pre', { class: 'code' }, pretty(code)),
-      h('div', { class: 'prow' }, input, h('button', { type: 'button', class: 'btn small', onclick: () => { const r = interpret(code, parseInputs(input.value).map((x) => x)); out.textContent = r.error ? '⚠ ' + r.error : 'Affiche : ' + (r.out.join(' ; ') || '(rien)'); } }, '▶ Tester'), out)); }
+      h('div', { class: 'prow' }, input, h('button', { type: 'button', class: 'btn small', onclick: () => { const r = interpret(code, parseInputs(input.value).map((x) => x)); out.textContent = r.error ? '⚠ ' + r.error : 'Affiche : ' + (r.out.join(' ; ') || '(rien)'); } }, semanticIcon('', { kind: 'play' }), 'Tester'), out)); }
     else { inputs = t[1]; ask = t[2]; body.append(h('p', null, h('b', null, `${i + 1}. `), ask === 'out' ? 'Qu’affiche cet algorithme ?' : `Quelle est la valeur de ${ask} à la fin ?`, inputs.length ? h('span', null, ' Valeurs saisies au clavier : ', h('code', null, inputs.map(fmtNum).join(' ; ')), '.') : null), h('pre', { class: 'code' }, pretty(code)), h('div', { class: 'prow' }, input)); }
     body.querySelector('p')?.append(arHint(arGeneric(run ? 'run' : ask === 'out' ? 'predictOut' : 'predictVar')));
     const illustration = studentIllustration(d, i, 'student-illustration-question');

@@ -6,18 +6,18 @@ import { CATALOG, ACTIVITIES } from '../data/index.js';
 import { sessionStats } from '../scoring/scoring.js';
 
 export const BADGES = [
-  { id: 'first', icon: '🚀', title: 'Décollage', desc: 'Terminer une première activité.' },
-  { id: 'perfect', icon: '💎', title: 'Sans faute', desc: 'Obtenir 5/5 à une activité.' },
-  { id: 'sharp', icon: '🎯', title: 'Tireur d’élite', desc: '5 activités réussies à 5/5 dès le premier essai.' },
-  { id: 'streak3', icon: '🔥', title: 'En feu', desc: '3 activités d’affilée à au moins 4/5.' },
-  { id: 'streak7', icon: '☄️', title: 'Inarrêtable', desc: '7 activités d’affilée à au moins 4/5.' },
-  { id: 'session', icon: '🏅', title: 'Séance bouclée', desc: 'Terminer les 4 activités d’une séance.' },
-  { id: 'ten', icon: '📚', title: 'Studieux', desc: 'Terminer 10 activités.' },
-  { id: 'module', icon: '🏆', title: 'Maître d’un module', desc: 'Terminer toutes les séances d’un module.' },
-  { id: 'speed', icon: '⚡', title: 'Éclair', desc: 'Réussir une activité à 5/5 en moins de 45 secondes.' },
-  { id: 'comeback', icon: '💪', title: 'Persévérant', desc: 'Passer de moins de 3/5 à 5/5 sur une même activité.' },
-  { id: 'half', icon: '🌗', title: 'Mi-parcours', desc: 'Terminer 60 activités.' },
-  { id: 'all', icon: '👑', title: 'Légende InfoPlay', desc: 'Terminer les 120 activités.' },
+  { id: 'first', art: 'badge-first', icon: '🚀', title: 'Décollage', desc: 'Terminer une première activité.' },
+  { id: 'perfect', art: 'badge-perfect', icon: '💎', title: 'Sans faute', desc: 'Obtenir 5/5 à une activité.' },
+  { id: 'sharp', art: 'badge-sharp', icon: '🎯', title: 'Tireur d’élite', desc: '5 activités réussies à 5/5 dès le premier essai.' },
+  { id: 'streak3', art: 'badge-streak3', icon: '🔥', title: 'En feu', desc: '3 activités d’affilée à au moins 4/5.' },
+  { id: 'streak7', art: 'badge-streak7', icon: '☄️', title: 'Inarrêtable', desc: '7 activités d’affilée à au moins 4/5.' },
+  { id: 'session', art: 'badge-session', icon: '🏅', title: 'Séance bouclée', desc: 'Terminer les 4 activités d’une séance.' },
+  { id: 'ten', art: 'badge-ten', icon: '📚', title: 'Studieux', desc: 'Terminer 10 activités.' },
+  { id: 'module', art: 'badge-module', icon: '🏆', title: 'Maître d’un module', desc: 'Terminer toutes les séances d’un module.' },
+  { id: 'speed', art: 'badge-speed', icon: '⚡', title: 'Éclair', desc: 'Réussir une activité à 5/5 en moins de 45 secondes.' },
+  { id: 'comeback', art: 'badge-comeback', icon: '💪', title: 'Persévérant', desc: 'Passer de moins de 3/5 à 5/5 sur une même activité.' },
+  { id: 'half', art: 'badge-half', icon: '🌗', title: 'Mi-parcours', desc: 'Terminer 60 activités.' },
+  { id: 'all', art: 'badge-all', icon: '👑', title: 'Légende InfoPlay', desc: 'Terminer les 120 activités.' },
 ];
 export const badgeById = Object.fromEntries(BADGES.map((b) => [b.id, b]));
 

@@ -1,3 +1,5 @@
+import { semanticIcon } from '../utils/semantic-icons.js';
+import { uiIcon } from '../utils/ui-icon.js';
 // Moteur de simulation guidée : une vue interactive + des étapes validées une à une.
 import { h, norm, fmtNum, reduced } from '../utils/dom.js';
 import { audio } from '../audio/audio.js';
@@ -32,14 +34,14 @@ const VIEWS = {
     const msg = h('p', { class: 'hint-line', 'aria-live': 'polite' });
     const screen = h('output', { class: 'screen' }); const disk = h('output', { class: 'disk' });
     function edit(k, v) { st[k] = v === '' ? null : Number(v); st.calc = false; st.shown = false; st.saved = false; paint(); }
-    function paint() { if (st.calc) st.res = st.a + st.b; screen.textContent = st.shown ? fmtNum(st.res) : '…'; disk.textContent = st.saved ? '💾 somme.txt enregistré' : '💾 (rien d’enregistré)'; }
+    function paint() { if (st.calc) st.res = st.a + st.b; screen.textContent = st.shown ? fmtNum(st.res) : '…'; disk.replaceChildren(uiIcon('sim-stockage', '💾', { size: 28 }), st.saved ? ' somme.txt enregistré' : ' (rien d’enregistré)'); }
     host.append(h('div', { class: 'flow' },
-      h('div', { class: 'blk' }, h('h4', null, '⌨ Entrée'), h('label', null, 'Nombre 1 ', ia), h('label', null, 'Nombre 2 ', ib)),
+      h('div', { class: 'blk' }, h('h4', { class: 'module-heading' }, uiIcon('sim-entree', '⌨', { size: 28 }), 'Entrée'), h('label', null, 'Nombre 1 ', ia), h('label', null, 'Nombre 2 ', ib)),
       h('div', { class: 'arrow', 'aria-hidden': 'true' }, '→'),
-      h('div', { class: 'blk' }, h('h4', null, '⚙ Traitement'), h('button', { type: 'button', class: 'btn small', onclick: () => { if (st.a == null || st.b == null) msg.textContent = 'Il faut d’abord saisir les deux nombres.'; else { st.calc = true; st.shown = false; st.saved = false; msg.textContent = 'Somme calculée dans le processeur.'; } paint(); } }, 'Additionner')),
+      h('div', { class: 'blk' }, h('h4', { class: 'module-heading' }, uiIcon('sim-traitement', '⚙', { size: 28 }), 'Traitement'), h('button', { type: 'button', class: 'btn small', onclick: () => { if (st.a == null || st.b == null) msg.textContent = 'Il faut d’abord saisir les deux nombres.'; else { st.calc = true; st.shown = false; st.saved = false; msg.textContent = 'Somme calculée dans le processeur.'; } paint(); } }, 'Additionner')),
       h('div', { class: 'arrow', 'aria-hidden': 'true' }, '→'),
-      h('div', { class: 'blk' }, h('h4', null, '🖥 Sortie'), screen, h('button', { type: 'button', class: 'btn small', onclick: () => { if (!st.calc) msg.textContent = 'Rien à afficher : le traitement n’a pas encore été fait.'; else { st.shown = true; msg.textContent = ''; } paint(); } }, 'Afficher')),
-      h('div', { class: 'blk' }, h('h4', null, '💽 Stockage'), disk, h('button', { type: 'button', class: 'btn small', onclick: () => { if (!st.calc) msg.textContent = 'Il n’y a pas encore de résultat à conserver.'; else { st.saved = true; msg.textContent = ''; } paint(); } }, 'Enregistrer'))), msg);
+      h('div', { class: 'blk' }, h('h4', { class: 'module-heading' }, uiIcon('sim-sortie', '🖥', { size: 28 }), 'Sortie'), screen, h('button', { type: 'button', class: 'btn small', onclick: () => { if (!st.calc) msg.textContent = 'Rien à afficher : le traitement n’a pas encore été fait.'; else { st.shown = true; msg.textContent = ''; } paint(); } }, 'Afficher')),
+      h('div', { class: 'blk' }, h('h4', { class: 'module-heading' }, uiIcon('sim-stockage', '💽', { size: 28 }), 'Stockage'), disk, h('button', { type: 'button', class: 'btn small', onclick: () => { if (!st.calc) msg.textContent = 'Il n’y a pas encore de résultat à conserver.'; else { st.saved = true; msg.textContent = ''; } paint(); } }, 'Enregistrer'))), msg);
     paint();
     return { refresh() { ia.value = st.a ?? ''; ib.value = st.b ?? ''; paint(); } };
   },
@@ -61,8 +63,8 @@ const VIEWS = {
   vending(host, st, ctx) {
     const items = ctx.cfg.items; items.forEach(([k]) => { st[k] ??= 0; }); st.total ??= null;
     const out = {}; const tot = h('input', { type: 'number', step: 'any', 'aria-label': 'Total à payer en dirhams', oninput: (e) => { st.total = e.target.value === '' ? null : Number(e.target.value); } });
-    const rows = items.map(([k, label, price, icon]) => { out[k] = h('output', { class: 'count' }, '0');
-      return h('div', { class: 'vrow' }, h('span', { class: 'ico' }, icon), h('span', { class: 'lbl' }, `${label} — ${price} DH`),
+    const rows = items.map(([k, label, price, icon, art]) => { out[k] = h('output', { class: 'count' }, '0');
+      return h('div', { class: 'vrow' }, uiIcon(art, icon, { className: 'ico', size: 32 }), h('span', { class: 'lbl' }, `${label} — ${price} DH`),
         h('button', { type: 'button', class: 'icon-btn', 'aria-label': `Retirer un ${label}`, onclick: () => { st[k] = Math.max(0, st[k] - 1); paint(); } }, '−'), out[k],
         h('button', { type: 'button', class: 'icon-btn', 'aria-label': `Ajouter un ${label}`, onclick: () => { st[k]++; paint(); } }, '+')); });
     const paint = () => items.forEach(([k]) => { out[k].textContent = st[k]; });
@@ -74,8 +76,8 @@ const VIEWS = {
     const derive = () => { if (C.derive) C.derive(st); };
     const paint = () => { derive(); for (const [k] of C.items) boxes[k].checked = !!st[k];
       stat.replaceChildren(...C.status(st).map(([t, ok]) => h('li', { class: ok ? 'ok' : 'ko' }, (ok ? '✔ ' : '✖ ') + t))); };
-    host.append(h('div', { class: 'tgl' }, C.items.map(([k, label, icon]) => { boxes[k] = h('input', { type: 'checkbox', onchange: (e) => { st[k] = e.target.checked; paint(); } });
-      return h('label', { class: 'sw' }, boxes[k], h('span', { class: 'ico' }, icon), h('span', null, label)); })), h('h4', { class: 'small-h' }, 'État du réseau'), stat);
+    host.append(h('div', { class: 'tgl' }, C.items.map(([k, label, icon, art]) => { boxes[k] = h('input', { type: 'checkbox', onchange: (e) => { st[k] = e.target.checked; paint(); } });
+      return h('label', { class: 'sw' }, boxes[k], uiIcon(art, icon, { className: 'ico', size: 32 }), h('span', null, label)); })), h('h4', { class: 'small-h' }, 'État du réseau'), stat);
     paint(); return { refresh: paint };
   },
   mail(host, st) {
@@ -83,8 +85,8 @@ const VIEWS = {
     const fld = (k, label, el) => { el.setAttribute('aria-label', label); el.addEventListener('input', (e) => { st[k] = e.target.value; st.sent = false; paint(); }); return h('label', { class: 'mrow' }, h('span', null, label), el); };
     const to = h('input', { type: 'text', autocomplete: 'off', placeholder: 'adresse@ecole.exemple' }), sub = h('input', { type: 'text', autocomplete: 'off' }), body = h('textarea', { rows: '5' });
     const msg = h('p', { class: 'hint-line', 'aria-live': 'polite' }); const att = h('button', { type: 'button', class: 'btn ghost small', 'aria-pressed': 'false', onclick: () => { st.att = !st.att; st.sent = false; paint(); } });
-    const send = h('button', { type: 'button', class: 'btn primary', onclick: () => { if (!st.to.trim()) msg.textContent = 'Il manque l’adresse du destinataire.'; else if (!st.subject.trim()) msg.textContent = 'Écris un objet pour que le destinataire comprenne le sujet.'; else { st.sent = true; msg.textContent = 'Message simulé « envoyé » : rien n’a quitté cet ordinateur.'; } paint(); } }, '✉ Envoyer');
-    function paint() { att.textContent = st.att ? '📎 devoir.docx joint (retirer)' : '📎 Joindre devoir.docx'; att.setAttribute('aria-pressed', String(st.att)); }
+    const send = h('button', { type: 'button', class: 'btn primary', onclick: () => { if (!st.to.trim()) msg.textContent = 'Il manque l’adresse du destinataire.'; else if (!st.subject.trim()) msg.textContent = 'Écris un objet pour que le destinataire comprenne le sujet.'; else { st.sent = true; msg.textContent = 'Message simulé « envoyé » : rien n’a quitté cet ordinateur.'; } paint(); } }, semanticIcon('', { kind: 'mail' }), 'Envoyer');
+    function paint() { att.replaceChildren(semanticIcon('', { kind: 'link' }), st.att ? 'devoir.docx joint (retirer)' : 'Joindre devoir.docx'); att.setAttribute('aria-pressed', String(st.att)); }
     host.append(h('div', { class: 'mailbox' }, h('p', { class: 'muted' }, 'Simulation : aucun message réel n’est envoyé et aucune adresse réelle n’est utilisée.'), fld('to', 'À (destinataire)', to), fld('subject', 'Objet', sub), fld('body', 'Message', body), att, send, msg)); paint();
     return { refresh() { to.value = st.to; sub.value = st.subject; body.value = st.body; paint(); } };
   },
